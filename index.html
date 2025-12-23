@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Sveriges Arbetsmarknads-OS</title>
+    <meta name="description" content="AI-driven arbetsmarknadsplattform byggd på Sveriges kompletta arbetsmarknadsdata. TalentFlow för individer, SkillHedge för investerare, CityIQ för kommuner.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .tagline {
+            font-size: 1.1em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+            color: #2c3e50;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .product-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .product-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .product-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .product-card p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+        
+        .product-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .product-features li {
+            padding: 8px 0;
+            color: #666;
+        }
+        
+        .product-features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .cta-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .cta-button:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        
+        .cta-button.secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        /* Stats Section */
+        .stats {
+            background: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .stat {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-item {
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            position: absolute;
+            left: -12px;
+            top: 35px;
+        }
+        
+        .timeline-item h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        
+        .timeline-item p {
+            color: #666;
+        }
+        
+        /* CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .final-cta p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            
+            header p {
+                font-size: 1.2em;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+            
+            .product-card h3 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🚀 NordiqFlow</h1>
+            <p>Sveriges första AI-drivna arbetsmarknads-OS</p>
+            <p class="tagline">
+                Byggd på Arbetsförmedlingens kompletta datakatalog (60+ datasets, 10+ års historik, real-time API access)
+            </p>
+        </div>
+    </header>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">60+</div>
+                    <div class="stat-label">Sammankopplade datasets</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Yrken i taxonomin</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">8,000+</div>
+                    <div class="stat-label">Kompetenser mappade</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">Real-time</div>
+                    <div class="stat-label">Jobbmarknadsdata</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Tre Produkter. En Plattform.</h2>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-icon">💼</div>
+                    <span class="product-tag">B2C</span>
+                    <h3>TalentFlow</h3>
+                    <p><strong>För individer som vill byta karriär</strong></p>
+                    <p>AI-driven karriärplanering baserad på faktiska skill-överlappar, inte gissningar.</p>
+                    <ul class="product-features">
+                        <li>Hitta yrken med 80%+ skill-match</li>
+                        <li>Se exakt vilka kurser som krävs (med YH-koppling)</li>
+                        <li>Förutse löneökning baserat på real data</li>
+                        <li>Personliga karriärvägar i realtid</li>
+                    </ul>
+                    <p style="color: #667eea; font-weight: bold; margin-bottom: 15px;">299 SEK/månad</p>
+                    <button class="cta-button">Coming Soon</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">📊</div>
+                    <span class="product-tag">B2B FinTech</span>
+                    <h3>SkillHedge</h3>
+                    <p><strong>För företag och investerare</strong></p>
+                    <p>Handla med arbetsmarknadsindex. Hedga mot talangbrist.</p>
+                    <ul class="product-features">
+                        <li>Real-time skill supply/demand indices</li>
+                        <li>Derivat för kompetensrisk-hedging</li>
+                        <li>Backtesting med 10+ års data</li>
+                        <li>Förutsäg löneinflation per kompetens</li>
+                    </ul>
+                    <p style="color: #667eea; font-weight: bold; margin-bottom: 15px;">Från 500k SEK/år</p>
+                    <button class="cta-button">Boka Demo</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">🏛️</div>
+                    <span class="product-tag">B2G GovTech</span>
+                    <h3>CityIQ</h3>
+                    <p><strong>För kommuner och regioner</strong></p>
+                    <p>Se exakt vilka kompetenser din stad saknar. Optimera utbildningsinvesteringar.</p>
+                    <ul class="product-features">
+                        <li>Real-time talangbristanalys per kommun</li>
+                        <li>ROI-kalkyl för utbildningsprogram</li>
+                        <li>Mappning: lokala jobb ↔ lokala utbildningar</li>
+                        <li>Skatteintäktsprognos baserad på kompetenstillförsel</li>
+                    </ul>
+                    <p style="color: #667eea; font-weight: bold; margin-bottom: 15px;">50-200k SEK/år</p>
+                    <button class="cta-button">Kontakta Oss</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Hur Fungerar Det?</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1. Semantisk Graf</h3>
+                    <p>Vi tar Arbetsförmedlingens Taxonomy (10,000 yrken, 8,000 skills, SSYK/SNI/SUN-mappningar) och bygger en komplett kunskapsgraf.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>2. Real-Time Data Stream</h3>
+                    <p>JobSearch API ger oss varje jobbannons i Sverige i realtid, inklusive kompetenskrav länkade till taxonomin.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>3. AI Enrichment</h3>
+                    <p>NLP-motorn extraherar skills från ostrukturerad text (CV:er, gamla annonser) och mappar till vårt system.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>4. Historisk Analys</h3>
+                    <p>10+ år av data möjliggör trendanalys, ML-modeller för löneprediktion, och backtesting av index.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>5. Tre Produkter, Ett System</h3>
+                    <p>Samma graf driver personliga karriärvägar (TalentFlow), finansiella index (SkillHedge), och kommunal analys (CityIQ).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <h2>Bygg Framtidens Arbetskraft</h2>
+            <p>NordiqFlow är mer än en plattform – det är ett operativsystem för Sveriges arbetsmarknad.</p>
+            <p style="margin-bottom: 40px;">Privatperson? Företag? Kommun? Vi har lösningen.</p>
+            <button class="cta-button" style="background: white; color: #667eea; margin-right: 15px;">Kom Igång</button>
+            <a href="https://github.com/linneamoritznyc/nordiqflow" class="cta-button secondary" style="color: white; border-color: white;">Se Projektet på GitHub</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Byggd på öppen arbetsmarknadsdata från Arbetsförmedlingen</p>
+            <p style="margin-top: 15px;">
+                Skapad av <a href="https://linneamoritz.com" target="_blank">Linnea Moritz</a> | 
+                <a href="https://github.com/linneamoritznyc" target="_blank">GitHub</a>
+            </p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                Data sources: 
+                <a href="https://jobtechdev.se" target="_blank">JobTech Dev</a> | 
+                <a href="https://data.arbetsformedlingen.se" target="_blank">AF Open Data</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
