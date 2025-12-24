@@ -1,0 +1,66 @@
+===========================================================
+SKILLBRIDGE INTELLIGENCE - SYSTEM ARCHITECTURE & DATA SPECS
+===========================================================
+
+VERSION: 1.0
+DATE: 2023-12-23
+STATUS: Engineering Phase Complete
+
+1. SYSTEM PURPOSE
+-----------------
+SkillBridge is a high-precision skill-matching engine that maps 
+unstructured CV text against the JobTech Taxonomy. It uses 
+"Skill-Atom" extraction rather than keyword matching to calculate 
+occupational relevance.
+
+2. DATA INFRASTRUCTURE (JOBTECH SCHEMA)
+---------------------------------------
+The system relies on two primary JSON sources located in the root:
+
+A. [skills.json]
+   - Purpose: Master list of all valid competence "atoms".
+   - Structure: data -> concepts -> list[]
+   - Key fields: 'id' (String), 'preferred_label' (String), 'type' (skill)
+
+B. [concepts-and-common-relations.json] (34MB Master File)
+   - Purpose: Contains occupations and their requirements.
+   - Structure: data -> concepts -> list[]
+   - Occupation Filter: type == 'occupation-name'
+   - Relations Logic: Skills are stored in two separate fields:
+     - 'related': Direct skill requirements.
+     - 'broader': Higher-level skill categories.
+   - Requirement: Both fields MUST be merged to create a full skill profile.
+
+3. PIPELINE ARCHITECTURE
+------------------------
+[LOADER] (loaders.py)
+   - Navigates the "data -> concepts" nesting.
+   - Normalizes all IDs to Strings to prevent type-mismatch failures.
+   - Extracts text from PDFs using PyPDF2.
+
+[ENGINE] (engine.py)
+   - Uses Regex with word boundaries (\b) and re.escape() to find 
+     exact skill matches in raw text.
+   - Calculates a Match Score using: (Found Atoms / Total Required Atoms).
+   - Returns a ranked list of occupations.
+
+[INTERFACE] (app.py)
+   - Streamlit-based dashboard.
+   - Features a System Log (Debug) to monitor "Bensin" (data volume) 
+     before analysis starts.
+
+4. CRITICAL ENGINEERING INSIGHTS (FOR FUTURE AI/DEV)
+----------------------------------------------------
+- DATA ENVELOPE: Never look at the root of the JSON files. Always
+  access root['data']['concepts'].
+- ID CONSISTENCY: JobTech IDs (e.g., '15e8_KDZ_31Z') are alphanumeric.
+  Always treat them as Strings.
+- REGEX SAFETY: Labels like "C++" or ".NET" will break standard 
+  Regex. Always use re.escape(label) before compiling patterns.
+- MERGING RELATIONS: An occupation is incomplete if you only look 
+  at the 'related' field. You must include 'broader' to see the 
+  full skill requirements.
+
+===========================================================
+END OF DOCUMENTATION
+===========================================================
