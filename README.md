@@ -153,10 +153,16 @@ Exit multiples: 15-20x ARR för platform plays med network effects = **150-230M 
 nordiqflow/
 ├── README.md                    # This file
 ├── docs/
-│   └── API_RESEARCH.md         # AF API documentation deep dive
+│   ├── API_RESEARCH.md         # AF API documentation deep dive
+│   └── data_structure/
+│       └── COMPLETE_GUIDE.md   # Complete data structure guide
 ├── scripts/
 │   ├── test_apis.py            # API connectivity testing
 │   └── requirements.txt        # Python dependencies
+├── data_scraper/
+│   ├── download_all_datasets.py # Download all AF datasets
+│   ├── README.md               # Scraper documentation
+│   └── requirements.txt        # Scraper dependencies
 ├── index.html                  # Landing page
 └── vercel.json                 # Deployment config
 ```
@@ -172,13 +178,28 @@ pip install -r requirements.txt
 python test_apis.py
 ```
 
-### 2. View Landing Page Locally
+### 2. Download All Datasets (NEW!)
+```bash
+cd data_scraper
+pip install -r requirements.txt
+python download_all_datasets.py
+```
+
+This will download 60+ datasets including:
+- ⭐ **Släktskap mellan yrken** (pre-computed career transitions!)
+- ⭐ **Yrkesbarometer** (5-year demand forecasts!)
+- Complete SSYK, SNI, SUN taxonomies
+- 8,000+ skill concepts
+
+**See `/data_scraper/README.md` for full documentation.**
+
+### 3. View Landing Page Locally
 ```bash
 open index.html  # Mac
 # or just double-click index.html
 ```
 
-### 3. Deploy to Vercel
+### 4. Deploy to Vercel
 ```bash
 vercel
 ```
