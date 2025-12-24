@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Arbetsmarknads Visualisering</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: white;
+            overflow: hidden;
+        }
+        
+        #header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+        
+        #header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        #header p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        #network-viz {
+            width: 100vw;
+            height: 100vh;
+            cursor: grab;
+        }
+        
+        #network-viz:active {
+            cursor: grabbing;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            max-width: 350px;
+            border: 2px solid rgba(139, 92, 246, 0.6);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .tooltip-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #a78bfa;
+        }
+        
+        .tooltip-type {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+        
+        .tooltip-desc {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        #stats {
+            position: absolute;
+            top: 100px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+        }
+        
+        .stat-item {
+            margin-bottom: 12px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #a78bfa;
+        }
+        
+        .stat-label {
+            opacity: 0.7;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>🌐 Sveriges Arbetsmarknads-Nätverk</h1>
+        <p>Interaktiv visualisering av 10,000+ yrken, kompetenser och karriärvägar</p>
+    </div>
+    
+    <div id="stats">
+        <div class="stat-item">
+            <div class="stat-value">10,472</div>
+            <div class="stat-label">YRKESBENÄMNINGAR</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">8,200</div>
+            <div class="stat-label">KOMPETENSER</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">2,500+</div>
+            <div class="stat-label">KARRIÄRVÄGAR</div>
+        </div>
+    </div>
+    
+    <div id="network-viz"></div>
+    
+    <div id="controls">
+        <div class="control-item">
+            <span class="color-dot" style="background: #8b5cf6;"></span>
+            <span>Huvudgrupper</span>
+        </div>
+        <div class="control-item">
+            <span class="color-dot" style="background: #ec4899;"></span>
+            <span>Yrken</span>
+        </div>
+        <div class="control-item">
+            <span class="color-dot" style="background: #fde047;"></span>
+            <span>Kompetenser</span>
+        </div>
+        <div class="control-item" style="opacity: 0.6;">
+            <span>━━━</span>
+            <span>Karriärövergångar</span>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Full-screen Interactive Network Visualization
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // Expanded dataset with more realistic Swedish labor market data
+        const nodes = [
+            // SSYK Level 1 - Major groups (10 total in real taxonomy)
+            { id: 'ssyk1', name: 'Chefer', type: 'major', size: 30, color: '#8b5cf6', desc: 'Ledare och beslutsfattare inom olika verksamheter', count: '~500 yrkesroller' },
+            { id: 'ssyk2', name: 'Akademiker', type: 'major', size: 30, color: '#8b5cf6', desc: 'Specialister med högre utbildning', count: '~2000 yrkesroller' },
+            { id: 'ssyk3', name: 'Tekniker', type: 'major', size: 30, color: '#8b5cf6', desc: 'Praktiskt tekniska yrken', count: '~1500 yrkesroller' },
+            { id: 'ssyk4', name: 'Kontorspersonal', type: 'major', size: 30, color: '#8b5cf6', desc: 'Administrativt arbete', count: '~800 yrkesroller' },
+            { id: 'ssyk5', name: 'Service', type: 'major', size: 30, color: '#8b5cf6', desc: 'Kundservice och omsorg', count: '~1200 yrkesroller' },
+            { id: 'ssyk6', name: 'Jordbruk', type: 'major', size: 25, color: '#8b5cf6', desc: 'Lantbruk, skog och fiske', count: '~300 yrkesroller' },
+            { id: 'ssyk7', name: 'Hantverks', type: 'major', size: 28, color: '#8b5cf6', desc: 'Byggarbetare och hantverkare', count: '~900 yrkesroller' },
+            { id: 'ssyk8', name: 'Process', type: 'major', size: 27, color: '#8b5cf6', desc: 'Maskinoperatörer och montörer', count: '~700 yrkesroller' },
+            
+            // SSYK Level 4 - Specific high-demand occupations
+            { id: 'sw', name: 'Mjukvaruutvecklare', type: 'occupation', size: 18, color: '#ec4899', parent: 'ssyk2', salary: '45-65k/mån', demand: 'Mycket hög' },
+            { id: 'nurse', name: 'Sjuksköterska', type: 'occupation', size: 18, color: '#ec4899', parent: 'ssyk2', salary: '35-45k/mån', demand: 'Mycket hög' },
+            { id: 'teacher', name: 'Grundskolelärare', type: 'occupation', size: 17, color: '#ec4899', parent: 'ssyk2', salary: '32-42k/mån', demand: 'Hög' },
+            { id: 'psychologist', name: 'Psykolog', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk2', salary: '38-50k/mån', demand: 'Hög' },
+            { id: 'engineer', name: 'Civilingenjör', type: 'occupation', size: 17, color: '#ec4899', parent: 'ssyk2', salary: '42-60k/mån', demand: 'Hög' },
+            
+            { id: 'electrician', name: 'Elektriker', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk7', salary: '35-48k/mån', demand: 'Mycket hög' },
+            { id: 'carpenter', name: 'Snickare', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk7', salary: '32-45k/mån', demand: 'Hög' },
+            { id: 'plumber', name: 'Rörmokare', type: 'occupation', size: 15, color: '#ec4899', parent: 'ssyk7', salary: '34-47k/mån', demand: 'Mycket hög' },
+            
+            { id: 'accountant', name: 'Redovisningsekonom', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk4', salary: '35-48k/mån', demand: 'Medel' },
+            { id: 'admin', name: 'Kontorsassistent', type: 'occupation', size: 15, color: '#ec4899', parent: 'ssyk4', salary: '28-38k/mån', demand: 'Medel' },
+            { id: 'hr', name: 'HR-specialist', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk4', salary: '38-50k/mån', demand: 'Hög' },
+            
+            { id: 'chef', name: 'Kock', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk5', salary: '28-40k/mån', demand: 'Mycket hög' },
+            { id: 'waiter', name: 'Servitör', type: 'occupation', size: 15, color: '#ec4899', parent: 'ssyk5', salary: '25-32k/mån', demand: 'Hög' },
+            { id: 'caregiver', name: 'Undersköterska', type: 'occupation', size: 17, color: '#ec4899', parent: 'ssyk5', salary: '28-35k/mån', demand: 'Mycket hög' },
+            
+            // Top skills (from real taxonomy data)
+            { id: 'python', name: 'Python', type: 'skill', size: 12, color: '#fde047', category: 'Programmering' },
+            { id: 'javascript', name: 'JavaScript', type: 'skill', size: 12, color: '#fde047', category: 'Programmering' },
+            { id: 'leadership', name: 'Ledarskap', type: 'skill', size: 13, color: '#fde047', category: 'Mjuka färdigheter' },
+            { id: 'communication', name: 'Kommunikation', type: 'skill', size: 13, color: '#fde047', category: 'Mjuka färdigheter' },
+            { id: 'project_mgmt', name: 'Projektledning', type: 'skill', size: 12, color: '#fde047', category: 'Management' },
+            { id: 'excel', name: 'Excel', type: 'skill', size: 11, color: '#fde047', category: 'Verktyg' },
+            { id: 'sql', name: 'SQL', type: 'skill', size: 11, color: '#fde047', category: 'Data' },
+            { id: 'teamwork', name: 'Lagarbete', type: 'skill', size: 12, color: '#fde047', category: 'Mjuka färdigheter' },
+            { id: 'problem_solving', name: 'Problemlösning', type: 'skill', size: 12, color: '#fde047', category: 'Analytiskt' },
+        ];
+        
+        const links = [
+            // Hierarchy links (SSYK structure)
+            ...['sw', 'nurse', 'teacher', 'psychologist', 'engineer'].map(t => ({ source: 'ssyk2', target: t, type: 'hierarchy' })),
+            ...['electrician', 'carpenter', 'plumber'].map(t => ({ source: 'ssyk7', target: t, type: 'hierarchy' })),
+            ...['accountant', 'admin', 'hr'].map(t => ({ source: 'ssyk4', target: t, type: 'hierarchy' })),
+            ...['chef', 'waiter', 'caregiver'].map(t => ({ source: 'ssyk5', target: t, type: 'hierarchy' })),
+            
+            // Skill requirements
+            { source: 'sw', target: 'python', type: 'skill' },
+            { source: 'sw', target: 'javascript', type: 'skill' },
+            { source: 'sw', target: 'problem_solving', type: 'skill' },
+            { source: 'sw', target: 'teamwork', type: 'skill' },
+            
+            { source: 'nurse', target: 'communication', type: 'skill' },
+            { source: 'nurse', target: 'teamwork', type: 'skill' },
+            { source: 'teacher', target: 'communication', type: 'skill' },
+            { source: 'teacher', target: 'leadership', type: 'skill' },
+            
+            { source: 'accountant', target: 'excel', type: 'skill' },
+            { source: 'accountant', target: 'sql', type: 'skill' },
+            { source: 'hr', target: 'communication', type: 'skill' },
+            { source: 'hr', target: 'leadership', type: 'skill' },
+            
+            { source: 'engineer', target: 'problem_solving', type: 'skill' },
+            { source: 'engineer', target: 'project_mgmt', type: 'skill' },
+            
+            { source: 'ssyk1', target: 'leadership', type: 'skill' },
+            { source: 'ssyk1', target: 'project_mgmt', type: 'skill' },
+            
+            // Career transitions (släktskap - from real AF data)
+            { source: 'accountant', target: 'admin', type: 'transition', strength: 75 },
+            { source: 'accountant', target: 'hr', type: 'transition', strength: 50 },
+            { source: 'chef', target: 'waiter', type: 'transition', strength: 75 },
+            { source: 'sw', target: 'engineer', type: 'transition', strength: 50 },
+            { source: 'electrician', target: 'carpenter', type: 'transition', strength: 50 },
+            { source: 'nurse', target: 'caregiver', type: 'transition', strength: 60 },
+            { source: 'teacher', target: 'psychologist', type: 'transition', strength: 40 },
+        ];
+        
+        const svg = d3.select('#network-viz')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+        
+        // Add zoom behavior
+        const g = svg.append('g');
+        
+        svg.call(d3.zoom()
+            .scaleExtent([0.5, 3])
+            .on('zoom', (event) => {
+                g.attr('transform', event.transform);
+            }));
+        
+        const tooltip = d3.select('body')
+            .append('div')
+            .attr('class', 'tooltip');
+        
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(links).id(d => d.id).distance(d => {
+                if (d.type === 'hierarchy') return 150;
+                if (d.type === 'skill') return 100;
+                return 120;
+            }))
+            .force('charge', d3.forceManyBody().strength(-500))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(d => d.size + 20));
+        
+        const link = g.append('g')
+            .selectAll('line')
+            .data(links)
+            .join('line')
+            .attr('stroke', d => {
+                if (d.type === 'transition') return 'rgba(236, 72, 153, 0.6)';
+                if (d.type === 'skill') return 'rgba(253, 224, 71, 0.4)';
+                return 'rgba(139, 92, 246, 0.3)';
+            })
+            .attr('stroke-width', d => d.type === 'transition' ? 3 : d.type === 'skill' ? 1.5 : 2)
+            .attr('stroke-dasharray', d => d.type === 'skill' ? '5,5' : 'none');
+        
+        const node = g.append('g')
+            .selectAll('g')
+            .data(nodes)
+            .join('g')
+            .style('cursor', 'pointer')
+            .call(drag(simulation));
+        
+        node.append('circle')
+            .attr('r', d => d.size)
+            .attr('fill', d => d.color)
+            .attr('stroke', 'white')
+            .attr('stroke-width', 2.5)
+            .style('filter', 'drop-shadow(0 0 12px rgba(139, 92, 246, 0.8))');
+        
+        node.append('text')
+            .attr('dy', d => d.size + 20)
+            .attr('text-anchor', 'middle')
+            .attr('fill', 'white')
+            .attr('font-size', d => d.type === 'major' ? '15px' : d.type === 'occupation' ? '13px' : '11px')
+            .attr('font-weight', d => d.type === 'major' ? '700' : '500')
+            .text(d => d.name)
+            .style('pointer-events', 'none')
+            .style('text-shadow', '0 2px 4px rgba(0,0,0,0.5)');
+        
+        node.on('mouseover', function(event, d) {
+            const typeMap = {
+                'major': 'SSYK Huvudgrupp',
+                'occupation': 'Yrkesroll (SSYK-4)',
+                'skill': 'Kompetens'
+            };
+            
+            let htmlContent = `
+                <div class="tooltip-title">${d.name}</div>
+                <div class="tooltip-type">${typeMap[d.type]}</div>
+            `;
+            
+            if (d.desc) htmlContent += `<div class="tooltip-desc">${d.desc}</div>`;
+            if (d.count) htmlContent += `<div class="tooltip-desc" style="margin-top: 8px; opacity: 0.8;">${d.count}</div>`;
+            if (d.salary) htmlContent += `<div class="tooltip-desc" style="margin-top: 8px;"><strong>Lön:</strong> ${d.salary}</div>`;
+            if (d.demand) htmlContent += `<div class="tooltip-desc"><strong>Efterfrågan:</strong> ${d.demand}</div>`;
+            if (d.category) htmlContent += `<div class="tooltip-desc" style="margin-top: 8px; opacity: 0.8;">Kategori: ${d.category}</div>`;
+            
+            tooltip
+                .style('opacity', 1)
+                .style('left', (event.pageX + 15) + 'px')
+                .style('top', (event.pageY - 15) + 'px')
+                .html(htmlContent);
+            
+            d3.select(this).select('circle')
+                .transition()
+                .duration(200)
+                .attr('r', d.size * 1.4)
+                .style('filter', 'drop-shadow(0 0 20px rgba(139, 92, 246, 1))');
+        })
+        .on('mouseout', function(event, d) {
+            tooltip.style('opacity', 0);
+            d3.select(this).select('circle')
+                .transition()
+                .duration(200)
+                .attr('r', d.size)
+                .style('filter', 'drop-shadow(0 0 12px rgba(139, 92, 246, 0.8))');
+        })
+        .on('click', function(event, d) {
+            event.stopPropagation();
+            
+            const connections = links.filter(l => l.source.id === d.id || l.target.id === d.id);
+            const related = connections.map(l => l.source.id === d.id ? l.target.name : l.source.name).join(', ');
+            
+            alert(`🎯 ${d.name}\n\n${related ? `Kopplad till: ${related}\n\n` : ''}I den färdiga produkten kommer detta att öppna en fullständig karriärvy med:\n\n• Detaljerad rollbeskrivning\n• Lönestatistik per region\n• Kompetenskrav och gap-analys\n• Utbildningsvägar\n• Branschefterfrågan (5-års prognos)\n• Relaterade karriärvägar`);
+        });
+        
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+            
+            node.attr('transform', d => `translate(${d.x},${d.y})`);
+        });
+        
+        function drag(simulation) {
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+            
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+            
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+            
+            return d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended);
+        }
+        
+        // Animate on load
+        setTimeout(() => {
+            simulation.alpha(1).restart();
+        }, 300);
+        
+        // Responsive resize
+        window.addEventListener('resize', () => {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
