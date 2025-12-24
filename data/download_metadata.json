@@ -1,0 +1,17 @@
+{
+  "download_date": "2025-12-24T01:14:57.091170",
+  "total_datasets": 20,
+  "downloaded": 0,
+  "failed": 20,
+  "categories": [
+    "ssyk",
+    "sni",
+    "skills",
+    "occupations",
+    "relationships",
+    "forecasts",
+    "education",
+    "geographic",
+    "requirements"
+  ]
+}
