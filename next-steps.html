@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Next Steps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 60px;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+        
+        .step h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .step p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 16px;
+        }
+        
+        .step-time {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            margin: 12px 0;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        
+        .why {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 14px;
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .done {
+            opacity: 0.6;
+        }
+        
+        .done h2::before {
+            content: "✓ ";
+            color: #4ade80;
+        }
+        
+        .current {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+        
+        .links {
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 16px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        
+        .links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .encouragement {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 What's Next</h1>
+        <p class="subtitle">Simple, achievable steps. One at a time.</p>
+        
+        <!-- DONE -->
+        <div class="step done">
+            <span class="step-number">✓</span>
+            <h2>Foundation Complete</h2>
+            <p>You built the landing page, downloaded 34 datasets, created the visualization, and documented everything.</p>
+            <div class="why">
+                <strong>Why this matters:</strong> You have a solid foundation. The hard thinking is done. Now it's just execution.
+            </div>
+        </div>
+        
+        <!-- STEP 1 -->
+        <div class="step current">
+            <span class="step-number">1</span>
+            <span class="step-time">⏱️ 5 minutes</span>
+            <h2>Deploy the Visualization</h2>
+            <p>Get your interactive network graph live so you can show people.</p>
+            
+            <div class="code-block">cd ~/Desktop/nordiqflow
+git add viz.html
+git commit -m "Added network visualization"
+git push origin main</div>
+            
+            <p>Then go to <strong>vercel.com/new</strong> → Import nordiqflow repo → Project name: <code>nordiqflowviz</code> → Deploy</p>
+            
+            <p>Result: Live demo at <code>nordiqflowviz.vercel.app</code></p>
+            
+            <div class="why">
+                <strong>Why start here:</strong> Quick win. Something tangible to show. Builds momentum.
+            </div>
+        </div>
+        
+        <!-- STEP 2 -->
+        <div class="step">
+            <span class="step-number">2</span>
+            <span class="step-time">⏱️ 1-2 hours</span>
+            <h2>Get the Missing Datasets</h2>
+            <p>You have 34/60 datasets. Get the critical ones manually (scraper is broken, that's okay).</p>
+            
+            <p><strong>Priority downloads:</strong></p>
+            <ol style="margin-left: 24px; margin-top: 8px; line-height: 1.8;">
+                <li><strong>Yrkesbarometer</strong> - 5-year demand forecasts (the gold!)</li>
+                <li><strong>Närliggande yrken</strong> - AI-computed career transitions</li>
+                <li><strong>Relevanta kompetenser</strong> - Skill recommendations</li>
+            </ol>
+            
+            <p style="margin-top: 16px;">Go to <a href="https://data.arbetsformedlingen.se/data/" target="_blank" style="color: #fde047;">data.arbetsformedlingen.se/data/</a>, find each dataset, click "Ladda ner JSON fil", save to <code>data/raw/taxonomy/</code></p>
+            
+            <div class="why">
+                <strong>Why this matters:</strong> Yrkesbarometer enables demand forecasting. Without it, TalentFlow recommendations are incomplete.
+            </div>
+        </div>
+        
+        <!-- STEP 3 -->
+        <div class="step">
+            <span class="step-number">3</span>
+            <span class="step-time">⏱️ 1 day</span>
+            <h2>Set Up Neo4j (Graph Database)</h2>
+            <p>Install the database where all your data will live.</p>
+            
+            <p><strong>Option A: Local (for learning)</strong></p>
+            <div class="code-block"># Download Neo4j Desktop
+# https://neo4j.com/download/
+
+# Create new database
+# Start it
+# Open browser at localhost:7474
+# Create first node:
+CREATE (o:Occupation {name: "Mjukvaruutvecklare"})</div>
+            
+            <p><strong>Option B: Cloud (for production later)</strong></p>
+            <p>Sign up for Neo4j AuraDB free tier → Create instance → Get connection string</p>
+            
+            <div class="why">
+                <strong>Why this matters:</strong> Can't build anything without a database. This is the foundation for TalentFlow.
+            </div>
+        </div>
+        
+        <!-- STEP 4 -->
+        <div class="step">
+            <span class="step-number">4</span>
+            <span class="step-time">⏱️ 3-4 days</span>
+            <h2>Import Data to Neo4j</h2>
+            <p>Take your JSON files and put them into the graph database.</p>
+            
+            <p><strong>Start small:</strong> Just SSYK hierarchy first</p>
+            
+            <div class="code-block"># Python script to read JSON and create nodes
+import json
+from neo4j import GraphDatabase
+
+# Load JSON
+with open('data/raw/taxonomy/the-ssyk-hierarchy-with-occupations.json') as f:
+    data = json.load(f)
+
+# Create nodes in Neo4j
+# (Full script in TECHNICAL_SPEC.md)</div>
+            
+            <p>Test with a query:</p>
+            <div class="code-block">MATCH (o:Occupation)
+RETURN o.name
+LIMIT 10</div>
+            
+            <div class="why">
+                <strong>Why this matters:</strong> Once data is in the graph, you can start querying it. This unlocks TalentFlow.
+            </div>
+        </div>
+        
+        <!-- STEP 5 -->
+        <div class="step">
+            <span class="step-number">5</span>
+            <span class="step-time">⏱️ 1 week</span>
+            <h2>Build First API Endpoint</h2>
+            <p>Create a simple backend that queries Neo4j and returns JSON.</p>
+            
+            <div class="code-block"># FastAPI backend
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/api/occupations/search")
+def search_occupations(q: str):
+    # Query Neo4j
+    # Return results
+    return {"results": [...]}</div>
+            
+            <p>Deploy to Railway.app (free tier)</p>
+            <p>Test: <code>curl api.nordiqflow.com/api/occupations/search?q=utvecklare</code></p>
+            
+            <div class="why">
+                <strong>Why this matters:</strong> Once you have an API, you can build the frontend. This is the bridge between data and product.
+            </div>
+        </div>
+        
+        <!-- STEP 6 -->
+        <div class="step">
+            <span class="step-number">6</span>
+            <span class="step-time">⏱️ 2 weeks</span>
+            <h2>Build TalentFlow MVP</h2>
+            <p>Create the actual product people will use.</p>
+            
+            <p><strong>Minimal features:</strong></p>
+            <ol style="margin-left: 24px; margin-top: 8px; line-height: 1.8;">
+                <li>Search for your current occupation</li>
+                <li>See career transition options (sorted by similarity)</li>
+                <li>View skill gaps for each option</li>
+                <li>That's it. Ship it.</li>
+            </ol>
+            
+            <p style="margin-top: 16px;">React frontend → Connect to API → Deploy to Vercel</p>
+            
+            <div class="why">
+                <strong>Why this matters:</strong> This is the MVP. Get it in front of users. Get feedback. Iterate.
+            </div>
+        </div>
+        
+        <!-- ENCOURAGEMENT -->
+        <div class="encouragement">
+            <p style="margin-bottom: 16px;">🌟 You don't have to do all of this today.</p>
+            <p style="margin-bottom: 16px;">Focus on Step 1 (5 minutes). Then rest.</p>
+            <p>Tomorrow, tackle Step 2 (1-2 hours). Then rest.</p>
+            <p style="margin-top: 32px; font-size: 24px; font-weight: 600;">One step at a time. You've got this. 💜</p>
+        </div>
+        
+        <!-- LINKS -->
+        <div class="links">
+            <a href="https://nordiqflow.vercel.app/">Landing Page</a>
+            <a href="https://github.com/linneamoritznyc/nordiqflow">GitHub</a>
+            <a href="https://data.arbetsformedlingen.se/">AF Data</a>
+        </div>
+    </div>
+</body>
+</html>
