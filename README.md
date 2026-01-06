@@ -43,6 +43,28 @@ Dagens rekryteringssajter är enkla sökmotorer. NordiqFlow är en **semantisk g
 
 ---
 
+## Architecture — call graph
+
+![Project architecture call graph](docs/call_graph.svg)
+
+You can also find the Mermaid source for the diagram at `docs/call_graph.mmd` and a one-page mapping at `docs/CALL_GRAPH.md`.
+
+```mermaid
+flowchart LR
+  DS[data_scraper] --> DATA[data/]
+  DATA --> LOADERS[Kompetensbryggan/loaders.py]
+  LOADERS --> ENGINE[Kompetensbryggan/engine.py]
+  ENGINE --> BRYGGAN[Kompetensbryggan/bryggan.py]
+  ENGINE --> VIS[Kompetensbryggan/visualizer.py]
+  BRYGGAN --> STYLES[Kompetensbryggan/styles.py]
+  STATIC[Static pages] --> INDEX[index.html]
+  STATIC --> VIZ[viz.html]
+  ENGINE --> STATIC
+  SCRIPTS[scripts/] --> DATA
+  DOCS[docs/] -->|design notes| ENGINE
+```
+
+
 ## 📦 Produkter
 
 ### 1️⃣ TalentFlow (B2C SaaS)

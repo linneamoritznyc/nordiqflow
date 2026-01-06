@@ -1,0 +1,12 @@
+flowchart LR
+  DS[data_scraper] --> DATA[data/]
+  DATA --> LOADERS[Kompetensbryggan/loaders.py]
+  LOADERS --> ENGINE[Kompetensbryggan/engine.py]
+  ENGINE --> BRYGGAN[Kompetensbryggan/bryggan.py]
+  ENGINE --> VIS[Kompetensbryggan/visualizer.py]
+  BRYGGAN --> STYLES[Kompetensbryggan/styles.py]
+  STATIC[Static pages] --> INDEX[index.html]
+  STATIC --> VIZ[viz.html]
+  ENGINE --> STATIC
+  SCRIPTS[scripts/] --> DATA
+  DOCS[docs/] -->|design notes| ENGINE
