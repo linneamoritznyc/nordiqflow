@@ -29,6 +29,18 @@
       "dest": "/cityiq.html"
     },
     {
+      "src": "/algoritmen",
+      "dest": "/algoritmen.html"
+    },
+    {
+      "src": "/research",
+      "dest": "/research.html"
+    },
+    {
+      "src": "/demo",
+      "dest": "/demo.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }

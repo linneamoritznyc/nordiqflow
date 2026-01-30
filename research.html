@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Forskningsgrund</title>
+    <meta name="description" content="Akademisk forskningsgrund for NordiqFlow: Nobel Prize-vinnande ekonomisk teori, arbetsmarknadsforskning, och ML-litteratur.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section.white {
+            background: white;
+        }
+
+        .section.gray {
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Paper Cards */
+        .paper-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .paper-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .paper-card.nobel {
+            border-left-color: #f39c12;
+            background: linear-gradient(135deg, #fffef0 0%, white 100%);
+        }
+
+        .paper-card.nobel::before {
+            content: "Nobel Prize";
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .paper-card.seminal {
+            border-left-color: #27ae60;
+        }
+
+        .paper-card.seminal::before {
+            content: "Grundlaggande";
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .paper-card.ml {
+            border-left-color: #9b59b6;
+        }
+
+        .paper-card.ml::before {
+            content: "Machine Learning";
+            display: inline-block;
+            background: #9b59b6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .paper-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .paper-authors {
+            color: #667eea;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .paper-venue {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .paper-abstract {
+            color: #555;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+
+        .paper-relevance {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .paper-relevance h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .paper-relevance p {
+            color: #555;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        .paper-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .paper-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* Category Headers */
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 50px 0 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .category-icon.econ {
+            background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+        }
+
+        .category-icon.labor {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .category-icon.ml {
+            background: linear-gradient(135deg, #9b59b6 0%, #667eea 100%);
+        }
+
+        .category-icon.sweden {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .category-header h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 5em;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+
+        .quote-text {
+            font-size: 1.2em;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            padding-left: 40px;
+        }
+
+        .quote-author {
+            color: #667eea;
+            font-weight: 600;
+            padding-left: 40px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #27ae60, #f39c12);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-year {
+            min-width: 60px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9em;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .timeline-content h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 0.95em;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .timeline::before {
+                left: 15px;
+            }
+
+            .timeline-year {
+                min-width: 50px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html">For Investors</a>
+            <a href="af-data.html">AF Data</a>
+            <a href="af-issues.html">AF:s Problem</a>
+            <a href="tech.html">Tech & Modeller</a>
+            <a href="algoritmen.html">Algoritmen</a>
+            <a href="research.html" class="active">Forskning</a>
+            <a href="demo.html">Live Demo</a>
+            <a href="cityiq.html">CityIQ</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Forskningsgrund</h1>
+            <p>NordiqFlow bygger pa decennier av akademisk forskning inom arbetsmarknadsekonomi, matchningsteori, och maskininlarning.</p>
+        </div>
+    </section>
+
+    <!-- Stats Overview -->
+    <section class="section white">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Nobelpris i ekonomi</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Akademiska kallor</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">60 ar</div>
+                    <div class="stat-label">Forskningshistorik</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Oppen data</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nobel Prize Economics -->
+    <section class="section gray">
+        <div class="container">
+            <div class="category-header">
+                <div class="category-icon econ">&#127942;</div>
+                <h2>Nobelpristagande Ekonomisk Teori</h2>
+            </div>
+
+            <div class="paper-card nobel">
+                <div class="paper-title">Job Search, the Duration of Unemployment, and the Phillips Curve</div>
+                <div class="paper-authors">Peter A. Diamond, Dale T. Mortensen, Christopher A. Pissarides</div>
+                <div class="paper-venue">American Economic Review | Nobel Prize 2010</div>
+                <div class="paper-abstract">
+                    DMP-modellen forklarar varfor det kan finnas hog arbetsloshet och manga lediga jobb samtidigt.
+                    Matchningsfunktionen M = m(U, V) beskriver hur effektivt arbetssokande (U) och vakanser (V)
+                    paras ihop. Friktioner i sokning leder till ineffektivitet som kan reduceras genom battre
+                    informationssystem.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Var karnhypotes ar att forbattra m() genom att reducera informationsasymmetri.
+                        Genom att avsloja dolda karriarvagar som AF:s data redan innehaller kan vi
+                        minska sokfriktioner och forbattra matchningseffektiviteten.
+                    </p>
+                </div>
+                <a href="https://www.nobelprize.org/prizes/economic-sciences/2010/summary/" target="_blank" class="paper-link">
+                    Las mer pa nobelprize.org &rarr;
+                </a>
+            </div>
+
+            <div class="paper-card nobel">
+                <div class="paper-title">Human Capital: A Theoretical and Empirical Analysis</div>
+                <div class="paper-authors">Gary S. Becker</div>
+                <div class="paper-venue">University of Chicago Press, 1964 | Nobel Prize 1992</div>
+                <div class="paper-abstract">
+                    Becker introducerade distinktionen mellan generellt humankapital (vardefullt for manga
+                    arbetsgivare) och specifikt humankapital (vardefullt endast for en arbetsgivare).
+                    Jobbtitlar tenderar att betona specifikt kapital, vilket underskattar arbetarens
+                    faktiska transfererbara kompetenser.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Vi extraherar "skill atoms" for att avsloja transfererbart generellt kapital.
+                        En "Butikschef" har kompetenser (ledarskap, kundservice, lagerhantering) som ar
+                        vardefulla i manga branscher - inte bara detaljhandel.
+                    </p>
+                </div>
+                <a href="https://www.nobelprize.org/prizes/economic-sciences/1992/becker/facts/" target="_blank" class="paper-link">
+                    Las mer pa nobelprize.org &rarr;
+                </a>
+            </div>
+
+            <div class="paper-card nobel">
+                <div class="paper-title">Job Market Signaling</div>
+                <div class="paper-authors">A. Michael Spence</div>
+                <div class="paper-venue">Quarterly Journal of Economics, 1973 | Nobel Prize 2001</div>
+                <div class="paper-abstract">
+                    Spence visade att utbildning och jobbtitlar fungerar som "signaler" av produktivitet
+                    till arbetsgivare. Men dessa signaler ar ofta brusiga - en "Marketing Manager" kan
+                    betyda SEO-specialist pa ett foretag och fullstack-marknadsforing pa ett annat.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Vi ersatter brusiga titelsignaler med preciserade kompetens-profiler.
+                        Istallet for att matcha pa "Marketing Manager" matchar vi pa specifika
+                        concept_ids som "digital_marketing", "seo", "content_strategy".
+                    </p>
+                </div>
+                <a href="https://www.nobelprize.org/prizes/economic-sciences/2001/spence/facts/" target="_blank" class="paper-link">
+                    Las mer pa nobelprize.org &rarr;
+                </a>
+            </div>
+
+            <div class="quote-box">
+                <div class="quote-text">
+                    "The fundamental problem is not the shortage of jobs or workers, but that matching
+                    is costly and takes time. Improving the matching technology can reduce unemployment
+                    and increase welfare."
+                </div>
+                <div class="quote-author">- Christopher Pissarides, Nobel Lecture 2010</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Labor Market Research -->
+    <section class="section white">
+        <div class="container">
+            <div class="category-header">
+                <div class="category-icon labor">&#128188;</div>
+                <h2>Arbetsmarknadsforskning</h2>
+            </div>
+
+            <div class="paper-card seminal">
+                <div class="paper-title">The Skill Content of Recent Technological Change</div>
+                <div class="paper-authors">David H. Autor, Frank Levy, Richard J. Murnane</div>
+                <div class="paper-venue">Quarterly Journal of Economics, 2003</div>
+                <div class="paper-abstract">
+                    Denna inflytelserika artikel introducerade ALM-hypotesen: automatisering ersatter
+                    rutinarbete (bade manuellt och kognitivt) men kompletterar icke-rutinarbete.
+                    Forfattarna utvecklade en taxonomi for att klassificera jobb efter kompetensinnehall.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Vi anvander en liknande taxonomi-approach via AF:s SSYK-klassificering.
+                        Var prediktion av framtida efterfragan tar hansyn till automatiseringsrisk
+                        baserat pa yrkens "rutininnehall".
+                    </p>
+                </div>
+                <a href="https://economics.mit.edu/sites/default/files/publications/skill-content-of-recent-technological-change.pdf" target="_blank" class="paper-link">
+                    Las artikeln (PDF) &rarr;
+                </a>
+            </div>
+
+            <div class="paper-card seminal">
+                <div class="paper-title">Occupational Mobility and Career Dynamics</div>
+                <div class="paper-authors">Fatih Guvenen, Burhanettin Kuruscu, Satoshi Tanaka, David Wiczer</div>
+                <div class="paper-venue">Journal of Political Economy, 2020</div>
+                <div class="paper-abstract">
+                    Forfattarna analyserar livslanga karriartrajektorier och visar att majoriteten av
+                    loneokningar sker vid yrkesbyte, inte inom samma yrke. De beraknar att
+                    "skill mismatch" kostar amerikanska arbetare 5-10% av livsinkomsten.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Detta underbygger var karnprodukt: att hjlpa manniskor hitta ratt karriarbyte.
+                        Genom att minska skill mismatch kan vi potentiellt oka individers livsinkomst
+                        betydligt.
+                    </p>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">Skills-Based Hiring: The Long-Term Rise of Low-Credential Workers</div>
+                <div class="paper-authors">Joseph B. Fuller, Christina Langer, Matt Sigelman</div>
+                <div class="paper-venue">Harvard Business School Working Paper, 2022</div>
+                <div class="paper-abstract">
+                    Forskningen visar att foretag i okande grad gar mot "skills-based hiring" -
+                    att anstalla baserat pa kompetenser snarare an examensbevis. 46% av
+                    "middle-skill" jobb i USA har tagit bort examenskrav sedan 2017.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Trenden mot skills-based hiring gor var produkt mer relevant over tid.
+                        Nar foretag fokuserar pa kompetenser snarare an titlar blir var
+                        kompetens-matchning allt viktigare.
+                    </p>
+                </div>
+                <a href="https://www.hbs.edu/managing-the-future-of-work/research/Pages/default.aspx" target="_blank" class="paper-link">
+                    Harvard Managing the Future of Work &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Machine Learning Papers -->
+    <section class="section gray">
+        <div class="container">
+            <div class="category-header">
+                <div class="category-icon ml">&#129302;</div>
+                <h2>Maskininlarning & NLP</h2>
+            </div>
+
+            <div class="paper-card ml">
+                <div class="paper-title">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</div>
+                <div class="paper-authors">Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova</div>
+                <div class="paper-venue">NAACL-HLT 2019 | Google AI Language</div>
+                <div class="paper-abstract">
+                    BERT revolutionerade NLP genom att introducera bidirektionell kontextforstaelse.
+                    Modellen far state-of-the-art resultat pa en rad NLP-uppgifter inklusive
+                    named entity recognition och textklassificering.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Arbetsformedlingens JobAd Enrichments API anvander BERT-liknande modeller
+                        for att extrahera kompetenser fran ostrukturerad text. Vi utnyttjar detta
+                        for CV-parsing och jobbannons-analys.
+                    </p>
+                </div>
+                <a href="https://arxiv.org/abs/1810.04805" target="_blank" class="paper-link">
+                    arXiv:1810.04805 &rarr;
+                </a>
+            </div>
+
+            <div class="paper-card ml">
+                <div class="paper-title">node2vec: Scalable Feature Learning for Networks</div>
+                <div class="paper-authors">Aditya Grover, Jure Leskovec</div>
+                <div class="paper-venue">KDD 2016 | Stanford University</div>
+                <div class="paper-abstract">
+                    node2vec introducerar en algoritm for att lara sig vektor-representationer
+                    av noder i en graf. Genom biased random walks kan modellen fanga bade
+                    lokal (BFS) och global (DFS) grafstruktur.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Vi anvander node2vec-liknande embeddings for att representera yrken
+                        i vektorrummet. Detta mojliggor berakning av "semantisk narhets mellan
+                        yrken som inte har direkta substitutability-relationer.
+                    </p>
+                </div>
+                <a href="https://arxiv.org/abs/1607.00653" target="_blank" class="paper-link">
+                    arXiv:1607.00653 &rarr;
+                </a>
+            </div>
+
+            <div class="paper-card ml">
+                <div class="paper-title">Graph Neural Networks: A Review of Methods and Applications</div>
+                <div class="paper-authors">Jie Zhou, Ganqu Cui, Shengding Hu, et al.</div>
+                <div class="paper-venue">AI Open, 2020</div>
+                <div class="paper-abstract">
+                    En omfattande oversikt av graf-neurala natverk (GNN) och deras tillampningar.
+                    GNN:er kan lara sig nodrepresentationer som tar hansyn till grafstruktur,
+                    vilket ar idealiskt for rekommendationssystem.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Karriargrafen (yrken som noder, overgangsmojligheter som kanter) ar
+                        idealisk for GNN-baserad rekommendation. Framtida versioner av
+                        NordiqFlow kan anvanda GNN for battre personalisering.
+                    </p>
+                </div>
+                <a href="https://arxiv.org/abs/1812.08434" target="_blank" class="paper-link">
+                    arXiv:1812.08434 &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Swedish Research -->
+    <section class="section white">
+        <div class="container">
+            <div class="category-header">
+                <div class="category-icon sweden">&#127480;&#127466;</div>
+                <h2>Svensk Forskning & Data</h2>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">JobTech Development - Oppna Data for Arbetsmarknaden</div>
+                <div class="paper-authors">Arbetsformedlingen</div>
+                <div class="paper-venue">jobtechdev.se | Fortlopande</div>
+                <div class="paper-abstract">
+                    JobTech Development ar Arbetsformedlingens initiativ for att oppna upp
+                    arbetsmarknadsdata. De tillhandahaller API:er for taxonomi, substitutability,
+                    jobbsokning, och NLP-baserad textanalys - gratis for alla.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Detta ar var huvudsakliga datakalla. Vi bygger pa AF:s 51,000+
+                        forberaknade karriaroverganger och 10,000+ klassificerade yrken.
+                        Utan JobTech skulle NordiqFlow inte vara mojligt.
+                    </p>
+                </div>
+                <a href="https://jobtechdev.se/" target="_blank" class="paper-link">
+                    Besok jobtechdev.se &rarr;
+                </a>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">Yrkesbarometern - Prognoser for 200 Yrken</div>
+                <div class="paper-authors">Arbetsformedlingen</div>
+                <div class="paper-venue">arbetsformedlingen.se/yrkesbarometern | Arlig</div>
+                <div class="paper-abstract">
+                    Yrkesbarometern ger 5-ars prognoser for efterfragan pa 200+ yrken i Sverige,
+                    uppdelat pa region och utbildningsniva. Data samlas in genom intervjuer
+                    med arbetsgivare och statistisk analys.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        Vi integrerar Yrkesbarometerns prognoser i var scoring-formel (D-komponenten).
+                        Detta saker att vi rekommenderar yrken med faktisk efterfragan,
+                        inte bara hog kompetensoverlapp.
+                    </p>
+                </div>
+                <a href="https://arbetsformedlingen.se/for-arbetssokande/yrken-och-framtid/yrkesbarometern" target="_blank" class="paper-link">
+                    Utforska Yrkesbarometern &rarr;
+                </a>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">SSYK 2012 - Standard for Svensk Yrkesklassificering</div>
+                <div class="paper-authors">Statistiska Centralbyran (SCB)</div>
+                <div class="paper-venue">SCB MIS 2012:1</div>
+                <div class="paper-abstract">
+                    SSYK ar den svenska versionen av internationella ISCO-standarden.
+                    Den klassificerar alla yrken i en 4-niva hierarki med 430 detaljerade
+                    yrkeskategorier pa niva 4.
+                </div>
+                <div class="paper-relevance">
+                    <h4>Relevans for NordiqFlow</h4>
+                    <p>
+                        SSYK-koderna ar ryggarden i var taxonomi. De mojliggor hierarkisk
+                        expansion och koppling till internationella standarder (ISCO, ESCO)
+                        for framtida EU-expansion.
+                    </p>
+                </div>
+                <a href="https://www.scb.se/dokumentation/klassifikationer-och-standarder/standard-for-svensk-yrkesklassificering-ssyk/" target="_blank" class="paper-link">
+                    SCB SSYK-dokumentation &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Timeline -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Forskningens Tidslinje</h2>
+            <p class="section-subtitle">
+                Fran grundlaggande ekonomisk teori till modern AI-tillampning.
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1964</div>
+                    <div class="timeline-content">
+                        <h4>Human Capital Theory</h4>
+                        <p>Gary Becker publicerar "Human Capital" - grundar teorin om generellt vs specifikt humankapital.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1973</div>
+                    <div class="timeline-content">
+                        <h4>Signaling Theory</h4>
+                        <p>Michael Spence visar att jobbtitlar och utbildning ar brusiga signaler av produktivitet.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1979</div>
+                    <div class="timeline-content">
+                        <h4>DMP-modellen borjar ta form</h4>
+                        <p>Diamond, Mortensen och Pissarides utvecklar matchningsteori for arbetsmarknader.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2003</div>
+                    <div class="timeline-content">
+                        <h4>Skill-Based Technical Change</h4>
+                        <p>Autor, Levy & Murnane publicerar inflytelserik artikel om automatisering och kompetenser.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2010</div>
+                    <div class="timeline-content">
+                        <h4>Nobel Prize i Ekonomi</h4>
+                        <p>DMP tilldelas Nobelpriset "for their analysis of markets with search frictions".</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-content">
+                        <h4>BERT Revolutionerar NLP</h4>
+                        <p>Google publicerar BERT - mojliggor avancerad textforstaelse for kompetensextraktion.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h4>JobTech Development lanseras</h4>
+                        <p>AF oppnar upp sina API:er - 51,000+ karriaroverganger blir tillgangliga.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <h4>NordiqFlow</h4>
+                        <p>Vi kombinerar 60 ar av forskning med modern AI for att forbattra svensk arbetsmarknad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="algoritmen.html">Algoritmen</a> |
+                <a href="tech.html">Tech & Modeller</a>
+            </p>
+            <p style="margin-top: 15px; opacity: 0.7; font-size: 0.9em;">
+                Akademisk bakgrund: ORCID <a href="https://orcid.org/0009-0004-9742-8608" target="_blank">0009-0004-9742-8608</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
