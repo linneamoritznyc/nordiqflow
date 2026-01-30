@@ -75,7 +75,7 @@
 
         /* Hero */
         .hero {
-            background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
             color: white;
             padding: 80px 20px;
             text-align: center;
@@ -132,7 +132,7 @@
         }
 
         .problem-header {
-            background: #e74c3c;
+            background: #e67e22;
             color: white;
             padding: 25px 30px;
             display: flex;
@@ -206,8 +206,8 @@
         }
 
         .comparison-box.bad {
-            background: #fdf2f2;
-            border: 2px solid #e74c3c;
+            background: #fef9f0;
+            border: 2px solid #e67e22;
         }
 
         .comparison-box.good {
@@ -221,7 +221,7 @@
         }
 
         .comparison-box.bad h4 {
-            color: #c0392b;
+            color: #d35400;
         }
 
         .comparison-box.good h4 {
@@ -266,8 +266,27 @@
         .impact-stat .number {
             font-size: 3em;
             font-weight: bold;
-            color: #e74c3c;
+            color: #e67e22;
             margin-bottom: 10px;
+        }
+
+        /* Source links */
+        .source-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #667eea;
+            text-decoration: none;
+            border: 1px solid #e0e0e0;
+        }
+
+        .source-link:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
         }
 
         .impact-stat .label {
@@ -470,6 +489,10 @@
                             </ul>
                         </div>
                     </div>
+
+                    <a href="https://jobtechdev.se/docs/apis/taxonomy/" target="_blank" class="source-link">
+                        📚 Källa: JobTech Taxonomy API Documentation
+                    </a>
                 </div>
             </div>
 
@@ -501,6 +524,10 @@
                         Arbetssökande måste gissa vilka nyckelord arbetsgivare använder.
                         Arbetsgivare missar kandidater som har rätt kompetenser men "fel" ordval.
                     </p>
+
+                    <a href="https://jobtechdev.se/docs/apis/jobad-enrichments/" target="_blank" class="source-link">
+                        📚 Källa: JobAd Enrichments API - skill extraction
+                    </a>
                 </div>
             </div>
 
@@ -534,6 +561,10 @@
                         De missar tusentals jobb de faktiskt skulle kunna ta – och ofta med
                         högre lön och bättre framtidsutsikter.
                     </p>
+
+                    <a href="https://taxonomy.api.jobtechdev.se/v1/taxonomy/specific/relations/substitutability-relations-between-occupations" target="_blank" class="source-link">
+                        📚 Källa: AF Substitutability Relations API (51,000+ relationer)
+                    </a>
                 </div>
             </div>
 
@@ -575,6 +606,10 @@
                         Arbetssökande har ingen aning om hur nära de är ett jobb, eller vad
                         de behöver lära sig för att kvalificera sig. De sitter i mörker.
                     </p>
+
+                    <a href="https://platsbanken.arbetsformedlingen.se/" target="_blank" class="source-link">
+                        📚 Källa: Platsbanken.se - testa själv sökfunktionen
+                    </a>
                 </div>
             </div>
 
@@ -605,6 +640,10 @@
                         Folk tar jobb i branscher på nedgång. De missar möjligheter i
                         tillväxtbranscher. Strukturell arbetslöshet fortsätter.
                     </p>
+
+                    <a href="https://arbetsformedlingen.se/for-arbetssokande/yrken-och-framtid/yrkesbarometern" target="_blank" class="source-link">
+                        📚 Källa: Arbetsförmedlingens Yrkesbarometer
+                    </a>
                 </div>
             </div>
 
