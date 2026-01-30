@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Problem med Arbetsförmedlingen</title>
+    <meta name="description" content="Fem huvudproblem med Arbetsförmedlingens databaser och matchningssystem - och hur NordiqFlow löser dem.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            background: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .intro-section p {
+            font-size: 1.15em;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-section .metaphor {
+            font-style: italic;
+            color: #667eea;
+            font-size: 1.3em;
+            margin-top: 30px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+            text-align: left;
+        }
+
+        /* Problem Cards */
+        .problems-section {
+            padding: 60px 20px;
+        }
+
+        .problem-card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .problem-header {
+            background: #e74c3c;
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .problem-number {
+            background: rgba(255,255,255,0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .problem-header h2 {
+            font-size: 1.4em;
+        }
+
+        .problem-content {
+            padding: 30px;
+        }
+
+        .problem-content h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .problem-content p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #fef9e7;
+            border: 1px solid #f1c40f;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example-box h4 {
+            color: #b7950b;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .example-box p {
+            color: #666;
+            margin: 0;
+        }
+
+        /* Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-box {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .comparison-box.bad {
+            background: #fdf2f2;
+            border: 2px solid #e74c3c;
+        }
+
+        .comparison-box.good {
+            background: #f0fff4;
+            border: 2px solid #27ae60;
+        }
+
+        .comparison-box h4 {
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-box.bad h4 {
+            color: #c0392b;
+        }
+
+        .comparison-box.good h4 {
+            color: #1e8449;
+        }
+
+        .comparison-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .comparison-box li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        /* Impact Stats */
+        .impact-section {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .impact-section h2 {
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .impact-stat {
+            padding: 20px;
+        }
+
+        .impact-stat .number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .impact-stat .label {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .solution-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .solution-card {
+            background: #f0fff4;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .solution-card h3 {
+            color: #1e8449;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .solution-card p {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html">For Investors</a>
+            <a href="af-issues.html" class="active">AF:s Problem</a>
+            <a href="tech.html">Tech & Modeller</a>
+            <a href="cityiq.html">CityIQ</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>5 Problem med Arbetsförmedlingens System</h1>
+            <p>Arbetsförmedlingen sitter på fantastisk data. Men de använder den inte.</p>
+        </div>
+    </section>
+
+    <section class="intro-section">
+        <div class="container">
+            <p>
+                Arbetsförmedlingen har investerat hundratals miljoner i att bygga Sveriges mest kompletta
+                arbetsmarknadsdatabas. De har 60+ datasets, 10+ års historik, och förberäknade
+                karriärövergångar mellan yrken. Men för vanliga användare? Platsbanken fungerar
+                fortfarande som en enkel jobboard från 2005.
+            </p>
+            <p class="metaphor">
+                "Arbetsförmedlingen har en Ferrari-motor men använder den för att driva en cykel."
+            </p>
+        </div>
+    </section>
+
+    <section class="problems-section">
+        <div class="container">
+
+            <!-- Problem 1 -->
+            <div class="problem-card">
+                <div class="problem-header">
+                    <div class="problem-number">1</div>
+                    <h2>Exakt keyword-matchning</h2>
+                </div>
+                <div class="problem-content">
+                    <h3>Problemet</h3>
+                    <p>
+                        Platsbanken matchar på exakta nyckelord, inte semantisk betydelse.
+                        "Agile Coach" och "Scrum Master" behandlas som helt olika yrken,
+                        trots att de har 90%+ kompetensöverlappar.
+                    </p>
+
+                    <div class="example-box">
+                        <h4>Verkligt exempel</h4>
+                        <p>
+                            Sök "Java-utvecklare" → Får inte se Python-jobb, trots att övergången
+                            kräver minimal omskolning. Systemet förstår inte att programmeringsspråk
+                            är utbytbara skills.
+                        </p>
+                    </div>
+
+                    <div class="comparison">
+                        <div class="comparison-box bad">
+                            <h4>Dagens Platsbanken</h4>
+                            <ul>
+                                <li>"Agile Coach" ≠ "Scrum Master"</li>
+                                <li>"Java" ≠ "Python"</li>
+                                <li>"Butikschef" ≠ "Verksamhetsledare"</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-box good">
+                            <h4>NordiqFlow</h4>
+                            <ul>
+                                <li>"Agile Coach" ≈ "Scrum Master" (90%)</li>
+                                <li>"Java" → "Python" (lätt övergång)</li>
+                                <li>"Butikschef" → "Verksamhetsledare" (85%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="problem-card">
+                <div class="problem-header">
+                    <div class="problem-number">2</div>
+                    <h2>Ingen skill-inferens</h2>
+                </div>
+                <div class="problem-content">
+                    <h3>Problemet</h3>
+                    <p>
+                        Om du har "Python" på ditt CV men inte "programmering", så förstår inte
+                        systemet att du kan programmera. Det finns ingen taxonomi-traversering
+                        som kopplar specifika skills till generella kategorier.
+                    </p>
+
+                    <div class="example-box">
+                        <h4>Verkligt exempel</h4>
+                        <p>
+                            Du har "Google Ads" och "Facebook Ads" på ditt CV. Ett jobb kräver
+                            "Digital marknadsföring". Ingen match – trots att du uppenbarligen
+                            har kompetensen.
+                        </p>
+                    </div>
+
+                    <h3>Konsekvensen</h3>
+                    <p>
+                        Arbetssökande måste gissa vilka nyckelord arbetsgivare använder.
+                        Arbetsgivare missar kandidater som har rätt kompetenser men "fel" ordval.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="problem-card">
+                <div class="problem-header">
+                    <div class="problem-number">3</div>
+                    <h2>Ingen karriärvägsmedvetenhet</h2>
+                </div>
+                <div class="problem-content">
+                    <h3>Problemet</h3>
+                    <p>
+                        Arbetsförmedlingen har faktiskt förberäknade "substitutability relations"
+                        – data som visar vilka yrken som är substitut för varandra (t.ex.
+                        Butikschef → Verksamhetsledare inom vård: 75% substitutability).
+                        Men denna data exponeras inte för användare.
+                    </p>
+
+                    <div class="example-box">
+                        <h4>Gömd data</h4>
+                        <p>
+                            Filen <code>substitutability-relations-between-occupations.json</code>
+                            innehåller 51,000+ förberäknade karriärövergångar. Den är publik via
+                            API, men ingen frontend visar den.
+                        </p>
+                    </div>
+
+                    <h3>Konsekvensen</h3>
+                    <p>
+                        Arbetssökande ser bara jobb som matchar deras nuvarande titel.
+                        De missar tusentals jobb de faktiskt skulle kunna ta – och ofta med
+                        högre lön och bättre framtidsutsikter.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Problem 4 -->
+            <div class="problem-card">
+                <div class="problem-header">
+                    <div class="problem-number">4</div>
+                    <h2>Binära resultat (match/no-match)</h2>
+                </div>
+                <div class="problem-content">
+                    <h3>Problemet</h3>
+                    <p>
+                        Antingen matchar du ett jobb, eller så gör du det inte. Det finns
+                        inga partiella matchningar, inga gap-analyser, inga "du uppfyller
+                        85% av kraven och saknar dessa 3 kompetenser".
+                    </p>
+
+                    <div class="comparison">
+                        <div class="comparison-box bad">
+                            <h4>Dagens resultat</h4>
+                            <ul>
+                                <li>Jobb A: Visas</li>
+                                <li>Jobb B: Visas inte</li>
+                                <li>Ingen förklaring</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-box good">
+                            <h4>NordiqFlow-resultat</h4>
+                            <ul>
+                                <li>Jobb A: 95% match</li>
+                                <li>Jobb B: 72% match (saknar: Excel, projektledning)</li>
+                                <li>Jobb C: 68% match (saknar: 1 YH-kurs)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Konsekvensen</h3>
+                    <p>
+                        Arbetssökande har ingen aning om hur nära de är ett jobb, eller vad
+                        de behöver lära sig för att kvalificera sig. De sitter i mörker.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Problem 5 -->
+            <div class="problem-card">
+                <div class="problem-header">
+                    <div class="problem-number">5</div>
+                    <h2>Ingen framtidsanalys</h2>
+                </div>
+                <div class="problem-content">
+                    <h3>Problemet</h3>
+                    <p>
+                        Platsbanken visar jobb som finns nu. Men den varnar dig inte om att
+                        ditt yrke har fallande efterfrågan, eller att ett närliggande yrke
+                        har exploderande tillväxt och bättre lön.
+                    </p>
+
+                    <div class="example-box">
+                        <h4>Gömd data</h4>
+                        <p>
+                            Arbetsförmedlingens "Yrkesbarometer" har 5-års efterfrågeprognoser
+                            för varje yrke. Men denna data integreras inte i jobbsökningen.
+                        </p>
+                    </div>
+
+                    <h3>Konsekvensen</h3>
+                    <p>
+                        Folk tar jobb i branscher på nedgång. De missar möjligheter i
+                        tillväxtbranscher. Strukturell arbetslöshet fortsätter.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="impact-section">
+        <div class="container">
+            <h2>Konsekvenserna i siffror</h2>
+            <div class="impact-grid">
+                <div class="impact-stat">
+                    <div class="number">100k+</div>
+                    <div class="label">Ofyllda jobb i Sverige</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="number">7.5%</div>
+                    <div class="label">Arbetslöshet</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="number">51k</div>
+                    <div class="label">Karriärvägar som inte visas</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution-section">
+        <div class="container">
+            <h2>Hur NordiqFlow löser detta</h2>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <h3>Semantisk matchning</h3>
+                    <p>
+                        Vi matchar på concept_id, inte nyckelord. "Agile Coach" och
+                        "Scrum Master" kopplas automatiskt via taxonomin.
+                    </p>
+                </div>
+                <div class="solution-card">
+                    <h3>Taxonomi-traversering</h3>
+                    <p>
+                        "Google Ads" → "Digital marknadsföring" automatiskt.
+                        Hierarkisk expansion av alla kompetenser.
+                    </p>
+                </div>
+                <div class="solution-card">
+                    <h3>Karriärvägsexponering</h3>
+                    <p>
+                        Vi visar AF:s substitutability-data. Se alla 51,000+
+                        möjliga övergångar baserat på ditt nuvarande yrke.
+                    </p>
+                </div>
+                <div class="solution-card">
+                    <h3>Gap-analys</h3>
+                    <p>
+                        "85% match. Saknar: projektledning (YH-kurs 400h)."
+                        Konkret feedback på varje möjlig karriärväg.
+                    </p>
+                </div>
+                <div class="solution-card">
+                    <h3>Efterfrågeintegration</h3>
+                    <p>
+                        Yrkesbarometer-data integrerad. Se 5-års prognos
+                        för varje rekommenderat yrke.
+                    </p>
+                </div>
+                <div class="solution-card">
+                    <h3>Lönedelta</h3>
+                    <p>
+                        "+7,000 kr/månad" – se potentiell löneförändring
+                        för varje karriärväg baserat på faktisk statistik.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Se skillnaden själv</h2>
+            <p>TalentFlow visar vad Platsbanken borde göra – men inte gör.</p>
+            <a href="index.html" class="cta-button">Testa TalentFlow</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="tech.html">Läs mer om tekniken</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

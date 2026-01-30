@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Tech & Ekonomiska Modeller</title>
+    <meta name="description" content="Teknisk förklaring av NordiqFlow: tre-lagers matchningsalgoritm, ekonomiska teorier, och ML-arkitektur.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2c3e50 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section.white {
+            background: white;
+        }
+
+        .section.gray {
+            background: #f8f9fa;
+        }
+
+        .section.dark {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .section.dark .section-title {
+            color: white;
+        }
+
+        /* Algorithm Flow */
+        .algorithm-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .layer-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .layer-header {
+            padding: 20px 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .layer-header.l1 { background: #3498db; }
+        .layer-header.l2 { background: #9b59b6; }
+        .layer-header.l3 { background: #27ae60; }
+
+        .layer-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .layer-header h3 {
+            font-size: 1.3em;
+        }
+
+        .layer-content {
+            padding: 25px 30px;
+        }
+
+        .layer-content p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .layer-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .layer-content li {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1a1a2e;
+            color: #a8e6cf;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .code-block .comment {
+            color: #6c757d;
+        }
+
+        .code-block .keyword {
+            color: #ff6b6b;
+        }
+
+        .code-block .string {
+            color: #ffd93d;
+        }
+
+        .code-block .number {
+            color: #4ecdc4;
+        }
+
+        /* Theory Cards */
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .theory-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-top: 4px solid #667eea;
+        }
+
+        .theory-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .theory-card .year {
+            color: #667eea;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .theory-card p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .theory-card .application {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .theory-card .application h4 {
+            color: #667eea;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .theory-card .application p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Data Architecture */
+        .data-architecture {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .data-architecture h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table code {
+            background: #f0f4ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* Scoring Formula */
+        .formula-box {
+            background: #1a1a2e;
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .formula-box h3 {
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .formula {
+            font-family: 'Georgia', serif;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .formula-legend {
+            text-align: left;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-item .weight {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .legend-item .desc {
+            color: #ccc;
+            font-size: 0.95em;
+        }
+
+        /* Visual Diagram */
+        .diagram-section {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .diagram-section h3 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .flow-box {
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .flow-arrow {
+            font-size: 1.5em;
+            color: #667eea;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .formula {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html">For Investors</a>
+            <a href="af-issues.html">AF:s Problem</a>
+            <a href="tech.html" class="active">Tech & Modeller</a>
+            <a href="cityiq.html">CityIQ</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Tech & Ekonomiska Modeller</h1>
+            <p>Hur NordiqFlow fungerar under huven: algoritmer, dataarkitektur, och den ekonomiska teorin bakom.</p>
+        </div>
+    </section>
+
+    <!-- Algorithm Section -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Tre-Lagers Matchningsalgoritm</h2>
+
+            <div class="diagram-section">
+                <h3>Dataflöde</h3>
+                <div class="flow-diagram">
+                    <div class="flow-box">CV / Profil</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">NLP Extraktion</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">Concept IDs</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">Graf-Traversering</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">Rankade Resultat</div>
+                </div>
+            </div>
+
+            <div class="algorithm-flow">
+                <!-- Layer 1 -->
+                <div class="layer-card">
+                    <div class="layer-header l1">
+                        <div class="layer-number">1</div>
+                        <h3>Semantisk Matchning</h3>
+                    </div>
+                    <div class="layer-content">
+                        <p>
+                            Extraherar kompetenser från ostrukturerad text (CV:er, jobbeskrivningar)
+                            och mappar dem till Arbetsförmedlingens taxonomi-ID:n.
+                        </p>
+                        <ul>
+                            <li>Använder AF:s JobAd Enrichments API för NLP-extraktion</li>
+                            <li>Matchar på <code>concept_id</code>, inte textsträngar</li>
+                            <li>"Agile Coach" och "Scrum Master" → samma concept_id</li>
+                        </ul>
+                        <div class="code-block">
+<span class="comment"># Extrahera kompetenser från CV-text</span>
+response = enrichments_api.extract(text=cv_text)
+skills = [s[<span class="string">'concept_id'</span>] <span class="keyword">for</span> s <span class="keyword">in</span> response[<span class="string">'skills'</span>]]
+<span class="comment"># skills = ['KDZ_123', 'ABC_456', ...]  # Taxonomi-IDs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 2 -->
+                <div class="layer-card">
+                    <div class="layer-header l2">
+                        <div class="layer-number">2</div>
+                        <h3>Graf-Traversering</h3>
+                    </div>
+                    <div class="layer-content">
+                        <p>
+                            Traverserar Arbetsförmedlingens substitutability-graf för att hitta
+                            karriärövergångar. BFS-algoritm med viktade kanter.
+                        </p>
+                        <ul>
+                            <li>51,000+ förberäknade yrkes-till-yrkes-relationer</li>
+                            <li>Substitutability-nivåer: Hög (75), Medium (50), Låg (25)</li>
+                            <li>Expanderar kandidatens skills hierarkiskt (Python → Programmering)</li>
+                        </ul>
+                        <div class="code-block">
+<span class="comment"># Hitta substitutability för ett yrke</span>
+transitions = substitutability_graph.get_transitions(
+    occupation_id=<span class="string">'butikschef_123'</span>,
+    min_level=<span class="number">50</span>  <span class="comment"># Minst medium substitutability</span>
+)
+<span class="comment"># → [{'target': 'verksamhetsledare_456', 'level': 75}, ...]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 3 -->
+                <div class="layer-card">
+                    <div class="layer-header l3">
+                        <div class="layer-number">3</div>
+                        <h3>Prediktiv Scoring</h3>
+                    </div>
+                    <div class="layer-content">
+                        <p>
+                            Kombinerar matchningsdata med framtidsprognoser och lönestatistik
+                            för att ranka karriärvägar.
+                        </p>
+                        <ul>
+                            <li>Integrerar Yrkesbarometerns 5-års efterfrågeprognos</li>
+                            <li>Beräknar lönedelta mellan nuvarande och målyrke</li>
+                            <li>Viktad composite score för slutrankning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scoring Formula -->
+            <div class="formula-box">
+                <h3>Scoring-Formel</h3>
+                <div class="formula">
+                    Score = 0.30×S + 0.30×M + 0.20×D + 0.10×K + 0.10×L
+                </div>
+                <div class="formula-legend">
+                    <div class="legend-item">
+                        <span class="weight">30%</span>
+                        <span class="desc">S = Substitutability (AF:s data)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="weight">30%</span>
+                        <span class="desc">M = Skill Match %</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="weight">20%</span>
+                        <span class="desc">D = Efterfrågeprognos (Yrkesbarometer)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="weight">10%</span>
+                        <span class="desc">K = Nuvarande marknadssituation</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="weight">10%</span>
+                        <span class="desc">L = Lönedelta (incitament)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Architecture -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Dataarkitektur</h2>
+
+            <div class="data-architecture">
+                <h3>Arbetsförmedlingens API:er vi använder</h3>
+                <table class="data-table">
+                    <tr>
+                        <th>API</th>
+                        <th>Data</th>
+                        <th>Användning</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Taxonomy API</strong></td>
+                        <td>10,000 yrken, 8,000 skills</td>
+                        <td>Semantisk matchning, hierarki-expansion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Substitutability</strong></td>
+                        <td>51,000+ övergångar</td>
+                        <td>Karriärvägsrekommendationer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JobSearch API</strong></td>
+                        <td>Real-time jobblistningar</td>
+                        <td>Marknadssituation, efterfrågan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Enrichments API</strong></td>
+                        <td>NLP-extraktion</td>
+                        <td>CV-parsing, skill-extraktion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Yrkesbarometer</strong></td>
+                        <td>5-års prognoser</td>
+                        <td>Efterfrågeprediktion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Historical Ads</strong></td>
+                        <td>10+ års jobbdata</td>
+                        <td>Trendanalys, ML-träning</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="data-architecture">
+                <h3>Nyckel-Datasets</h3>
+                <table class="data-table">
+                    <tr>
+                        <th>Fil</th>
+                        <th>Storlek</th>
+                        <th>Innehåll</th>
+                    </tr>
+                    <tr>
+                        <td><code>substitutability-relations.json</code></td>
+                        <td>2.3 MB</td>
+                        <td>Karriärövergångar med substitutability-nivå</td>
+                    </tr>
+                    <tr>
+                        <td><code>concepts-and-relations.json</code></td>
+                        <td>34 MB</td>
+                        <td>Master-graf med alla relationer</td>
+                    </tr>
+                    <tr>
+                        <td><code>skills.json</code></td>
+                        <td>543 KB</td>
+                        <td>8,000 "skill atoms" med taxonomi</td>
+                    </tr>
+                    <tr>
+                        <td><code>ssyk-level-4.json</code></td>
+                        <td>150 KB</td>
+                        <td>430 svenska yrken (SSYK-4)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Economic Theory -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Ekonomisk Teori</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                NordiqFlow bygger på etablerad arbetsmarknadsteori, inklusive Nobel Prize-vinnande forskning.
+            </p>
+
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h3>Search & Matching Theory</h3>
+                    <div class="year">DMP-modellen | Nobel Prize 2010</div>
+                    <p>
+                        Förklarar varför arbetslöshet och lediga jobb existerar samtidigt.
+                        Matchningsfunktionen M = m(U, V) beskriver effektiviteten i att
+                        koppla ihop arbetssökande (U) med vakanser (V).
+                    </p>
+                    <div class="application">
+                        <h4>NordiqFlow-tillämpning</h4>
+                        <p>
+                            Vi förbättrar m() genom att reducera informationsasymmetri.
+                            Semantisk matchning minskar sökfriktioner.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Human Capital Theory</h3>
+                    <div class="year">Gary Becker | 1964</div>
+                    <p>
+                        Skiljer på generellt humankapital (värdefullt för många arbetsgivare)
+                        och specifikt (värdefullt för en). Jobbtitlar betonar specifikt kapital.
+                    </p>
+                    <div class="application">
+                        <h4>NordiqFlow-tillämpning</h4>
+                        <p>
+                            Vi extraherar "skill atoms" för att avslöja transfererbart
+                            generellt kapital. H = H_general + H_specific
+                        </p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Signaling Theory</h3>
+                    <div class="year">Michael Spence | Nobel 1973</div>
+                    <p>
+                        Jobbtitlar är "brusiga signaler" av produktivitet. "Marketing Manager"
+                        kan betyda SEO-specialist eller fullstack beroende på företag.
+                    </p>
+                    <div class="application">
+                        <h4>NordiqFlow-tillämpning</h4>
+                        <p>
+                            Ersätt brusig jobbtitel med preciserad skill-profil.
+                            I(produktivitet; skills) > I(produktivitet; titel)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Granularity Gap</h3>
+                    <div class="year">NordiqFlow Insight</div>
+                    <p>
+                        Arbetssökande beskriver skills specifikt ("Google Ads", "Python pandas").
+                        Jobbposter beskriver generellt ("Digital marknadsföring", "Dataanalys").
+                    </p>
+                    <div class="application">
+                        <h4>NordiqFlow-tillämpning</h4>
+                        <p>
+                            Hierarkisk taxonomi-traversering bryggar granularitetsnivåer
+                            automatiskt.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="section dark">
+        <div class="container">
+            <h2 class="section-title">Planerad Tech Stack</h2>
+            <div class="theory-grid">
+                <div class="theory-card" style="background: #2c3e50; border-top-color: #3498db;">
+                    <h3 style="color: white;">Backend</h3>
+                    <p style="color: #ccc;">
+                        <strong>Neo4j</strong> - Grafddatabas för taxonomi och relationer<br>
+                        <strong>FastAPI</strong> - Python API-layer<br>
+                        <strong>Pinecone/Weaviate</strong> - Vektorlagring för semantisk sökning
+                    </p>
+                </div>
+                <div class="theory-card" style="background: #2c3e50; border-top-color: #27ae60;">
+                    <h3 style="color: white;">Frontend</h3>
+                    <p style="color: #ccc;">
+                        <strong>Next.js</strong> - React-ramverk<br>
+                        <strong>D3.js</strong> - Interaktiva visualiseringar<br>
+                        <strong>Vercel</strong> - Deployment
+                    </p>
+                </div>
+                <div class="theory-card" style="background: #2c3e50; border-top-color: #9b59b6;">
+                    <h3 style="color: white;">Data Pipeline</h3>
+                    <p style="color: #ccc;">
+                        <strong>AF Open APIs</strong> - Datakälla<br>
+                        <strong>ClickHouse</strong> - Time-series för historik<br>
+                        <strong>Apache Airflow</strong> - Orkestrering
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="investors.html">För Investerare</a>
+            </p>
+            <p style="margin-top: 15px; opacity: 0.7; font-size: 0.9em;">
+                Akademisk bakgrund: ORCID <a href="https://orcid.org/0009-0004-9742-8608" target="_blank">0009-0004-9742-8608</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
