@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - For Investors | Almi & Science Park</title>
+    <meta name="description" content="Investeringsinformation om NordiqFlow - Sveriges första AI-drivna arbetsmarknadsplattform. För Almi, Science Park och innovationsfinansiärer.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section.white {
+            background: white;
+        }
+
+        .section.gray {
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .content-block {
+            margin-bottom: 40px;
+        }
+
+        .content-block h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .content-block p {
+            color: #555;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .content-block ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-block li {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+
+        .highlight-box h3 {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 2px solid #e0e0e0;
+        }
+
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 1em;
+        }
+
+        /* Revenue Table */
+        .revenue-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .revenue-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .revenue-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .revenue-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .revenue-table .total-row {
+            background: #f0f4ff;
+            font-weight: bold;
+        }
+
+        /* Timeline */
+        .timeline {
+            margin: 40px 0;
+        }
+
+        .timeline-item {
+            padding: 25px 30px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .timeline-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .timeline-item p {
+            color: #666;
+        }
+
+        /* Moat Section */
+        .moat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .moat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .moat-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .moat-card p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Contact CTA */
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .contact-section p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .contact-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html" class="active">For Investors</a>
+            <a href="af-issues.html">AF:s Problem</a>
+            <a href="tech.html">Tech & Modeller</a>
+            <a href="cityiq.html">CityIQ</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>For Investors</h1>
+            <p>NordiqFlow bygger Sveriges arbetsmarknads-OS. Här är varför det spelar roll.</p>
+        </div>
+    </section>
+
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Marknadsmöjligheten</h2>
+
+            <div class="highlight-box">
+                <h3>Sverige har ett paradoxalt problem</h3>
+                <p>
+                    100,000+ lediga jobb existerar samtidigt som 7.5% arbetslöshet. Detta är inte en konjunkturfråga
+                    – det är ett strukturellt matchningsproblem. Arbetsförmedlingen har all data för att lösa det,
+                    men exponerar den inte på ett användbart sätt.
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number">100,000+</div>
+                    <div class="label">Ofyllda jobb i Sverige</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">7.5%</div>
+                    <div class="label">Arbetslöshet</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">51,000+</div>
+                    <div class="label">Karriärövergångar i AF:s data</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">0</div>
+                    <div class="label">Sätt att komma åt den datan idag</div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3>Vad NordiqFlow gör</h3>
+                <p>
+                    Vi tar Arbetsförmedlingens öppna data (60+ datasets, 10+ års historik) och bygger
+                    intelligenta produkter ovanpå. Arbetsförmedlingen har redan gjort ML-jobbet – de har
+                    förberäknade substitutability-relationer mellan yrken. Vi exponerar det på ett sätt
+                    som skapar värde.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Affärsmodell & Intäkter</h2>
+
+            <div class="content-block">
+                <h3>Två produkter, två segment</h3>
+                <p>NordiqFlow har två primära intäktsströmmar:</p>
+            </div>
+
+            <table class="revenue-table">
+                <tr>
+                    <th>Produkt</th>
+                    <th>Segment</th>
+                    <th>Pris</th>
+                    <th>År 2 Mål</th>
+                </tr>
+                <tr>
+                    <td><strong>TalentFlow</strong></td>
+                    <td>B2C (individer)</td>
+                    <td>299 SEK/månad</td>
+                    <td>3.6M SEK (1,000 användare)</td>
+                </tr>
+                <tr>
+                    <td><strong>CityIQ</strong></td>
+                    <td>B2G (kommuner)</td>
+                    <td>50-200k SEK/år</td>
+                    <td>3M SEK (30 kommuner)</td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="3"><strong>Total År 2 ARR</strong></td>
+                    <td><strong>6.6M SEK</strong></td>
+                </tr>
+            </table>
+
+            <div class="content-block">
+                <h3>TalentFlow (B2C)</h3>
+                <p>
+                    Karriärplaneringsverktyg för individer som vill byta yrke. Visar dolda karriärvägar
+                    baserat på kompetensöverlappar, inte jobbtitlar. Freemium-modell med premium för
+                    detaljerade utbildningsvägar och löneprognoser.
+                </p>
+                <ul>
+                    <li>Gratis: 3 karriärförslag</li>
+                    <li>Premium (299 SEK/mån): Obegränsade förslag, gap-analys, utbildningsvägar</li>
+                    <li>Målgrupp: Karriärbytare, nyutexaminerade, uppsagda</li>
+                </ul>
+            </div>
+
+            <div class="content-block">
+                <h3>CityIQ (B2G)</h3>
+                <p>
+                    Talangbristanalys för kommuner. Visar vilka kompetenser som saknas lokalt,
+                    och ROI på utbildningsinvesteringar. Möjliggör datadrivna beslut om YH-program
+                    och arbetsmarknadsinsatser.
+                </p>
+                <ul>
+                    <li>Pris: 50k (små) - 200k (stora) SEK/år beroende på kommunstorlek</li>
+                    <li>Värde: Bättre utbildningsplanering, skatteintäktsprognoser</li>
+                    <li>Pilot: Vetlanda kommun (diskussioner pågår)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Konkurrensfördelar (Moat)</h2>
+
+            <div class="moat-grid">
+                <div class="moat-card">
+                    <h4>Data Moat</h4>
+                    <p>
+                        Vi har laddat ner och strukturerat 60+ datasets från Arbetsförmedlingen.
+                        Ingen annan aktör har byggt en enhetlig graf över denna data.
+                    </p>
+                </div>
+
+                <div class="moat-card">
+                    <h4>First Mover</h4>
+                    <p>
+                        10+ år av historisk jobbdata möjliggör ML-modeller som konkurrenter
+                        inte kan träna utan samma datainsamling.
+                    </p>
+                </div>
+
+                <div class="moat-card">
+                    <h4>Nätverkseffekter</h4>
+                    <p>
+                        Fler TalentFlow-användare → bättre feedback-data → bättre rekommendationer
+                        → fler användare. Plus: CityIQ-kunder genererar regional data.
+                    </p>
+                </div>
+
+                <div class="moat-card">
+                    <h4>Regulatorisk Position</h4>
+                    <p>
+                        Byggd på statlig infrastruktur. Positionering som "arbetsmarknads-OS"
+                        skapar legitimitet hos kommuner och myndigheter.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Roadmap</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Fas 1: Prototyp (Klar)</h4>
+                    <p>
+                        Kompetensbryggan-prototyp byggd. 60+ datasets nedladdade och strukturerade.
+                        Grundläggande matchningsalgoritm validerad.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Fas 2: MVP (Q1-Q2 2026)</h4>
+                    <p>
+                        Lansering av TalentFlow web-app. Pilot med 3 kommuner för CityIQ.
+                        Första betalande kunder.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Fas 3: Skalning (Q3-Q4 2026)</h4>
+                    <p>
+                        1,000 TalentFlow-användare. 30 CityIQ-kommuner.
+                        6.6M SEK ARR.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Fas 4: Nordisk Expansion (2027+)</h4>
+                    <p>
+                        Utvidgning till Norge (NAV), Danmark (Jobindex), Finland (TE-palvelut).
+                        40M SEK ARR-mål.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Team</h2>
+
+            <div class="content-block">
+                <h3>Linnea Moritz</h3>
+                <p>
+                    Grundare och utvecklare. Bakgrund inom [din bakgrund].
+                    ORCID: <a href="https://orcid.org/0009-0004-9742-8608" target="_blank">0009-0004-9742-8608</a>
+                </p>
+                <p>
+                    Baserad i Vetlanda. Nära samarbete med lokalt näringsliv och Science Park.
+                </p>
+            </div>
+
+            <div class="content-block">
+                <h3>Söker</h3>
+                <ul>
+                    <li>Finansiering för MVP-utveckling och första piloter</li>
+                    <li>Strategiska partners inom kommunsektorn</li>
+                    <li>Teknisk rådgivning kring skalning</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <h2>Intresserad av att veta mer?</h2>
+            <p>Kontakta mig för en genomgång av projektet och möjligheter till samarbete.</p>
+            <a href="mailto:linnea@nordiqflow.com?subject=Investor Inquiry - NordiqFlow" class="contact-button">
+                Kontakta Linnea
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="https://nordiqflow-hr2n.vercel.app" target="_blank">Live Demo</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

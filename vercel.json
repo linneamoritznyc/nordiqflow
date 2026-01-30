@@ -3,11 +3,27 @@
   "name": "nordiqflow",
   "builds": [
     {
-      "src": "index.html",
+      "src": "*.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/investors",
+      "dest": "/investors.html"
+    },
+    {
+      "src": "/af-issues",
+      "dest": "/af-issues.html"
+    },
+    {
+      "src": "/tech",
+      "dest": "/tech.html"
+    },
+    {
+      "src": "/cityiq",
+      "dest": "/cityiq.html"
+    },
     {
       "src": "/(.*)",
       "dest": "/$1"
