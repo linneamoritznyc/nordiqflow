@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - AF Öppen Data | Datakällor & Standarder</title>
+    <meta name="description" content="Komplett guide till Arbetsförmedlingens öppna data: API:er, taxonomier, europeiska standarder och hur NordiqFlow använder dem.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section.white {
+            background: white;
+        }
+
+        .section.gray {
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        /* Content blocks */
+        .content-block {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .content-block h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-block p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        /* API Cards */
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .api-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #3498db;
+        }
+
+        .api-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .api-card .endpoint {
+            background: #f0f4ff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            word-break: break-all;
+        }
+
+        .api-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .api-card a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .api-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Standards Table */
+        .standards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .standards-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .standards-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+
+        .standards-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .standards-table code {
+            background: #f0f4ff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* Integration diagram */
+        .integration-box {
+            background: #1a1a2e;
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .integration-box h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .integration-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .integration-node {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .integration-node.eu {
+            border: 2px solid #f39c12;
+        }
+
+        .integration-node.se {
+            border: 2px solid #3498db;
+        }
+
+        .integration-node.af {
+            border: 2px solid #27ae60;
+        }
+
+        .integration-arrow {
+            color: #667eea;
+            font-size: 1.5em;
+        }
+
+        /* Why locked section */
+        .locked-section {
+            background: #fff9e6;
+            border: 2px solid #f39c12;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .locked-section h3 {
+            color: #b7950b;
+            margin-bottom: 15px;
+        }
+
+        .locked-section p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .locked-section ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .locked-section li {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        /* Source links */
+        .source-box {
+            background: #f0f4ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .source-box h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .source-box a {
+            display: block;
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 0;
+            font-size: 0.95em;
+        }
+
+        .source-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dataset list */
+        .dataset-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .dataset-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+        }
+
+        .dataset-item h5 {
+            color: #2c3e50;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .dataset-item p {
+            color: #666;
+            font-size: 0.85em;
+            margin: 0;
+        }
+
+        .dataset-item .size {
+            color: #3498db;
+            font-weight: 500;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: #3498db;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .integration-flow {
+                flex-direction: column;
+            }
+
+            .integration-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html">For Investors</a>
+            <a href="af-data.html" class="active">AF Data</a>
+            <a href="af-issues.html">AF:s Problem</a>
+            <a href="tech.html">Tech & Modeller</a>
+            <a href="cityiq.html">CityIQ</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Arbetsförmedlingens Öppna Data</h1>
+            <p>60+ datasets, 9 API:er, och europeiska standarder som NordiqFlow bygger på.</p>
+        </div>
+    </section>
+
+    <!-- What is AF Open Data -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Vad är AF:s öppna data?</h2>
+
+            <div class="content-block">
+                <h3>📊 JobTech Dev - Sveriges arbetsmarknadsdata</h3>
+                <p>
+                    Arbetsförmedlingen publicerar all sin arbetsmarknadsdata via plattformen <strong>JobTech Dev</strong>.
+                    Detta inkluderar alla jobbannonser, en komplett taxonomi över yrken och kompetenser,
+                    samt historisk data som sträcker sig över 10 år tillbaka.
+                </p>
+                <p>
+                    Datan är <strong>helt gratis</strong> att använda under öppna licenser. Detta är
+                    ett resultat av svenska öppenhetslagar och EU:s PSI-direktiv (Public Sector Information)
+                    som kräver att myndigheter gör sin data tillgänglig.
+                </p>
+                <div class="source-box">
+                    <h4>Huvudkällor</h4>
+                    <a href="https://jobtechdev.se" target="_blank">🔗 JobTech Dev - Huvudportal</a>
+                    <a href="https://jobtechdev.se/docs" target="_blank">🔗 API-dokumentation</a>
+                    <a href="https://data.arbetsformedlingen.se" target="_blank">🔗 AF Open Data Portal</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APIs we use -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">API:er vi använder</h2>
+
+            <div class="api-grid">
+                <div class="api-card">
+                    <h4>Taxonomy API</h4>
+                    <div class="endpoint">taxonomy.api.jobtechdev.se/v1/</div>
+                    <p>Komplett taxonomi med 10,000+ yrken, 8,000+ kompetenser, och alla relationer mellan dem.</p>
+                    <a href="https://jobtechdev.se/docs/apis/taxonomy/" target="_blank">Dokumentation →</a>
+                </div>
+
+                <div class="api-card">
+                    <h4>Substitutability Relations</h4>
+                    <div class="endpoint">taxonomy.api.jobtechdev.se/.../substitutability-relations</div>
+                    <p><strong>51,000+ karriärövergångar</strong> med förberäknad substitutability. Detta är kärnan i TalentFlow.</p>
+                    <a href="https://jobtechdev.se/docs/apis/taxonomy/" target="_blank">Dokumentation →</a>
+                </div>
+
+                <div class="api-card">
+                    <h4>JobSearch API</h4>
+                    <div class="endpoint">jobsearch.api.jobtechdev.se/search</div>
+                    <p>Real-time sökning bland alla aktiva jobbannonser i Sverige. Filtrering på yrke, region, kompetens.</p>
+                    <a href="https://jobtechdev.se/docs/apis/jobsearch/" target="_blank">Dokumentation →</a>
+                </div>
+
+                <div class="api-card">
+                    <h4>JobAd Enrichments API</h4>
+                    <div class="endpoint">jobad-enrichments.api.jobtechdev.se/</div>
+                    <p>NLP-extraktion av kompetenser från ostrukturerad text. Används för CV-parsing.</p>
+                    <a href="https://jobtechdev.se/docs/apis/jobad-enrichments/" target="_blank">Dokumentation →</a>
+                </div>
+
+                <div class="api-card">
+                    <h4>Historical Ads API</h4>
+                    <div class="endpoint">historical.api.jobtechdev.se/</div>
+                    <p>10+ år av historiska jobbannonser. Möjliggör trendanalys och ML-modellträning.</p>
+                    <a href="https://jobtechdev.se/docs/apis/historical/" target="_blank">Dokumentation →</a>
+                </div>
+
+                <div class="api-card">
+                    <h4>JobStream API</h4>
+                    <div class="endpoint">jobstream.api.jobtechdev.se/</div>
+                    <p>Real-time webhook för nya jobbannonser. Möjliggör instant uppdateringar.</p>
+                    <a href="https://jobtechdev.se/docs/apis/jobstream/" target="_blank">Dokumentation →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classification codes -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Klassificeringskoder & Standarder</h2>
+
+            <div class="content-block">
+                <h3>🏷️ Standardiserade koder som AF använder</h3>
+                <p>
+                    Arbetsförmedlingen använder en rad standardiserade klassificeringssystem som är
+                    gemensamma för svenska myndigheter och harmoniserade med europeiska system.
+                    Detta skapar en "låst" datastruktur som är svår att ändra.
+                </p>
+
+                <table class="standards-table">
+                    <tr>
+                        <th>Kod</th>
+                        <th>Fullständigt namn</th>
+                        <th>Beskrivning</th>
+                        <th>EU-motsvarighet</th>
+                    </tr>
+                    <tr>
+                        <td><code>SSYK</code></td>
+                        <td>Standard för Svensk Yrkesklassificering</td>
+                        <td>430 yrken på 4-siffernivå (t.ex. 2512 = Mjukvaruutvecklare)</td>
+                        <td><code>ISCO-08</code> (International Standard Classification of Occupations)</td>
+                    </tr>
+                    <tr>
+                        <td><code>SNI</code></td>
+                        <td>Svensk Näringsgrensindelning</td>
+                        <td>821 branschkoder (t.ex. 62.01 = Dataprogrammering)</td>
+                        <td><code>NACE</code> (EU:s branschklassificering)</td>
+                    </tr>
+                    <tr>
+                        <td><code>SUN</code></td>
+                        <td>Svensk Utbildningsnomenklatur</td>
+                        <td>~400 utbildningsinriktningar med nivåer</td>
+                        <td><code>ISCED</code> (International Standard Classification of Education)</td>
+                    </tr>
+                    <tr>
+                        <td><code>NUTS</code></td>
+                        <td>Nomenclature of Territorial Units</td>
+                        <td>Regionkoder (SE110 = Stockholms län)</td>
+                        <td><code>NUTS</code> (EU-standard)</td>
+                    </tr>
+                    <tr>
+                        <td><code>ESCO</code></td>
+                        <td>European Skills, Competences, Qualifications and Occupations</td>
+                        <td>13,000+ kompetenser mappade till yrken</td>
+                        <td>Detta ÄR EU-standarden (AF översätter till)</td>
+                    </tr>
+                </table>
+
+                <div class="source-box">
+                    <h4>Källor för klassificeringssystem</h4>
+                    <a href="https://www.scb.se/hitta-statistik/klassifikationer-och-standarder/ssyk/" target="_blank">🔗 SCB: SSYK (Standard för Svensk Yrkesklassificering)</a>
+                    <a href="https://www.scb.se/hitta-statistik/klassifikationer-och-standarder/sni/" target="_blank">🔗 SCB: SNI (Svensk Näringsgrensindelning)</a>
+                    <a href="https://ec.europa.eu/esco/portal" target="_blank">🔗 EU: ESCO Portal</a>
+                    <a href="https://ilostat.ilo.org/resources/concepts-and-definitions/classification-occupation/" target="_blank">🔗 ILO: ISCO-08 Standard</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- European integration -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Europeisk integration</h2>
+
+            <div class="integration-box">
+                <h3>Dataflöde: EU → SCB → Myndigheter</h3>
+                <div class="integration-flow">
+                    <div class="integration-node eu">
+                        <strong>EU-standarder</strong><br>
+                        <small>ISCO, NACE, ISCED, ESCO</small>
+                    </div>
+                    <div class="integration-arrow">→</div>
+                    <div class="integration-node se">
+                        <strong>SCB</strong><br>
+                        <small>Svensk anpassning (SSYK, SNI, SUN)</small>
+                    </div>
+                    <div class="integration-arrow">→</div>
+                    <div class="integration-node af">
+                        <strong>Arbetsförmedlingen</strong><br>
+                        <small>JobTech Taxonomy</small>
+                    </div>
+                </div>
+                <div class="integration-flow" style="margin-top: 20px;">
+                    <div class="integration-node af">
+                        <strong>Arbetsförmedlingen</strong>
+                    </div>
+                    <div class="integration-arrow">→</div>
+                    <div class="integration-node se">
+                        <strong>Försäkringskassan</strong><br>
+                        <small>Använder samma SSYK</small>
+                    </div>
+                    <div class="integration-arrow">→</div>
+                    <div class="integration-node se">
+                        <strong>Skatteverket</strong><br>
+                        <small>Använder samma SNI</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="locked-section">
+                <h3>⚠️ Varför AF har svårt att ändra sin data</h3>
+                <p>
+                    Arbetsförmedlingens klassificeringssystem är inte en intern beslutsfråga.
+                    Det är del av ett komplext ekosystem av svenska och europeiska standarder:
+                </p>
+                <ul>
+                    <li><strong>EU-harmonisering:</strong> Sverige rapporterar arbetsmarknadsstatistik till Eurostat med ISCO/NACE-koder. Ändringar kräver EU-koordination.</li>
+                    <li><strong>Myndighetskopplingar:</strong> Försäkringskassan, Skatteverket, CSN och kommuner använder samma SSYK-koder. En ändring påverkar alla.</li>
+                    <li><strong>SCB-beroende:</strong> Statistiska Centralbyrån (SCB) äger och förvaltar de svenska standarderna. AF är en konsument, inte ägare.</li>
+                    <li><strong>Bakåtkompatibilitet:</strong> 10+ år av historisk data är kodad med nuvarande system. Ändringar bryter tidsserier.</li>
+                    <li><strong>Internationell jämförbarhet:</strong> ILO (International Labour Organization) kräver ISCO-kompatibilitet för globala jämförelser.</li>
+                </ul>
+                <p>
+                    <strong>Slutsats:</strong> AF kan lägga till kompetens-data (som de gör med JobTech), men grundläggande
+                    yrkesklassificeringar är "låsta" av externa beroenden. NordiqFlow jobbar <em>med</em> denna struktur,
+                    inte mot den.
+                </p>
+                <div class="source-box">
+                    <h4>Källor</h4>
+                    <a href="https://ec.europa.eu/eurostat/web/labour-market/methodology" target="_blank">🔗 Eurostat: Labour Market Methodology</a>
+                    <a href="https://www.scb.se/om-scb/samordning-av-sveriges-officiella-statistik/" target="_blank">🔗 SCB: Samordning av officiell statistik</a>
+                    <a href="https://www.regeringen.se/rattsliga-dokument/departementsserien-och-promemorior/2019/03/ds-20199/" target="_blank">🔗 Regeringen: Ds 2019:9 om arbetsmarknadspolitik</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Datasets -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Dataset-katalog (60+ filer)</h2>
+
+            <div class="content-block">
+                <h3>📁 Nyckel-datasets som NordiqFlow använder</h3>
+                <p>Vi har laddat ner och strukturerat följande datasets från JobTech:</p>
+
+                <div class="dataset-list">
+                    <div class="dataset-item">
+                        <h5>substitutability-relations-between-occupations.json</h5>
+                        <p>51,000+ karriärövergångar mellan yrken</p>
+                        <p class="size">2.3 MB</p>
+                    </div>
+                    <div class="dataset-item">
+                        <h5>concepts-and-common-relations.json</h5>
+                        <p>Master-graf med alla begrepp och relationer</p>
+                        <p class="size">34 MB</p>
+                    </div>
+                    <div class="dataset-item">
+                        <h5>skills.json</h5>
+                        <p>8,000+ kompetenser ("skill atoms")</p>
+                        <p class="size">543 KB</p>
+                    </div>
+                    <div class="dataset-item">
+                        <h5>ssyk-level-4-groups.json</h5>
+                        <p>430 svenska yrken (SSYK-4)</p>
+                        <p class="size">150 KB</p>
+                    </div>
+                    <div class="dataset-item">
+                        <h5>the-ssyk-hierarchy-with-occupations.json</h5>
+                        <p>Fullständig yrkestaxonomi med hierarki</p>
+                        <p class="size">399 KB</p>
+                    </div>
+                    <div class="dataset-item">
+                        <h5>sni-hierarchy.json</h5>
+                        <p>821 branschkoder med hierarki</p>
+                        <p class="size">249 KB</p>
+                    </div>
+                    <div class="dataset-item">
+                        <h5>sun-field-hierarchy.json</h5>
+                        <p>Utbildningsområden och nivåer</p>
+                        <p class="size">169 KB</p>
+                    </div>
+                    <div class="dataset-item">
+                        <h5>occupation-skill-relations.json</h5>
+                        <p>Mappning: yrken ↔ krav på kompetenser</p>
+                        <p class="size">1.8 MB</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 20px; color: #666;">
+                    <strong>Total datastorlek:</strong> ~35 MB strukturerad data |
+                    <strong>Senast uppdaterad:</strong> Januari 2026
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How we use it -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Hur NordiqFlow använder datan</h2>
+
+            <div class="content-block">
+                <h3>🔄 Vår datapipeline</h3>
+                <ol style="margin-left: 25px; color: #555;">
+                    <li style="margin-bottom: 15px;">
+                        <strong>Nattlig synkronisering:</strong> Vi hämtar uppdateringar från alla JobTech API:er varje natt.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong>Graf-byggning:</strong> Datasets laddas in i en Neo4j-grafdatabas där yrken är noder
+                        och substitutability-relationer är kanter.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong>Enrichment:</strong> När en användare laddar upp ett CV, skickar vi texten till
+                        JobAd Enrichments API för att extrahera kompetens-ID:n.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong>Matchning:</strong> Vi traverserar grafen för att hitta yrken som matchar
+                        användarens kompetenser, rankat efter substitutability och efterfrågan.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong>Gap-analys:</strong> För varje matchat yrke beräknar vi vilka kompetenser
+                        som saknas och kopplar till utbildningsvägar via SUN-koderna.
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Utforska datan själv</h2>
+            <p>All data vi använder är helt öppen och gratis att utforska.</p>
+            <a href="https://jobtechdev.se" target="_blank" class="cta-button">Besök JobTech Dev</a>
+            <a href="tech.html" class="cta-button outline">Läs om vår teknik</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="investors.html">För Investerare</a> |
+                <a href="tech.html">Teknisk dokumentation</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.7;">
+                Data: <a href="https://jobtechdev.se" target="_blank">JobTech Dev</a> (CC0/Open License)
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

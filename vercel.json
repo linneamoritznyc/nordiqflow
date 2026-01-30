@@ -13,6 +13,10 @@
       "dest": "/investors.html"
     },
     {
+      "src": "/af-data",
+      "dest": "/af-data.html"
+    },
+    {
       "src": "/af-issues",
       "dest": "/af-issues.html"
     },
