@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NordiqFlow - Live Demo</title>
-    <meta name="description" content="Testa NordiqFlow:s karriarmatchning live. Valj ditt yrke och kompetenser for att se personliga karriarrekommendationer.">
+    <meta name="description" content="Testa NordiqFlow:s karriärmatchning live. Välj ditt yrke och kompetenser för att se personliga karriärrekommendationer.">
     <style>
         * {
             margin: 0;
@@ -142,7 +142,7 @@
         }
 
         .form-group select,
-        .form-group input {
+        .form-group input[type="text"] {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
@@ -155,6 +155,143 @@
         .form-group input:focus {
             outline: none;
             border-color: #667eea;
+        }
+
+        /* CV Upload */
+        .cv-upload-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%);
+            border-radius: 12px;
+            border: 2px dashed #667eea;
+        }
+
+        .cv-upload-section h3 {
+            color: #667eea;
+            font-size: 1em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cv-upload-area {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cv-upload-area:hover {
+            background: #f8f9fa;
+        }
+
+        .cv-upload-area.dragover {
+            background: #e8f0ff;
+            border: 2px solid #667eea;
+        }
+
+        .cv-upload-area input[type="file"] {
+            display: none;
+        }
+
+        .cv-upload-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .cv-upload-text {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .cv-upload-text strong {
+            color: #667eea;
+        }
+
+        .cv-status {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            display: none;
+        }
+
+        .cv-status.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .cv-status.analyzing {
+            display: block;
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .cv-extracted-skills {
+            margin-top: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .cv-extracted-skills.show {
+            display: block;
+        }
+
+        .cv-extracted-skills h4 {
+            color: #27ae60;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+        }
+
+        .cv-skill-tag {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 3px;
+        }
+
+        .cv-tip {
+            margin-top: 12px;
+            padding: 10px;
+            background: #fff8e1;
+            border-radius: 6px;
+            font-size: 0.85em;
+            color: #f57c00;
+            display: none;
+        }
+
+        .cv-tip.show {
+            display: block;
+        }
+
+        /* Or divider */
+        .or-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .or-divider::before,
+        .or-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .or-divider span {
+            padding: 0 15px;
         }
 
         /* Skills Tags */
@@ -553,7 +690,7 @@
         <div class="container">
             <div class="hero-badge">Interaktiv Demonstration</div>
             <h1>Live Demo</h1>
-            <p>Testa NordiqFlow:s karriarmatchning. Valj ditt yrke och kompetenser for att se personliga rekommendationer.</p>
+            <p>Testa NordiqFlow:s karriärmatchning. Välj ditt yrke och kompetenser för att se personliga rekommendationer.</p>
         </div>
     </section>
 
@@ -564,23 +701,46 @@
                 <div class="input-panel">
                     <h2>Din Profil</h2>
 
+                    <!-- CV Upload Section -->
+                    <div class="cv-upload-section">
+                        <h3>📄 Ladda upp ditt CV</h3>
+                        <div class="cv-upload-area" id="cv-upload-area">
+                            <input type="file" id="cv-file" accept=".pdf,.doc,.docx,.txt">
+                            <div class="cv-upload-icon">📁</div>
+                            <div class="cv-upload-text">
+                                <strong>Klicka här</strong> eller dra och släpp<br>
+                                PDF, Word eller textfil
+                            </div>
+                        </div>
+                        <div class="cv-status" id="cv-status"></div>
+                        <div class="cv-extracted-skills" id="cv-extracted-skills">
+                            <h4>✨ Extraherade kompetenser från ditt CV:</h4>
+                            <div id="cv-skills-list"></div>
+                        </div>
+                        <div class="cv-tip" id="cv-tip"></div>
+                    </div>
+
+                    <div class="or-divider">
+                        <span>eller välj manuellt</span>
+                    </div>
+
                     <div class="form-group">
                         <label for="occupation">Nuvarande yrke</label>
                         <select id="occupation">
-                            <option value="">Valj ditt yrke...</option>
+                            <option value="">Välj ditt yrke...</option>
                             <option value="butikschef">Butikschef</option>
                             <option value="systemutvecklare">Systemutvecklare</option>
-                            <option value="underskoterska">Underskoterska</option>
-                            <option value="lastbilschaufor">Lastbilschaufor</option>
-                            <option value="lakare">Lakare</option>
-                            <option value="larare">Larare</option>
+                            <option value="underskoterska">Undersköterska</option>
+                            <option value="lastbilschaufor">Lastbilschaufför</option>
+                            <option value="lakare">Läkare</option>
+                            <option value="larare">Lärare</option>
                             <option value="ekonom">Ekonom/Redovisningskonsult</option>
-                            <option value="marknadsforare">Marknadskommunikator</option>
+                            <option value="marknadsforare">Marknadskommunikatör</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Valj dina kompetenser</label>
+                        <label>Välj dina kompetenser</label>
                         <div class="skills-container" id="available-skills">
                             <!-- Populated by JS -->
                         </div>
@@ -591,7 +751,7 @@
                     </div>
 
                     <button class="run-button" id="run-btn" disabled>
-                        Kor Matchning
+                        Kör Matchning
                     </button>
 
                     <!-- Algorithm Visualization -->
@@ -604,12 +764,12 @@
                         </div>
                         <div class="algo-step">
                             <div class="step-icon" id="step2-icon">2</div>
-                            <div class="step-text">Traverserar karriargrafen</div>
+                            <div class="step-text">Traverserar karriärgrafen</div>
                             <div class="step-time" id="step2-time">-</div>
                         </div>
                         <div class="algo-step">
                             <div class="step-icon" id="step3-icon">3</div>
-                            <div class="step-text">Beraknar composite scores</div>
+                            <div class="step-text">Beräknar composite scores</div>
                             <div class="step-time" id="step3-time">-</div>
                         </div>
                         <div class="algo-step">
@@ -624,9 +784,9 @@
                 <div class="results-panel">
                     <div id="results-content">
                         <div class="empty-state">
-                            <div class="icon">&#128269;</div>
-                            <h3>Valj yrke och kompetenser</h3>
-                            <p>Fyll i din profil till vanster och klicka "Kor Matchning" for att se karriarrekommendationer.</p>
+                            <div class="icon">🔍</div>
+                            <h3>Välj yrke och kompetenser</h3>
+                            <p>Fyll i din profil till vänster och klicka "Kör Matchning" för att se karriärrekommendationer.</p>
                         </div>
                     </div>
                 </div>
@@ -643,7 +803,7 @@
                 <a href="research.html">Forskning</a>
             </p>
             <p style="margin-top: 15px; opacity: 0.7; font-size: 0.9em;">
-                Demo anvander simulerad data baserad pa Arbetsformedlingens oppna API:er.
+                Demo använder simulerad data baserad på Arbetsförmedlingens öppna API:er.
             </p>
         </div>
     </footer>
@@ -653,7 +813,7 @@
         const skillsByOccupation = {
             butikschef: [
                 'Ledarskap', 'Personalansvar', 'Budgetplanering', 'Kundservice',
-                'Forsaljning', 'Lagerhantering', 'Schemaplanering', 'Konflikthantering',
+                'Försäljning', 'Lagerhantering', 'Schemaplanering', 'Konflikthantering',
                 'Kassa', 'Varuexponering', 'Excel', 'Ekonomistyrning'
             ],
             systemutvecklare: [
@@ -661,95 +821,156 @@
                 'REST API', 'React', 'Node.js', 'DevOps', 'Testning', 'Systemdesign'
             ],
             underskoterska: [
-                'Omvardnad', 'Medicinhantering', 'Dokumentation', 'Vardplanering',
+                'Omvårdnad', 'Medicinhantering', 'Dokumentation', 'Vårdplanering',
                 'Kommunikation', 'Patienttrygghet', 'Teamarbete', 'Stresshantering',
-                'Forflyttningsteknik', 'Saromlaggning', 'Hygien'
+                'Förflyttningsteknik', 'Såromläggning', 'Hygien'
             ],
             lastbilschaufor: [
-                'Korkort CE', 'Farligt gods', 'Logistik', 'Kundkontakt',
-                'Lastning', 'Ruttplanering', 'Fordonsunderhall', 'Tidsplanering',
-                'Digital fardskrivare', 'YKB'
+                'Körkort CE', 'Farligt gods', 'Logistik', 'Kundkontakt',
+                'Lastning', 'Ruttplanering', 'Fordonsunderhåll', 'Tidsplanering',
+                'Digital färdskrivare', 'YKB'
             ],
             lakare: [
-                'Diagnostik', 'Patientkommunikation', 'Medicinsk kunskap', 'Journalforing',
+                'Diagnostik', 'Patientkommunikation', 'Medicinsk kunskap', 'Journalföring',
                 'Teamledning', 'Beslutsfattande', 'Etik', 'Forskning',
                 'Specialistkunskap', 'Handledning'
             ],
             larare: [
-                'Pedagogik', 'Amneskunskap', 'Bedomning', 'Klassrumsledarskap',
-                'Foraldrakontakt', 'Digitala verktyg', 'Inkludering', 'Konfliktlosning',
+                'Pedagogik', 'Ämneskunskap', 'Bedömning', 'Klassrumsledarskap',
+                'Föräldrakontakt', 'Digitala verktyg', 'Inkludering', 'Konfliktlösning',
                 'Kursplanering', 'Mentorskap'
             ],
             ekonom: [
                 'Redovisning', 'Bokslut', 'Skatt', 'Excel', 'Budgetering',
-                'Ekonomianalys', 'SAP', 'Rapportering', 'Revision', 'Lonehantering'
+                'Ekonomianalys', 'SAP', 'Rapportering', 'Revision', 'Lönehantering'
             ],
             marknadsforare: [
-                'Digital marknadsforing', 'Content', 'SEO', 'SEM', 'Sociala medier',
-                'Copywriting', 'Analys', 'Google Analytics', 'E-postmarknadsforing', 'Varumarske'
+                'Digital marknadsföring', 'Content', 'SEO', 'SEM', 'Sociala medier',
+                'Copywriting', 'Analys', 'Google Analytics', 'E-postmarknadsföring', 'Varumärke'
             ]
         };
 
         // Career transitions database (simplified)
         const careerTransitions = {
             butikschef: [
-                { target: 'Verksamhetsledare (Vard)', score: 87, substitutability: 85, demand: 'Hog', salary: '+15%', skills_match: ['Ledarskap', 'Personalansvar', 'Budgetplanering', 'Schemaplanering'], skills_gap: ['Vardkunskap', 'Medicinhantering'] },
-                { target: 'Projektledare', score: 84, substitutability: 82, demand: 'Hog', salary: '+20%', skills_match: ['Ledarskap', 'Budgetplanering', 'Konflikthantering', 'Ekonomistyrning'], skills_gap: ['Projektmetodik', 'Riskanalys'] },
+                { target: 'Verksamhetsledare (Vård)', score: 87, substitutability: 85, demand: 'Hög', salary: '+15%', skills_match: ['Ledarskap', 'Personalansvar', 'Budgetplanering', 'Schemaplanering'], skills_gap: ['Vårdkunskap', 'Medicinhantering'] },
+                { target: 'Projektledare', score: 84, substitutability: 82, demand: 'Hög', salary: '+20%', skills_match: ['Ledarskap', 'Budgetplanering', 'Konflikthantering', 'Ekonomistyrning'], skills_gap: ['Projektmetodik', 'Riskanalys'] },
                 { target: 'Hotellchef', score: 81, substitutability: 79, demand: 'Medium', salary: '+10%', skills_match: ['Ledarskap', 'Kundservice', 'Personalansvar', 'Schemaplanering'], skills_gap: ['Hotellsystem', 'Revenue management'] },
                 { target: 'Restaurangchef', score: 72, substitutability: 65, demand: 'Medium', salary: '+5%', skills_match: ['Ledarskap', 'Kundservice', 'Lagerhantering', 'Schemaplanering'], skills_gap: ['Livsmedelshantering', 'Menykostnad'] },
-                { target: 'HR-specialist', score: 68, substitutability: 52, demand: 'Medium', salary: '+8%', skills_match: ['Personalansvar', 'Konflikthantering', 'Schemaplanering'], skills_gap: ['Arbetsratt', 'Rekrytering', 'HR-system'] },
-                { target: 'Forsaljningschef', score: 64, substitutability: 55, demand: 'Medium', salary: '+25%', skills_match: ['Forsaljning', 'Ledarskap', 'Kundservice'], skills_gap: ['B2B-forsaljning', 'CRM', 'Pipeline management'] }
+                { target: 'HR-specialist', score: 68, substitutability: 52, demand: 'Medium', salary: '+8%', skills_match: ['Personalansvar', 'Konflikthantering', 'Schemaplanering'], skills_gap: ['Arbetsrätt', 'Rekrytering', 'HR-system'] },
+                { target: 'Försäljningschef', score: 64, substitutability: 55, demand: 'Medium', salary: '+25%', skills_match: ['Försäljning', 'Ledarskap', 'Kundservice'], skills_gap: ['B2B-försäljning', 'CRM', 'Pipeline management'] }
             ],
             systemutvecklare: [
-                { target: 'Tech Lead', score: 89, substitutability: 88, demand: 'Hog', salary: '+30%', skills_match: ['JavaScript', 'Systemdesign', 'Agil utveckling', 'Git'], skills_gap: ['Arkitektur', 'Mentorskap'] },
-                { target: 'DevOps Engineer', score: 82, substitutability: 78, demand: 'Hog', salary: '+15%', skills_match: ['Git', 'DevOps', 'Python', 'REST API'], skills_gap: ['Kubernetes', 'CI/CD', 'Infrastruktur'] },
-                { target: 'Data Engineer', score: 76, substitutability: 70, demand: 'Hog', salary: '+20%', skills_match: ['Python', 'SQL', 'Systemdesign'], skills_gap: ['ETL', 'Spark', 'Data pipelines'] },
+                { target: 'Tech Lead', score: 89, substitutability: 88, demand: 'Hög', salary: '+30%', skills_match: ['JavaScript', 'Systemdesign', 'Agil utveckling', 'Git'], skills_gap: ['Arkitektur', 'Mentorskap'] },
+                { target: 'DevOps Engineer', score: 82, substitutability: 78, demand: 'Hög', salary: '+15%', skills_match: ['Git', 'DevOps', 'Python', 'REST API'], skills_gap: ['Kubernetes', 'CI/CD', 'Infrastruktur'] },
+                { target: 'Data Engineer', score: 76, substitutability: 70, demand: 'Hög', salary: '+20%', skills_match: ['Python', 'SQL', 'Systemdesign'], skills_gap: ['ETL', 'Spark', 'Data pipelines'] },
                 { target: 'Product Owner', score: 65, substitutability: 55, demand: 'Medium', salary: '+10%', skills_match: ['Agil utveckling', 'Systemdesign'], skills_gap: ['Produktstrategi', 'Stakeholder management', 'Backlog'] },
-                { target: 'IT-konsult', score: 71, substitutability: 65, demand: 'Hog', salary: '+25%', skills_match: ['Systemdesign', 'Agil utveckling', 'Testning'], skills_gap: ['Presentationsteknik', 'Affarsforstaelse'] }
+                { target: 'IT-konsult', score: 71, substitutability: 65, demand: 'Hög', salary: '+25%', skills_match: ['Systemdesign', 'Agil utveckling', 'Testning'], skills_gap: ['Presentationsteknik', 'Affärsförståelse'] }
             ],
             underskoterska: [
-                { target: 'Sjukskoterska', score: 78, substitutability: 72, demand: 'Mycket hog', salary: '+35%', skills_match: ['Omvardnad', 'Dokumentation', 'Teamarbete', 'Patienttrygghet'], skills_gap: ['Sjukskoterskeutbildning', 'Avancerad medicinhantering'] },
-                { target: 'Vardbitradesansvarig', score: 85, substitutability: 82, demand: 'Hog', salary: '+15%', skills_match: ['Omvardnad', 'Teamarbete', 'Dokumentation', 'Medicinhantering'], skills_gap: ['Ledarskap', 'Schemaplanering'] },
-                { target: 'Vardadministrator', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Dokumentation', 'Vardplanering', 'Kommunikation'], skills_gap: ['Administration', 'Journalsystem'] },
-                { target: 'Medicisk sekreterare', score: 62, substitutability: 50, demand: 'Medium', salary: '+8%', skills_match: ['Dokumentation', 'Kommunikation'], skills_gap: ['Medicinsk terminologi', 'Diktering'] }
+                { target: 'Sjuksköterska', score: 78, substitutability: 72, demand: 'Mycket hög', salary: '+35%', skills_match: ['Omvårdnad', 'Dokumentation', 'Teamarbete', 'Patienttrygghet'], skills_gap: ['Sjuksköterskeutbildning', 'Avancerad medicinhantering'] },
+                { target: 'Vårdbiträdesansvarig', score: 85, substitutability: 82, demand: 'Hög', salary: '+15%', skills_match: ['Omvårdnad', 'Teamarbete', 'Dokumentation', 'Medicinhantering'], skills_gap: ['Ledarskap', 'Schemaplanering'] },
+                { target: 'Vårdadministratör', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Dokumentation', 'Vårdplanering', 'Kommunikation'], skills_gap: ['Administration', 'Journalsystem'] },
+                { target: 'Medicinsk sekreterare', score: 62, substitutability: 50, demand: 'Medium', salary: '+8%', skills_match: ['Dokumentation', 'Kommunikation'], skills_gap: ['Medicinsk terminologi', 'Diktering'] }
             ],
             lastbilschaufor: [
-                { target: 'Transportledare', score: 82, substitutability: 78, demand: 'Hog', salary: '+20%', skills_match: ['Logistik', 'Ruttplanering', 'Tidsplanering', 'Kundkontakt'], skills_gap: ['Transportplanering', 'Systemkunskap'] },
-                { target: 'Terminalarbetare (ledande)', score: 75, substitutability: 70, demand: 'Medium', salary: '+10%', skills_match: ['Lastning', 'Logistik', 'Tidsplanering'], skills_gap: ['Truckforkort', 'Lagerhantering'] },
-                { target: 'Budbilschauff (egenforetagare)', score: 70, substitutability: 65, demand: 'Hog', salary: 'Varierar', skills_match: ['Kundkontakt', 'Ruttplanering', 'Tidsplanering'], skills_gap: ['Foretagande', 'Bokforing'] },
-                { target: 'Maskinforare', score: 65, substitutability: 55, demand: 'Medium', salary: '+5%', skills_match: ['Fordonsunderhall', 'Tidsplanering'], skills_gap: ['Maskinkort', 'Anlaggning'] }
+                { target: 'Transportledare', score: 82, substitutability: 78, demand: 'Hög', salary: '+20%', skills_match: ['Logistik', 'Ruttplanering', 'Tidsplanering', 'Kundkontakt'], skills_gap: ['Transportplanering', 'Systemkunskap'] },
+                { target: 'Terminalarbetare (ledande)', score: 75, substitutability: 70, demand: 'Medium', salary: '+10%', skills_match: ['Lastning', 'Logistik', 'Tidsplanering'], skills_gap: ['Truckkort', 'Lagerhantering'] },
+                { target: 'Budbilschaufför (egenföretagare)', score: 70, substitutability: 65, demand: 'Hög', salary: 'Varierar', skills_match: ['Kundkontakt', 'Ruttplanering', 'Tidsplanering'], skills_gap: ['Företagande', 'Bokföring'] },
+                { target: 'Maskinförare', score: 65, substitutability: 55, demand: 'Medium', salary: '+5%', skills_match: ['Fordonsunderhåll', 'Tidsplanering'], skills_gap: ['Maskinkort', 'Anläggning'] }
             ],
             lakare: [
-                { target: 'Verksamhetschef (Vard)', score: 85, substitutability: 80, demand: 'Hog', salary: '+10%', skills_match: ['Medicinsk kunskap', 'Teamledning', 'Beslutsfattande', 'Etik'], skills_gap: ['Ekonomistyrning', 'Personalansvar'] },
-                { target: 'Medicinsk radgivare', score: 78, substitutability: 72, demand: 'Medium', salary: '-5%', skills_match: ['Medicinsk kunskap', 'Kommunikation', 'Beslutsfattande'], skills_gap: ['Regulatorik', 'Dokumentation'] },
+                { target: 'Verksamhetschef (Vård)', score: 85, substitutability: 80, demand: 'Hög', salary: '+10%', skills_match: ['Medicinsk kunskap', 'Teamledning', 'Beslutsfattande', 'Etik'], skills_gap: ['Ekonomistyrning', 'Personalansvar'] },
+                { target: 'Medicinsk rådgivare', score: 78, substitutability: 72, demand: 'Medium', salary: '-5%', skills_match: ['Medicinsk kunskap', 'Kommunikation', 'Beslutsfattande'], skills_gap: ['Regulatorik', 'Dokumentation'] },
                 { target: 'Forskare (klinisk)', score: 82, substitutability: 75, demand: 'Medium', salary: '-10%', skills_match: ['Forskning', 'Medicinsk kunskap', 'Specialistkunskap'], skills_gap: ['Statistik', 'Publikation'] },
-                { target: 'Chefsoverl', score: 80, substitutability: 75, demand: 'Medium', salary: '+15%', skills_match: ['Diagnostik', 'Teamledning', 'Handledning'], skills_gap: ['Administration', 'Budget'] }
+                { target: 'Chefsöverläkare', score: 80, substitutability: 75, demand: 'Medium', salary: '+15%', skills_match: ['Diagnostik', 'Teamledning', 'Handledning'], skills_gap: ['Administration', 'Budget'] }
             ],
             larare: [
                 { target: 'Rektor', score: 75, substitutability: 68, demand: 'Medium', salary: '+40%', skills_match: ['Pedagogik', 'Klassrumsledarskap', 'Mentorskap'], skills_gap: ['Skolledning', 'Budget', 'Juridik'] },
                 { target: 'Utbildningskoordinator', score: 72, substitutability: 65, demand: 'Medium', salary: '+15%', skills_match: ['Pedagogik', 'Kursplanering', 'Digitala verktyg'], skills_gap: ['Projektledning', 'LMS-system'] },
-                { target: 'HR-utbildare', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Pedagogik', 'Kursplanering', 'Digitala verktyg'], skills_gap: ['HR-kunskap', 'Affarsforstaelse'] },
-                { target: 'Specialpedagog', score: 80, substitutability: 75, demand: 'Hog', salary: '+5%', skills_match: ['Pedagogik', 'Inkludering', 'Mentorskap'], skills_gap: ['Specialpedagogik', 'Utredning'] }
+                { target: 'HR-utbildare', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Pedagogik', 'Kursplanering', 'Digitala verktyg'], skills_gap: ['HR-kunskap', 'Affärsförståelse'] },
+                { target: 'Specialpedagog', score: 80, substitutability: 75, demand: 'Hög', salary: '+5%', skills_match: ['Pedagogik', 'Inkludering', 'Mentorskap'], skills_gap: ['Specialpedagogik', 'Utredning'] }
             ],
             ekonom: [
-                { target: 'Controller', score: 88, substitutability: 85, demand: 'Hog', salary: '+25%', skills_match: ['Redovisning', 'Budgetering', 'Ekonomianalys', 'Excel'], skills_gap: ['Business Intelligence', 'Prognos'] },
+                { target: 'Controller', score: 88, substitutability: 85, demand: 'Hög', salary: '+25%', skills_match: ['Redovisning', 'Budgetering', 'Ekonomianalys', 'Excel'], skills_gap: ['Business Intelligence', 'Prognos'] },
                 { target: 'CFO-assistent', score: 82, substitutability: 78, demand: 'Medium', salary: '+30%', skills_match: ['Bokslut', 'Rapportering', 'Ekonomianalys'], skills_gap: ['Strategisk analys', 'Presentationsteknik'] },
                 { target: 'Revisor', score: 79, substitutability: 72, demand: 'Medium', salary: '+15%', skills_match: ['Redovisning', 'Revision', 'Bokslut'], skills_gap: ['Revisionsmetodik', 'ISA-standarder'] },
-                { target: 'Skattespecialist', score: 75, substitutability: 68, demand: 'Medium', salary: '+20%', skills_match: ['Skatt', 'Redovisning', 'Rapportering'], skills_gap: ['Skatteratt', 'Internationell skatt'] },
-                { target: 'Finansanalytiker', score: 72, substitutability: 62, demand: 'Hog', salary: '+35%', skills_match: ['Ekonomianalys', 'Excel', 'Rapportering'], skills_gap: ['Vardering', 'Finansiell modellering'] }
+                { target: 'Skattespecialist', score: 75, substitutability: 68, demand: 'Medium', salary: '+20%', skills_match: ['Skatt', 'Redovisning', 'Rapportering'], skills_gap: ['Skatterätt', 'Internationell skatt'] },
+                { target: 'Finansanalytiker', score: 72, substitutability: 62, demand: 'Hög', salary: '+35%', skills_match: ['Ekonomianalys', 'Excel', 'Rapportering'], skills_gap: ['Värdering', 'Finansiell modellering'] }
             ],
             marknadsforare: [
-                { target: 'Digital strateg', score: 85, substitutability: 80, demand: 'Hog', salary: '+25%', skills_match: ['Digital marknadsforing', 'SEO', 'Analys', 'Google Analytics'], skills_gap: ['Strategiutveckling', 'Affarsplanering'] },
-                { target: 'Content Manager', score: 82, substitutability: 78, demand: 'Hog', salary: '+15%', skills_match: ['Content', 'Copywriting', 'Sociala medier'], skills_gap: ['Teamledning', 'Redaktionell planering'] },
-                { target: 'Growth Hacker', score: 78, substitutability: 72, demand: 'Hog', salary: '+30%', skills_match: ['Digital marknadsforing', 'Analys', 'SEM'], skills_gap: ['A/B-testning', 'Produktutveckling'] },
-                { target: 'E-handelsansvarig', score: 75, substitutability: 68, demand: 'Hog', salary: '+20%', skills_match: ['Digital marknadsforing', 'Analys', 'SEO'], skills_gap: ['E-handelsplattformar', 'Logistik'] },
+                { target: 'Digital strateg', score: 85, substitutability: 80, demand: 'Hög', salary: '+25%', skills_match: ['Digital marknadsföring', 'SEO', 'Analys', 'Google Analytics'], skills_gap: ['Strategiutveckling', 'Affärsplanering'] },
+                { target: 'Content Manager', score: 82, substitutability: 78, demand: 'Hög', salary: '+15%', skills_match: ['Content', 'Copywriting', 'Sociala medier'], skills_gap: ['Teamledning', 'Redaktionell planering'] },
+                { target: 'Growth Hacker', score: 78, substitutability: 72, demand: 'Hög', salary: '+30%', skills_match: ['Digital marknadsföring', 'Analys', 'SEM'], skills_gap: ['A/B-testning', 'Produktutveckling'] },
+                { target: 'E-handelsansvarig', score: 75, substitutability: 68, demand: 'Hög', salary: '+20%', skills_match: ['Digital marknadsföring', 'Analys', 'SEO'], skills_gap: ['E-handelsplattformar', 'Logistik'] },
                 { target: 'PR-konsult', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Content', 'Copywriting', 'Sociala medier'], skills_gap: ['Mediarelationer', 'Krishantering'] }
             ]
+        };
+
+        // CV keyword mapping to skills and occupations
+        const cvKeywordMapping = {
+            // Tech keywords
+            'javascript': { skill: 'JavaScript', occupations: ['systemutvecklare'] },
+            'python': { skill: 'Python', occupations: ['systemutvecklare'] },
+            'java': { skill: 'Java', occupations: ['systemutvecklare'] },
+            'react': { skill: 'React', occupations: ['systemutvecklare'] },
+            'node': { skill: 'Node.js', occupations: ['systemutvecklare'] },
+            'sql': { skill: 'SQL', occupations: ['systemutvecklare', 'ekonom'] },
+            'git': { skill: 'Git', occupations: ['systemutvecklare'] },
+            'agil': { skill: 'Agil utveckling', occupations: ['systemutvecklare'] },
+            'scrum': { skill: 'Agil utveckling', occupations: ['systemutvecklare'] },
+
+            // Leadership keywords
+            'chef': { skill: 'Ledarskap', occupations: ['butikschef', 'lakare', 'larare'] },
+            'ledare': { skill: 'Ledarskap', occupations: ['butikschef'] },
+            'ledarskap': { skill: 'Ledarskap', occupations: ['butikschef'] },
+            'personal': { skill: 'Personalansvar', occupations: ['butikschef'] },
+            'budget': { skill: 'Budgetplanering', occupations: ['butikschef', 'ekonom'] },
+
+            // Healthcare keywords
+            'vård': { skill: 'Omvårdnad', occupations: ['underskoterska'] },
+            'patient': { skill: 'Patienttrygghet', occupations: ['underskoterska', 'lakare'] },
+            'medicin': { skill: 'Medicinhantering', occupations: ['underskoterska', 'lakare'] },
+            'sjukvård': { skill: 'Omvårdnad', occupations: ['underskoterska'] },
+            'omsorg': { skill: 'Omvårdnad', occupations: ['underskoterska'] },
+
+            // Marketing keywords
+            'marknadsföring': { skill: 'Digital marknadsföring', occupations: ['marknadsforare'] },
+            'seo': { skill: 'SEO', occupations: ['marknadsforare'] },
+            'content': { skill: 'Content', occupations: ['marknadsforare'] },
+            'sociala medier': { skill: 'Sociala medier', occupations: ['marknadsforare'] },
+            'google analytics': { skill: 'Google Analytics', occupations: ['marknadsforare'] },
+
+            // Finance keywords
+            'redovisning': { skill: 'Redovisning', occupations: ['ekonom'] },
+            'bokslut': { skill: 'Bokslut', occupations: ['ekonom'] },
+            'ekonomi': { skill: 'Ekonomianalys', occupations: ['ekonom'] },
+            'skatt': { skill: 'Skatt', occupations: ['ekonom'] },
+            'revision': { skill: 'Revision', occupations: ['ekonom'] },
+
+            // Teaching keywords
+            'undervisning': { skill: 'Pedagogik', occupations: ['larare'] },
+            'pedagogik': { skill: 'Pedagogik', occupations: ['larare'] },
+            'lärare': { skill: 'Pedagogik', occupations: ['larare'] },
+            'elev': { skill: 'Klassrumsledarskap', occupations: ['larare'] },
+
+            // Transport keywords
+            'körkort': { skill: 'Körkort CE', occupations: ['lastbilschaufor'] },
+            'transport': { skill: 'Logistik', occupations: ['lastbilschaufor'] },
+            'logistik': { skill: 'Logistik', occupations: ['lastbilschaufor'] },
+            'lastbil': { skill: 'Körkort CE', occupations: ['lastbilschaufor'] },
+
+            // General keywords
+            'excel': { skill: 'Excel', occupations: ['butikschef', 'ekonom'] },
+            'kundservice': { skill: 'Kundservice', occupations: ['butikschef'] },
+            'försäljning': { skill: 'Försäljning', occupations: ['butikschef'] },
+            'kommunikation': { skill: 'Kommunikation', occupations: ['underskoterska', 'larare'] }
         };
 
         // State
         let selectedOccupation = '';
         let selectedSkills = new Set();
+        let cvExtractedSkills = new Set();
 
         // DOM Elements
         const occupationSelect = document.getElementById('occupation');
@@ -758,6 +979,113 @@
         const runButton = document.getElementById('run-btn');
         const resultsContent = document.getElementById('results-content');
         const algoViz = document.getElementById('algo-viz');
+        const cvUploadArea = document.getElementById('cv-upload-area');
+        const cvFileInput = document.getElementById('cv-file');
+        const cvStatus = document.getElementById('cv-status');
+        const cvExtractedSkillsDiv = document.getElementById('cv-extracted-skills');
+        const cvSkillsList = document.getElementById('cv-skills-list');
+        const cvTip = document.getElementById('cv-tip');
+
+        // CV Upload Event Listeners
+        cvUploadArea.addEventListener('click', () => cvFileInput.click());
+        cvUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            cvUploadArea.classList.add('dragover');
+        });
+        cvUploadArea.addEventListener('dragleave', () => {
+            cvUploadArea.classList.remove('dragover');
+        });
+        cvUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            cvUploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                handleCVUpload(e.dataTransfer.files[0]);
+            }
+        });
+        cvFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleCVUpload(e.target.files[0]);
+            }
+        });
+
+        // Handle CV Upload
+        async function handleCVUpload(file) {
+            cvStatus.className = 'cv-status analyzing';
+            cvStatus.textContent = '🔄 Analyserar ditt CV...';
+
+            // Simulate reading file (in real app, would send to backend)
+            await sleep(1500);
+
+            // Simulate text extraction (demo uses filename + random skills)
+            const fileName = file.name.toLowerCase();
+            const extractedSkills = new Set();
+            let suggestedOccupation = '';
+            const occupationScores = {};
+
+            // Simulate finding keywords in CV
+            Object.entries(cvKeywordMapping).forEach(([keyword, data]) => {
+                // Simulate random matching (in real app, would parse actual CV text)
+                if (Math.random() > 0.6 || fileName.includes(keyword)) {
+                    extractedSkills.add(data.skill);
+                    data.occupations.forEach(occ => {
+                        occupationScores[occ] = (occupationScores[occ] || 0) + 1;
+                    });
+                }
+            });
+
+            // Find most likely occupation
+            let maxScore = 0;
+            Object.entries(occupationScores).forEach(([occ, score]) => {
+                if (score > maxScore) {
+                    maxScore = score;
+                    suggestedOccupation = occ;
+                }
+            });
+
+            // Add some occupation-specific skills
+            if (suggestedOccupation && skillsByOccupation[suggestedOccupation]) {
+                const occSkills = skillsByOccupation[suggestedOccupation];
+                const additionalSkills = occSkills.slice(0, 4);
+                additionalSkills.forEach(s => extractedSkills.add(s));
+            }
+
+            cvExtractedSkills = extractedSkills;
+
+            // Update UI
+            cvStatus.className = 'cv-status success';
+            cvStatus.textContent = `✅ CV analyserat: ${file.name}`;
+
+            cvExtractedSkillsDiv.classList.add('show');
+            cvSkillsList.innerHTML = Array.from(extractedSkills)
+                .map(s => `<span class="cv-skill-tag">${s}</span>`)
+                .join('');
+
+            // Show tip and auto-select occupation
+            if (suggestedOccupation) {
+                const occName = occupationSelect.querySelector(`option[value="${suggestedOccupation}"]`)?.textContent || suggestedOccupation;
+                cvTip.innerHTML = `💡 <strong>Tips:</strong> Baserat på ditt CV verkar du passa som <strong>${occName}</strong>. Vi har förvalt detta yrke och dina kompetenser åt dig!`;
+                cvTip.classList.add('show');
+
+                // Auto-select occupation and skills
+                occupationSelect.value = suggestedOccupation;
+                selectedOccupation = suggestedOccupation;
+                updateSkillsUI();
+
+                // Auto-select matching skills
+                extractedSkills.forEach(skill => {
+                    if (skillsByOccupation[suggestedOccupation]?.includes(skill)) {
+                        selectedSkills.add(skill);
+                    }
+                });
+                updateSelectedSkillsUI();
+                updateRunButton();
+
+                // Update skill tag styling
+                document.querySelectorAll('.skill-tag').forEach(tag => {
+                    tag.classList.toggle('selected', selectedSkills.has(tag.dataset.skill));
+                });
+            }
+        }
 
         // Event Listeners
         occupationSelect.addEventListener('change', (e) => {
@@ -802,10 +1130,10 @@
         // Update selected skills display
         function updateSelectedSkillsUI() {
             if (selectedSkills.size === 0) {
-                selectedSkillsList.innerHTML = '<span style="color: #999; font-size: 0.9em;">Klicka pa kompetenser ovan for att valja</span>';
+                selectedSkillsList.innerHTML = '<span style="color: #999; font-size: 0.9em;">Klicka på kompetenser ovan för att välja</span>';
             } else {
                 selectedSkillsList.innerHTML = Array.from(selectedSkills).map(skill =>
-                    `<span class="selected-skill">${skill} <span class="remove" onclick="toggleSkill('${skill}')">x</span></span>`
+                    `<span class="selected-skill">${skill} <span class="remove" onclick="toggleSkill('${skill}')">×</span></span>`
                 ).join('');
             }
         }
@@ -821,15 +1149,15 @@
             resultsContent.innerHTML = `
                 <div class="loading">
                     <div class="spinner"></div>
-                    <p>Kor matchningsalgoritm...</p>
+                    <p>Kör matchningsalgoritm...</p>
                 </div>
             `;
             algoViz.style.display = 'block';
 
             // Simulate algorithm steps
             await simulateStep(1, 'Expanderar kompetenser hierarkiskt', 120);
-            await simulateStep(2, 'Traverserar karriargrafen', 250);
-            await simulateStep(3, 'Beraknar composite scores', 180);
+            await simulateStep(2, 'Traverserar karriärgrafen', 250);
+            await simulateStep(3, 'Beräknar composite scores', 180);
             await simulateStep(4, 'Rankar och filtrerar resultat', 80);
 
             // Get results
@@ -860,7 +1188,7 @@
             icon.style.background = '#667eea';
             await sleep(duration);
             icon.classList.add('done');
-            icon.textContent = '';
+            icon.textContent = '✓';
             time.textContent = `${duration}ms`;
         }
 
@@ -874,9 +1202,9 @@
             if (results.length === 0) {
                 resultsContent.innerHTML = `
                     <div class="empty-state">
-                        <div class="icon">&#128533;</div>
+                        <div class="icon">😕</div>
                         <h3>Inga matchningar hittades</h3>
-                        <p>Prova att valja fler kompetenser.</p>
+                        <p>Prova att välja fler kompetenser.</p>
                     </div>
                 `;
                 return;
@@ -890,7 +1218,7 @@
 
             resultsContent.innerHTML = `
                 <div class="results-header">
-                    <h2>Karriarrekommendationer</h2>
+                    <h2>Karriärrekommendationer</h2>
                     <span class="results-count">${results.length} matchningar</span>
                 </div>
                 ${results.map((r, i) => `
@@ -914,17 +1242,17 @@
                             </div>
                             <div class="metric">
                                 <div class="metric-value">${r.demand}</div>
-                                <div class="metric-label">Efterfragan</div>
+                                <div class="metric-label">Efterfrågan</div>
                             </div>
                             <div class="metric">
                                 <div class="metric-value">${r.salary}</div>
-                                <div class="metric-label">Lonedelta</div>
+                                <div class="metric-label">Lönedelta</div>
                             </div>
                         </div>
 
                         <div class="progress-container">
                             <div class="progress-label">
-                                <span>Overgripande matchning</span>
+                                <span>Övergripande matchning</span>
                                 <span>${r.adjustedScore}%</span>
                             </div>
                             <div class="progress-bar">
@@ -935,11 +1263,11 @@
                         <div class="skill-gap">
                             <h4>Matchande kompetenser (${r.matchedSkills.length})</h4>
                             ${r.matchedSkills.map(s => `<span class="matching-skill">${s}</span>`).join('')}
-                            ${r.matchedSkills.length === 0 ? '<span style="color: #999; font-size: 0.85em;">Valj fler kompetenser for att se matchningar</span>' : ''}
+                            ${r.matchedSkills.length === 0 ? '<span style="color: #999; font-size: 0.85em;">Välj fler kompetenser för att se matchningar</span>' : ''}
                         </div>
 
                         <div class="skill-gap" style="margin-top: 10px;">
-                            <h4>Kompetenser du behover (${r.skills_gap.length})</h4>
+                            <h4>Kompetenser du behöver (${r.skills_gap.length})</h4>
                             ${r.skills_gap.map(s => `<span class="gap-skill">${s}</span>`).join('')}
                         </div>
                     </div>
