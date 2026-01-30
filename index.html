@@ -67,6 +67,43 @@
             background: #667eea;
         }
 
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 15px;
+            padding-left: 15px;
+            border-left: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .lang-toggle button {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle button:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .lang-toggle button.active {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        /* Language visibility */
+        [data-lang="en"] { display: none; }
+        body.lang-en [data-lang="sv"] { display: none; }
+        body.lang-en [data-lang="en"] { display: block; }
+        body.lang-en span[data-lang="en"],
+        body.lang-en a[data-lang="en"] { display: inline; }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -459,26 +496,37 @@
             <a href="index.html" class="active">TalentFlow</a>
             <a href="investors.html">For Investors</a>
             <a href="af-data.html">AF Data</a>
-            <a href="af-issues.html">AF:s Problem</a>
-            <a href="tech.html">Tech & Modeller</a>
+            <a href="af-issues.html" data-lang="sv">AF:s Problem</a>
+            <a href="af-issues.html" data-lang="en">AF Issues</a>
+            <a href="tech.html" data-lang="sv">Tech & Modeller</a>
+            <a href="tech.html" data-lang="en">Tech & Models</a>
             <a href="cityiq.html">CityIQ</a>
+            <div class="lang-toggle">
+                <button id="lang-sv" class="active">SV</button>
+                <button id="lang-en">EN</button>
+            </div>
         </div>
     </nav>
 
     <section class="hero">
         <div class="container">
             <h1>TalentFlow</h1>
-            <p class="subtitle">Hitta karriärvägar du aldrig visste fanns</p>
-            <p class="tagline">
+            <p class="subtitle" data-lang="sv">Hitta karriärvägar du aldrig visste fanns</p>
+            <p class="subtitle" data-lang="en">Discover career paths you never knew existed</p>
+            <p class="tagline" data-lang="sv">
                 Traditionell jobbsökning matchar jobbtitlar. Vi matchar kompetenser.
                 Baserat på Arbetsförmedlingens 51,000+ förberäknade karriärövergångar.
+            </p>
+            <p class="tagline" data-lang="en">
+                Traditional job search matches job titles. We match skills.
+                Based on the Swedish Employment Agency's 51,000+ pre-calculated career transitions.
             </p>
         </div>
     </section>
 
     <section class="problem-section">
         <div class="container">
-            <div class="problem-box">
+            <div class="problem-box" data-lang="sv">
                 <h2>Problemet med dagens jobbsökning</h2>
                 <p>
                     Du söker "butikschef" och får förslag på... butikschefsjobb. Men dina kompetenser
@@ -487,8 +535,17 @@
                     Det ser du aldrig.
                 </p>
             </div>
+            <div class="problem-box" data-lang="en">
+                <h2>The Problem with Today's Job Search</h2>
+                <p>
+                    You search for "store manager" and get suggestions for... store manager jobs. But your skills
+                    (leadership, logistics, customer service, budget responsibility) match 85% of the requirements for
+                    "healthcare operations manager" – a job with higher salary and better future prospects.
+                    You never see it.
+                </p>
+            </div>
 
-            <div class="solution-box">
+            <div class="solution-box" data-lang="sv">
                 <h2>TalentFlow-lösningen</h2>
                 <p>
                     Vi använder Arbetsförmedlingens egen substitutability-data – 51,000+ förberäknade
@@ -496,38 +553,42 @@
                     inte AI-hallucinationer. Riktig data om vilka jobb som faktiskt matchar dina skills.
                 </p>
             </div>
+            <div class="solution-box" data-lang="en">
+                <h2>The TalentFlow Solution</h2>
+                <p>
+                    We use the Swedish Employment Agency's own substitutability data – 51,000+ pre-calculated
+                    transitions between occupations based on actual skill overlap. Not guesswork,
+                    not AI hallucinations. Real data about which jobs actually match your skills.
+                </p>
+            </div>
         </div>
     </section>
 
     <section class="demo-section">
         <div class="container">
-            <h2 class="section-title">Se hur det fungerar</h2>
+            <h2 class="section-title" data-lang="sv">Se hur det fungerar</h2>
+            <h2 class="section-title" data-lang="en">See how it works</h2>
 
             <div class="demo-container">
-                <div class="demo-card">
+                <div class="demo-card" data-lang="sv">
                     <h3>Exempel: Från Butikschef till Verksamhetsledare</h3>
-
                     <div class="career-example">
                         <div class="career-box current">
                             <div class="label">Nuvarande yrke</div>
                             <h4>Butikschef</h4>
                             <p style="color: #666; font-size: 0.9em;">Detaljhandel</p>
                         </div>
-
                         <div class="arrow">→</div>
-
                         <div class="career-box target">
                             <div class="label">Rekommenderad övergång</div>
                             <h4>Verksamhetsledare, vård</h4>
                             <p style="color: #666; font-size: 0.9em;">Hälso- och sjukvård</p>
                         </div>
                     </div>
-
                     <div class="match-score">
                         <div class="percentage">85%</div>
                         <div class="label">Kompetensöverlappling enligt AF:s data</div>
                     </div>
-
                     <div class="benefits-grid">
                         <div class="benefit-item">
                             <div class="value positive">+7,000 kr</div>
@@ -547,13 +608,53 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="demo-card" data-lang="en">
+                    <h3>Example: From Store Manager to Healthcare Operations Manager</h3>
+                    <div class="career-example">
+                        <div class="career-box current">
+                            <div class="label">Current occupation</div>
+                            <h4>Store Manager</h4>
+                            <p style="color: #666; font-size: 0.9em;">Retail</p>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="career-box target">
+                            <div class="label">Recommended transition</div>
+                            <h4>Healthcare Ops Manager</h4>
+                            <p style="color: #666; font-size: 0.9em;">Healthcare sector</p>
+                        </div>
+                    </div>
+                    <div class="match-score">
+                        <div class="percentage">85%</div>
+                        <div class="label">Skill overlap according to government data</div>
+                    </div>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="value positive">+$700</div>
+                            <div class="desc">Potential salary increase/month</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="value">HIGH</div>
+                            <div class="desc">Demand in Stockholm</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="value">400h</div>
+                            <div class="desc">Training to close gap</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="value">3</div>
+                            <div class="desc">Missing skills</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="features-section">
         <div class="container">
-            <h2 class="section-title">Vad TalentFlow ger dig</h2>
+            <h2 class="section-title" data-lang="sv">Vad TalentFlow ger dig</h2>
+            <h2 class="section-title" data-lang="en">What TalentFlow gives you</h2>
 
             <div class="features-grid">
                 <div class="feature-card">
@@ -639,5 +740,34 @@
             </p>
         </div>
     </footer>
+
+    <!-- Language Toggle Script -->
+    <script>
+        // Language toggle functionality
+        const langSV = document.getElementById('lang-sv');
+        const langEN = document.getElementById('lang-en');
+
+        // Check saved preference
+        const savedLang = localStorage.getItem('nordiqflow-lang') || 'sv';
+        if (savedLang === 'en') {
+            document.body.classList.add('lang-en');
+            langEN.classList.add('active');
+            langSV.classList.remove('active');
+        }
+
+        langSV.addEventListener('click', () => {
+            document.body.classList.remove('lang-en');
+            langSV.classList.add('active');
+            langEN.classList.remove('active');
+            localStorage.setItem('nordiqflow-lang', 'sv');
+        });
+
+        langEN.addEventListener('click', () => {
+            document.body.classList.add('lang-en');
+            langEN.classList.add('active');
+            langSV.classList.remove('active');
+            localStorage.setItem('nordiqflow-lang', 'en');
+        });
+    </script>
 </body>
 </html>
