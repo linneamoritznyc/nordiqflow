@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Algoritmen (Djupdykning)</title>
+    <meta name="description" content="Matematisk djupdykning i NordiqFlow: scoring-formler, graf-traversering, substitutability-beräkningar och prediktiva modeller.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.3);
+            border: 1px solid #667eea;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section.white {
+            background: white;
+        }
+
+        .section.gray {
+            background: #f8f9fa;
+        }
+
+        .section.dark {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section.dark .section-title {
+            color: white;
+        }
+
+        /* Math Formula Boxes */
+        .formula-container {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            overflow-x: auto;
+        }
+
+        .formula-title {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .formula {
+            font-family: 'Times New Roman', 'Georgia', serif;
+            font-size: 1.4em;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 2;
+        }
+
+        .formula-small {
+            font-size: 1.1em;
+        }
+
+        .formula sub {
+            font-size: 0.7em;
+            vertical-align: sub;
+        }
+
+        .formula sup {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
+
+        .formula-explanation {
+            color: #aaa;
+            font-size: 0.95em;
+            margin-top: 20px;
+        }
+
+        .formula-explanation strong {
+            color: #667eea;
+        }
+
+        .variable-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .variable-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+        }
+
+        .variable-symbol {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2em;
+            font-style: italic;
+            color: #4ecdc4;
+            min-width: 30px;
+        }
+
+        .variable-desc {
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        /* Algorithm Cards */
+        .algo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+        }
+
+        .algo-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .algo-card p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .algo-card.highlight {
+            border-left-color: #27ae60;
+            background: linear-gradient(135deg, #f0fff4 0%, white 100%);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1a1a2e;
+            color: #a8e6cf;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .code-block .comment {
+            color: #6c757d;
+        }
+
+        .code-block .keyword {
+            color: #ff6b6b;
+        }
+
+        .code-block .string {
+            color: #ffd93d;
+        }
+
+        .code-block .number {
+            color: #4ecdc4;
+        }
+
+        .code-block .function {
+            color: #74b9ff;
+        }
+
+        /* Matrix Display */
+        .matrix-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .matrix {
+            display: inline-block;
+            padding: 20px 10px;
+            position: relative;
+        }
+
+        .matrix::before,
+        .matrix::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .matrix::before {
+            left: 0;
+            border-right: none;
+        }
+
+        .matrix::after {
+            right: 0;
+            border-left: none;
+        }
+
+        .matrix-grid {
+            display: grid;
+            gap: 10px;
+            font-family: 'Times New Roman', serif;
+            color: white;
+        }
+
+        .matrix-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .matrix-grid.cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .matrix-cell {
+            text-align: center;
+            padding: 5px 15px;
+            font-size: 1.1em;
+        }
+
+        .matrix-label {
+            color: #667eea;
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Graph Theory Section */
+        .graph-notation {
+            background: #2c3e50;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .graph-notation h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .notation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .notation-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .notation-symbol {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.5em;
+            color: #4ecdc4;
+            margin-bottom: 10px;
+        }
+
+        .notation-name {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notation-desc {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+
+        /* Step by Step */
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .step-content h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* Complexity Table */
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .complexity-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .complexity-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .complexity-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .complexity-table code {
+            background: #e8f4ff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Probability Section */
+        .prob-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 30px;
+            color: white;
+            margin: 30px 0;
+        }
+
+        .prob-box h3 {
+            margin-bottom: 20px;
+        }
+
+        .prob-formula {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.3em;
+            margin: 15px 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .formula {
+                font-size: 1em;
+            }
+
+            .step-item {
+                flex-direction: column;
+            }
+
+            .step-number {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html">For Investors</a>
+            <a href="af-data.html">AF Data</a>
+            <a href="af-issues.html">AF:s Problem</a>
+            <a href="tech.html">Tech & Modeller</a>
+            <a href="algoritmen.html" class="active">Algoritmen</a>
+            <a href="research.html">Forskning</a>
+            <a href="demo.html">Live Demo</a>
+            <a href="cityiq.html">CityIQ</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">Matematisk Djupdykning</div>
+            <h1>Algoritmen</h1>
+            <p>Formell specifikation av NordiqFlow:s matchningsalgoritm, graf-traversering, och prediktiva modeller med fullstandig matematisk notation.</p>
+        </div>
+    </section>
+
+    <!-- Core Scoring Function -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Huvudscoring-Funktionen</h2>
+            <p class="section-subtitle">
+                Den centrala scoring-funktionen som rankar alla karriaroverganger for en given kandidat.
+            </p>
+
+            <div class="formula-container">
+                <div class="formula-title">Definition 1: Composite Career Score</div>
+                <div class="formula">
+                    S(c, t) = w<sub>1</sub> &middot; sub(c, t) + w<sub>2</sub> &middot; M(c, t) + w<sub>3</sub> &middot; D(t) + w<sub>4</sub> &middot; K(t) + w<sub>5</sub> &middot; &Delta;L(c, t)
+                </div>
+                <div class="formula-explanation">
+                    <strong>Dar:</strong>
+                </div>
+                <div class="variable-list">
+                    <div class="variable-item">
+                        <span class="variable-symbol">S(c,t)</span>
+                        <span class="variable-desc">Total score for kandidat c till malyrke t</span>
+                    </div>
+                    <div class="variable-item">
+                        <span class="variable-symbol">sub(c,t)</span>
+                        <span class="variable-desc">Substitutability-varde fran AF (0-100)</span>
+                    </div>
+                    <div class="variable-item">
+                        <span class="variable-symbol">M(c,t)</span>
+                        <span class="variable-desc">Skill match-procent</span>
+                    </div>
+                    <div class="variable-item">
+                        <span class="variable-symbol">D(t)</span>
+                        <span class="variable-desc">Efterfrageprognos (Yrkesbarometer)</span>
+                    </div>
+                    <div class="variable-item">
+                        <span class="variable-symbol">K(t)</span>
+                        <span class="variable-desc">Nuvarande marknadssituation</span>
+                    </div>
+                    <div class="variable-item">
+                        <span class="variable-symbol">&Delta;L(c,t)</span>
+                        <span class="variable-desc">Normaliserad loneskillnad</span>
+                    </div>
+                </div>
+
+                <div class="formula" style="margin-top: 30px;">
+                    <strong style="color: #667eea;">Standardvikter:</strong><br>
+                    w = [0.30, 0.30, 0.20, 0.10, 0.10]<sup>T</sup> &nbsp;&nbsp; dar &nbsp;&nbsp; &Sigma;w<sub>i</sub> = 1
+                </div>
+            </div>
+
+            <div class="algo-card highlight">
+                <h3>Varfor dessa vikter?</h3>
+                <p>
+                    Substitutability (w<sub>1</sub>=30%) och Skill Match (w<sub>2</sub>=30%) ar karnmetrikerna - de mater
+                    <strong>faktisk kompetensoverlapp</strong>. Efterfrageprognos (w<sub>3</sub>=20%) saker att vi
+                    rekommenderar yrken med <strong>framtida anstallningsbarhet</strong>. Lonedelta (w<sub>5</sub>=10%)
+                    ger ekonomiskt incitament utan att dominera rekommendationerna.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skill Matching Mathematics -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Skill Matching: Mangdlara</h2>
+            <p class="section-subtitle">
+                Berakning av kompetensoverlapp med hjararkisk expansion.
+            </p>
+
+            <div class="formula-container">
+                <div class="formula-title">Definition 2: Skill Match Score</div>
+                <div class="formula">
+                    M(c, t) = |S<sub>c</sub> &cap; R<sub>t</sub>| / |R<sub>t</sub>|
+                </div>
+                <div class="formula-explanation">
+                    <strong>Dar:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><em>S<sub>c</sub></em> = Mangden av kandidatens kompetenser (concept_ids)</li>
+                        <li><em>R<sub>t</sub></em> = Mangden av malyrkets kravda kompetenser</li>
+                        <li>|&middot;| = Kardinalitet (antal element)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <h3>Hierarkisk Expansion</h3>
+                <p>
+                    For att hantera granularitetsgapet expanderar vi kandidatens kompetenser uppat i taxonomin:
+                </p>
+                <div class="formula-container" style="margin: 20px 0;">
+                    <div class="formula formula-small">
+                        S<sub>c</sub><sup>*</sup> = S<sub>c</sub> &cup; { parent(s) : s &isin; S<sub>c</sub> } &cup; { parent(parent(s)) : s &isin; S<sub>c</sub> }
+                    </div>
+                </div>
+                <p>
+                    <strong>Exempel:</strong> Om kandidaten har "Google Ads" expanderar vi till:
+                    <code>{"Google Ads", "PPC", "Digital Marketing", "Marketing"}</code>
+                </p>
+            </div>
+
+            <div class="code-block">
+<span class="comment"># Implementering av hierarkisk skill-expansion</span>
+<span class="keyword">def</span> <span class="function">expand_skills</span>(skills: Set[str], taxonomy: Graph, max_depth: int = <span class="number">2</span>) -> Set[str]:
+    expanded = set(skills)
+    current_level = skills
+
+    <span class="keyword">for</span> depth <span class="keyword">in</span> range(max_depth):
+        parents = set()
+        <span class="keyword">for</span> skill <span class="keyword">in</span> current_level:
+            <span class="keyword">if</span> taxonomy.has_parent(skill):
+                parents.add(taxonomy.get_parent(skill))
+        expanded |= parents
+        current_level = parents
+
+    <span class="keyword">return</span> expanded
+
+<span class="comment"># Berakna skill match med expansion</span>
+<span class="keyword">def</span> <span class="function">skill_match</span>(candidate_skills, job_requirements, taxonomy):
+    expanded = expand_skills(candidate_skills, taxonomy)
+    intersection = expanded & job_requirements
+    <span class="keyword">return</span> len(intersection) / len(job_requirements) <span class="keyword">if</span> job_requirements <span class="keyword">else</span> <span class="number">0</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Graph Traversal -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Graf-Traversering</h2>
+            <p class="section-subtitle">
+                Karriaroverganger modelleras som en viktad riktad graf.
+            </p>
+
+            <div class="graph-notation">
+                <h3>Grafnotation</h3>
+                <div class="notation-grid">
+                    <div class="notation-item">
+                        <div class="notation-symbol">G = (V, E)</div>
+                        <div class="notation-name">Karriargrafen</div>
+                        <div class="notation-desc">V = yrken, E = overgangsmojligheter</div>
+                    </div>
+                    <div class="notation-item">
+                        <div class="notation-symbol">w(e)</div>
+                        <div class="notation-name">Kantvikt</div>
+                        <div class="notation-desc">Substitutability-varde (25, 50, 75)</div>
+                    </div>
+                    <div class="notation-item">
+                        <div class="notation-symbol">N(v)</div>
+                        <div class="notation-name">Grannar</div>
+                        <div class="notation-desc">Direkt narbara yrken</div>
+                    </div>
+                    <div class="notation-item">
+                        <div class="notation-symbol">d(u,v)</div>
+                        <div class="notation-name">Avstand</div>
+                        <div class="notation-desc">Kortaste vagen i hopp</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formula-container">
+                <div class="formula-title">Definition 3: Viktad BFS (Breadth-First Search)</div>
+                <div class="formula formula-small">
+                    Kandidater(c, k) = { v &isin; V : d(occ(c), v) &le; k &and; &Pi;<sub>e &isin; path</sub> w(e) &ge; &theta; }
+                </div>
+                <div class="formula-explanation">
+                    <strong>Tolkning:</strong> Alla yrken v som kan nas fran kandidatens nuvarande yrke inom k hopp,
+                    dar den kumulativa substitutability-produkten overskrider troskel &theta;.
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <h3>Traverseringsalgoritm</h3>
+                <div class="code-block">
+<span class="comment"># Modifierad BFS med viktade kanter</span>
+<span class="keyword">def</span> <span class="function">find_career_paths</span>(graph, start_occupation, max_hops=<span class="number">2</span>, min_score=<span class="number">0.25</span>):
+    results = []
+    queue = [(start_occupation, <span class="number">1.0</span>, [])]  <span class="comment"># (node, cumulative_score, path)</span>
+    visited = {start_occupation}
+
+    <span class="keyword">while</span> queue:
+        current, score, path = queue.pop(<span class="number">0</span>)
+
+        <span class="keyword">for</span> neighbor, edge_weight <span class="keyword">in</span> graph.get_transitions(current):
+            new_score = score * (edge_weight / <span class="number">100</span>)  <span class="comment"># Normalize 0-1</span>
+
+            <span class="keyword">if</span> neighbor <span class="keyword">not in</span> visited <span class="keyword">and</span> new_score >= min_score:
+                new_path = path + [(current, neighbor, edge_weight)]
+
+                <span class="keyword">if</span> len(new_path) <= max_hops:
+                    results.append({
+                        <span class="string">'target'</span>: neighbor,
+                        <span class="string">'path_score'</span>: new_score,
+                        <span class="string">'path'</span>: new_path
+                    })
+                    visited.add(neighbor)
+                    queue.append((neighbor, new_score, new_path))
+
+    <span class="keyword">return</span> sorted(results, key=<span class="keyword">lambda</span> x: x[<span class="string">'path_score'</span>], reverse=<span class="keyword">True</span>)
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 20px; color: #2c3e50;">Komplexitetsanalys</h3>
+            <table class="complexity-table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Tidskomplexitet</th>
+                    <th>Kommentar</th>
+                </tr>
+                <tr>
+                    <td>BFS traversering</td>
+                    <td><code>O(V + E)</code></td>
+                    <td>V=10,000 yrken, E=51,000 relationer</td>
+                </tr>
+                <tr>
+                    <td>Skill match (per yrke)</td>
+                    <td><code>O(|S| log |S|)</code></td>
+                    <td>Set intersection med sorterade listor</td>
+                </tr>
+                <tr>
+                    <td>Total ranking</td>
+                    <td><code>O(n log n)</code></td>
+                    <td>Sortering av kandidater</td>
+                </tr>
+                <tr>
+                    <td>Hierarkisk expansion</td>
+                    <td><code>O(|S| &middot; d)</code></td>
+                    <td>d = max djup (vanligtvis 2)</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- Substitutability Matrix -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Substitutability-Matrisen</h2>
+            <p class="section-subtitle">
+                Arbetsformedlingens forberaknade yrkes-till-yrkes-relationer som en adjacensmatris.
+            </p>
+
+            <div class="formula-container">
+                <div class="formula-title">Definition 4: Substitutability Matrix</div>
+                <div class="matrix-container">
+                    <div style="color: white; font-family: 'Times New Roman', serif; font-size: 1.2em;">
+                        A =
+                    </div>
+                    <div class="matrix">
+                        <div class="matrix-grid cols-4">
+                            <div class="matrix-cell">0</div>
+                            <div class="matrix-cell">75</div>
+                            <div class="matrix-cell">50</div>
+                            <div class="matrix-cell">...</div>
+                            <div class="matrix-cell">75</div>
+                            <div class="matrix-cell">0</div>
+                            <div class="matrix-cell">25</div>
+                            <div class="matrix-cell">...</div>
+                            <div class="matrix-cell">50</div>
+                            <div class="matrix-cell">25</div>
+                            <div class="matrix-cell">0</div>
+                            <div class="matrix-cell">...</div>
+                            <div class="matrix-cell">...</div>
+                            <div class="matrix-cell">...</div>
+                            <div class="matrix-cell">...</div>
+                            <div class="matrix-cell">0</div>
+                        </div>
+                    </div>
+                    <div style="color: white; font-family: 'Times New Roman', serif;">
+                        &isin; R<sup>n&times;n</sup>
+                    </div>
+                </div>
+                <div class="matrix-label" style="color: #aaa;">
+                    n = 10,000+ yrken | A<sub>ij</sub> &isin; {0, 25, 50, 75}
+                </div>
+
+                <div class="formula-explanation" style="margin-top: 30px;">
+                    <strong>Egenskaper:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Matrisen ar <em>icke-symmetrisk</em>: A<sub>ij</sub> &ne; A<sub>ji</sub> i allmanhet</li>
+                        <li>Diagonal: A<sub>ii</sub> = 0 (ingen overgang till samma yrke)</li>
+                        <li>Gles matris: ~51,000 icke-noll element av 100M mojliga</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <h3>Icke-symmetri: Varfor riktning spelar roll</h3>
+                <p>
+                    En <strong>Butikschef</strong> har hog substitutability mot <strong>Verksamhetsledare</strong> (A<sub>butik,verk</sub> = 75),
+                    men omvant ar det lagre (A<sub>verk,butik</sub> = 50). Detta beror pa att:
+                </p>
+                <ul style="margin: 15px 0 0 20px; color: #555;">
+                    <li>Butikschefen har ledarskap + kundfokus + saljkunskap</li>
+                    <li>Verksamhetsledaren har mer specifik vardkompetens</li>
+                    <li>Det ar lattare att <em>generalisera</em> an att <em>specialisera</em></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Predictive Models -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Prediktiva Modeller</h2>
+            <p class="section-subtitle">
+                Efterfrageprediktion och loneprognoser.
+            </p>
+
+            <div class="prob-box">
+                <h3>Efterfrageprognos: Bayesiansk Uppdatering</h3>
+                <div class="prob-formula">
+                    P(D<sub>t+1</sub> | data) = P(data | D<sub>t+1</sub>) &middot; P(D<sub>t+1</sub>) / P(data)
+                </div>
+                <p style="margin-top: 15px; opacity: 0.9;">
+                    Vi kombinerar Yrkesbarometerns 5-ars prognos (prior) med realtidsdata fran
+                    JobStream API:t (likelihood) for att fa uppdaterade efterfrageprognoser.
+                </p>
+            </div>
+
+            <div class="formula-container">
+                <div class="formula-title">Definition 5: Normaliserat Lonedelta</div>
+                <div class="formula">
+                    &Delta;L(c, t) = (L<sub>t</sub> - L<sub>c</sub>) / &sigma;<sub>L</sub>
+                </div>
+                <div class="formula-explanation">
+                    <strong>Dar:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>L<sub>t</sub> = Medianlone for malyrket</li>
+                        <li>L<sub>c</sub> = Kandidatens nuvarande (uppskattade) lone</li>
+                        <li>&sigma;<sub>L</sub> = Standardavvikelse for loneskillnader (for normalisering)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-container" style="margin-top: 40px;">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Data Aggregering</h4>
+                        <p>
+                            Varje natt aggregerar vi jobblistningar fran JobSearch API och beraknar
+                            antal lediga jobb per yrke (SSYK-kod) och region (NUTS-3).
+                        </p>
+                        <code>demand[ssyk][region] = count(active_listings)</code>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Trendanalys</h4>
+                        <p>
+                            Med 10+ ar av historisk data (Historical Ads API) beraknar vi trender
+                            med exponentiell utjamning:
+                        </p>
+                        <div class="formula-container" style="margin: 10px 0; padding: 15px;">
+                            <div class="formula formula-small" style="padding: 10px;">
+                                T<sub>t</sub> = &alpha; &middot; D<sub>t</sub> + (1 - &alpha;) &middot; T<sub>t-1</sub>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Ensemble-prediktion</h4>
+                        <p>
+                            Slutlig efterfrageprognos kombinerar tre kallor:
+                        </p>
+                        <ul style="margin: 10px 0 0 20px; color: #555;">
+                            <li>Yrkesbarometerns expertbedomning (40%)</li>
+                            <li>Historisk trend (35%)</li>
+                            <li>Realtids-momentum (25%)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Algorithm -->
+    <section class="section dark">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Komplett Algoritmflode</h2>
+
+            <div class="code-block" style="background: #0d1117;">
+<span class="comment"># NordiqFlow - Huvudalgoritm (pseudokod)</span>
+
+<span class="keyword">def</span> <span class="function">recommend_careers</span>(candidate: Candidate, top_k: int = <span class="number">10</span>) -> List[Recommendation]:
+    <span class="comment">"""
+    Huvudfunktion for karriarrekommendationer.
+
+    Args:
+        candidate: Kandidatobjekt med skills, nuvarande yrke, lon
+        top_k: Antal rekommendationer att returnera
+
+    Returns:
+        Lista av Recommendation-objekt sorterade efter score
+    """</span>
+
+    <span class="comment"># Steg 1: Expandera kandidatens kompetenser hierarkiskt</span>
+    expanded_skills = expand_skills(candidate.skills, taxonomy, max_depth=<span class="number">2</span>)
+
+    <span class="comment"># Steg 2: Hitta potentiella malyrken via graf-traversering</span>
+    potential_targets = find_career_paths(
+        graph=substitutability_graph,
+        start=candidate.current_occupation,
+        max_hops=<span class="number">2</span>,
+        min_score=<span class="number">0.25</span>
+    )
+
+    <span class="comment"># Steg 3: Berakna composite score for varje malyrke</span>
+    scored_targets = []
+    <span class="keyword">for</span> target <span class="keyword">in</span> potential_targets:
+        score = compute_score(
+            sub=target.substitutability,
+            match=skill_match(expanded_skills, target.required_skills),
+            demand=get_demand_forecast(target.occupation_id),
+            market=get_current_market(target.occupation_id),
+            salary_delta=normalize_salary_delta(candidate.salary, target.median_salary)
+        )
+        scored_targets.append((target, score))
+
+    <span class="comment"># Steg 4: Sortera och returnera top-k</span>
+    scored_targets.sort(key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>], reverse=<span class="keyword">True</span>)
+
+    <span class="keyword">return</span> [
+        Recommendation(
+            occupation=t.occupation,
+            score=s,
+            skill_gap=compute_gap(expanded_skills, t.required_skills),
+            training_time=estimate_training(gap)
+        )
+        <span class="keyword">for</span> t, s <span class="keyword">in</span> scored_targets[:top_k]
+    ]
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="tech.html">Tech Overview</a> |
+                <a href="research.html">Forskningsgrund</a>
+            </p>
+            <p style="margin-top: 15px; opacity: 0.7; font-size: 0.9em;">
+                Akademisk bakgrund: ORCID <a href="https://orcid.org/0009-0004-9742-8608" target="_blank">0009-0004-9742-8608</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

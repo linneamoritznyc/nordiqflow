@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordiqFlow - Live Demo</title>
+    <meta name="description" content="Testa NordiqFlow:s karriarmatchning live. Valj ditt yrke och kompetenser for att se personliga karriarrekommendationer.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        /* Demo Container */
+        .demo-section {
+            padding: 40px 20px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Input Panel */
+        .input-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+        }
+
+        .input-panel h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.4em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #555;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Skills Tags */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: #f0f4ff;
+            color: #667eea;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-tag:hover {
+            background: #e0e8ff;
+        }
+
+        .skill-tag.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .selected-skills {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 60px;
+        }
+
+        .selected-skills h4 {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .selected-skill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #27ae60;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 3px;
+        }
+
+        .selected-skill .remove {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .selected-skill .remove:hover {
+            opacity: 1;
+        }
+
+        /* Run Button */
+        .run-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .run-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .run-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            min-height: 600px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .results-header h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+
+        .results-count {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Result Cards */
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .result-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .result-card.high {
+            border-left-color: #27ae60;
+        }
+
+        .result-card.medium {
+            border-left-color: #f39c12;
+        }
+
+        .result-card.low {
+            border-left-color: #e74c3c;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .result-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .result-score {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .result-score.high { color: #27ae60; }
+        .result-score.medium { color: #f39c12; }
+        .result-score.low { color: #e74c3c; }
+
+        .result-subtitle {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 3px;
+        }
+
+        .result-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .metric-label {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        /* Skill Gap */
+        .skill-gap {
+            margin-top: 15px;
+        }
+
+        .skill-gap h4 {
+            color: #555;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .gap-skill {
+            display: inline-block;
+            background: #ffebee;
+            color: #c62828;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 3px;
+        }
+
+        .matching-skill {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 3px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.high { background: linear-gradient(90deg, #27ae60, #2ecc71); }
+        .progress-fill.medium { background: linear-gradient(90deg, #f39c12, #f1c40f); }
+        .progress-fill.low { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #888;
+        }
+
+        .empty-state .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e0e0e0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Algorithm Visualization */
+        .algo-viz {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            color: white;
+        }
+
+        .algo-viz h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .algo-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .algo-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+
+        .step-icon.done {
+            background: #27ae60;
+        }
+
+        .step-text {
+            flex: 1;
+            font-size: 0.95em;
+        }
+
+        .step-time {
+            color: #667eea;
+            font-size: 0.85em;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-panel {
+                position: static;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html">For Investors</a>
+            <a href="af-data.html">AF Data</a>
+            <a href="af-issues.html">AF:s Problem</a>
+            <a href="tech.html">Tech & Modeller</a>
+            <a href="algoritmen.html">Algoritmen</a>
+            <a href="research.html">Forskning</a>
+            <a href="demo.html" class="active">Live Demo</a>
+            <a href="cityiq.html">CityIQ</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">Interaktiv Demonstration</div>
+            <h1>Live Demo</h1>
+            <p>Testa NordiqFlow:s karriarmatchning. Valj ditt yrke och kompetenser for att se personliga rekommendationer.</p>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="container">
+            <div class="demo-grid">
+                <!-- Input Panel -->
+                <div class="input-panel">
+                    <h2>Din Profil</h2>
+
+                    <div class="form-group">
+                        <label for="occupation">Nuvarande yrke</label>
+                        <select id="occupation">
+                            <option value="">Valj ditt yrke...</option>
+                            <option value="butikschef">Butikschef</option>
+                            <option value="systemutvecklare">Systemutvecklare</option>
+                            <option value="underskoterska">Underskoterska</option>
+                            <option value="lastbilschaufor">Lastbilschaufor</option>
+                            <option value="lakare">Lakare</option>
+                            <option value="larare">Larare</option>
+                            <option value="ekonom">Ekonom/Redovisningskonsult</option>
+                            <option value="marknadsforare">Marknadskommunikator</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Valj dina kompetenser</label>
+                        <div class="skills-container" id="available-skills">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="selected-skills">
+                            <h4>Valda kompetenser:</h4>
+                            <div id="selected-skills-list"></div>
+                        </div>
+                    </div>
+
+                    <button class="run-button" id="run-btn" disabled>
+                        Kor Matchning
+                    </button>
+
+                    <!-- Algorithm Visualization -->
+                    <div class="algo-viz" id="algo-viz" style="display: none;">
+                        <h3>Algoritmsteg</h3>
+                        <div class="algo-step">
+                            <div class="step-icon" id="step1-icon">1</div>
+                            <div class="step-text">Expanderar kompetenser hierarkiskt</div>
+                            <div class="step-time" id="step1-time">-</div>
+                        </div>
+                        <div class="algo-step">
+                            <div class="step-icon" id="step2-icon">2</div>
+                            <div class="step-text">Traverserar karriargrafen</div>
+                            <div class="step-time" id="step2-time">-</div>
+                        </div>
+                        <div class="algo-step">
+                            <div class="step-icon" id="step3-icon">3</div>
+                            <div class="step-text">Beraknar composite scores</div>
+                            <div class="step-time" id="step3-time">-</div>
+                        </div>
+                        <div class="algo-step">
+                            <div class="step-icon" id="step4-icon">4</div>
+                            <div class="step-text">Rankar och filtrerar resultat</div>
+                            <div class="step-time" id="step4-time">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel">
+                    <div id="results-content">
+                        <div class="empty-state">
+                            <div class="icon">&#128269;</div>
+                            <h3>Valj yrke och kompetenser</h3>
+                            <p>Fyll i din profil till vanster och klicka "Kor Matchning" for att se karriarrekommendationer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="algoritmen.html">Algoritmen</a> |
+                <a href="research.html">Forskning</a>
+            </p>
+            <p style="margin-top: 15px; opacity: 0.7; font-size: 0.9em;">
+                Demo anvander simulerad data baserad pa Arbetsformedlingens oppna API:er.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Skill database by occupation
+        const skillsByOccupation = {
+            butikschef: [
+                'Ledarskap', 'Personalansvar', 'Budgetplanering', 'Kundservice',
+                'Forsaljning', 'Lagerhantering', 'Schemaplanering', 'Konflikthantering',
+                'Kassa', 'Varuexponering', 'Excel', 'Ekonomistyrning'
+            ],
+            systemutvecklare: [
+                'JavaScript', 'Python', 'Java', 'SQL', 'Git', 'Agil utveckling',
+                'REST API', 'React', 'Node.js', 'DevOps', 'Testning', 'Systemdesign'
+            ],
+            underskoterska: [
+                'Omvardnad', 'Medicinhantering', 'Dokumentation', 'Vardplanering',
+                'Kommunikation', 'Patienttrygghet', 'Teamarbete', 'Stresshantering',
+                'Forflyttningsteknik', 'Saromlaggning', 'Hygien'
+            ],
+            lastbilschaufor: [
+                'Korkort CE', 'Farligt gods', 'Logistik', 'Kundkontakt',
+                'Lastning', 'Ruttplanering', 'Fordonsunderhall', 'Tidsplanering',
+                'Digital fardskrivare', 'YKB'
+            ],
+            lakare: [
+                'Diagnostik', 'Patientkommunikation', 'Medicinsk kunskap', 'Journalforing',
+                'Teamledning', 'Beslutsfattande', 'Etik', 'Forskning',
+                'Specialistkunskap', 'Handledning'
+            ],
+            larare: [
+                'Pedagogik', 'Amneskunskap', 'Bedomning', 'Klassrumsledarskap',
+                'Foraldrakontakt', 'Digitala verktyg', 'Inkludering', 'Konfliktlosning',
+                'Kursplanering', 'Mentorskap'
+            ],
+            ekonom: [
+                'Redovisning', 'Bokslut', 'Skatt', 'Excel', 'Budgetering',
+                'Ekonomianalys', 'SAP', 'Rapportering', 'Revision', 'Lonehantering'
+            ],
+            marknadsforare: [
+                'Digital marknadsforing', 'Content', 'SEO', 'SEM', 'Sociala medier',
+                'Copywriting', 'Analys', 'Google Analytics', 'E-postmarknadsforing', 'Varumarske'
+            ]
+        };
+
+        // Career transitions database (simplified)
+        const careerTransitions = {
+            butikschef: [
+                { target: 'Verksamhetsledare (Vard)', score: 87, substitutability: 85, demand: 'Hog', salary: '+15%', skills_match: ['Ledarskap', 'Personalansvar', 'Budgetplanering', 'Schemaplanering'], skills_gap: ['Vardkunskap', 'Medicinhantering'] },
+                { target: 'Projektledare', score: 84, substitutability: 82, demand: 'Hog', salary: '+20%', skills_match: ['Ledarskap', 'Budgetplanering', 'Konflikthantering', 'Ekonomistyrning'], skills_gap: ['Projektmetodik', 'Riskanalys'] },
+                { target: 'Hotellchef', score: 81, substitutability: 79, demand: 'Medium', salary: '+10%', skills_match: ['Ledarskap', 'Kundservice', 'Personalansvar', 'Schemaplanering'], skills_gap: ['Hotellsystem', 'Revenue management'] },
+                { target: 'Restaurangchef', score: 72, substitutability: 65, demand: 'Medium', salary: '+5%', skills_match: ['Ledarskap', 'Kundservice', 'Lagerhantering', 'Schemaplanering'], skills_gap: ['Livsmedelshantering', 'Menykostnad'] },
+                { target: 'HR-specialist', score: 68, substitutability: 52, demand: 'Medium', salary: '+8%', skills_match: ['Personalansvar', 'Konflikthantering', 'Schemaplanering'], skills_gap: ['Arbetsratt', 'Rekrytering', 'HR-system'] },
+                { target: 'Forsaljningschef', score: 64, substitutability: 55, demand: 'Medium', salary: '+25%', skills_match: ['Forsaljning', 'Ledarskap', 'Kundservice'], skills_gap: ['B2B-forsaljning', 'CRM', 'Pipeline management'] }
+            ],
+            systemutvecklare: [
+                { target: 'Tech Lead', score: 89, substitutability: 88, demand: 'Hog', salary: '+30%', skills_match: ['JavaScript', 'Systemdesign', 'Agil utveckling', 'Git'], skills_gap: ['Arkitektur', 'Mentorskap'] },
+                { target: 'DevOps Engineer', score: 82, substitutability: 78, demand: 'Hog', salary: '+15%', skills_match: ['Git', 'DevOps', 'Python', 'REST API'], skills_gap: ['Kubernetes', 'CI/CD', 'Infrastruktur'] },
+                { target: 'Data Engineer', score: 76, substitutability: 70, demand: 'Hog', salary: '+20%', skills_match: ['Python', 'SQL', 'Systemdesign'], skills_gap: ['ETL', 'Spark', 'Data pipelines'] },
+                { target: 'Product Owner', score: 65, substitutability: 55, demand: 'Medium', salary: '+10%', skills_match: ['Agil utveckling', 'Systemdesign'], skills_gap: ['Produktstrategi', 'Stakeholder management', 'Backlog'] },
+                { target: 'IT-konsult', score: 71, substitutability: 65, demand: 'Hog', salary: '+25%', skills_match: ['Systemdesign', 'Agil utveckling', 'Testning'], skills_gap: ['Presentationsteknik', 'Affarsforstaelse'] }
+            ],
+            underskoterska: [
+                { target: 'Sjukskoterska', score: 78, substitutability: 72, demand: 'Mycket hog', salary: '+35%', skills_match: ['Omvardnad', 'Dokumentation', 'Teamarbete', 'Patienttrygghet'], skills_gap: ['Sjukskoterskeutbildning', 'Avancerad medicinhantering'] },
+                { target: 'Vardbitradesansvarig', score: 85, substitutability: 82, demand: 'Hog', salary: '+15%', skills_match: ['Omvardnad', 'Teamarbete', 'Dokumentation', 'Medicinhantering'], skills_gap: ['Ledarskap', 'Schemaplanering'] },
+                { target: 'Vardadministrator', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Dokumentation', 'Vardplanering', 'Kommunikation'], skills_gap: ['Administration', 'Journalsystem'] },
+                { target: 'Medicisk sekreterare', score: 62, substitutability: 50, demand: 'Medium', salary: '+8%', skills_match: ['Dokumentation', 'Kommunikation'], skills_gap: ['Medicinsk terminologi', 'Diktering'] }
+            ],
+            lastbilschaufor: [
+                { target: 'Transportledare', score: 82, substitutability: 78, demand: 'Hog', salary: '+20%', skills_match: ['Logistik', 'Ruttplanering', 'Tidsplanering', 'Kundkontakt'], skills_gap: ['Transportplanering', 'Systemkunskap'] },
+                { target: 'Terminalarbetare (ledande)', score: 75, substitutability: 70, demand: 'Medium', salary: '+10%', skills_match: ['Lastning', 'Logistik', 'Tidsplanering'], skills_gap: ['Truckforkort', 'Lagerhantering'] },
+                { target: 'Budbilschauff (egenforetagare)', score: 70, substitutability: 65, demand: 'Hog', salary: 'Varierar', skills_match: ['Kundkontakt', 'Ruttplanering', 'Tidsplanering'], skills_gap: ['Foretagande', 'Bokforing'] },
+                { target: 'Maskinforare', score: 65, substitutability: 55, demand: 'Medium', salary: '+5%', skills_match: ['Fordonsunderhall', 'Tidsplanering'], skills_gap: ['Maskinkort', 'Anlaggning'] }
+            ],
+            lakare: [
+                { target: 'Verksamhetschef (Vard)', score: 85, substitutability: 80, demand: 'Hog', salary: '+10%', skills_match: ['Medicinsk kunskap', 'Teamledning', 'Beslutsfattande', 'Etik'], skills_gap: ['Ekonomistyrning', 'Personalansvar'] },
+                { target: 'Medicinsk radgivare', score: 78, substitutability: 72, demand: 'Medium', salary: '-5%', skills_match: ['Medicinsk kunskap', 'Kommunikation', 'Beslutsfattande'], skills_gap: ['Regulatorik', 'Dokumentation'] },
+                { target: 'Forskare (klinisk)', score: 82, substitutability: 75, demand: 'Medium', salary: '-10%', skills_match: ['Forskning', 'Medicinsk kunskap', 'Specialistkunskap'], skills_gap: ['Statistik', 'Publikation'] },
+                { target: 'Chefsoverl', score: 80, substitutability: 75, demand: 'Medium', salary: '+15%', skills_match: ['Diagnostik', 'Teamledning', 'Handledning'], skills_gap: ['Administration', 'Budget'] }
+            ],
+            larare: [
+                { target: 'Rektor', score: 75, substitutability: 68, demand: 'Medium', salary: '+40%', skills_match: ['Pedagogik', 'Klassrumsledarskap', 'Mentorskap'], skills_gap: ['Skolledning', 'Budget', 'Juridik'] },
+                { target: 'Utbildningskoordinator', score: 72, substitutability: 65, demand: 'Medium', salary: '+15%', skills_match: ['Pedagogik', 'Kursplanering', 'Digitala verktyg'], skills_gap: ['Projektledning', 'LMS-system'] },
+                { target: 'HR-utbildare', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Pedagogik', 'Kursplanering', 'Digitala verktyg'], skills_gap: ['HR-kunskap', 'Affarsforstaelse'] },
+                { target: 'Specialpedagog', score: 80, substitutability: 75, demand: 'Hog', salary: '+5%', skills_match: ['Pedagogik', 'Inkludering', 'Mentorskap'], skills_gap: ['Specialpedagogik', 'Utredning'] }
+            ],
+            ekonom: [
+                { target: 'Controller', score: 88, substitutability: 85, demand: 'Hog', salary: '+25%', skills_match: ['Redovisning', 'Budgetering', 'Ekonomianalys', 'Excel'], skills_gap: ['Business Intelligence', 'Prognos'] },
+                { target: 'CFO-assistent', score: 82, substitutability: 78, demand: 'Medium', salary: '+30%', skills_match: ['Bokslut', 'Rapportering', 'Ekonomianalys'], skills_gap: ['Strategisk analys', 'Presentationsteknik'] },
+                { target: 'Revisor', score: 79, substitutability: 72, demand: 'Medium', salary: '+15%', skills_match: ['Redovisning', 'Revision', 'Bokslut'], skills_gap: ['Revisionsmetodik', 'ISA-standarder'] },
+                { target: 'Skattespecialist', score: 75, substitutability: 68, demand: 'Medium', salary: '+20%', skills_match: ['Skatt', 'Redovisning', 'Rapportering'], skills_gap: ['Skatteratt', 'Internationell skatt'] },
+                { target: 'Finansanalytiker', score: 72, substitutability: 62, demand: 'Hog', salary: '+35%', skills_match: ['Ekonomianalys', 'Excel', 'Rapportering'], skills_gap: ['Vardering', 'Finansiell modellering'] }
+            ],
+            marknadsforare: [
+                { target: 'Digital strateg', score: 85, substitutability: 80, demand: 'Hog', salary: '+25%', skills_match: ['Digital marknadsforing', 'SEO', 'Analys', 'Google Analytics'], skills_gap: ['Strategiutveckling', 'Affarsplanering'] },
+                { target: 'Content Manager', score: 82, substitutability: 78, demand: 'Hog', salary: '+15%', skills_match: ['Content', 'Copywriting', 'Sociala medier'], skills_gap: ['Teamledning', 'Redaktionell planering'] },
+                { target: 'Growth Hacker', score: 78, substitutability: 72, demand: 'Hog', salary: '+30%', skills_match: ['Digital marknadsforing', 'Analys', 'SEM'], skills_gap: ['A/B-testning', 'Produktutveckling'] },
+                { target: 'E-handelsansvarig', score: 75, substitutability: 68, demand: 'Hog', salary: '+20%', skills_match: ['Digital marknadsforing', 'Analys', 'SEO'], skills_gap: ['E-handelsplattformar', 'Logistik'] },
+                { target: 'PR-konsult', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Content', 'Copywriting', 'Sociala medier'], skills_gap: ['Mediarelationer', 'Krishantering'] }
+            ]
+        };
+
+        // State
+        let selectedOccupation = '';
+        let selectedSkills = new Set();
+
+        // DOM Elements
+        const occupationSelect = document.getElementById('occupation');
+        const availableSkillsContainer = document.getElementById('available-skills');
+        const selectedSkillsList = document.getElementById('selected-skills-list');
+        const runButton = document.getElementById('run-btn');
+        const resultsContent = document.getElementById('results-content');
+        const algoViz = document.getElementById('algo-viz');
+
+        // Event Listeners
+        occupationSelect.addEventListener('change', (e) => {
+            selectedOccupation = e.target.value;
+            selectedSkills.clear();
+            updateSkillsUI();
+            updateSelectedSkillsUI();
+            updateRunButton();
+        });
+
+        runButton.addEventListener('click', runMatching);
+
+        // Update available skills based on occupation
+        function updateSkillsUI() {
+            const skills = skillsByOccupation[selectedOccupation] || [];
+            availableSkillsContainer.innerHTML = skills.map(skill =>
+                `<div class="skill-tag" data-skill="${skill}">${skill}</div>`
+            ).join('');
+
+            // Add click listeners
+            document.querySelectorAll('.skill-tag').forEach(tag => {
+                tag.addEventListener('click', () => toggleSkill(tag.dataset.skill));
+            });
+        }
+
+        // Toggle skill selection
+        function toggleSkill(skill) {
+            if (selectedSkills.has(skill)) {
+                selectedSkills.delete(skill);
+            } else {
+                selectedSkills.add(skill);
+            }
+            updateSelectedSkillsUI();
+            updateRunButton();
+
+            // Update tag styling
+            document.querySelectorAll('.skill-tag').forEach(tag => {
+                tag.classList.toggle('selected', selectedSkills.has(tag.dataset.skill));
+            });
+        }
+
+        // Update selected skills display
+        function updateSelectedSkillsUI() {
+            if (selectedSkills.size === 0) {
+                selectedSkillsList.innerHTML = '<span style="color: #999; font-size: 0.9em;">Klicka pa kompetenser ovan for att valja</span>';
+            } else {
+                selectedSkillsList.innerHTML = Array.from(selectedSkills).map(skill =>
+                    `<span class="selected-skill">${skill} <span class="remove" onclick="toggleSkill('${skill}')">x</span></span>`
+                ).join('');
+            }
+        }
+
+        // Update run button state
+        function updateRunButton() {
+            runButton.disabled = !selectedOccupation || selectedSkills.size === 0;
+        }
+
+        // Run matching algorithm
+        async function runMatching() {
+            // Show loading state
+            resultsContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Kor matchningsalgoritm...</p>
+                </div>
+            `;
+            algoViz.style.display = 'block';
+
+            // Simulate algorithm steps
+            await simulateStep(1, 'Expanderar kompetenser hierarkiskt', 120);
+            await simulateStep(2, 'Traverserar karriargrafen', 250);
+            await simulateStep(3, 'Beraknar composite scores', 180);
+            await simulateStep(4, 'Rankar och filtrerar resultat', 80);
+
+            // Get results
+            const results = careerTransitions[selectedOccupation] || [];
+
+            // Adjust scores based on selected skills
+            const adjustedResults = results.map(r => {
+                const matchedSkills = r.skills_match.filter(s => selectedSkills.has(s));
+                const matchRatio = matchedSkills.length / r.skills_match.length;
+                const adjustedScore = Math.round(r.score * (0.7 + 0.3 * matchRatio));
+                return {
+                    ...r,
+                    adjustedScore,
+                    matchedSkills,
+                    userSkillMatch: Math.round(matchRatio * 100)
+                };
+            }).sort((a, b) => b.adjustedScore - a.adjustedScore);
+
+            // Display results
+            displayResults(adjustedResults);
+        }
+
+        // Simulate algorithm step
+        async function simulateStep(stepNum, text, duration) {
+            const icon = document.getElementById(`step${stepNum}-icon`);
+            const time = document.getElementById(`step${stepNum}-time`);
+
+            icon.style.background = '#667eea';
+            await sleep(duration);
+            icon.classList.add('done');
+            icon.textContent = '';
+            time.textContent = `${duration}ms`;
+        }
+
+        // Sleep helper
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Display results
+        function displayResults(results) {
+            if (results.length === 0) {
+                resultsContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">&#128533;</div>
+                        <h3>Inga matchningar hittades</h3>
+                        <p>Prova att valja fler kompetenser.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const getScoreClass = (score) => {
+                if (score >= 80) return 'high';
+                if (score >= 60) return 'medium';
+                return 'low';
+            };
+
+            resultsContent.innerHTML = `
+                <div class="results-header">
+                    <h2>Karriarrekommendationer</h2>
+                    <span class="results-count">${results.length} matchningar</span>
+                </div>
+                ${results.map((r, i) => `
+                    <div class="result-card ${getScoreClass(r.adjustedScore)}">
+                        <div class="result-header">
+                            <div>
+                                <div class="result-title">${r.target}</div>
+                                <div class="result-subtitle">Rankning #${i + 1}</div>
+                            </div>
+                            <div class="result-score ${getScoreClass(r.adjustedScore)}">${r.adjustedScore}%</div>
+                        </div>
+
+                        <div class="result-metrics">
+                            <div class="metric">
+                                <div class="metric-value">${r.substitutability}%</div>
+                                <div class="metric-label">Substitutability</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${r.userSkillMatch}%</div>
+                                <div class="metric-label">Din Skill Match</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${r.demand}</div>
+                                <div class="metric-label">Efterfragan</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${r.salary}</div>
+                                <div class="metric-label">Lonedelta</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Overgripande matchning</span>
+                                <span>${r.adjustedScore}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill ${getScoreClass(r.adjustedScore)}" style="width: ${r.adjustedScore}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-gap">
+                            <h4>Matchande kompetenser (${r.matchedSkills.length})</h4>
+                            ${r.matchedSkills.map(s => `<span class="matching-skill">${s}</span>`).join('')}
+                            ${r.matchedSkills.length === 0 ? '<span style="color: #999; font-size: 0.85em;">Valj fler kompetenser for att se matchningar</span>' : ''}
+                        </div>
+
+                        <div class="skill-gap" style="margin-top: 10px;">
+                            <h4>Kompetenser du behover (${r.skills_gap.length})</h4>
+                            ${r.skills_gap.map(s => `<span class="gap-skill">${s}</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        // Initialize
+        updateSelectedSkillsUI();
+    </script>
+</body>
+</html>
