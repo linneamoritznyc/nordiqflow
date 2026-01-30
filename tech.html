@@ -412,6 +412,155 @@
             margin: 10px 0;
         }
 
+        /* Interactive Graph */
+        .graph-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin: 30px 0;
+        }
+
+        .graph-container h3 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .graph-container .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        #career-graph {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafbfc;
+        }
+
+        .graph-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item-graph {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .legend-color.high { background: #27ae60; }
+        .legend-color.medium { background: #f39c12; }
+        .legend-color.low { background: #e74c3c; }
+        .legend-color.current { background: #667eea; border: 3px solid #1a1a2e; }
+
+        .graph-instructions {
+            text-align: center;
+            color: #888;
+            font-size: 0.85em;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* Simplified Explanation */
+        .simple-section {
+            background: linear-gradient(135deg, #f0fff4 0%, #e8f8f0 100%);
+            border: 2px solid #27ae60;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .simple-section h2 {
+            color: #1e8449;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .simple-section .emoji-header {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .simple-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .simple-content p {
+            color: #444;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .simple-analogy {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #27ae60;
+        }
+
+        .simple-analogy h4 {
+            color: #1e8449;
+            margin-bottom: 10px;
+        }
+
+        .simple-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .simple-step {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .simple-step .number {
+            width: 40px;
+            height: 40px;
+            background: #27ae60;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        .simple-step h5 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .simple-step p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             nav {
@@ -746,6 +895,182 @@ transitions = substitutability_graph.get_transitions(
         </div>
     </section>
 
+    <!-- Interactive Graph Section -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Interaktiv Karriärgraf</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Klicka och dra i noderna för att utforska hur olika yrken är kopplade till varandra.
+                Varje linje representerar en möjlig karriärövergång baserat på kompetensöverlappar.
+            </p>
+
+            <div class="graph-container">
+                <h3>Karriärövergångar: Butikschef</h3>
+                <p class="subtitle">Exempel på hur en butikschef kan övergå till närliggande yrken</p>
+                <div id="career-graph"></div>
+                <div class="graph-legend">
+                    <div class="legend-item-graph">
+                        <div class="legend-color current"></div>
+                        <span>Ditt nuvarande yrke</span>
+                    </div>
+                    <div class="legend-item-graph">
+                        <div class="legend-color high"></div>
+                        <span>Hög matchning (75%+)</span>
+                    </div>
+                    <div class="legend-item-graph">
+                        <div class="legend-color medium"></div>
+                        <span>Medium matchning (50-74%)</span>
+                    </div>
+                    <div class="legend-item-graph">
+                        <div class="legend-color low"></div>
+                        <span>Låg matchning (25-49%)</span>
+                    </div>
+                </div>
+                <p class="graph-instructions">
+                    💡 Dra i noderna för att utforska grafen. Ju tjockare linje, desto starkare koppling.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Data Flows -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Så flödar data genom systemet</h2>
+
+            <div class="data-architecture">
+                <h3>Steg 1: Datainsamling</h3>
+                <p style="color: #555; margin-bottom: 15px;">
+                    Varje natt hämtar vi färska data från Arbetsförmedlingens öppna API:er.
+                    Detta inkluderar nya jobbannonser, uppdaterade prognoser, och taxonomi-ändringar.
+                </p>
+                <div class="code-block">
+<span class="comment"># Nattlig datahämtning (pseudo-kod)</span>
+<span class="keyword">for</span> api <span class="keyword">in</span> [taxonomy, jobsearch, forecasts]:
+    data = api.fetch_updates(since=yesterday)
+    database.upsert(data)
+    log.info(f<span class="string">"Updated {len(data)} records from {api.name}"</span>)
+                </div>
+            </div>
+
+            <div class="data-architecture">
+                <h3>Steg 2: Graf-byggning</h3>
+                <p style="color: #555; margin-bottom: 15px;">
+                    Vi bygger en kunskapsgraf där yrken är noder och kompetensrelationer är kanter.
+                    Denna graf möjliggör snabba traverseringar för karriärrekommendationer.
+                </p>
+                <div class="code-block">
+<span class="comment"># Grafstruktur (Neo4j Cypher)</span>
+(butikschef:Occupation {id: <span class="string">'SSYK_5221'</span>})
+    -[:CAN_TRANSITION {strength: <span class="number">85</span>}]->
+(verksamhetsledare:Occupation {id: <span class="string">'SSYK_1312'</span>})
+
+<span class="comment"># Traversera för att hitta karriärvägar</span>
+MATCH path = (start)-[:CAN_TRANSITION*<span class="number">1..3</span>]->(target)
+WHERE start.id = <span class="string">'current_occupation'</span>
+RETURN path ORDER BY relationship_strength DESC
+                </div>
+            </div>
+
+            <div class="data-architecture">
+                <h3>Steg 3: Realtids-scoring</h3>
+                <p style="color: #555; margin-bottom: 15px;">
+                    När en användare frågar om karriärvägar, kombinerar vi graf-traversering
+                    med realtidsdata om arbetsmarknad och löner för att ranka resultaten.
+                </p>
+                <div class="code-block">
+<span class="comment"># Realtids-scoring</span>
+<span class="keyword">def</span> score_career_path(current, target):
+    base_score = graph.get_substitutability(current, target)
+    demand_multiplier = forecasts.get_demand(target)
+    salary_delta = salaries.get_delta(current, target)
+
+    <span class="keyword">return</span> (
+        <span class="number">0.30</span> * base_score +
+        <span class="number">0.30</span> * skill_match +
+        <span class="number">0.20</span> * demand_multiplier +
+        <span class="number">0.10</span> * market_situation +
+        <span class="number">0.10</span> * normalize(salary_delta)
+    )
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ML & AI Section -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Maskininlärning & AI</h2>
+
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h3>NLP för CV-parsing</h3>
+                    <div class="year">JobAd Enrichments API</div>
+                    <p>
+                        Arbetsförmedlingen har tränat en NLP-modell på miljontals svenska
+                        jobbtexter. Vi använder deras API för att extrahera kompetenser
+                        från ostrukturerad text.
+                    </p>
+                    <div class="application">
+                        <h4>Exempel</h4>
+                        <p>
+                            "Jag har jobbat med Google Ads i 3 år" →
+                            Extraherar: <code>digital_marketing</code>, <code>google_ads</code>, <code>ppc</code>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Graf-baserad rekommendation</h3>
+                    <div class="year">Graph Neural Networks</div>
+                    <p>
+                        Karriärövergångar modelleras som en graf där vi kan använda
+                        algoritmer som PageRank och Node2Vec för att hitta dolda samband.
+                    </p>
+                    <div class="application">
+                        <h4>Teknisk approach</h4>
+                        <p>
+                            BFS-traversering med viktade kanter. Substitutability-värden
+                            fungerar som kantvikter för kortaste-väg-beräkningar.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Efterfrågeprediktion</h3>
+                    <div class="year">Time Series Forecasting</div>
+                    <p>
+                        Med 10+ års historisk jobbdata kan vi träna modeller som
+                        predicerar framtida efterfrågan per yrke och region.
+                    </p>
+                    <div class="application">
+                        <h4>Datakälla</h4>
+                        <p>
+                            Yrkesbarometern + Historical Ads API ger tillräckligt med
+                            träningsdata för ARIMA/Prophet-modeller.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Skill Gap Analysis</h3>
+                    <div class="year">Set Operations + Ranking</div>
+                    <p>
+                        Beräknar vilka kompetenser som saknas för ett målyrke och
+                        rankar dem efter hur många jobb de "låser upp".
+                    </p>
+                    <div class="application">
+                        <h4>Formel</h4>
+                        <p>
+                            Gap = Required_skills - User_skills<br>
+                            Importance(skill) = Count(jobs_unlocked_by_skill)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Tech Stack -->
     <section class="section dark">
         <div class="container">
@@ -778,6 +1103,248 @@ transitions = substitutability_graph.get_transitions(
             </div>
         </div>
     </section>
+
+    <!-- Simplified Explanation -->
+    <section class="section white">
+        <div class="container">
+            <div class="simple-section">
+                <div class="emoji-header">🧠💡</div>
+                <h2>Förenklad Förklaring</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                    Inte så bra på matte eller teknik? Ingen fara! Här förklarar vi hur NordiqFlow fungerar
+                    med enkla ord och vardagliga exempel.
+                </p>
+
+                <div class="simple-content">
+                    <div class="simple-analogy">
+                        <h4>🗺️ Tänk dig en karta över alla jobb</h4>
+                        <p style="margin: 0; color: #555;">
+                            Föreställ dig att alla yrken i Sverige är städer på en karta. Mellan städerna
+                            går det vägar – vissa är motorvägar (lätt att byta), andra är grusvägar (svårare).
+                            <strong>NordiqFlow visar dig vilka vägar som finns</strong> och vilken som är
+                            snabbast för just dig.
+                        </p>
+                    </div>
+
+                    <p>
+                        <strong>Problemet idag:</strong> När du söker jobb på Platsbanken är det som att
+                        söka på Google Maps men bara få se städer som heter exakt det du skrev. Skriver du
+                        "butikschef" ser du bara "butikschef" – inte att du faktiskt kan ta en genväg till
+                        "verksamhetsledare" eller "projektledare" som ligger precis bredvid.
+                    </p>
+
+                    <div class="simple-steps">
+                        <div class="simple-step">
+                            <div class="number">1</div>
+                            <h5>Du berättar vad du kan</h5>
+                            <p>Ladda upp ditt CV eller berätta om din erfarenhet</p>
+                        </div>
+                        <div class="simple-step">
+                            <div class="number">2</div>
+                            <h5>Vi hittar dina "byggstenar"</h5>
+                            <p>AI plockar ut dina kompetenser – ledarskap, kundservice, budget, etc.</p>
+                        </div>
+                        <div class="simple-step">
+                            <div class="number">3</div>
+                            <h5>Vi jämför med alla jobb</h5>
+                            <p>Vilka jobb kräver samma byggstenar som du redan har?</p>
+                        </div>
+                        <div class="simple-step">
+                            <div class="number">4</div>
+                            <h5>Du får en rankning</h5>
+                            <p>"85% match! Du saknar bara 2 saker för detta jobb."</p>
+                        </div>
+                    </div>
+
+                    <div class="simple-analogy">
+                        <h4>🧩 LEGO-analogin</h4>
+                        <p style="margin: 0; color: #555;">
+                            Tänk på kompetenser som LEGO-bitar. Du har kanske: <em>röd bit (ledarskap)</em>,
+                            <em>blå bit (kundservice)</em>, <em>grön bit (Excel)</em>. Ett jobb som
+                            "Verksamhetsledare" kräver: röd, blå, grön, och <em>gul bit (vårderfarenhet)</em>.
+                            <br><br>
+                            <strong>NordiqFlow säger:</strong> "Du har 3 av 4 bitar! Du behöver bara skaffa
+                            den gula biten (en kort kurs) så är du klar."
+                        </p>
+                    </div>
+
+                    <p>
+                        <strong>Det smarta:</strong> Arbetsförmedlingen har redan räknat ut vilka jobb som
+                        liknar varandra. De har över 51,000 sådana "genvägar" i sin databas. Men de visar
+                        dem inte för dig! NordiqFlow tar den gömda datan och gör den synlig och användbar.
+                    </p>
+
+                    <div class="simple-analogy">
+                        <h4>📊 Varför procentsatser?</h4>
+                        <p style="margin: 0; color: #555;">
+                            När vi säger "85% match" menar vi: <em>"Av alla saker det här jobbet kräver,
+                            har du redan 85% av dem."</em> Det är som ett recept där du redan har de flesta
+                            ingredienserna hemma – du behöver bara handla några få saker till.
+                        </p>
+                    </div>
+
+                    <p style="text-align: center; margin-top: 30px;">
+                        <strong style="color: #1e8449; font-size: 1.2em;">
+                            Kortfattat: Vi visar dig jobb du aldrig visste att du kunde ta – och exakt vad
+                            du behöver lära dig för att ta dem.
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- D3.js Interactive Graph Script -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Career transition data (simplified example)
+        const nodes = [
+            { id: "butikschef", label: "Butikschef", group: "current", x: 400, y: 250 },
+            { id: "verksamhetsledare", label: "Verksamhetsledare\n(Vård)", group: "high", x: 550, y: 150 },
+            { id: "projektledare", label: "Projektledare", group: "high", x: 600, y: 300 },
+            { id: "hotellchef", label: "Hotellchef", group: "high", x: 250, y: 150 },
+            { id: "restaurangchef", label: "Restaurangchef", group: "medium", x: 200, y: 300 },
+            { id: "logistikchef", label: "Logistikchef", group: "medium", x: 550, y: 400 },
+            { id: "hr_chef", label: "HR-chef", group: "medium", x: 300, y: 400 },
+            { id: "forsaljningschef", label: "Försäljningschef", group: "low", x: 700, y: 200 },
+            { id: "marknadschef", label: "Marknadschef", group: "low", x: 150, y: 200 },
+            { id: "inkopschef", label: "Inköpschef", group: "low", x: 450, y: 100 }
+        ];
+
+        const links = [
+            { source: "butikschef", target: "verksamhetsledare", strength: 85 },
+            { source: "butikschef", target: "projektledare", strength: 82 },
+            { source: "butikschef", target: "hotellchef", strength: 79 },
+            { source: "butikschef", target: "restaurangchef", strength: 65 },
+            { source: "butikschef", target: "logistikchef", strength: 58 },
+            { source: "butikschef", target: "hr_chef", strength: 52 },
+            { source: "butikschef", target: "forsaljningschef", strength: 45 },
+            { source: "butikschef", target: "marknadschef", strength: 38 },
+            { source: "butikschef", target: "inkopschef", strength: 48 },
+            // Secondary connections
+            { source: "verksamhetsledare", target: "projektledare", strength: 70 },
+            { source: "hotellchef", target: "restaurangchef", strength: 75 },
+            { source: "projektledare", target: "logistikchef", strength: 60 },
+            { source: "forsaljningschef", target: "marknadschef", strength: 65 }
+        ];
+
+        const container = document.getElementById('career-graph');
+        const width = container.clientWidth;
+        const height = 500;
+
+        const svg = d3.select("#career-graph")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // Color scale
+        const colorScale = (group) => {
+            const colors = {
+                current: "#667eea",
+                high: "#27ae60",
+                medium: "#f39c12",
+                low: "#e74c3c"
+            };
+            return colors[group] || "#999";
+        };
+
+        // Link strength to width
+        const linkWidth = (strength) => Math.max(1, strength / 20);
+
+        // Create links
+        const link = svg.append("g")
+            .selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("stroke", "#999")
+            .attr("stroke-opacity", 0.6)
+            .attr("stroke-width", d => linkWidth(d.strength));
+
+        // Create node groups
+        const node = svg.append("g")
+            .selectAll("g")
+            .data(nodes)
+            .enter()
+            .append("g")
+            .attr("transform", d => `translate(${d.x}, ${d.y})`)
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        // Add circles to nodes
+        node.append("circle")
+            .attr("r", d => d.group === "current" ? 35 : 28)
+            .attr("fill", d => colorScale(d.group))
+            .attr("stroke", d => d.group === "current" ? "#1a1a2e" : "#fff")
+            .attr("stroke-width", d => d.group === "current" ? 4 : 2)
+            .style("cursor", "grab");
+
+        // Add labels
+        node.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", d => d.group === "current" ? 50 : 45)
+            .attr("fill", "#333")
+            .attr("font-size", "11px")
+            .attr("font-weight", d => d.group === "current" ? "bold" : "normal")
+            .text(d => d.label.split('\n')[0]);
+
+        // Add percentage labels for links from butikschef
+        const linkLabels = svg.append("g")
+            .selectAll("text")
+            .data(links.filter(l => l.source === "butikschef"))
+            .enter()
+            .append("text")
+            .attr("font-size", "10px")
+            .attr("fill", "#666")
+            .text(d => d.strength + "%");
+
+        // Position links and labels
+        function updatePositions() {
+            link
+                .attr("x1", d => nodes.find(n => n.id === d.source).x)
+                .attr("y1", d => nodes.find(n => n.id === d.source).y)
+                .attr("x2", d => nodes.find(n => n.id === d.target).x)
+                .attr("y2", d => nodes.find(n => n.id === d.target).y);
+
+            linkLabels
+                .attr("x", d => {
+                    const source = nodes.find(n => n.id === d.source);
+                    const target = nodes.find(n => n.id === d.target);
+                    return (source.x + target.x) / 2;
+                })
+                .attr("y", d => {
+                    const source = nodes.find(n => n.id === d.source);
+                    const target = nodes.find(n => n.id === d.target);
+                    return (source.y + target.y) / 2 - 5;
+                });
+        }
+
+        updatePositions();
+
+        // Drag functions
+        function dragstarted(event, d) {
+            d3.select(this).select("circle").style("cursor", "grabbing");
+        }
+
+        function dragged(event, d) {
+            d.x = Math.max(40, Math.min(width - 40, event.x));
+            d.y = Math.max(40, Math.min(height - 40, event.y));
+            d3.select(this).attr("transform", `translate(${d.x}, ${d.y})`);
+            updatePositions();
+        }
+
+        function dragended(event, d) {
+            d3.select(this).select("circle").style("cursor", "grab");
+        }
+
+        // Responsive resize
+        window.addEventListener('resize', () => {
+            const newWidth = container.clientWidth;
+            svg.attr("width", newWidth);
+        });
+    </script>
 
     <footer>
         <div class="container">
