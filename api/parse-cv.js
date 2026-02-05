@@ -1,8 +1,8 @@
 /**
- * API endpoint: Parse CV text and extract occupation + skills using LLM
+ * API endpoint: Parse CV text and extract occupation + skills using Claude
  * POST /api/parse-cv { text: "CV content..." }
  *
- * Requires OPENAI_API_KEY environment variable
+ * Requires ANTHROPIC_API_KEY environment variable
  */
 
 const fs = require('fs');
@@ -22,67 +22,66 @@ function loadData() {
     }
 }
 
-async function parseWithOpenAI(cvText) {
-    const apiKey = process.env.OPENAI_API_KEY;
+async function parseWithClaude(cvText) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
 
     if (!apiKey) {
-        throw new Error('OPENAI_API_KEY environment variable not set');
+        throw new Error('ANTHROPIC_API_KEY environment variable not set');
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${apiKey}`,
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: 'claude-3-5-sonnet-20241022',
+            max_tokens: 1024,
             messages: [
                 {
-                    role: 'system',
+                    role: 'user',
                     content: `Du är en expert på den svenska arbetsmarknaden och SSYK-klassificering.
-Analysera CV:t och extrahera:
+Analysera CV:t nedan och extrahera:
 1. Den mest troliga yrkesbenämningen (enligt svenska yrkestitlar)
 2. Alla identifierade kompetenser/skills
 3. Antal års erfarenhet
 4. Utbildningsnivå
 
-Svara ENDAST med JSON i följande format:
+Svara ENDAST med JSON i följande format (ingen markdown, bara ren JSON):
 {
   "occupation": "Yrkestitel på svenska",
   "occupation_alternatives": ["Alternativ titel 1", "Alternativ titel 2"],
-  "skills": ["Kompetens 1", "Kompetens 2", ...],
+  "skills": ["Kompetens 1", "Kompetens 2"],
   "experience_years": 5,
   "education_level": "Högskoleutbildning",
   "summary": "Kort sammanfattning av profilen"
-}`
-                },
-                {
-                    role: 'user',
-                    content: `Analysera detta CV:\n\n${cvText.substring(0, 8000)}`
+}
+
+CV:
+${cvText.substring(0, 8000)}`
                 }
-            ],
-            temperature: 0.3,
-            max_tokens: 1000
+            ]
         })
     });
 
     if (!response.ok) {
         const error = await response.text();
-        throw new Error(`OpenAI API error: ${error}`);
+        throw new Error(`Claude API error: ${error}`);
     }
 
     const data = await response.json();
-    const content = data.choices[0].message.content;
+    const content = data.content[0].text;
 
     // Parse JSON from response
     try {
-        // Handle markdown code blocks
+        // Handle markdown code blocks if present
         const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, content];
         return JSON.parse(jsonMatch[1].trim());
     } catch (e) {
-        console.error('Failed to parse LLM response:', content);
-        throw new Error('Failed to parse LLM response as JSON');
+        console.error('Failed to parse Claude response:', content);
+        throw new Error('Failed to parse Claude response as JSON');
     }
 }
 
@@ -155,16 +154,16 @@ module.exports = async (req, res) => {
         }
 
         // Check for API key
-        if (!process.env.OPENAI_API_KEY) {
+        if (!process.env.ANTHROPIC_API_KEY) {
             return res.status(503).json({
                 error: 'CV parsing service not configured',
-                hint: 'OPENAI_API_KEY environment variable must be set'
+                hint: 'ANTHROPIC_API_KEY environment variable must be set'
             });
         }
 
-        // Parse CV with LLM
-        console.log('Parsing CV with OpenAI...');
-        const extracted = await parseWithOpenAI(text);
+        // Parse CV with Claude
+        console.log('Parsing CV with Claude...');
+        const extracted = await parseWithClaude(text);
 
         // Match occupation against taxonomy
         const occupationMatch = matchOccupation(extracted.occupation);
@@ -200,7 +199,7 @@ module.exports = async (req, res) => {
             },
             meta: {
                 cvLength: text.length,
-                processingModel: 'gpt-4o-mini',
+                processingModel: 'claude-3-5-sonnet-20241022',
                 taxonomySource: 'Arbetsförmedlingen JobTech'
             }
         };

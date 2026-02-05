@@ -1061,7 +1061,7 @@
             <div class="processing-steps">
                 <div class="processing-step" id="step-1">
                     <div class="step-icon">1</div>
-                    <span>Extraherar kompetenser med LLM (GPT-4o)</span>
+                    <span>Extraherar kompetenser med Claude 3.5 Sonnet</span>
                 </div>
                 <div class="processing-step" id="step-2">
                     <div class="step-icon">2</div>
@@ -1187,7 +1187,7 @@
 
                 // Send to API for parsing
                 progressFill.style.width = '40%';
-                progressText.textContent = 'AI analyserar CV med GPT-4o...';
+                progressText.textContent = 'AI analyserar CV med Claude...';
 
                 const response = await fetch(`${API_BASE}/api/parse-cv`, {
                     method: 'POST',
