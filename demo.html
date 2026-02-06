@@ -1292,14 +1292,26 @@
             </div>
         </div>
 
-        <!-- Run Button -->
+        <!-- Run Buttons -->
         <div class="run-section">
-            <button class="run-button" id="run-btn" disabled>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                </svg>
-                Analysera med AI
-            </button>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="run-button" id="run-jobs-btn" disabled style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                    Sök jobb med mina skills
+                </button>
+                <button class="run-button" id="run-btn" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    Analysera karriärvägar
+                </button>
+            </div>
+            <p style="color: var(--gray-400); font-size: 0.9em; margin-top: 15px;">
+                Ladda upp CV för att söka jobb direkt, eller välj yrke för att se karriärövergångar
+            </p>
         </div>
 
         <!-- AI Processing -->
@@ -1530,7 +1542,7 @@
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
-                    const response = await fetch(`${API_BASE}/api/occupations?q=${encodeURIComponent(query)}&limit=10`);
+                    const response = await fetch(`${API_BASE}/api/occupations?q=${encodeURIComponent(query)}&limit=20`);
                     const data = await response.json();
 
                     if (data.data && data.data.length > 0) {
@@ -1614,11 +1626,72 @@
         };
 
         function updateRunButton() {
+            // Enable career analysis if occupation selected
             runBtn.disabled = !selectedOccupation;
+
+            // Enable job search if we have skills (from CV or manually added)
+            const runJobsBtn = document.getElementById('run-jobs-btn');
+            runJobsBtn.disabled = userSkills.length === 0;
         }
 
         // Run AI Analysis - now uses real API
         runBtn.addEventListener('click', runAnalysis);
+
+        // Direct job search with skills
+        document.getElementById('run-jobs-btn').addEventListener('click', searchJobsWithSkills);
+
+        async function searchJobsWithSkills() {
+            if (userSkills.length === 0) return;
+
+            // Build search query from skills
+            const skillsQuery = userSkills.slice(0, 5).join(' '); // Use top 5 skills
+
+            const jobsSection = document.getElementById('jobs-section');
+            const jobsLoading = document.getElementById('jobs-loading');
+            const jobsGrid = document.getElementById('jobs-grid');
+            const jobsSubtitle = document.getElementById('jobs-subtitle');
+
+            // Hide career results, show jobs
+            document.getElementById('results-section').classList.remove('show');
+            jobsSection.classList.add('show');
+            jobsLoading.classList.add('show');
+            jobsGrid.innerHTML = '';
+            jobsSubtitle.textContent = `Söker jobb som matchar dina kompetenser...`;
+
+            jobsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            try {
+                const response = await fetch(`${API_BASE}/api/jobs?q=${encodeURIComponent(skillsQuery)}&limit=15`);
+
+                if (!response.ok) throw new Error('Kunde inte hämta jobb');
+
+                const data = await response.json();
+                jobsLoading.classList.remove('show');
+
+                if (data.jobs && data.jobs.length > 0) {
+                    jobsSubtitle.innerHTML = `<strong>${data.total}</strong> jobb hittades som matchar dina kompetenser`;
+                    displayJobs(data.jobs);
+                } else {
+                    jobsSubtitle.textContent = 'Inga jobb hittades som matchar dina kompetenser';
+                    jobsGrid.innerHTML = `
+                        <div class="no-jobs-message">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+                            <h3>Inga träffar</h3>
+                            <p>Prova att söka på Platsbanken direkt med dina kompetenser.</p>
+                            <p style="margin-top: 15px;">
+                                <a href="https://arbetsformedlingen.se/platsbanken/annonser?q=${encodeURIComponent(skillsQuery)}" target="_blank" class="job-btn job-btn-secondary">
+                                    Sök på Platsbanken →
+                                </a>
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error searching jobs:', error);
+                jobsLoading.classList.remove('show');
+                jobsSubtitle.textContent = 'Kunde inte söka jobb';
+            }
+        }
 
         async function runAnalysis() {
             aiProcessing.classList.add('show');
