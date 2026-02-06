@@ -1000,6 +1000,9 @@
 
                 <div class="file-info" id="file-info">
                     <span class="name" id="file-name"></span>
+                    <p style="margin-top: 12px; font-size: 0.85em; color: var(--gray-400);">
+                        💡 <strong>Tips:</strong> Sök nu efter ett yrke i rutan till höger för att se karriärövergångar baserade på AF:s data.
+                    </p>
                 </div>
             </div>
 
@@ -1209,9 +1212,8 @@
 
                 // Store extracted data
                 cvExtractedData = {
-                    occupation: result.extracted.occupation,
-                    occupationId: result.matched.occupation?.id,
                     skills: result.extracted.skills || [],
+                    competenceAreas: result.extracted.competence_areas || [],
                     matchedSkills: result.matched.skills || [],
                     experience: result.extracted.summary || '',
                     experienceYears: result.extracted.experience_years
@@ -1220,21 +1222,19 @@
                 await sleep(500);
                 progressBar.style.display = 'none';
                 fileInfo.style.display = 'block';
-                fileName.textContent = `✓ ${file.name} - ${cvExtractedData.skills.length} kompetenser identifierade`;
 
-                // Auto-fill form
-                occupationInput.value = cvExtractedData.occupation;
-                if (result.matched.occupation) {
-                    selectedOccupation = {
-                        id: result.matched.occupation.id,
-                        name: result.matched.occupation.name,
-                        ssykCode: result.matched.occupation.ssykCode,
-                        ssykLabel: result.matched.occupation.ssykLabel
-                    };
-                }
+                // Show competence areas and skills count
+                const areasText = cvExtractedData.competenceAreas.length > 0
+                    ? `Områden: ${cvExtractedData.competenceAreas.join(', ')}`
+                    : '';
+                fileName.innerHTML = `✅ CV analyserat: ${file.name}<br><span style="color: var(--primary-light); font-size: 0.9em;">${cvExtractedData.skills.length} kompetenser extraherade${areasText ? ' · ' + areasText : ''}</span>`;
 
+                // Add extracted skills
                 userSkills = [...cvExtractedData.skills];
                 renderSkillTags();
+
+                // Don't pre-select an occupation - let user search
+                occupationInput.placeholder = 'Sök efter det yrke du vill utforska karriärvägar för...';
 
                 document.getElementById('experience-input').value = cvExtractedData.experience;
                 updateRunButton();
@@ -1246,7 +1246,7 @@
                 fileName.innerHTML = `<span style="color: var(--warning);">⚠️ ${error.message}</span>`;
 
                 // Fallback: let user enter manually
-                alert('CV-analys kräver att OPENAI_API_KEY är konfigurerad på servern. Du kan fortfarande söka efter yrke och lägga till kompetenser manuellt.');
+                alert('CV-analys kräver att ANTHROPIC_API_KEY är konfigurerad på servern. Du kan fortfarande söka efter yrke och lägga till kompetenser manuellt.');
             }
         }
 

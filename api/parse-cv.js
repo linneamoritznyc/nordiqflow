@@ -42,21 +42,25 @@ async function parseWithClaude(cvText) {
             messages: [
                 {
                     role: 'user',
-                    content: `Du är en expert på den svenska arbetsmarknaden och SSYK-klassificering.
-Analysera CV:t nedan och extrahera:
-1. Den mest troliga yrkesbenämningen (enligt svenska yrkestitlar)
-2. Alla identifierade kompetenser/skills
-3. Antal års erfarenhet
-4. Utbildningsnivå
+                    content: `Du är en expert på den svenska arbetsmarknaden.
+
+VIKTIGT: Extrahera ENDAST kompetenser som EXPLICIT nämns i CV:t. Gissa INTE eller inferera skills som inte står där.
+
+Analysera CV:t och extrahera:
+1. Kompetenser/skills som FAKTISKT nämns (teknologier, verktyg, metoder som står i texten)
+2. Antal års erfarenhet (uppskatta från arbetshistorik)
+3. Utbildningsnivå
+4. En sammanfattning av personens bakgrund
+
+OBS: Ge INTE en specifik yrkestitel - personen kan ha en mångsidig bakgrund som inte passar i en traditionell kategori. Beskriv istället deras kompetensområden.
 
 Svara ENDAST med JSON i följande format (ingen markdown, bara ren JSON):
 {
-  "occupation": "Yrkestitel på svenska",
-  "occupation_alternatives": ["Alternativ titel 1", "Alternativ titel 2"],
-  "skills": ["Kompetens 1", "Kompetens 2"],
+  "skills": ["Kompetens som nämns explicit 1", "Kompetens 2"],
+  "competence_areas": ["Område 1 (t.ex. 'Tech/Utveckling')", "Område 2 (t.ex. 'Marknadsföring')"],
   "experience_years": 5,
   "education_level": "Högskoleutbildning",
-  "summary": "Kort sammanfattning av profilen"
+  "summary": "Kort sammanfattning av bakgrund och styrkor"
 }
 
 CV:
@@ -165,35 +169,18 @@ module.exports = async (req, res) => {
         console.log('Parsing CV with Claude...');
         const extracted = await parseWithClaude(text);
 
-        // Match occupation against taxonomy
-        const occupationMatch = matchOccupation(extracted.occupation);
-        const alternativeMatches = (extracted.occupation_alternatives || [])
-            .map(alt => matchOccupation(alt))
-            .filter(Boolean);
-
         // Match skills against taxonomy
         const skillsAnalysis = matchSkills(extracted.skills || []);
 
         const result = {
             extracted: {
-                occupation: extracted.occupation,
-                skills: extracted.skills,
+                skills: extracted.skills || [],
+                competence_areas: extracted.competence_areas || [],
                 experience_years: extracted.experience_years,
                 education_level: extracted.education_level,
                 summary: extracted.summary
             },
             matched: {
-                occupation: occupationMatch ? {
-                    id: occupationMatch.id,
-                    name: occupationMatch.name,
-                    ssykCode: occupationMatch.ssykCode,
-                    ssykLabel: occupationMatch.ssykLabel
-                } : null,
-                alternativeOccupations: alternativeMatches.map(m => ({
-                    id: m.id,
-                    name: m.name,
-                    ssykCode: m.ssykCode
-                })),
                 skills: skillsAnalysis.matched,
                 unmatchedSkills: skillsAnalysis.unmatched
             },

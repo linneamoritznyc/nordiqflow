@@ -35,7 +35,7 @@ nordiqflow/
 - **Data is downloaded** - Check `/data/raw/taxonomy/` for 60+ AF datasets
 - **Substitutability is key** - `substitutability-relations-between-occupations.json` contains career transitions
 - **AF did the ML** - We build UX on their pre-computed relationships
-- **Three products** - TalentFlow (B2C), SkillHedge (B2B), CityIQ (B2G)
+- **Two products** - TalentFlow (B2C), CityIQ (B2G)
 - **Swedish UI, English docs** - B2C in Swedish, technical docs in English
 
 ### Next Steps for Development
@@ -43,8 +43,7 @@ nordiqflow/
 1. **Build graph database** - Load taxonomy data into Neo4j
 2. **Create API layer** - `/transitions`, `/skill-gap`, `/demand` endpoints
 3. **Develop TalentFlow UI** - Career transition interface
-4. **Implement SkillHedge indices** - Real-time labor market metrics
-5. **Build CityIQ dashboard** - Municipal talent gap analysis
+4. **Build CityIQ dashboard** - Municipal talent gap analysis
 
 ### Academic Publishing Path
 
