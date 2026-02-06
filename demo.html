@@ -876,6 +876,258 @@
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
+        /* Jobs Section */
+        .jobs-section {
+            display: none;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .jobs-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .jobs-header {
+            margin-bottom: 30px;
+        }
+
+        .jobs-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .jobs-subtitle {
+            color: var(--gray-400);
+            font-size: 0.95em;
+        }
+
+        .jobs-loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: var(--gray-400);
+        }
+
+        .jobs-loading.show {
+            display: block;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .jobs-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .job-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .job-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .job-card-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+
+        .job-card-employer {
+            color: var(--primary-light);
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .job-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+            color: var(--gray-300);
+        }
+
+        .job-meta-item svg {
+            width: 14px;
+            height: 14px;
+            color: var(--gray-400);
+        }
+
+        .job-card-description {
+            color: var(--gray-300);
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-card-apply {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .job-card-apply-title {
+            color: var(--success);
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-card-apply-content {
+            color: var(--gray-200);
+            font-size: 0.9em;
+        }
+
+        .job-card-apply-content a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        .job-card-apply-content a:hover {
+            text-decoration: underline;
+        }
+
+        .job-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .job-deadline {
+            font-size: 0.85em;
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .job-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .job-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+        }
+
+        .job-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .job-btn-secondary {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--gray-200);
+        }
+
+        .job-btn-secondary:hover {
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .verified-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .no-jobs-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-400);
+        }
+
+        .no-jobs-message h3 {
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
         /* Footer */
         footer {
             background: rgba(15, 23, 42, 0.8);
@@ -1102,6 +1354,22 @@
             </div>
 
             <div class="career-grid" id="career-results"></div>
+        </div>
+
+        <!-- Live Jobs Section -->
+        <div class="jobs-section" id="jobs-section">
+            <div class="jobs-header">
+                <h2 class="jobs-title">
+                    <span class="live-dot"></span>
+                    Lediga Jobb Just Nu
+                </h2>
+                <p class="jobs-subtitle" id="jobs-subtitle">Klicka på en karriärrekommendation ovan för att se lediga jobb</p>
+            </div>
+            <div class="jobs-loading" id="jobs-loading">
+                <div class="loader"></div>
+                <p>Hämtar jobb från Platsbanken...</p>
+            </div>
+            <div class="jobs-grid" id="jobs-grid"></div>
         </div>
     </div>
 
@@ -1489,14 +1757,173 @@
                             </div>
                         </div>
                         ` : ''}
+
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button class="job-btn job-btn-primary" onclick="loadJobsForOccupation('${r.name}', '${r.ssykCode || ''}')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                                Se lediga jobb på Platsbanken
+                            </button>
+                        </div>
                     </div>
                 `;
             }).join('');
+
+            // Show jobs section but with initial message
+            document.getElementById('jobs-section').classList.add('show');
         }
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
+
+        // Load jobs for a specific occupation
+        async function loadJobsForOccupation(occupationName, ssykCode) {
+            const jobsSection = document.getElementById('jobs-section');
+            const jobsLoading = document.getElementById('jobs-loading');
+            const jobsGrid = document.getElementById('jobs-grid');
+            const jobsSubtitle = document.getElementById('jobs-subtitle');
+
+            // Show loading state
+            jobsSection.classList.add('show');
+            jobsLoading.classList.add('show');
+            jobsGrid.innerHTML = '';
+            jobsSubtitle.textContent = `Hämtar lediga jobb för "${occupationName}"...`;
+
+            // Scroll to jobs section
+            jobsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            try {
+                // Use occupation name for search
+                const searchQuery = encodeURIComponent(occupationName);
+                const response = await fetch(`${API_BASE}/api/jobs?q=${searchQuery}&limit=10`);
+
+                if (!response.ok) {
+                    throw new Error('Kunde inte hämta jobb');
+                }
+
+                const data = await response.json();
+                jobsLoading.classList.remove('show');
+
+                if (data.jobs && data.jobs.length > 0) {
+                    jobsSubtitle.innerHTML = `<strong>${data.total}</strong> lediga jobb för "${occupationName}" just nu på Platsbanken`;
+                    displayJobs(data.jobs);
+                } else {
+                    jobsSubtitle.textContent = `Inga lediga jobb hittades för "${occupationName}" just nu`;
+                    jobsGrid.innerHTML = `
+                        <div class="no-jobs-message">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+                            <h3>Inga aktiva annonser</h3>
+                            <p>Det finns inga lediga jobb för detta yrke just nu på Platsbanken.</p>
+                            <p style="margin-top: 15px;">
+                                <a href="https://arbetsformedlingen.se/platsbanken/annonser?q=${searchQuery}" target="_blank" class="job-btn job-btn-secondary">
+                                    Sök på Platsbanken direkt →
+                                </a>
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+                jobsLoading.classList.remove('show');
+                jobsSubtitle.textContent = 'Kunde inte hämta jobb';
+                jobsGrid.innerHTML = `
+                    <div class="no-jobs-message">
+                        <div style="font-size: 3em; margin-bottom: 15px;">⚠️</div>
+                        <h3>Något gick fel</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayJobs(jobs) {
+            const jobsGrid = document.getElementById('jobs-grid');
+
+            jobsGrid.innerHTML = jobs.map(job => {
+                const deadline = job.lastApplicationDate
+                    ? new Date(job.lastApplicationDate).toLocaleDateString('sv-SE')
+                    : 'Ingen deadline';
+
+                const publishedDate = job.publishedDate
+                    ? new Date(job.publishedDate).toLocaleDateString('sv-SE')
+                    : '';
+
+                // Build application info
+                let applyContent = '';
+                if (job.application.url) {
+                    applyContent = `<a href="${job.application.url}" target="_blank">Ansök via arbetsgivarens webbplats →</a>`;
+                } else if (job.application.email) {
+                    applyContent = `Mejla din ansökan till: <a href="mailto:${job.application.email}">${job.application.email}</a>`;
+                } else {
+                    applyContent = `<a href="${job.platsbankenUrl}" target="_blank">Se ansökningsinstruktioner på Platsbanken →</a>`;
+                }
+
+                if (job.application.reference) {
+                    applyContent += `<br><span style="color: var(--gray-400); font-size: 0.85em;">Ange referens: ${job.application.reference}</span>`;
+                }
+
+                return `
+                    <div class="job-card">
+                        <div class="verified-badge">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Verifierad på Platsbanken
+                        </div>
+
+                        <div class="job-card-header">
+                            <div>
+                                <h3 class="job-card-title">${job.title}</h3>
+                                <div class="job-card-employer">${job.employer}</div>
+                            </div>
+                        </div>
+
+                        <div class="job-card-meta">
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                ${job.location}
+                            </div>
+                            ${job.employmentType ? `
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                                ${job.employmentType}
+                            </div>
+                            ` : ''}
+                            ${publishedDate ? `
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Publicerad ${publishedDate}
+                            </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="job-card-description">${job.descriptionShort}</div>
+
+                        <div class="job-card-apply">
+                            <div class="job-card-apply-title">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                                Så ansöker du
+                            </div>
+                            <div class="job-card-apply-content">${applyContent}</div>
+                        </div>
+
+                        <div class="job-card-footer">
+                            <div class="job-deadline">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Sista ansökningsdag: ${deadline}
+                            </div>
+                            <div class="job-card-actions">
+                                <a href="${job.platsbankenUrl}" target="_blank" class="job-btn job-btn-primary">
+                                    Se på Platsbanken
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Make loadJobsForOccupation available globally
+        window.loadJobsForOccupation = loadJobsForOccupation;
     </script>
 </body>
 </html>
