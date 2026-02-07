@@ -27,7 +27,7 @@ Private project management portal that syncs with your Google Sheets planning sp
 
 1. Go to https://vercel.com/new
 2. Import the **same GitHub repo** (linneamoritznyc/nordiqflow)
-3. **IMPORTANT**: Set the **Root Directory** to `dashboard`
+3. **IMPORTANT**: Set the **Root Directory** to `private`
 4. Vercel will auto-detect Next.js
 5. Before deploying, add these **Environment Variables**:
 
