@@ -29,7 +29,7 @@ export async function readAllRows(): Promise<DayRow[]> {
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: `'${SHEET_NAME}'!A1:G400`,
+    range: `'${SHEET_NAME}'!A1:G600`,
   });
 
   const rows = response.data.values || [];
