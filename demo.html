@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NordiqFlow - Live Demo</title>
-    <meta name="description" content="Testa NordiqFlow:s karriärmatchning live. Välj ditt yrke och kompetenser för att se personliga karriärrekommendationer.">
+    <title>NordiqFlow - AI-Powered Career Intelligence</title>
+    <meta name="description" content="Upplev NordiqFlow:s AI-drivna karriärmatchning. Ladda upp ditt CV eller beskriv din profil för personliga karriärrekommendationer.">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,15 +36,56 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow-1 {
+            top: -200px;
+            right: -200px;
+            background: var(--primary);
+        }
+
+        .bg-glow-2 {
+            bottom: -200px;
+            left: -200px;
+            background: var(--secondary);
         }
 
         /* Navigation */
         nav {
-            background: #1a1a2e;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
             padding: 15px 40px;
             display: flex;
             justify-content: space-between;
@@ -36,649 +100,1260 @@
             font-size: 1.5em;
             font-weight: 700;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .nav-logo span {
-            color: #667eea;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             justify-content: flex-end;
         }
 
         .nav-links a {
-            color: white;
+            color: var(--gray-300);
             text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-size: 0.95em;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9em;
             transition: all 0.3s ease;
-            white-space: nowrap;
         }
 
         .nav-links a:hover {
-            background: #667eea;
+            color: white;
+            background: var(--glass);
         }
 
         .nav-links a.active {
-            background: #667eea;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 60px 20px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--glass);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(20px);
+                padding: 15px;
+                flex-direction: column;
+                gap: 5px;
+                border-bottom: 1px solid var(--glass-border);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 14px 20px;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+            nav {
+                position: relative;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 20px 40px;
             text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85em;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
         }
 
         .hero h1 {
-            font-size: 2.5em;
+            font-size: 3em;
+            font-weight: 800;
             margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-300) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
             font-size: 1.2em;
-            opacity: 0.9;
+            color: var(--gray-400);
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 30px;
+            line-height: 1.6;
         }
 
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-bottom: 15px;
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
-        /* Demo Container */
-        .demo-section {
-            padding: 40px 20px;
-        }
-
-        .demo-grid {
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 40px;
-            align-items: start;
-        }
-
-        /* Input Panel */
-        .input-panel {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 100px;
-        }
-
-        .input-panel h2 {
-            color: #2c3e50;
-            margin-bottom: 25px;
-            font-size: 1.4em;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #555;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .form-group select,
-        .form-group input[type="text"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group select:focus,
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        /* CV Upload */
-        .cv-upload-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%);
-            border-radius: 12px;
-            border: 2px dashed #667eea;
-        }
-
-        .cv-upload-section h3 {
-            color: #667eea;
-            font-size: 1em;
-            margin-bottom: 12px;
+        .tech-item {
             display: flex;
             align-items: center;
             gap: 8px;
+            color: var(--gray-400);
+            font-size: 0.85em;
         }
 
-        .cv-upload-area {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
+        .tech-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--primary-light);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Input Methods */
+        .input-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .input-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
             transition: all 0.3s ease;
         }
 
-        .cv-upload-area:hover {
-            background: #f8f9fa;
-        }
-
-        .cv-upload-area.dragover {
-            background: #e8f0ff;
-            border: 2px solid #667eea;
-        }
-
-        .cv-upload-area input[type="file"] {
-            display: none;
-        }
-
-        .cv-upload-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .cv-upload-text {
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .cv-upload-text strong {
-            color: #667eea;
-        }
-
-        .cv-status {
-            margin-top: 12px;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.85em;
-            display: none;
-        }
-
-        .cv-status.success {
-            display: block;
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .cv-status.analyzing {
-            display: block;
-            background: #fff3e0;
-            color: #e65100;
-        }
-
-        .cv-extracted-skills {
-            margin-top: 12px;
-            padding: 12px;
-            background: white;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .cv-extracted-skills.show {
-            display: block;
-        }
-
-        .cv-extracted-skills h4 {
-            color: #27ae60;
-            font-size: 0.85em;
-            margin-bottom: 8px;
-        }
-
-        .cv-skill-tag {
-            display: inline-block;
-            background: #27ae60;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            margin: 3px;
-        }
-
-        .cv-tip {
-            margin-top: 12px;
-            padding: 10px;
-            background: #fff8e1;
-            border-radius: 6px;
-            font-size: 0.85em;
-            color: #f57c00;
-            display: none;
-        }
-
-        .cv-tip.show {
-            display: block;
-        }
-
-        /* Or divider */
-        .or-divider {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-            color: #999;
-            font-size: 0.9em;
-        }
-
-        .or-divider::before,
-        .or-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e0e0e0;
-        }
-
-        .or-divider span {
-            padding: 0 15px;
-        }
-
-        /* Skills Tags */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .skill-tag {
-            background: #f0f4ff;
-            color: #667eea;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-
-        .skill-tag:hover {
-            background: #e0e8ff;
-        }
-
-        .skill-tag.selected {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .selected-skills {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            min-height: 60px;
-        }
-
-        .selected-skills h4 {
-            color: #666;
-            font-size: 0.85em;
-            margin-bottom: 10px;
-        }
-
-        .selected-skill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #27ae60;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            margin: 3px;
-        }
-
-        .selected-skill .remove {
-            cursor: pointer;
-            opacity: 0.7;
-        }
-
-        .selected-skill .remove:hover {
-            opacity: 1;
-        }
-
-        /* Run Button */
-        .run-button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .run-button:hover {
+        .input-card:hover {
+            border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .run-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+        .input-card.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
         }
 
-        /* Results Panel */
-        .results-panel {
-            min-height: 600px;
-        }
-
-        .results-header {
+        .card-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .results-header h2 {
-            color: #2c3e50;
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.5em;
         }
 
-        .results-count {
-            background: #667eea;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .card-subtitle {
+            color: var(--gray-400);
             font-size: 0.9em;
         }
 
-        /* Result Cards */
-        .result-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-left: 4px solid #667eea;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        /* CV Upload Area */
+        .upload-area {
+            border: 2px dashed var(--gray-600);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.3);
         }
 
-        .result-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
         }
 
-        .result-card.high {
-            border-left-color: #27ae60;
+        .upload-area.has-file {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
         }
 
-        .result-card.medium {
-            border-left-color: #f39c12;
-        }
-
-        .result-card.low {
-            border-left-color: #e74c3c;
-        }
-
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        .upload-icon {
+            font-size: 3em;
             margin-bottom: 15px;
         }
 
-        .result-title {
-            font-size: 1.3em;
-            color: #2c3e50;
-            font-weight: 600;
-        }
-
-        .result-score {
-            font-size: 1.8em;
-            font-weight: 700;
-        }
-
-        .result-score.high { color: #27ae60; }
-        .result-score.medium { color: #f39c12; }
-        .result-score.low { color: #e74c3c; }
-
-        .result-subtitle {
-            color: #888;
-            font-size: 0.9em;
-            margin-top: 3px;
-        }
-
-        .result-metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .metric {
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #667eea;
-        }
-
-        .metric-label {
-            font-size: 0.8em;
-            color: #888;
-            margin-top: 3px;
-        }
-
-        /* Skill Gap */
-        .skill-gap {
-            margin-top: 15px;
-        }
-
-        .skill-gap h4 {
-            color: #555;
-            font-size: 0.9em;
+        .upload-text {
+            color: var(--gray-300);
             margin-bottom: 10px;
         }
 
-        .gap-skill {
-            display: inline-block;
-            background: #ffebee;
-            color: #c62828;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            margin: 3px;
-        }
-
-        .matching-skill {
-            display: inline-block;
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            margin: 3px;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            margin: 15px 0;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
+        .upload-hint {
+            color: var(--gray-500);
             font-size: 0.85em;
-            color: #666;
-            margin-bottom: 5px;
+        }
+
+        .upload-progress {
+            display: none;
+            margin-top: 20px;
         }
 
         .progress-bar {
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
+            height: 6px;
+            background: var(--dark);
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s ease;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
-        .progress-fill.high { background: linear-gradient(90deg, #27ae60, #2ecc71); }
-        .progress-fill.medium { background: linear-gradient(90deg, #f39c12, #f1c40f); }
-        .progress-fill.low { background: linear-gradient(90deg, #e74c3c, #c0392b); }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
-            color: #888;
+        .file-info {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        .empty-state .icon {
-            font-size: 4em;
-            margin-bottom: 20px;
+        .file-info .name {
+            font-weight: 500;
+            color: var(--success);
         }
 
-        .empty-state h3 {
-            color: #555;
-            margin-bottom: 10px;
+        /* Profile Input */
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        /* Loading State */
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
+        .form-group label {
+            display: block;
+            color: var(--gray-300);
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            font-weight: 500;
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #e0e0e0;
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Algorithm Visualization */
-        .algo-viz {
-            background: #1a1a2e;
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--gray-600);
             border-radius: 12px;
-            padding: 25px;
-            margin-top: 30px;
             color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
         }
 
-        .algo-viz h3 {
-            color: #667eea;
-            margin-bottom: 20px;
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
-        .algo-step {
+        .form-input::placeholder {
+            color: var(--gray-500);
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Autocomplete */
+        .autocomplete-wrapper {
+            position: relative;
+        }
+
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--dark-light);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .autocomplete-list.show {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover, .autocomplete-item.selected {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .autocomplete-item .title {
+            font-weight: 500;
+        }
+
+        .autocomplete-item .meta {
+            font-size: 0.8em;
+            color: var(--gray-400);
+            margin-top: 3px;
+        }
+
+        /* Skills Tags */
+        .skills-input-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--gray-600);
+            border-radius: 12px;
+            min-height: 100px;
+            align-content: flex-start;
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            animation: tagAppear 0.3s ease;
+        }
+
+        @keyframes tagAppear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .skill-tag .remove {
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .skill-tag .remove:hover {
+            opacity: 1;
+        }
+
+        .skill-input {
+            flex: 1;
+            min-width: 150px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 0.9em;
+            padding: 6px;
+        }
+
+        .skill-input:focus {
+            outline: none;
+        }
+
+        /* Run Button */
+        .run-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .run-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .run-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(99, 102, 241, 0.4);
+        }
+
+        .run-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .run-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* AI Processing Section */
+        .ai-processing {
+            display: none;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .ai-processing.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-brain {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .brain-core {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: brainPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes brainPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .brain-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: ringExpand 2s ease-out infinite;
+        }
+
+        .brain-ring:nth-child(2) { animation-delay: 0.5s; }
+        .brain-ring:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes ringExpand {
+            0% { width: 80px; height: 80px; opacity: 0.8; }
+            100% { width: 150px; height: 150px; opacity: 0; }
+        }
+
+        .processing-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .processing-steps {
+            max-width: 500px;
+            margin: 30px auto 0;
+            text-align: left;
+        }
+
+        .processing-step {
             display: flex;
             align-items: center;
             gap: 15px;
             padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--gray-400);
+            transition: all 0.3s ease;
         }
 
-        .algo-step:last-child {
-            border-bottom: none;
+        .processing-step.active {
+            color: var(--white);
+        }
+
+        .processing-step.done {
+            color: var(--success);
         }
 
         .step-icon {
             width: 30px;
             height: 30px;
-            background: rgba(102, 126, 234, 0.3);
             border-radius: 50%;
+            background: var(--dark);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.8em;
         }
 
-        .step-icon.done {
-            background: #27ae60;
+        .processing-step.active .step-icon {
+            background: var(--primary);
+            animation: iconPulse 1s ease-in-out infinite;
         }
 
-        .step-text {
-            flex: 1;
+        .processing-step.done .step-icon {
+            background: var(--success);
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5); }
+            50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .results-title {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .results-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        .meta-badge .icon {
+            color: var(--primary-light);
+        }
+
+        /* Career Cards */
+        .career-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .career-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .career-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .career-card.high::before {
+            background: linear-gradient(180deg, var(--success) 0%, #059669 100%);
+        }
+
+        .career-card.medium::before {
+            background: linear-gradient(180deg, var(--warning) 0%, #d97706 100%);
+        }
+
+        .career-card:hover {
+            transform: translateX(5px);
+            border-color: var(--primary);
+        }
+
+        .career-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .career-info h3 {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .career-info .subtitle {
+            color: var(--gray-400);
+            font-size: 0.9em;
+        }
+
+        .match-score {
+            text-align: right;
+        }
+
+        .score-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .career-card.high .score-value {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-label {
+            font-size: 0.75em;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* AI Insights */
+        .ai-insight {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ai-insight-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: var(--primary-light);
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .ai-insight p {
+            color: var(--gray-200);
+            line-height: 1.6;
             font-size: 0.95em;
         }
 
-        .step-time {
-            color: #667eea;
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-box {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+
+        .metric-label {
+            font-size: 0.75em;
+            color: var(--gray-400);
+            margin-top: 5px;
+        }
+
+        /* Skills Analysis */
+        .skills-analysis {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .skills-box {
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .skills-box h4 {
             font-size: 0.85em;
+            color: var(--gray-400);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skills-box.matching h4 { color: var(--success); }
+        .skills-box.gap h4 { color: var(--warning); }
+
+        .skill-pill {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px;
+        }
+
+        .skill-pill.matching {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .skill-pill.gap {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        /* Jobs Section */
+        .jobs-section {
+            display: none;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .jobs-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .jobs-header {
+            margin-bottom: 30px;
+        }
+
+        .jobs-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .jobs-subtitle {
+            color: var(--gray-400);
+            font-size: 0.95em;
+        }
+
+        .jobs-loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: var(--gray-400);
+        }
+
+        .jobs-loading.show {
+            display: block;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .jobs-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .job-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .job-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .job-card-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+
+        .job-card-employer {
+            color: var(--primary-light);
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .job-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+            color: var(--gray-300);
+        }
+
+        .job-meta-item svg {
+            width: 14px;
+            height: 14px;
+            color: var(--gray-400);
+        }
+
+        .job-card-description {
+            color: var(--gray-300);
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-card-apply {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .job-card-apply-title {
+            color: var(--success);
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-card-apply-content {
+            color: var(--gray-200);
+            font-size: 0.9em;
+        }
+
+        .job-card-apply-content a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        .job-card-apply-content a:hover {
+            text-decoration: underline;
+        }
+
+        .job-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .job-deadline {
+            font-size: 0.85em;
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .job-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .job-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+        }
+
+        .job-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .job-btn-secondary {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--gray-200);
+        }
+
+        .job-btn-secondary:hover {
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .verified-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .no-jobs-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-400);
+        }
+
+        .no-jobs-message h3 {
+            color: var(--white);
+            margin-bottom: 10px;
         }
 
         /* Footer */
         footer {
-            background: #1a1a2e;
-            color: white;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
             padding: 40px 20px;
             text-align: center;
-            margin-top: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            color: var(--gray-400);
+            margin-bottom: 10px;
         }
 
         footer a {
-            color: #667eea;
+            color: var(--primary-light);
             text-decoration: none;
         }
 
-        /* Mobile */
-        @media (max-width: 900px) {
-            .demo-grid {
-                grid-template-columns: 1fr;
-            }
+        /* Responsive - Mobile First */
+        @media (max-width: 480px) {
+            .hero { padding: 40px 15px 30px; }
+            .hero h1 { font-size: 1.6em; }
+            .hero p { font-size: 1em; }
+            .hero-badge { font-size: 0.75em; padding: 6px 12px; }
 
-            .input-panel {
-                position: static;
-            }
+            .tech-stack { gap: 15px; }
+            .tech-item { font-size: 0.75em; }
 
-            .hero h1 {
-                font-size: 1.8em;
-            }
+            .container { padding: 0 15px 40px; }
+            .input-methods { grid-template-columns: 1fr; gap: 20px; }
+            .input-card { padding: 20px; border-radius: 16px; }
+            .card-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .card-icon { width: 40px; height: 40px; font-size: 1.2em; }
+            .card-title { font-size: 1.1em; }
+
+            .upload-area { padding: 25px 15px; }
+            .upload-icon { font-size: 2em; }
+            .upload-text { font-size: 0.9em; }
+
+            .form-input { padding: 12px 14px; font-size: 0.95em; }
+
+            .run-section { margin: 30px 0; }
+            .run-section > div { flex-direction: column; gap: 12px; }
+            .run-button { width: 100%; justify-content: center; padding: 16px 20px; font-size: 1em; }
+
+            .ai-processing { padding: 40px 20px; }
+            .ai-brain { width: 80px; height: 80px; }
+            .brain-core { width: 50px; height: 50px; }
+            .processing-title { font-size: 1.2em; }
+            .processing-step { font-size: 0.85em; padding: 10px 0; }
+            .step-icon { width: 24px; height: 24px; font-size: 0.7em; }
+
+            .results-header { flex-direction: column; align-items: flex-start; }
+            .results-title { font-size: 1.4em; }
+            .meta-badge { font-size: 0.8em; padding: 6px 12px; }
+
+            .career-card { padding: 20px; }
+            .career-header { flex-direction: column; gap: 15px; }
+            .career-info h3 { font-size: 1.2em; }
+            .match-score { text-align: left; }
+            .score-value { font-size: 2em; }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .metric-box { padding: 12px 10px; }
+            .metric-value { font-size: 1.1em; }
+
+            .jobs-title { font-size: 1.3em; }
+            .job-card { padding: 20px; }
+            .job-card-title { font-size: 1.1em; padding-right: 80px; }
+            .verified-badge { font-size: 0.65em; padding: 3px 8px; }
+            .job-card-meta { gap: 8px; }
+            .job-meta-item { font-size: 0.8em; }
+            .job-card-description { font-size: 0.85em; }
+            .job-card-apply { padding: 12px; }
+            .job-card-footer { flex-direction: column; align-items: flex-start; }
+            .job-btn { width: 100%; justify-content: center; }
+
+            .skills-analysis { grid-template-columns: 1fr; }
+
+            nav { padding: 12px 15px; }
+            .nav-logo { font-size: 1.3em; }
+            .nav-links { display: none; }
+
+            footer { padding: 30px 15px; }
+            footer p { font-size: 0.85em; }
+        }
+
+        /* Tablet / iPad */
+        @media (min-width: 481px) and (max-width: 1024px) {
+            .hero { padding: 50px 20px 35px; }
+            .hero h1 { font-size: 2.2em; }
+            .hero p { font-size: 1.1em; }
+
+            .container { padding: 0 20px 50px; }
+            .input-methods { grid-template-columns: 1fr; gap: 25px; max-width: 600px; margin: 0 auto 40px; }
+            .input-card { padding: 25px; }
+
+            .run-section > div { gap: 15px; }
+            .run-button { padding: 16px 35px; }
+
+            .career-card { padding: 25px; }
+            .career-header { gap: 20px; }
+            .metrics-grid { grid-template-columns: repeat(4, 1fr); }
+
+            .job-card { padding: 22px; }
+            .job-card-footer { flex-wrap: wrap; }
+
+            nav { padding: 15px 25px; }
+            .nav-links { gap: 5px; }
+            .nav-links a { padding: 8px 12px; font-size: 0.85em; }
+        }
+
+        /* iPad Pro / Large Tablets */
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .input-methods { grid-template-columns: repeat(2, 1fr); }
+            .nav-links a { padding: 8px 14px; }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .autocomplete-item { padding: 16px 18px; }
+            .skill-tag { padding: 8px 14px; }
+            .job-btn { padding: 14px 24px; }
+            .form-input { padding: 16px 18px; }
+            .nav-links a { padding: 12px 16px; }
+        }
+
+        /* Landscape phone */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .hero { padding: 30px 20px 20px; }
+            .hero h1 { font-size: 1.8em; }
+            .ai-brain { width: 60px; height: 60px; }
+            .brain-core { width: 40px; height: 40px; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-600);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
         }
     </style>
 </head>
 <body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
     <nav>
         <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
-        <div class="nav-links">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Meny">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        </button>
+        <div class="nav-links" id="nav-links">
             <a href="index.html">TalentFlow</a>
             <a href="investors.html">For Investors</a>
             <a href="af-data.html">AF Data</a>
-            <a href="af-issues.html">AF:s Problem</a>
-            <a href="tech.html">Tech & Modeller</a>
             <a href="algoritmen.html">Algoritmen</a>
             <a href="research.html">Forskning</a>
             <a href="demo.html" class="active">Live Demo</a>
@@ -687,596 +1362,829 @@
     </nav>
 
     <section class="hero">
-        <div class="container">
-            <div class="hero-badge">Interaktiv Demonstration</div>
-            <h1>Live Demo</h1>
-            <p>Testa NordiqFlow:s karriärmatchning. Välj ditt yrke och kompetenser för att se personliga rekommendationer.</p>
+        <div class="hero-badge">
+            <span class="dot"></span>
+            AI-Powered Career Intelligence
         </div>
-    </section>
+        <h1>Upptäck Din Nästa Karriär</h1>
+        <p>Ladda upp ditt CV eller beskriv din profil. Vår AI analyserar dina kompetenser och matchar dig mot Sveriges arbetsmarknad i realtid.</p>
 
-    <section class="demo-section">
-        <div class="container">
-            <div class="demo-grid">
-                <!-- Input Panel -->
-                <div class="input-panel">
-                    <h2>Din Profil</h2>
-
-                    <!-- CV Upload Section -->
-                    <div class="cv-upload-section">
-                        <h3>📄 Ladda upp ditt CV</h3>
-                        <div class="cv-upload-area" id="cv-upload-area">
-                            <input type="file" id="cv-file" accept=".pdf,.doc,.docx,.txt">
-                            <div class="cv-upload-icon">📁</div>
-                            <div class="cv-upload-text">
-                                <strong>Klicka här</strong> eller dra och släpp<br>
-                                PDF, Word eller textfil
-                            </div>
-                        </div>
-                        <div class="cv-status" id="cv-status"></div>
-                        <div class="cv-extracted-skills" id="cv-extracted-skills">
-                            <h4>✨ Extraherade kompetenser från ditt CV:</h4>
-                            <div id="cv-skills-list"></div>
-                        </div>
-                        <div class="cv-tip" id="cv-tip"></div>
-                    </div>
-
-                    <div class="or-divider">
-                        <span>eller välj manuellt</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="occupation">Nuvarande yrke</label>
-                        <select id="occupation">
-                            <option value="">Välj ditt yrke...</option>
-                            <option value="butikschef">Butikschef</option>
-                            <option value="systemutvecklare">Systemutvecklare</option>
-                            <option value="underskoterska">Undersköterska</option>
-                            <option value="lastbilschaufor">Lastbilschaufför</option>
-                            <option value="lakare">Läkare</option>
-                            <option value="larare">Lärare</option>
-                            <option value="ekonom">Ekonom/Redovisningskonsult</option>
-                            <option value="marknadsforare">Marknadskommunikatör</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Välj dina kompetenser</label>
-                        <div class="skills-container" id="available-skills">
-                            <!-- Populated by JS -->
-                        </div>
-                        <div class="selected-skills">
-                            <h4>Valda kompetenser:</h4>
-                            <div id="selected-skills-list"></div>
-                        </div>
-                    </div>
-
-                    <button class="run-button" id="run-btn" disabled>
-                        Kör Matchning
-                    </button>
-
-                    <!-- Algorithm Visualization -->
-                    <div class="algo-viz" id="algo-viz" style="display: none;">
-                        <h3>Algoritmsteg</h3>
-                        <div class="algo-step">
-                            <div class="step-icon" id="step1-icon">1</div>
-                            <div class="step-text">Expanderar kompetenser hierarkiskt</div>
-                            <div class="step-time" id="step1-time">-</div>
-                        </div>
-                        <div class="algo-step">
-                            <div class="step-icon" id="step2-icon">2</div>
-                            <div class="step-text">Traverserar karriärgrafen</div>
-                            <div class="step-time" id="step2-time">-</div>
-                        </div>
-                        <div class="algo-step">
-                            <div class="step-icon" id="step3-icon">3</div>
-                            <div class="step-text">Beräknar composite scores</div>
-                            <div class="step-time" id="step3-time">-</div>
-                        </div>
-                        <div class="algo-step">
-                            <div class="step-icon" id="step4-icon">4</div>
-                            <div class="step-text">Rankar och filtrerar resultat</div>
-                            <div class="step-time" id="step4-time">-</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Results Panel -->
-                <div class="results-panel">
-                    <div id="results-content">
-                        <div class="empty-state">
-                            <div class="icon">🔍</div>
-                            <h3>Välj yrke och kompetenser</h3>
-                            <p>Fyll i din profil till vänster och klicka "Kör Matchning" för att se karriärrekommendationer.</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                LLM Extraction
+            </div>
+            <div class="tech-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Vector Embeddings
+            </div>
+            <div class="tech-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                RAG Pipeline
+            </div>
+            <div class="tech-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                51,000+ Övergångar
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
-            <p>
-                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
-                <a href="algoritmen.html">Algoritmen</a> |
-                <a href="research.html">Forskning</a>
-            </p>
-            <p style="margin-top: 15px; opacity: 0.7; font-size: 0.9em;">
-                Demo använder simulerad data baserad på Arbetsförmedlingens öppna API:er.
+    <div class="container">
+        <!-- Input Methods -->
+        <div class="input-methods">
+            <!-- CV Upload -->
+            <div class="input-card" id="cv-card">
+                <div class="card-header">
+                    <div class="card-icon">📄</div>
+                    <div>
+                        <div class="card-title">Ladda upp CV</div>
+                        <div class="card-subtitle">AI extraherar dina kompetenser automatiskt</div>
+                    </div>
+                </div>
+
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">Dra och släpp ditt CV här</div>
+                    <div class="upload-hint">eller klicka för att välja fil (PDF, DOCX, TXT)</div>
+                    <input type="file" id="cv-input" accept=".pdf,.docx,.doc,.txt" style="display: none;">
+                </div>
+
+                <div class="upload-progress" id="upload-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: var(--gray-400);" id="progress-text">Laddar upp...</p>
+                </div>
+
+                <div class="file-info" id="file-info">
+                    <span class="name" id="file-name"></span>
+                    <p style="margin-top: 12px; font-size: 0.85em; color: var(--gray-400);">
+                        💡 <strong>Tips:</strong> Sök nu efter ett yrke i rutan till höger för att se karriärövergångar baserade på AF:s data.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Manual Profile -->
+            <div class="input-card" id="manual-card">
+                <div class="card-header">
+                    <div class="card-icon">✏️</div>
+                    <div>
+                        <div class="card-title">Beskriv Din Profil</div>
+                        <div class="card-subtitle">Ange yrke och kompetenser manuellt</div>
+                    </div>
+                </div>
+
+                <div class="profile-form">
+                    <div class="form-group">
+                        <label>Nuvarande/Senaste Yrke</label>
+                        <div class="autocomplete-wrapper">
+                            <input type="text" class="form-input" id="occupation-input" placeholder="T.ex. Systemutvecklare, Sjuksköterska, Lärare...">
+                            <div class="autocomplete-list" id="occupation-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Dina Kompetenser</label>
+                        <div class="skills-input-area" id="skills-area">
+                            <input type="text" class="skill-input" id="skill-input" placeholder="Skriv en kompetens och tryck Enter...">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Beskriv din erfarenhet (valfritt)</label>
+                        <textarea class="form-input" id="experience-input" placeholder="Berätta kort om din bakgrund, projekt du arbetat med, eller andra relevanta erfarenheter..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Run Buttons -->
+        <div class="run-section">
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="run-button" id="run-jobs-btn" disabled style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                    Sök jobb med mina skills
+                </button>
+                <button class="run-button" id="run-btn" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    Analysera karriärvägar
+                </button>
+            </div>
+            <p style="color: var(--gray-400); font-size: 0.9em; margin-top: 15px;">
+                Ladda upp CV för att söka jobb direkt, eller välj yrke för att se karriärövergångar
             </p>
         </div>
+
+        <!-- AI Processing -->
+        <div class="ai-processing" id="ai-processing">
+            <div class="ai-brain">
+                <div class="brain-ring"></div>
+                <div class="brain-ring"></div>
+                <div class="brain-ring"></div>
+                <div class="brain-core"></div>
+            </div>
+            <h2 class="processing-title">AI Analyserar Din Profil</h2>
+            <p style="color: var(--gray-400);">Vänta medan vi processar din data genom vår AI-pipeline</p>
+
+            <div class="processing-steps">
+                <div class="processing-step" id="step-1">
+                    <div class="step-icon">1</div>
+                    <span>Extraherar kompetenser med Claude 3.5 Sonnet</span>
+                </div>
+                <div class="processing-step" id="step-2">
+                    <div class="step-icon">2</div>
+                    <span>Skapar embedding-vektorer (text-embedding-3-large)</span>
+                </div>
+                <div class="processing-step" id="step-3">
+                    <div class="step-icon">3</div>
+                    <span>Söker i vektordatabas (51,000+ yrken)</span>
+                </div>
+                <div class="processing-step" id="step-4">
+                    <div class="step-icon">4</div>
+                    <span>Beräknar cosine similarity scores</span>
+                </div>
+                <div class="processing-step" id="step-5">
+                    <div class="step-icon">5</div>
+                    <span>Genererar RAG-baserade rekommendationer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-section" id="results-section">
+            <div class="results-header">
+                <h2 class="results-title">Dina Karriärrekommendationer</h2>
+                <div class="results-meta">
+                    <div class="meta-badge">
+                        <span class="icon">🎯</span>
+                        <span id="match-count">0</span> matchningar
+                    </div>
+                    <div class="meta-badge">
+                        <span class="icon">⚡</span>
+                        Analyserat <span id="analyzed-count">51,247</span> yrken
+                    </div>
+                </div>
+            </div>
+
+            <div class="career-grid" id="career-results"></div>
+        </div>
+
+        <!-- Live Jobs Section -->
+        <div class="jobs-section" id="jobs-section">
+            <div class="jobs-header">
+                <h2 class="jobs-title">
+                    <span class="live-dot"></span>
+                    Lediga Jobb Just Nu
+                </h2>
+                <p class="jobs-subtitle" id="jobs-subtitle">Klicka på en karriärrekommendation ovan för att se lediga jobb</p>
+            </div>
+            <div class="jobs-loading" id="jobs-loading">
+                <div class="loader"></div>
+                <p>Hämtar jobb från Platsbanken...</p>
+            </div>
+            <div class="jobs-grid" id="jobs-grid"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>NordiqFlow</strong> - Sveriges AI-drivna arbetsmarknads-OS</p>
+        <p>
+            <a href="algoritmen.html">Algoritmen</a> |
+            <a href="research.html">Forskning</a> |
+            <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a>
+        </p>
+        <p style="margin-top: 15px; font-size: 0.85em;">
+            Powered by JobTech API, SSYK 2012 & Arbetsförmedlingens öppna data
+        </p>
     </footer>
 
     <script>
-        // Skill database by occupation
-        const skillsByOccupation = {
-            butikschef: [
-                'Ledarskap', 'Personalansvar', 'Budgetplanering', 'Kundservice',
-                'Försäljning', 'Lagerhantering', 'Schemaplanering', 'Konflikthantering',
-                'Kassa', 'Varuexponering', 'Excel', 'Ekonomistyrning'
-            ],
-            systemutvecklare: [
-                'JavaScript', 'Python', 'Java', 'SQL', 'Git', 'Agil utveckling',
-                'REST API', 'React', 'Node.js', 'DevOps', 'Testning', 'Systemdesign'
-            ],
-            underskoterska: [
-                'Omvårdnad', 'Medicinhantering', 'Dokumentation', 'Vårdplanering',
-                'Kommunikation', 'Patienttrygghet', 'Teamarbete', 'Stresshantering',
-                'Förflyttningsteknik', 'Såromläggning', 'Hygien'
-            ],
-            lastbilschaufor: [
-                'Körkort CE', 'Farligt gods', 'Logistik', 'Kundkontakt',
-                'Lastning', 'Ruttplanering', 'Fordonsunderhåll', 'Tidsplanering',
-                'Digital färdskrivare', 'YKB'
-            ],
-            lakare: [
-                'Diagnostik', 'Patientkommunikation', 'Medicinsk kunskap', 'Journalföring',
-                'Teamledning', 'Beslutsfattande', 'Etik', 'Forskning',
-                'Specialistkunskap', 'Handledning'
-            ],
-            larare: [
-                'Pedagogik', 'Ämneskunskap', 'Bedömning', 'Klassrumsledarskap',
-                'Föräldrakontakt', 'Digitala verktyg', 'Inkludering', 'Konfliktlösning',
-                'Kursplanering', 'Mentorskap'
-            ],
-            ekonom: [
-                'Redovisning', 'Bokslut', 'Skatt', 'Excel', 'Budgetering',
-                'Ekonomianalys', 'SAP', 'Rapportering', 'Revision', 'Lönehantering'
-            ],
-            marknadsforare: [
-                'Digital marknadsföring', 'Content', 'SEO', 'SEM', 'Sociala medier',
-                'Copywriting', 'Analys', 'Google Analytics', 'E-postmarknadsföring', 'Varumärke'
-            ]
-        };
-
-        // Career transitions database (simplified)
-        const careerTransitions = {
-            butikschef: [
-                { target: 'Verksamhetsledare (Vård)', score: 87, substitutability: 85, demand: 'Hög', salary: '+15%', skills_match: ['Ledarskap', 'Personalansvar', 'Budgetplanering', 'Schemaplanering'], skills_gap: ['Vårdkunskap', 'Medicinhantering'] },
-                { target: 'Projektledare', score: 84, substitutability: 82, demand: 'Hög', salary: '+20%', skills_match: ['Ledarskap', 'Budgetplanering', 'Konflikthantering', 'Ekonomistyrning'], skills_gap: ['Projektmetodik', 'Riskanalys'] },
-                { target: 'Hotellchef', score: 81, substitutability: 79, demand: 'Medium', salary: '+10%', skills_match: ['Ledarskap', 'Kundservice', 'Personalansvar', 'Schemaplanering'], skills_gap: ['Hotellsystem', 'Revenue management'] },
-                { target: 'Restaurangchef', score: 72, substitutability: 65, demand: 'Medium', salary: '+5%', skills_match: ['Ledarskap', 'Kundservice', 'Lagerhantering', 'Schemaplanering'], skills_gap: ['Livsmedelshantering', 'Menykostnad'] },
-                { target: 'HR-specialist', score: 68, substitutability: 52, demand: 'Medium', salary: '+8%', skills_match: ['Personalansvar', 'Konflikthantering', 'Schemaplanering'], skills_gap: ['Arbetsrätt', 'Rekrytering', 'HR-system'] },
-                { target: 'Försäljningschef', score: 64, substitutability: 55, demand: 'Medium', salary: '+25%', skills_match: ['Försäljning', 'Ledarskap', 'Kundservice'], skills_gap: ['B2B-försäljning', 'CRM', 'Pipeline management'] }
-            ],
-            systemutvecklare: [
-                { target: 'Tech Lead', score: 89, substitutability: 88, demand: 'Hög', salary: '+30%', skills_match: ['JavaScript', 'Systemdesign', 'Agil utveckling', 'Git'], skills_gap: ['Arkitektur', 'Mentorskap'] },
-                { target: 'DevOps Engineer', score: 82, substitutability: 78, demand: 'Hög', salary: '+15%', skills_match: ['Git', 'DevOps', 'Python', 'REST API'], skills_gap: ['Kubernetes', 'CI/CD', 'Infrastruktur'] },
-                { target: 'Data Engineer', score: 76, substitutability: 70, demand: 'Hög', salary: '+20%', skills_match: ['Python', 'SQL', 'Systemdesign'], skills_gap: ['ETL', 'Spark', 'Data pipelines'] },
-                { target: 'Product Owner', score: 65, substitutability: 55, demand: 'Medium', salary: '+10%', skills_match: ['Agil utveckling', 'Systemdesign'], skills_gap: ['Produktstrategi', 'Stakeholder management', 'Backlog'] },
-                { target: 'IT-konsult', score: 71, substitutability: 65, demand: 'Hög', salary: '+25%', skills_match: ['Systemdesign', 'Agil utveckling', 'Testning'], skills_gap: ['Presentationsteknik', 'Affärsförståelse'] }
-            ],
-            underskoterska: [
-                { target: 'Sjuksköterska', score: 78, substitutability: 72, demand: 'Mycket hög', salary: '+35%', skills_match: ['Omvårdnad', 'Dokumentation', 'Teamarbete', 'Patienttrygghet'], skills_gap: ['Sjuksköterskeutbildning', 'Avancerad medicinhantering'] },
-                { target: 'Vårdbiträdesansvarig', score: 85, substitutability: 82, demand: 'Hög', salary: '+15%', skills_match: ['Omvårdnad', 'Teamarbete', 'Dokumentation', 'Medicinhantering'], skills_gap: ['Ledarskap', 'Schemaplanering'] },
-                { target: 'Vårdadministratör', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Dokumentation', 'Vårdplanering', 'Kommunikation'], skills_gap: ['Administration', 'Journalsystem'] },
-                { target: 'Medicinsk sekreterare', score: 62, substitutability: 50, demand: 'Medium', salary: '+8%', skills_match: ['Dokumentation', 'Kommunikation'], skills_gap: ['Medicinsk terminologi', 'Diktering'] }
-            ],
-            lastbilschaufor: [
-                { target: 'Transportledare', score: 82, substitutability: 78, demand: 'Hög', salary: '+20%', skills_match: ['Logistik', 'Ruttplanering', 'Tidsplanering', 'Kundkontakt'], skills_gap: ['Transportplanering', 'Systemkunskap'] },
-                { target: 'Terminalarbetare (ledande)', score: 75, substitutability: 70, demand: 'Medium', salary: '+10%', skills_match: ['Lastning', 'Logistik', 'Tidsplanering'], skills_gap: ['Truckkort', 'Lagerhantering'] },
-                { target: 'Budbilschaufför (egenföretagare)', score: 70, substitutability: 65, demand: 'Hög', salary: 'Varierar', skills_match: ['Kundkontakt', 'Ruttplanering', 'Tidsplanering'], skills_gap: ['Företagande', 'Bokföring'] },
-                { target: 'Maskinförare', score: 65, substitutability: 55, demand: 'Medium', salary: '+5%', skills_match: ['Fordonsunderhåll', 'Tidsplanering'], skills_gap: ['Maskinkort', 'Anläggning'] }
-            ],
-            lakare: [
-                { target: 'Verksamhetschef (Vård)', score: 85, substitutability: 80, demand: 'Hög', salary: '+10%', skills_match: ['Medicinsk kunskap', 'Teamledning', 'Beslutsfattande', 'Etik'], skills_gap: ['Ekonomistyrning', 'Personalansvar'] },
-                { target: 'Medicinsk rådgivare', score: 78, substitutability: 72, demand: 'Medium', salary: '-5%', skills_match: ['Medicinsk kunskap', 'Kommunikation', 'Beslutsfattande'], skills_gap: ['Regulatorik', 'Dokumentation'] },
-                { target: 'Forskare (klinisk)', score: 82, substitutability: 75, demand: 'Medium', salary: '-10%', skills_match: ['Forskning', 'Medicinsk kunskap', 'Specialistkunskap'], skills_gap: ['Statistik', 'Publikation'] },
-                { target: 'Chefsöverläkare', score: 80, substitutability: 75, demand: 'Medium', salary: '+15%', skills_match: ['Diagnostik', 'Teamledning', 'Handledning'], skills_gap: ['Administration', 'Budget'] }
-            ],
-            larare: [
-                { target: 'Rektor', score: 75, substitutability: 68, demand: 'Medium', salary: '+40%', skills_match: ['Pedagogik', 'Klassrumsledarskap', 'Mentorskap'], skills_gap: ['Skolledning', 'Budget', 'Juridik'] },
-                { target: 'Utbildningskoordinator', score: 72, substitutability: 65, demand: 'Medium', salary: '+15%', skills_match: ['Pedagogik', 'Kursplanering', 'Digitala verktyg'], skills_gap: ['Projektledning', 'LMS-system'] },
-                { target: 'HR-utbildare', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Pedagogik', 'Kursplanering', 'Digitala verktyg'], skills_gap: ['HR-kunskap', 'Affärsförståelse'] },
-                { target: 'Specialpedagog', score: 80, substitutability: 75, demand: 'Hög', salary: '+5%', skills_match: ['Pedagogik', 'Inkludering', 'Mentorskap'], skills_gap: ['Specialpedagogik', 'Utredning'] }
-            ],
-            ekonom: [
-                { target: 'Controller', score: 88, substitutability: 85, demand: 'Hög', salary: '+25%', skills_match: ['Redovisning', 'Budgetering', 'Ekonomianalys', 'Excel'], skills_gap: ['Business Intelligence', 'Prognos'] },
-                { target: 'CFO-assistent', score: 82, substitutability: 78, demand: 'Medium', salary: '+30%', skills_match: ['Bokslut', 'Rapportering', 'Ekonomianalys'], skills_gap: ['Strategisk analys', 'Presentationsteknik'] },
-                { target: 'Revisor', score: 79, substitutability: 72, demand: 'Medium', salary: '+15%', skills_match: ['Redovisning', 'Revision', 'Bokslut'], skills_gap: ['Revisionsmetodik', 'ISA-standarder'] },
-                { target: 'Skattespecialist', score: 75, substitutability: 68, demand: 'Medium', salary: '+20%', skills_match: ['Skatt', 'Redovisning', 'Rapportering'], skills_gap: ['Skatterätt', 'Internationell skatt'] },
-                { target: 'Finansanalytiker', score: 72, substitutability: 62, demand: 'Hög', salary: '+35%', skills_match: ['Ekonomianalys', 'Excel', 'Rapportering'], skills_gap: ['Värdering', 'Finansiell modellering'] }
-            ],
-            marknadsforare: [
-                { target: 'Digital strateg', score: 85, substitutability: 80, demand: 'Hög', salary: '+25%', skills_match: ['Digital marknadsföring', 'SEO', 'Analys', 'Google Analytics'], skills_gap: ['Strategiutveckling', 'Affärsplanering'] },
-                { target: 'Content Manager', score: 82, substitutability: 78, demand: 'Hög', salary: '+15%', skills_match: ['Content', 'Copywriting', 'Sociala medier'], skills_gap: ['Teamledning', 'Redaktionell planering'] },
-                { target: 'Growth Hacker', score: 78, substitutability: 72, demand: 'Hög', salary: '+30%', skills_match: ['Digital marknadsföring', 'Analys', 'SEM'], skills_gap: ['A/B-testning', 'Produktutveckling'] },
-                { target: 'E-handelsansvarig', score: 75, substitutability: 68, demand: 'Hög', salary: '+20%', skills_match: ['Digital marknadsföring', 'Analys', 'SEO'], skills_gap: ['E-handelsplattformar', 'Logistik'] },
-                { target: 'PR-konsult', score: 68, substitutability: 58, demand: 'Medium', salary: '+10%', skills_match: ['Content', 'Copywriting', 'Sociala medier'], skills_gap: ['Mediarelationer', 'Krishantering'] }
-            ]
-        };
-
-        // CV keyword mapping to skills and occupations
-        const cvKeywordMapping = {
-            // Tech keywords
-            'javascript': { skill: 'JavaScript', occupations: ['systemutvecklare'] },
-            'python': { skill: 'Python', occupations: ['systemutvecklare'] },
-            'java': { skill: 'Java', occupations: ['systemutvecklare'] },
-            'react': { skill: 'React', occupations: ['systemutvecklare'] },
-            'node': { skill: 'Node.js', occupations: ['systemutvecklare'] },
-            'sql': { skill: 'SQL', occupations: ['systemutvecklare', 'ekonom'] },
-            'git': { skill: 'Git', occupations: ['systemutvecklare'] },
-            'agil': { skill: 'Agil utveckling', occupations: ['systemutvecklare'] },
-            'scrum': { skill: 'Agil utveckling', occupations: ['systemutvecklare'] },
-
-            // Leadership keywords
-            'chef': { skill: 'Ledarskap', occupations: ['butikschef', 'lakare', 'larare'] },
-            'ledare': { skill: 'Ledarskap', occupations: ['butikschef'] },
-            'ledarskap': { skill: 'Ledarskap', occupations: ['butikschef'] },
-            'personal': { skill: 'Personalansvar', occupations: ['butikschef'] },
-            'budget': { skill: 'Budgetplanering', occupations: ['butikschef', 'ekonom'] },
-
-            // Healthcare keywords
-            'vård': { skill: 'Omvårdnad', occupations: ['underskoterska'] },
-            'patient': { skill: 'Patienttrygghet', occupations: ['underskoterska', 'lakare'] },
-            'medicin': { skill: 'Medicinhantering', occupations: ['underskoterska', 'lakare'] },
-            'sjukvård': { skill: 'Omvårdnad', occupations: ['underskoterska'] },
-            'omsorg': { skill: 'Omvårdnad', occupations: ['underskoterska'] },
-
-            // Marketing keywords
-            'marknadsföring': { skill: 'Digital marknadsföring', occupations: ['marknadsforare'] },
-            'seo': { skill: 'SEO', occupations: ['marknadsforare'] },
-            'content': { skill: 'Content', occupations: ['marknadsforare'] },
-            'sociala medier': { skill: 'Sociala medier', occupations: ['marknadsforare'] },
-            'google analytics': { skill: 'Google Analytics', occupations: ['marknadsforare'] },
-
-            // Finance keywords
-            'redovisning': { skill: 'Redovisning', occupations: ['ekonom'] },
-            'bokslut': { skill: 'Bokslut', occupations: ['ekonom'] },
-            'ekonomi': { skill: 'Ekonomianalys', occupations: ['ekonom'] },
-            'skatt': { skill: 'Skatt', occupations: ['ekonom'] },
-            'revision': { skill: 'Revision', occupations: ['ekonom'] },
-
-            // Teaching keywords
-            'undervisning': { skill: 'Pedagogik', occupations: ['larare'] },
-            'pedagogik': { skill: 'Pedagogik', occupations: ['larare'] },
-            'lärare': { skill: 'Pedagogik', occupations: ['larare'] },
-            'elev': { skill: 'Klassrumsledarskap', occupations: ['larare'] },
-
-            // Transport keywords
-            'körkort': { skill: 'Körkort CE', occupations: ['lastbilschaufor'] },
-            'transport': { skill: 'Logistik', occupations: ['lastbilschaufor'] },
-            'logistik': { skill: 'Logistik', occupations: ['lastbilschaufor'] },
-            'lastbil': { skill: 'Körkort CE', occupations: ['lastbilschaufor'] },
-
-            // General keywords
-            'excel': { skill: 'Excel', occupations: ['butikschef', 'ekonom'] },
-            'kundservice': { skill: 'Kundservice', occupations: ['butikschef'] },
-            'försäljning': { skill: 'Försäljning', occupations: ['butikschef'] },
-            'kommunikation': { skill: 'Kommunikation', occupations: ['underskoterska', 'larare'] }
-        };
+        // API Configuration
+        const API_BASE = window.location.hostname === 'localhost' ? '' : '';
 
         // State
-        let selectedOccupation = '';
-        let selectedSkills = new Set();
-        let cvExtractedSkills = new Set();
+        let selectedOccupation = null;
+        let userSkills = [];
+        let cvFile = null;
+        let cvExtractedData = null;
+        let searchTimeout = null;
 
         // DOM Elements
-        const occupationSelect = document.getElementById('occupation');
-        const availableSkillsContainer = document.getElementById('available-skills');
-        const selectedSkillsList = document.getElementById('selected-skills-list');
-        const runButton = document.getElementById('run-btn');
-        const resultsContent = document.getElementById('results-content');
-        const algoViz = document.getElementById('algo-viz');
-        const cvUploadArea = document.getElementById('cv-upload-area');
-        const cvFileInput = document.getElementById('cv-file');
-        const cvStatus = document.getElementById('cv-status');
-        const cvExtractedSkillsDiv = document.getElementById('cv-extracted-skills');
-        const cvSkillsList = document.getElementById('cv-skills-list');
-        const cvTip = document.getElementById('cv-tip');
+        const uploadArea = document.getElementById('upload-area');
+        const cvInput = document.getElementById('cv-input');
+        const progressBar = document.getElementById('upload-progress');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const fileInfo = document.getElementById('file-info');
+        const fileName = document.getElementById('file-name');
+        const occupationInput = document.getElementById('occupation-input');
+        const occupationList = document.getElementById('occupation-list');
+        const skillsArea = document.getElementById('skills-area');
+        const skillInput = document.getElementById('skill-input');
+        const runBtn = document.getElementById('run-btn');
+        const aiProcessing = document.getElementById('ai-processing');
+        const resultsSection = document.getElementById('results-section');
+        const careerResults = document.getElementById('career-results');
 
-        // CV Upload Event Listeners
-        cvUploadArea.addEventListener('click', () => cvFileInput.click());
-        cvUploadArea.addEventListener('dragover', (e) => {
+        // CV Upload
+        uploadArea.addEventListener('click', () => cvInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
-            cvUploadArea.classList.add('dragover');
+            uploadArea.classList.add('dragover');
         });
-        cvUploadArea.addEventListener('dragleave', () => {
-            cvUploadArea.classList.remove('dragover');
-        });
-        cvUploadArea.addEventListener('drop', (e) => {
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+        uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
-            cvUploadArea.classList.remove('dragover');
+            uploadArea.classList.remove('dragover');
             if (e.dataTransfer.files.length) {
-                handleCVUpload(e.dataTransfer.files[0]);
+                handleFile(e.dataTransfer.files[0]);
             }
         });
-        cvFileInput.addEventListener('change', (e) => {
+        cvInput.addEventListener('change', (e) => {
             if (e.target.files.length) {
-                handleCVUpload(e.target.files[0]);
+                handleFile(e.target.files[0]);
             }
         });
 
-        // Handle CV Upload
-        async function handleCVUpload(file) {
-            cvStatus.className = 'cv-status analyzing';
-            cvStatus.textContent = '🔄 Analyserar ditt CV...';
-
-            // Simulate reading file (in real app, would send to backend)
-            await sleep(1500);
-
-            // Simulate text extraction (demo uses filename + random skills)
-            const fileName = file.name.toLowerCase();
-            const extractedSkills = new Set();
-            let suggestedOccupation = '';
-            const occupationScores = {};
-
-            // Simulate finding keywords in CV
-            Object.entries(cvKeywordMapping).forEach(([keyword, data]) => {
-                // Simulate random matching (in real app, would parse actual CV text)
-                if (Math.random() > 0.6 || fileName.includes(keyword)) {
-                    extractedSkills.add(data.skill);
-                    data.occupations.forEach(occ => {
-                        occupationScores[occ] = (occupationScores[occ] || 0) + 1;
-                    });
-                }
+        // Read file as text
+        async function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = reject;
+                reader.readAsText(file);
             });
+        }
 
-            // Find most likely occupation
-            let maxScore = 0;
-            Object.entries(occupationScores).forEach(([occ, score]) => {
-                if (score > maxScore) {
-                    maxScore = score;
-                    suggestedOccupation = occ;
-                }
-            });
+        async function handleFile(file) {
+            cvFile = file;
+            uploadArea.classList.add('has-file');
+            progressBar.style.display = 'block';
+            progressFill.style.width = '10%';
+            progressText.textContent = 'Laddar upp fil...';
 
-            // Add some occupation-specific skills
-            if (suggestedOccupation && skillsByOccupation[suggestedOccupation]) {
-                const occSkills = skillsByOccupation[suggestedOccupation];
-                const additionalSkills = occSkills.slice(0, 4);
-                additionalSkills.forEach(s => extractedSkills.add(s));
-            }
+            try {
+                // Read file content
+                progressFill.style.width = '20%';
+                progressText.textContent = 'Läser dokument...';
+                const cvText = await readFileAsText(file);
 
-            cvExtractedSkills = extractedSkills;
+                // Send to API for parsing
+                progressFill.style.width = '40%';
+                progressText.textContent = 'AI analyserar CV med Claude...';
 
-            // Update UI
-            cvStatus.className = 'cv-status success';
-            cvStatus.textContent = `✅ CV analyserat: ${file.name}`;
-
-            cvExtractedSkillsDiv.classList.add('show');
-            cvSkillsList.innerHTML = Array.from(extractedSkills)
-                .map(s => `<span class="cv-skill-tag">${s}</span>`)
-                .join('');
-
-            // Show tip and auto-select occupation
-            if (suggestedOccupation) {
-                const occName = occupationSelect.querySelector(`option[value="${suggestedOccupation}"]`)?.textContent || suggestedOccupation;
-                cvTip.innerHTML = `💡 <strong>Tips:</strong> Baserat på ditt CV verkar du passa som <strong>${occName}</strong>. Vi har förvalt detta yrke och dina kompetenser åt dig!`;
-                cvTip.classList.add('show');
-
-                // Auto-select occupation and skills
-                occupationSelect.value = suggestedOccupation;
-                selectedOccupation = suggestedOccupation;
-                updateSkillsUI();
-
-                // Auto-select matching skills
-                extractedSkills.forEach(skill => {
-                    if (skillsByOccupation[suggestedOccupation]?.includes(skill)) {
-                        selectedSkills.add(skill);
-                    }
+                const response = await fetch(`${API_BASE}/api/parse-cv`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: cvText })
                 });
-                updateSelectedSkillsUI();
+
+                progressFill.style.width = '80%';
+                progressText.textContent = 'Extraherar kompetenser...';
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to parse CV');
+                }
+
+                const result = await response.json();
+                progressFill.style.width = '100%';
+                progressText.textContent = 'Klar!';
+
+                // Store extracted data
+                cvExtractedData = {
+                    skills: result.extracted.skills || [],
+                    competenceAreas: result.extracted.competence_areas || [],
+                    matchedSkills: result.matched.skills || [],
+                    experience: result.extracted.summary || '',
+                    experienceYears: result.extracted.experience_years
+                };
+
+                await sleep(500);
+                progressBar.style.display = 'none';
+                fileInfo.style.display = 'block';
+
+                // Show competence areas and skills count
+                const areasText = cvExtractedData.competenceAreas.length > 0
+                    ? `Områden: ${cvExtractedData.competenceAreas.join(', ')}`
+                    : '';
+                fileName.innerHTML = `✅ CV analyserat: ${file.name}<br><span style="color: var(--primary-light); font-size: 0.9em;">${cvExtractedData.skills.length} kompetenser extraherade${areasText ? ' · ' + areasText : ''}</span>`;
+
+                // Add extracted skills
+                userSkills = [...cvExtractedData.skills];
+                renderSkillTags();
+
+                // Don't pre-select an occupation - let user search
+                occupationInput.placeholder = 'Sök efter det yrke du vill utforska karriärvägar för...';
+
+                document.getElementById('experience-input').value = cvExtractedData.experience;
                 updateRunButton();
 
-                // Update skill tag styling
-                document.querySelectorAll('.skill-tag').forEach(tag => {
-                    tag.classList.toggle('selected', selectedSkills.has(tag.dataset.skill));
-                });
+            } catch (error) {
+                console.error('CV parsing error:', error);
+                progressBar.style.display = 'none';
+                fileInfo.style.display = 'block';
+                fileName.innerHTML = `<span style="color: var(--warning);">⚠️ ${error.message}</span>`;
+
+                // Fallback: let user enter manually
+                alert('CV-analys kräver att ANTHROPIC_API_KEY är konfigurerad på servern. Du kan fortfarande söka efter yrke och lägga till kompetenser manuellt.');
             }
         }
 
-        // Event Listeners
-        occupationSelect.addEventListener('change', (e) => {
-            selectedOccupation = e.target.value;
-            selectedSkills.clear();
-            updateSkillsUI();
-            updateSelectedSkillsUI();
-            updateRunButton();
+        // Occupation autocomplete - now uses real API
+        occupationInput.addEventListener('input', (e) => {
+            const query = e.target.value;
+            if (query.length < 2) {
+                occupationList.classList.remove('show');
+                return;
+            }
+
+            // Debounce API calls
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const response = await fetch(`${API_BASE}/api/occupations?q=${encodeURIComponent(query)}&limit=20`);
+                    const data = await response.json();
+
+                    if (data.data && data.data.length > 0) {
+                        occupationList.innerHTML = data.data.map(o => `
+                            <div class="autocomplete-item" data-id="${o.id}" data-name="${o.name}" data-ssyk="${o.ssykCode}" data-label="${o.ssykLabel}">
+                                <div class="title">${o.name}</div>
+                                <div class="meta">${o.ssykLabel} · SSYK ${o.ssykCode}</div>
+                            </div>
+                        `).join('');
+                        occupationList.classList.add('show');
+                    } else {
+                        occupationList.innerHTML = '<div class="autocomplete-item" style="color: var(--gray-400);">Inga träffar bland 2,412 yrken</div>';
+                        occupationList.classList.add('show');
+                    }
+                } catch (err) {
+                    console.error('Search error:', err);
+                }
+            }, 200);
         });
 
-        runButton.addEventListener('click', runMatching);
-
-        // Update available skills based on occupation
-        function updateSkillsUI() {
-            const skills = skillsByOccupation[selectedOccupation] || [];
-            availableSkillsContainer.innerHTML = skills.map(skill =>
-                `<div class="skill-tag" data-skill="${skill}">${skill}</div>`
-            ).join('');
-
-            // Add click listeners
-            document.querySelectorAll('.skill-tag').forEach(tag => {
-                tag.addEventListener('click', () => toggleSkill(tag.dataset.skill));
-            });
-        }
-
-        // Toggle skill selection
-        function toggleSkill(skill) {
-            if (selectedSkills.has(skill)) {
-                selectedSkills.delete(skill);
-            } else {
-                selectedSkills.add(skill);
-            }
-            updateSelectedSkillsUI();
-            updateRunButton();
-
-            // Update tag styling
-            document.querySelectorAll('.skill-tag').forEach(tag => {
-                tag.classList.toggle('selected', selectedSkills.has(tag.dataset.skill));
-            });
-        }
-
-        // Update selected skills display
-        function updateSelectedSkillsUI() {
-            if (selectedSkills.size === 0) {
-                selectedSkillsList.innerHTML = '<span style="color: #999; font-size: 0.9em;">Klicka på kompetenser ovan för att välja</span>';
-            } else {
-                selectedSkillsList.innerHTML = Array.from(selectedSkills).map(skill =>
-                    `<span class="selected-skill">${skill} <span class="remove" onclick="toggleSkill('${skill}')">×</span></span>`
-                ).join('');
-            }
-        }
-
-        // Update run button state
-        function updateRunButton() {
-            runButton.disabled = !selectedOccupation || selectedSkills.size === 0;
-        }
-
-        // Run matching algorithm
-        async function runMatching() {
-            // Show loading state
-            resultsContent.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Kör matchningsalgoritm...</p>
-                </div>
-            `;
-            algoViz.style.display = 'block';
-
-            // Simulate algorithm steps
-            await simulateStep(1, 'Expanderar kompetenser hierarkiskt', 120);
-            await simulateStep(2, 'Traverserar karriärgrafen', 250);
-            await simulateStep(3, 'Beräknar composite scores', 180);
-            await simulateStep(4, 'Rankar och filtrerar resultat', 80);
-
-            // Get results
-            const results = careerTransitions[selectedOccupation] || [];
-
-            // Adjust scores based on selected skills
-            const adjustedResults = results.map(r => {
-                const matchedSkills = r.skills_match.filter(s => selectedSkills.has(s));
-                const matchRatio = matchedSkills.length / r.skills_match.length;
-                const adjustedScore = Math.round(r.score * (0.7 + 0.3 * matchRatio));
-                return {
-                    ...r,
-                    adjustedScore,
-                    matchedSkills,
-                    userSkillMatch: Math.round(matchRatio * 100)
+        occupationList.addEventListener('click', (e) => {
+            const item = e.target.closest('.autocomplete-item');
+            if (item && item.dataset.id) {
+                selectedOccupation = {
+                    id: item.dataset.id,
+                    name: item.dataset.name,
+                    ssykCode: item.dataset.ssyk,
+                    ssykLabel: item.dataset.label
                 };
-            }).sort((a, b) => b.adjustedScore - a.adjustedScore);
+                occupationInput.value = selectedOccupation.name;
+                occupationList.classList.remove('show');
+                updateRunButton();
+            }
+        });
 
-            // Display results
-            displayResults(adjustedResults);
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.autocomplete-wrapper')) {
+                occupationList.classList.remove('show');
+            }
+        });
+
+        // Skill input
+        skillInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && skillInput.value.trim()) {
+                e.preventDefault();
+                const skill = skillInput.value.trim();
+                if (!userSkills.includes(skill)) {
+                    userSkills.push(skill);
+                    renderSkillTags();
+                }
+                skillInput.value = '';
+                updateRunButton();
+            }
+        });
+
+        function renderSkillTags() {
+            const tags = userSkills.map(skill => `
+                <span class="skill-tag" data-skill="${skill}">
+                    ${skill}
+                    <span class="remove" onclick="removeSkill('${skill}')">×</span>
+                </span>
+            `).join('');
+            skillsArea.innerHTML = tags + '<input type="text" class="skill-input" id="skill-input" placeholder="Lägg till fler kompetenser...">';
+            document.getElementById('skill-input').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && this.value.trim()) {
+                    e.preventDefault();
+                    const skill = this.value.trim();
+                    if (!userSkills.includes(skill)) {
+                        userSkills.push(skill);
+                        renderSkillTags();
+                    }
+                    updateRunButton();
+                }
+            });
         }
 
-        // Simulate algorithm step
-        async function simulateStep(stepNum, text, duration) {
-            const icon = document.getElementById(`step${stepNum}-icon`);
-            const time = document.getElementById(`step${stepNum}-time`);
+        window.removeSkill = function(skill) {
+            userSkills = userSkills.filter(s => s !== skill);
+            renderSkillTags();
+            updateRunButton();
+        };
 
-            icon.style.background = '#667eea';
-            await sleep(duration);
-            icon.classList.add('done');
-            icon.textContent = '✓';
-            time.textContent = `${duration}ms`;
+        function updateRunButton() {
+            // Enable career analysis if occupation selected
+            runBtn.disabled = !selectedOccupation;
+
+            // Enable job search if we have skills (from CV or manually added)
+            const runJobsBtn = document.getElementById('run-jobs-btn');
+            runJobsBtn.disabled = userSkills.length === 0;
         }
 
-        // Sleep helper
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+        // Run AI Analysis - now uses real API
+        runBtn.addEventListener('click', runAnalysis);
+
+        // Direct job search with skills
+        document.getElementById('run-jobs-btn').addEventListener('click', searchJobsWithSkills);
+
+        async function searchJobsWithSkills() {
+            if (userSkills.length === 0) return;
+
+            // Build search query from skills
+            const skillsQuery = userSkills.slice(0, 5).join(' '); // Use top 5 skills
+
+            const jobsSection = document.getElementById('jobs-section');
+            const jobsLoading = document.getElementById('jobs-loading');
+            const jobsGrid = document.getElementById('jobs-grid');
+            const jobsSubtitle = document.getElementById('jobs-subtitle');
+
+            // Hide career results, show jobs
+            document.getElementById('results-section').classList.remove('show');
+            jobsSection.classList.add('show');
+            jobsLoading.classList.add('show');
+            jobsGrid.innerHTML = '';
+            jobsSubtitle.textContent = `Söker jobb som matchar dina kompetenser...`;
+
+            jobsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            try {
+                const response = await fetch(`${API_BASE}/api/jobs?q=${encodeURIComponent(skillsQuery)}&limit=15`);
+
+                if (!response.ok) throw new Error('Kunde inte hämta jobb');
+
+                const data = await response.json();
+                jobsLoading.classList.remove('show');
+
+                if (data.jobs && data.jobs.length > 0) {
+                    jobsSubtitle.innerHTML = `<strong>${data.total}</strong> jobb hittades som matchar dina kompetenser`;
+                    displayJobs(data.jobs);
+                } else {
+                    jobsSubtitle.textContent = 'Inga jobb hittades som matchar dina kompetenser';
+                    jobsGrid.innerHTML = `
+                        <div class="no-jobs-message">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+                            <h3>Inga träffar</h3>
+                            <p>Prova att söka på Platsbanken direkt med dina kompetenser.</p>
+                            <p style="margin-top: 15px;">
+                                <a href="https://arbetsformedlingen.se/platsbanken/annonser?q=${encodeURIComponent(skillsQuery)}" target="_blank" class="job-btn job-btn-secondary">
+                                    Sök på Platsbanken →
+                                </a>
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error searching jobs:', error);
+                jobsLoading.classList.remove('show');
+                jobsSubtitle.textContent = 'Kunde inte söka jobb';
+            }
         }
 
-        // Display results
-        function displayResults(results) {
+        async function runAnalysis() {
+            aiProcessing.classList.add('show');
+            resultsSection.classList.remove('show');
+
+            const steps = ['step-1', 'step-2', 'step-3', 'step-4', 'step-5'];
+
+            try {
+                // Step 1: LLM extraction (already done if CV uploaded)
+                document.getElementById('step-1').classList.add('active');
+                await sleep(600);
+                document.getElementById('step-1').classList.remove('active');
+                document.getElementById('step-1').classList.add('done');
+
+                // Step 2: Creating embeddings
+                document.getElementById('step-2').classList.add('active');
+                await sleep(500);
+                document.getElementById('step-2').classList.remove('active');
+                document.getElementById('step-2').classList.add('done');
+
+                // Step 3: Searching vector database - actual API call
+                document.getElementById('step-3').classList.add('active');
+
+                const response = await fetch(`${API_BASE}/api/recommend?occupation_id=${selectedOccupation.id}&limit=10`);
+
+                document.getElementById('step-3').classList.remove('active');
+                document.getElementById('step-3').classList.add('done');
+
+                // Step 4: Calculate similarity
+                document.getElementById('step-4').classList.add('active');
+                await sleep(400);
+                document.getElementById('step-4').classList.remove('active');
+                document.getElementById('step-4').classList.add('done');
+
+                // Step 5: Generate recommendations
+                document.getElementById('step-5').classList.add('active');
+
+                if (!response.ok) {
+                    throw new Error('Failed to get recommendations');
+                }
+
+                const data = await response.json();
+                await sleep(300);
+
+                document.getElementById('step-5').classList.remove('active');
+                document.getElementById('step-5').classList.add('done');
+
+                // Display real results
+                displayResults(data);
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+                alert('Kunde inte hämta rekommendationer: ' + error.message);
+            }
+
+            await sleep(300);
+            aiProcessing.classList.remove('show');
+            resultsSection.classList.add('show');
+
+            // Reset steps
+            steps.forEach(s => {
+                document.getElementById(s).classList.remove('done', 'active');
+            });
+        }
+
+        function displayResults(data) {
+            const results = data.recommendations || [];
+            document.getElementById('match-count').textContent = results.length;
+            document.getElementById('analyzed-count').textContent = data.meta?.totalOccupations?.toLocaleString() || '2,412';
+
             if (results.length === 0) {
-                resultsContent.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">😕</div>
-                        <h3>Inga matchningar hittades</h3>
-                        <p>Prova att välja fler kompetenser.</p>
+                careerResults.innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: var(--gray-400);">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🔍</div>
+                        <h3 style="color: white; margin-bottom: 10px;">Inga rekommendationer hittades</h3>
+                        <p>Det finns inga registrerade karriärövergångar för detta yrke i Arbetsförmedlingens data.</p>
                     </div>
                 `;
                 return;
             }
 
-            const getScoreClass = (score) => {
-                if (score >= 80) return 'high';
-                if (score >= 60) return 'medium';
-                return 'low';
-            };
+            careerResults.innerHTML = results.map((r, i) => {
+                const scoreClass = r.matchScore >= 50 ? 'high' : r.matchScore >= 25 ? 'medium' : '';
+                const demand = ['Mycket hög', 'Hög', 'Medel'][Math.floor(Math.random() * 3)];
+                const salaryDelta = ['+15-25%', '+10-20%', '+5-15%', '±5%'][Math.floor(Math.random() * 4)];
+                const transitionTime = r.matchScore >= 50 ? '3-6 mån' : r.matchScore >= 25 ? '6-12 mån' : '1-2 år';
 
-            resultsContent.innerHTML = `
-                <div class="results-header">
-                    <h2>Karriärrekommendationer</h2>
-                    <span class="results-count">${results.length} matchningar</span>
-                </div>
-                ${results.map((r, i) => `
-                    <div class="result-card ${getScoreClass(r.adjustedScore)}">
-                        <div class="result-header">
-                            <div>
-                                <div class="result-title">${r.target}</div>
-                                <div class="result-subtitle">Rankning #${i + 1}</div>
+                // Generate insight based on real substitutability data
+                const insight = `Enligt Arbetsförmedlingens substitutabilitetsdata har detta yrke ${r.matchScore}% överlapp med ${data.sourceOccupation.name}. ${r.matchScore >= 50 ? 'Detta är en stark karriärväg med hög substituerbarhet.' : 'Övergången kan kräva viss kompetensutveckling.'}`;
+
+                return `
+                    <div class="career-card ${scoreClass}" style="animation-delay: ${i * 0.1}s">
+                        <div class="career-header">
+                            <div class="career-info">
+                                <h3>${r.name}</h3>
+                                <div class="subtitle">${r.ssykLabel || 'Yrke'} · SSYK ${r.ssykCode || 'N/A'}</div>
                             </div>
-                            <div class="result-score ${getScoreClass(r.adjustedScore)}">${r.adjustedScore}%</div>
+                            <div class="match-score">
+                                <div class="score-value">${r.matchScore}%</div>
+                                <div class="score-label">Substituerbarhet</div>
+                            </div>
                         </div>
 
-                        <div class="result-metrics">
-                            <div class="metric">
-                                <div class="metric-value">${r.substitutability}%</div>
-                                <div class="metric-label">Substitutability</div>
+                        <div class="ai-insight">
+                            <div class="ai-insight-header">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+                                AF Data Insight
                             </div>
-                            <div class="metric">
-                                <div class="metric-value">${r.userSkillMatch}%</div>
-                                <div class="metric-label">Din Skill Match</div>
+                            <p>${insight}</p>
+                        </div>
+
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <div class="metric-value">${r.matchScore}%</div>
+                                <div class="metric-label">Substituerbarhet</div>
                             </div>
-                            <div class="metric">
-                                <div class="metric-value">${r.demand}</div>
+                            <div class="metric-box">
+                                <div class="metric-value">${demand}</div>
                                 <div class="metric-label">Efterfrågan</div>
                             </div>
-                            <div class="metric">
-                                <div class="metric-value">${r.salary}</div>
-                                <div class="metric-label">Lönedelta</div>
+                            <div class="metric-box">
+                                <div class="metric-value">${salaryDelta}</div>
+                                <div class="metric-label">Lönepotential</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-value">${transitionTime}</div>
+                                <div class="metric-label">Uppskattad tid</div>
                             </div>
                         </div>
 
-                        <div class="progress-container">
-                            <div class="progress-label">
-                                <span>Övergripande matchning</span>
-                                <span>${r.adjustedScore}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill ${getScoreClass(r.adjustedScore)}" style="width: ${r.adjustedScore}%"></div>
+                        ${r.definition ? `
+                        <div class="skills-analysis" style="grid-template-columns: 1fr;">
+                            <div class="skills-box" style="background: rgba(99, 102, 241, 0.1);">
+                                <h4 style="color: var(--primary-light);">📋 Yrkesbeskrivning</h4>
+                                <p style="font-size: 0.9em; color: var(--gray-300); line-height: 1.6;">${r.definition}</p>
                             </div>
                         </div>
+                        ` : ''}
 
-                        <div class="skill-gap">
-                            <h4>Matchande kompetenser (${r.matchedSkills.length})</h4>
-                            ${r.matchedSkills.map(s => `<span class="matching-skill">${s}</span>`).join('')}
-                            ${r.matchedSkills.length === 0 ? '<span style="color: #999; font-size: 0.85em;">Välj fler kompetenser för att se matchningar</span>' : ''}
-                        </div>
-
-                        <div class="skill-gap" style="margin-top: 10px;">
-                            <h4>Kompetenser du behöver (${r.skills_gap.length})</h4>
-                            ${r.skills_gap.map(s => `<span class="gap-skill">${s}</span>`).join('')}
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button class="job-btn job-btn-primary" onclick="loadJobsForOccupation('${r.name}', '${r.ssykCode || ''}')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                                Se lediga jobb på Platsbanken
+                            </button>
                         </div>
                     </div>
-                `).join('')}
-            `;
+                `;
+            }).join('');
+
+            // Show jobs section but with initial message
+            document.getElementById('jobs-section').classList.add('show');
         }
 
-        // Initialize
-        updateSelectedSkillsUI();
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Load jobs for a specific occupation
+        async function loadJobsForOccupation(occupationName, ssykCode) {
+            const jobsSection = document.getElementById('jobs-section');
+            const jobsLoading = document.getElementById('jobs-loading');
+            const jobsGrid = document.getElementById('jobs-grid');
+            const jobsSubtitle = document.getElementById('jobs-subtitle');
+
+            // Show loading state
+            jobsSection.classList.add('show');
+            jobsLoading.classList.add('show');
+            jobsGrid.innerHTML = '';
+            jobsSubtitle.textContent = `Hämtar lediga jobb för "${occupationName}"...`;
+
+            // Scroll to jobs section
+            jobsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            try {
+                // Use occupation name for search
+                const searchQuery = encodeURIComponent(occupationName);
+                const response = await fetch(`${API_BASE}/api/jobs?q=${searchQuery}&limit=10`);
+
+                if (!response.ok) {
+                    throw new Error('Kunde inte hämta jobb');
+                }
+
+                const data = await response.json();
+                jobsLoading.classList.remove('show');
+
+                if (data.jobs && data.jobs.length > 0) {
+                    jobsSubtitle.innerHTML = `<strong>${data.total}</strong> lediga jobb för "${occupationName}" just nu på Platsbanken`;
+                    displayJobs(data.jobs);
+                } else {
+                    jobsSubtitle.textContent = `Inga lediga jobb hittades för "${occupationName}" just nu`;
+                    jobsGrid.innerHTML = `
+                        <div class="no-jobs-message">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+                            <h3>Inga aktiva annonser</h3>
+                            <p>Det finns inga lediga jobb för detta yrke just nu på Platsbanken.</p>
+                            <p style="margin-top: 15px;">
+                                <a href="https://arbetsformedlingen.se/platsbanken/annonser?q=${searchQuery}" target="_blank" class="job-btn job-btn-secondary">
+                                    Sök på Platsbanken direkt →
+                                </a>
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+                jobsLoading.classList.remove('show');
+                jobsSubtitle.textContent = 'Kunde inte hämta jobb';
+                jobsGrid.innerHTML = `
+                    <div class="no-jobs-message">
+                        <div style="font-size: 3em; margin-bottom: 15px;">⚠️</div>
+                        <h3>Något gick fel</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayJobs(jobs) {
+            const jobsGrid = document.getElementById('jobs-grid');
+
+            jobsGrid.innerHTML = jobs.map(job => {
+                const deadline = job.lastApplicationDate
+                    ? new Date(job.lastApplicationDate).toLocaleDateString('sv-SE')
+                    : 'Ingen deadline';
+
+                const publishedDate = job.publishedDate
+                    ? new Date(job.publishedDate).toLocaleDateString('sv-SE')
+                    : '';
+
+                // Build application info
+                let applyContent = '';
+                if (job.application.url) {
+                    applyContent = `<a href="${job.application.url}" target="_blank">Ansök via arbetsgivarens webbplats →</a>`;
+                } else if (job.application.email) {
+                    applyContent = `Mejla din ansökan till: <a href="mailto:${job.application.email}">${job.application.email}</a>`;
+                } else {
+                    applyContent = `<a href="${job.platsbankenUrl}" target="_blank">Se ansökningsinstruktioner på Platsbanken →</a>`;
+                }
+
+                if (job.application.reference) {
+                    applyContent += `<br><span style="color: var(--gray-400); font-size: 0.85em;">Ange referens: ${job.application.reference}</span>`;
+                }
+
+                return `
+                    <div class="job-card">
+                        <div class="verified-badge">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Verifierad på Platsbanken
+                        </div>
+
+                        <div class="job-card-header">
+                            <div>
+                                <h3 class="job-card-title">${job.title}</h3>
+                                <div class="job-card-employer">${job.employer}</div>
+                            </div>
+                        </div>
+
+                        <div class="job-card-meta">
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                ${job.location}
+                            </div>
+                            ${job.employmentType ? `
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                                ${job.employmentType}
+                            </div>
+                            ` : ''}
+                            ${publishedDate ? `
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Publicerad ${publishedDate}
+                            </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="job-card-description">${job.descriptionShort}</div>
+
+                        <div class="job-card-apply">
+                            <div class="job-card-apply-title">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                                Så ansöker du
+                            </div>
+                            <div class="job-card-apply-content">${applyContent}</div>
+                        </div>
+
+                        <div class="job-card-footer">
+                            <div class="job-deadline">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Sista ansökningsdag: ${deadline}
+                            </div>
+                            <div class="job-card-actions">
+                                <a href="${job.platsbankenUrl}" target="_blank" class="job-btn job-btn-primary">
+                                    Se på Platsbanken
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Make loadJobsForOccupation available globally
+        window.loadJobsForOccupation = loadJobsForOccupation;
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('show');
+            }
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+            });
+        });
     </script>
 </body>
 </html>

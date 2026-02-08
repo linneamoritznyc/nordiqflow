@@ -1,6 +1,6 @@
 # NordiqFlow - Sveriges Arbetsmarknads-OS
 
-> **En unified intelligence platform** som kombinerar Sveriges kompletta arbetsmarknadsdata (Arbetsförmedlingens Open Data) till tre produkter: TalentFlow (B2C), SkillHedge (FinTech), och CityIQ (GovTech).
+> **En unified intelligence platform** som kombinerar Sveriges kompletta arbetsmarknadsdata (Arbetsförmedlingens Open Data) till två produkter: TalentFlow (B2C) och CityIQ (GovTech).
 
 ---
 
@@ -9,7 +9,6 @@
 Dagens rekryteringssajter är enkla sökmotorer. NordiqFlow är en **semantisk graf över hela den svenska arbetsmarknaden** som möjliggör:
 
 - **För individer**: AI-drivna karriärövergångar baserade på faktiska skill-överlappar
-- **För investerare**: Handelbara index på kompetensutbud/-efterfrågan  
 - **För kommuner**: Exakt talangbristanalys kopplad till utbildningspipeline
 
 ---
@@ -31,14 +30,14 @@ Dagens rekryteringssajter är enkla sökmotorer. NordiqFlow är en **semantisk g
             │   ENGINE   │  (Unified Intelligence Layer)
             └──────┬─────┘
                    │
-        ┌──────────┼──────────┐
-        │          │          │
-    ┌───▼───┐  ┌──▼───┐  ┌──▼────┐
-    │Talent │  │Skill │  │ City  │
-    │ Flow  │  │Hedge │  │  IQ   │
-    │       │  │      │  │       │
-    │ B2C   │  │ B2B  │  │ B2G   │
-    └───────┘  └──────┘  └───────┘
+        ┌──────────┴──────────┐
+        │                     │
+    ┌───▼───┐             ┌──▼────┐
+    │Talent │             │ City  │
+    │ Flow  │             │  IQ   │
+    │       │             │       │
+    │ B2C   │             │ B2G   │
+    └───────┘             └───────┘
 ```
 
 ---
@@ -78,20 +77,7 @@ flowchart LR
 
 ---
 
-### 2️⃣ SkillHedge (FinTech Platform)
-**Problem**: Företag och investerare kan inte hedga mot talangbrist.
-
-**Lösning**: Handelbara arbetsmarknadsindex
-- "Nordic Cloud Engineer Index" (demand/supply ratio för SSYK 2512 + Kubernetes/AWS/Azure)
-- Företag kan köpa derivat: Om brist fördjupas → utbetalning för att täcka högre löner
-
-**Pris**: 
-- Index data feed: 50k SEK/år
-- Derivative trading: 500k SEK/år + 0.3% transaction fee
-
----
-
-### 3️⃣ CityIQ (GovTech Dashboard)
+### 2️⃣ CityIQ (GovTech Dashboard)
 **Problem**: Kommuner vet inte vilka kompetenser som saknas eller vilka utbildningar som ger ROI.
 
 **Lösning**: Real-time talangbristanalys
@@ -105,7 +91,7 @@ flowchart LR
 ## 🔑 Konkurrensfördel
 
 1. **Datamoat**: Ingen annan har byggt en unified graph över AF:s 60+ datasets
-2. **Nätverkseffekter**: Fler TalentFlow-användare → bättre SkillHedge-index → mer värde för CityIQ
+2. **Nätverkseffekter**: Fler TalentFlow-användare → bättre data → mer värde för CityIQ
 3. **Regulatory capture**: Position oss som "infrastruktur" för statlig arbetsmarknadspolitik
 4. **First-mover**: 10+ års historisk data → AI-modeller som konkurrenter inte kan replikera
 
@@ -116,11 +102,10 @@ flowchart LR
 | Product | Target | ARR Potential (Year 2) |
 |---------|--------|------------------------|
 | TalentFlow | 1,000 users @ 299 SEK/mo | 3.6M SEK |
-| SkillHedge | 5 institutions @ 1M SEK/yr | 5M SEK |
 | CityIQ | 30 municipalities @ 100k/yr | 3M SEK |
-| **TOTAL** | | **11.6M SEK** |
+| **TOTAL** | | **6.6M SEK** |
 
-Exit multiples: 15-20x ARR för platform plays med network effects = **150-230M SEK valuation**.
+Exit multiples: 15-20x ARR för platform plays med network effects = **100-130M SEK valuation**.
 
 ---
 
@@ -135,14 +120,12 @@ Exit multiples: 15-20x ARR för platform plays med network effects = **150-230M 
 ### Phase 2: MVP Launch (Månader 5-8)
 - [ ] TalentFlow web app (React)
 - [ ] CityIQ pilot med 3 kommuner
-- [ ] SkillHedge index data feed (Excel export)
 - [ ] **Goal**: 400k SEK ARR
 
 ### Phase 3: Scale (Månader 9-18)
 - [ ] TalentFlow mobile app + LinkedIn integration
-- [ ] SkillHedge trading platform
 - [ ] CityIQ expansion till 50 kommuner
-- [ ] **Goal**: 11M SEK ARR
+- [ ] **Goal**: 6.6M SEK ARR
 
 ### Phase 4: Nordisk expansion (År 2-3)
 - [ ] Norge (NAV APIs)

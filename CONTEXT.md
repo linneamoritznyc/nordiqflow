@@ -34,7 +34,6 @@ Kompetensbryggan proved the thesis. NordiqFlow scales it into three commercial p
 | Product | Target | What It Does |
 |---------|--------|--------------|
 | **TalentFlow** | B2C (Job seekers) | Personalized career transition recommendations |
-| **SkillHedge** | B2B (FinTech) | Tradeable labor market indices |
 | **CityIQ** | B2G (Municipalities) | Talent gap analysis with education ROI |
 
 ---
@@ -174,7 +173,7 @@ This work builds on Nobel Prize-winning economic theory:
 1. **Data is already downloaded** — Check `/data/raw/taxonomy/` and `/Kompetensbryggan/`
 2. **Substitutability is key** — This powers career transitions
 3. **AF did the ML** — We build UX on their computations
-4. **Three products, one backend** — TalentFlow, SkillHedge, CityIQ share data
+4. **Two products, one backend** — TalentFlow and CityIQ share data
 5. **Swedish UI, English docs** — B2C is Swedish, technical docs are English
 
 ### Common Tasks:

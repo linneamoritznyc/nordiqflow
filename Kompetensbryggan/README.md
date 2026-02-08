@@ -124,7 +124,6 @@ Kompetensbryggan proved the concept. NordiqFlow scales it into three products:
 | Single-user CV analysis | TalentFlow: Career guidance platform |
 | Manual skill gap display | Automated education pathway recommendations |
 | Local prototype | Cloud-deployed SaaS |
-| — | SkillHedge: Tradeable labor market indices |
 | — | CityIQ: Municipal talent gap analysis |
 
 **The key insight that transferred:**

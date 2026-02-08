@@ -1,0 +1,13 @@
+{
+  "name": "nordiqflow",
+  "version": "1.0.0",
+  "description": "AI-powered career intelligence platform for Sweden",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "node scripts/prepare-data.js",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

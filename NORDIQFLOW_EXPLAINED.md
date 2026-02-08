@@ -30,7 +30,7 @@ AF has **incredible data** but uses it for **basic job search**. It's like havin
 
 ## What NordiqFlow Actually Is
 
-NordiqFlow is a **unified intelligence platform** built on top of Arbetsförmedlingen's open data. It transforms raw government data into actionable intelligence for three distinct audiences:
+NordiqFlow is a **unified intelligence platform** built on top of Arbetsförmedlingen's open data. It transforms raw government data into actionable intelligence for two distinct audiences:
 
 ### 1. TalentFlow (B2C) — For Individuals
 
@@ -58,36 +58,7 @@ Output: "You can become a Healthcare Operations Manager with 85% skill match.
 
 ---
 
-### 2. SkillHedge (B2B/FinTech) — For Investors & Enterprises
-
-**The Problem:** Companies can't hedge against talent shortages. When cloud engineers become scarce, salaries spike, and there's no financial instrument to offset this risk.
-
-**The Solution:** Tradeable labor market indices.
-
-**Example Index: "Nordic Cloud Engineer Index"**
-```
-Components:
-- SSYK 2512 (System Administrators) demand
-- Skills: Kubernetes, AWS, Azure, Docker
-- Geographic weighting: Stockholm 40%, Gothenburg 25%, Malmö 15%, Remote 20%
-
-Current Value: 1.47 (47% more demand than supply)
-6-Month Change: +23%
-AF Forecast Correlation: 0.94
-```
-
-**Use Cases:**
-- **Enterprise:** Buy derivatives that pay out if talent shortage worsens (hedge against salary inflation)
-- **Investors:** Trade on labor market trends before they hit earnings reports
-- **Recruiters:** Price contracts based on real-time scarcity data
-
-**Price:** 
-- Index data feed: 50k SEK/year
-- Derivative trading: 500k SEK/year + 0.3% transaction fee
-
----
-
-### 3. CityIQ (B2G/GovTech) — For Municipalities
+### 2. CityIQ (B2G/GovTech) — For Municipalities
 
 **The Problem:** Uppsala has 200 open developer jobs but only graduates 50 developers per year. The municipality doesn't know this, and doesn't know which education investments would have the best ROI.
 
@@ -141,7 +112,7 @@ AF Forecast Correlation: 0.94
 | Career Pathfinder | Substitutability + Skills | Personalized transition recommendations |
 | Skill Gap Analysis | Skills + JobEd Connect | "You need X to become Y" |
 | Demand Forecasting | Yrkesbarometer + Historical | Predictive career advice |
-| Talent Indices | JobSearch + Skills | Tradeable financial instruments |
+| Demand Analysis | JobSearch + Skills | Labor market intelligence |
 | Municipal ROI Calculator | All datasets combined | Education investment decisions |
 
 ### The Key Insight
@@ -191,13 +162,13 @@ NordiqFlow takes these pre-computed relationships and builds user-facing product
            ┌──────────────┼──────────────┐
            │              │              │
            ▼              ▼              ▼
-    ┌────────────┐ ┌────────────┐ ┌────────────┐
-    │ TalentFlow │ │ SkillHedge │ │   CityIQ   │
-    │   (B2C)    │ │   (B2B)    │ │   (B2G)    │
-    │            │ │            │ │            │
-    │  React/    │ │  Trading   │ │  Dashboard │
-    │  Next.js   │ │  Platform  │ │  + Reports │
-    └────────────┘ └────────────┘ └────────────┘
+           ┌────────────┐            ┌────────────┐
+           │ TalentFlow │            │   CityIQ   │
+           │   (B2C)    │            │   (B2G)    │
+           │            │            │            │
+           │  React/    │            │  Dashboard │
+           │  Next.js   │            │  + Reports │
+           └────────────┘            └────────────┘
 ```
 
 ---
@@ -244,7 +215,7 @@ Sweden has:
 ### Why Competitors Can't Easily Replicate This
 
 1. **Data Moat** — No one else has built a unified graph over AF's 60+ datasets
-2. **Network Effects** — More TalentFlow users → better SkillHedge indices → more value for CityIQ
+2. **Network Effects** — More TalentFlow users → better data → more value for CityIQ
 3. **Regulatory Position** — We're building on government infrastructure, positioning as "labor market infrastructure"
 4. **First-Mover** — 10+ years of historical data means AI models competitors can't train
 
@@ -262,11 +233,10 @@ Sweden has:
 | Product | Target | Year 2 ARR |
 |---------|--------|------------|
 | TalentFlow | 1,000 users @ 299 SEK/mo | 3.6M SEK |
-| SkillHedge | 5 institutions @ 1M SEK/yr | 5M SEK |
 | CityIQ | 30 municipalities @ 100k/yr | 3M SEK |
-| **TOTAL** | | **11.6M SEK** |
+| **TOTAL** | | **6.6M SEK** |
 
-**Exit potential:** 15-20x ARR for platform plays with network effects = **150-230M SEK valuation**
+**Exit potential:** 15-20x ARR for platform plays with network effects = **100-130M SEK valuation**
 
 ---
 
@@ -299,7 +269,7 @@ When working on NordiqFlow, remember:
 1. **The data is already downloaded** — Check `/data/raw/taxonomy/`
 2. **Substitutability is the key dataset** — This powers career transitions
 3. **AF has done the ML work** — We're building UX on top of their computations
-4. **Three products, one data layer** — TalentFlow, SkillHedge, CityIQ share the same backend
+4. **Two products, one data layer** — TalentFlow and CityIQ share the same backend
 5. **Swedish language** — UI should be in Swedish for B2C, English for B2B
 
 ---

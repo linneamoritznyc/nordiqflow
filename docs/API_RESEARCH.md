@@ -127,7 +127,7 @@ Detta ger oss:
 - Antal jobb per skill
 - Geografisk fördelning
 
-**Detta är GULD för SkillHedge-index!**
+**Detta är GULD för NordiqFlow's analyser!**
 
 ---
 
@@ -219,7 +219,6 @@ GET https://historical-ads.api.jobtechdev.se/ads?year=2023&occupation_code=2513
 - Industry growth/decline tracking
 
 **Kritiskt för**:
-- SkillHedge index backtesting
 - TalentFlow "future-proof career" recommendations
 - CityIQ ROI calculations
 
@@ -290,25 +289,6 @@ for occ in similar_occupations:
     salary_data = jobsearch.aggregate(occupation=occ.concept_id, stat="salary")
     
     print(f"{occ.term}: {match_pct}% match, +{salary_delta} SEK, requires {courses}")
-```
-
-### För SkillHedge:
-
-```python
-# Skapa ett real-time index
-skill_id = "kubernetes_concept_id"
-
-# Demand: Antal jobb som kräver denna skill
-demand = jobsearch.count(filters=[{"type": "skill", "concept_id": skill_id}])
-
-# Supply: Antal personer med denna skill (från education data + historical hires)
-supply = historical.count_hires(skill_id) + jobed_connect.count_graduates(skill_id)
-
-# Index value
-index_value = demand / supply
-
-# Update i real-time via JobStream
-jobstream.subscribe(callback=update_index)
 ```
 
 ### För CityIQ:
@@ -388,9 +368,8 @@ for skill in skill_demand:
 
 **JA. 100%.**
 
-Alla tre produkterna kan byggas med dessa APIs:
+Båda produkterna kan byggas med dessa APIs:
 - ✅ TalentFlow: Taxonomy + JobSearch + JobEd Connect
-- ✅ SkillHedge: JobSearch aggregations + Historical + JobStream
 - ✅ CityIQ: Alla APIs kombinerade för kommunal analys
 
 **Nästa steg**: Kör `test_apis.py` för att verifiera faktisk connectivity.
