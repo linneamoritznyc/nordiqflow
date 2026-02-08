@@ -11,6 +11,7 @@ function getAuth() {
 }
 
 const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID || "";
+const SHEET_NAME = "2026 planning";
 
 export interface DayRow {
   rowIndex: number;
@@ -28,7 +29,7 @@ export async function readAllRows(): Promise<DayRow[]> {
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: "A1:G400",
+    range: `'${SHEET_NAME}'!A1:G400`,
   });
 
   const rows = response.data.values || [];
@@ -62,7 +63,7 @@ export async function updateCell(
 
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${column}${rowIndex}`,
+    range: `'${SHEET_NAME}'!${column}${rowIndex}`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[value]],
@@ -85,7 +86,7 @@ export async function updateRow(
   // Read current row first to preserve existing data
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: `A${rowIndex}:G${rowIndex}`,
+    range: `'${SHEET_NAME}'!A${rowIndex}:G${rowIndex}`,
   });
 
   const currentRow = response.data.values?.[0] || [];
@@ -105,7 +106,7 @@ export async function updateRow(
 
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
-    range: `A${rowIndex}:F${rowIndex}`,
+    range: `'${SHEET_NAME}'!A${rowIndex}:F${rowIndex}`,
     valueInputOption: "RAW",
     requestBody: {
       values: [updatedRow],
