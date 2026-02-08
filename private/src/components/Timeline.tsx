@@ -47,11 +47,16 @@ export function Timeline() {
       </div>
     );
 
-  // Group rows by week
-  const enriched = rows.map((row) => ({
-    ...row,
-    parsedDate: parseSheetDate(row.date),
-  }));
+  // Filter to only show 2026 dates (February onwards) and group by week
+  const enriched = rows
+    .map((row) => ({
+      ...row,
+      parsedDate: parseSheetDate(row.date),
+    }))
+    .filter((row) => {
+      if (!row.parsedDate) return false;
+      return row.parsedDate >= new Date(2026, 0, 1);
+    });
 
   const weeks: WeekGroup[] = [];
   let currentWeek: WeekGroup | null = null;
