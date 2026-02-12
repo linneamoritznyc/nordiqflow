@@ -743,8 +743,112 @@ transitions = substitutability_graph.get_transitions(
         </div>
     </section>
 
+    <!-- Concept ID Explanation -->
+    <section class="section gray" id="concept-id">
+        <div class="container">
+            <h2 class="section-title">Hur Concept IDs Fungerar</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Nyckeln till semantisk matchning: olika ord som betyder samma sak mappas till samma ID.
+            </p>
+
+            <div class="data-architecture">
+                <h3>Problemet utan taxonomi</h3>
+                <p style="color: #555; margin-bottom: 20px;">
+                    Ditt CV säger: <strong>"Jag har jobbat med agila metoder och Scrum"</strong><br>
+                    En jobbannons säger: <strong>"Vi söker någon med erfarenhet av Agile Coach"</strong><br>
+                    En annan annons: <strong>"Scrum Master med sprintvana"</strong>
+                </p>
+                <p style="color: #e74c3c; margin-bottom: 15px;">
+                    <strong>Utan taxonomi:</strong> Dessa matchar INTE (olika ord)
+                </p>
+                <p style="color: #27ae60;">
+                    <strong>Med taxonomi:</strong> AF vet att "agila metoder", "Scrum", "Agile Coach" alla tillhör samma concept_id
+                </p>
+            </div>
+
+            <div class="formula-box" style="text-align: left; margin-top: 30px;">
+                <h3 style="text-align: center; margin-bottom: 25px;">Nyckelinsikten: Synonymer → Samma ID</h3>
+                <div style="font-family: Monaco, Consolas, monospace; font-size: 0.95em; line-height: 2;">
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #ffd93d; min-width: 220px;">"Agile Coach"</span>
+                        <span style="color: #6c757d; margin: 0 15px;">─┐</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #ffd93d; min-width: 220px;">"Scrum Master"</span>
+                        <span style="color: #6c757d; margin: 0 15px;">─┼──→</span>
+                        <span style="color: #4ecdc4;">concept_id: "KDZ_123"</span>
+                        <span style="color: #a8e6cf; margin-left: 15px;">(Agil projektledning)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 25px;">
+                        <span style="color: #ffd93d; min-width: 220px;">"Agila metoder"</span>
+                        <span style="color: #6c757d; margin: 0 15px;">─┘</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #ffd93d; min-width: 220px;">"Python"</span>
+                        <span style="color: #6c757d; margin: 0 15px;">─┐</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #ffd93d; min-width: 220px;">"Python 3"</span>
+                        <span style="color: #6c757d; margin: 0 15px;">─┼──→</span>
+                        <span style="color: #4ecdc4;">concept_id: "ABC_456"</span>
+                        <span style="color: #a8e6cf; margin-left: 15px;">(Python-programmering)</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: #ffd93d; min-width: 220px;">"Python-utveckling"</span>
+                        <span style="color: #6c757d; margin: 0 15px;">─┘</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-architecture" style="margin-top: 30px;">
+                <h3>Varför detta är kraftfullt</h3>
+                <table class="data-table">
+                    <tr>
+                        <th>Utan Concept IDs</th>
+                        <th>Med Concept IDs</th>
+                    </tr>
+                    <tr>
+                        <td>Exakt strängmatchning: "Scrum" ≠ "agil"</td>
+                        <td>Semantisk matchning: Båda → samma koncept</td>
+                    </tr>
+                    <tr>
+                        <td>Missar relevanta jobb</td>
+                        <td>Hittar alla relaterade jobb</td>
+                    </tr>
+                    <tr>
+                        <td>Användaren måste gissa rätt sökord</td>
+                        <td>Systemet förstår vad du menar</td>
+                    </tr>
+                    <tr>
+                        <td>Sökresultat beror på ordval</td>
+                        <td>Sökresultat baserat på faktisk kompetens</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="code-block" style="margin-top: 30px;">
+<span class="comment"># Så här använder vi det i koden</span>
+<span class="keyword">async</span> <span class="keyword">def</span> match_cv_to_jobs(cv_text):
+    <span class="comment"># 1. Extrahera skills med AF Enrichments API</span>
+    enrichments = await af_api.enrich(cv_text)
+
+    <span class="comment"># 2. Vi får tillbaka concept_ids, inte strängar</span>
+    user_skills = {s[<span class="string">'concept_id'</span>] <span class="keyword">for</span> s <span class="keyword">in</span> enrichments[<span class="string">'skills'</span>]}
+    <span class="comment"># {'KDZ_123', 'ABC_456', 'XYZ_789', ...}</span>
+
+    <span class="comment"># 3. Jämför med jobbets kravs concept_ids</span>
+    job_required = {<span class="string">'KDZ_123'</span>, <span class="string">'DEF_111'</span>}  <span class="comment"># Från jobbannonsen</span>
+
+    <span class="comment"># 4. Set-operation för matchning</span>
+    match_score = len(user_skills & job_required) / len(job_required)
+    <span class="comment"># → 50% match (1 av 2 required skills)</span>
+            </div>
+        </div>
+    </section>
+
     <!-- Data Architecture -->
-    <section class="section gray">
+    <section class="section white">
         <div class="container">
             <h2 class="section-title">Dataarkitektur</h2>
 

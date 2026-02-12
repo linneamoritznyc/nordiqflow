@@ -1920,18 +1920,18 @@
                     throw new Error('Kunde inte extrahera text från filen. Prova med en annan fil eller kopiera texten manuellt.');
                 }
 
-                // Send to API for parsing
+                // Send to API for parsing using AF Enrichments API (free, official concept_ids)
                 progressFill.style.width = '40%';
-                progressText.textContent = 'AI analyserar CV med Claude...';
+                progressText.textContent = 'AF Enrichments API analyserar CV...';
 
-                const response = await fetch(`${API_BASE}/api/parse-cv`, {
+                const response = await fetch(`${API_BASE}/api/parse-cv-af`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text: cvText })
                 });
 
                 progressFill.style.width = '80%';
-                progressText.textContent = 'Extraherar kompetenser...';
+                progressText.textContent = 'Extraherar kompetenser med officiella concept_ids...';
 
                 if (!response.ok) {
                     const error = await response.json();
@@ -1942,13 +1942,32 @@
                 progressFill.style.width = '100%';
                 progressText.textContent = 'Klar!';
 
-                // Store extracted data
+                // Store extracted data - AF API returns skills with concept_ids
+                const skillTerms = (result.extracted.skills || []).map(s => s.term);
+                const skillCategories = result.extracted.skillCategories || {};
+
+                // Build competence areas from skill categories
+                const competenceAreas = [];
+                if (skillCategories.programming?.length > 0) competenceAreas.push('Tech/Utveckling');
+                if (skillCategories.methods?.length > 0) competenceAreas.push('Projektledning');
+                if (skillCategories.tools?.length > 0) competenceAreas.push('Verktyg');
+                if (skillCategories.soft_skills?.length > 0) competenceAreas.push('Mjuka kompetenser');
+
+                // Store suggested occupations for later use
+                const suggestedOccupations = result.extracted.occupations || [];
+
                 cvExtractedData = {
-                    skills: result.extracted.skills || [],
-                    competenceAreas: result.extracted.competence_areas || [],
+                    skills: skillTerms,
+                    skillsWithIds: result.extracted.skills || [],
+                    competenceAreas: competenceAreas,
                     matchedSkills: result.matched.skills || [],
-                    experience: result.extracted.summary || '',
-                    experienceYears: result.extracted.experience_years
+                    suggestedOccupations: suggestedOccupations,
+                    languages: result.extracted.languages || [],
+                    experience: suggestedOccupations.length > 0
+                        ? `Föreslagna yrken: ${suggestedOccupations.slice(0, 3).map(o => o.term).join(', ')}`
+                        : '',
+                    experienceYears: result.extracted.experienceYears,
+                    meta: result.meta
                 };
 
                 await sleep(500);
@@ -1981,7 +2000,7 @@
                 fileName.innerHTML = `<span style="color: var(--warning);">⚠️ ${error.message}</span>`;
 
                 // Fallback: let user enter manually
-                alert('CV-analys kräver att ANTHROPIC_API_KEY är konfigurerad på servern. Du kan fortfarande söka efter yrke och lägga till kompetenser manuellt.');
+                alert('CV-analys misslyckades. AF Enrichments API kan vara tillfälligt nere. Du kan fortfarande söka efter yrke och lägga till kompetenser manuellt.');
             }
         }
 
@@ -2614,25 +2633,42 @@
             const profileExp = document.getElementById('profile-experience');
             const profileSkills = document.getElementById('profile-skills');
 
-            // Set title based on competence areas
-            if (data.competenceAreas && data.competenceAreas.length > 0) {
+            // Set title based on suggested occupations or competence areas
+            if (data.suggestedOccupations && data.suggestedOccupations.length > 0) {
+                profileTitle.textContent = data.suggestedOccupations[0].term;
+            } else if (data.competenceAreas && data.competenceAreas.length > 0) {
                 profileTitle.textContent = data.competenceAreas.slice(0, 2).join(' & ');
             } else {
                 profileTitle.textContent = 'Din Profil';
             }
 
-            // Experience
+            // Experience and languages
+            let expText = '';
             if (data.experienceYears) {
-                profileExp.textContent = `${data.experienceYears} års erfarenhet`;
-            } else {
-                profileExp.textContent = data.experience ? data.experience.substring(0, 100) + '...' : '';
+                expText = `${data.experienceYears} års erfarenhet`;
             }
+            if (data.languages && data.languages.length > 0) {
+                const langText = data.languages.map(l => l.term).join(', ');
+                expText = expText ? `${expText} · Språk: ${langText}` : `Språk: ${langText}`;
+            }
+            if (!expText && data.competenceAreas?.length > 0) {
+                expText = data.competenceAreas.join(' · ');
+            }
+            profileExp.textContent = expText;
 
-            // Skills
+            // Skills - show skills with matched concept_ids highlighted
             const topSkills = data.skills.slice(0, 8);
-            profileSkills.innerHTML = topSkills.map(skill =>
-                `<span class="profile-skill">${skill}</span>`
-            ).join('') + (data.skills.length > 8 ? `<span class="profile-skill" style="opacity: 0.6;">+${data.skills.length - 8} till</span>` : '');
+            const matchedIds = new Set((data.matchedSkills || []).map(s => s.term?.toLowerCase()));
+
+            profileSkills.innerHTML = topSkills.map(skill => {
+                const isMatched = matchedIds.has(skill.toLowerCase());
+                return `<span class="profile-skill" ${isMatched ? 'title="Officiell AF-taxonomi"' : ''}>${skill}${isMatched ? ' ✓' : ''}</span>`;
+            }).join('') + (data.skills.length > 8 ? `<span class="profile-skill" style="opacity: 0.6;">+${data.skills.length - 8} till</span>` : '');
+
+            // Add API source badge
+            if (data.meta?.processingEngine) {
+                profileSkills.innerHTML += `<span class="profile-skill" style="background: var(--success); color: white; font-size: 0.7em;">Gratis API</span>`;
+            }
 
             summary.style.display = 'block';
         }

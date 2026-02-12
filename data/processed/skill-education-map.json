@@ -1,0 +1,188 @@
+{
+  "metadata": {
+    "description": "Maps skill categories to recommended SUN education fields",
+    "source": "sun-field-hierarchy.json + manual mapping",
+    "lastUpdated": "2026-02-12"
+  },
+  "skillCategories": {
+    "programming": {
+      "sunFieldCode": "48",
+      "sunFieldName": "Datateknik",
+      "educationTypes": [
+        {
+          "type": "YH",
+          "name": "Yrkeshögskoleutbildning",
+          "duration": "2 år",
+          "examples": ["Webbutvecklare", "Systemutvecklare .NET", "Java-utvecklare"]
+        },
+        {
+          "type": "Högskola",
+          "name": "Högskoleutbildning",
+          "duration": "3-5 år",
+          "examples": ["Civilingenjör datateknik", "Kandidat i datavetenskap"]
+        },
+        {
+          "type": "Bootcamp",
+          "name": "Intensivkurs",
+          "duration": "3-6 månader",
+          "examples": ["Full-stack bootcamp", "Python intensivkurs"]
+        }
+      ]
+    },
+    "projectManagement": {
+      "sunFieldCode": "34",
+      "sunFieldName": "Företagsekonomi och administration",
+      "educationTypes": [
+        {
+          "type": "Certifiering",
+          "name": "Professionell certifiering",
+          "duration": "1-4 veckor",
+          "examples": ["PMP", "PRINCE2", "Scrum Master"]
+        },
+        {
+          "type": "YH",
+          "name": "Yrkeshögskoleutbildning",
+          "duration": "1-2 år",
+          "examples": ["Projektledare IT", "Produktägare agil utveckling"]
+        }
+      ]
+    },
+    "dataAnalysis": {
+      "sunFieldCode": "46",
+      "sunFieldName": "Matematik och statistik",
+      "educationTypes": [
+        {
+          "type": "Kurs",
+          "name": "Kortare kurs",
+          "duration": "2-8 veckor",
+          "examples": ["Excel avancerad", "Power BI", "Tableau"]
+        },
+        {
+          "type": "YH",
+          "name": "Yrkeshögskoleutbildning",
+          "duration": "2 år",
+          "examples": ["Data Analyst", "Business Intelligence Developer"]
+        },
+        {
+          "type": "Högskola",
+          "name": "Högskoleutbildning",
+          "duration": "3-5 år",
+          "examples": ["Datavetare", "Statistiker"]
+        }
+      ]
+    },
+    "marketing": {
+      "sunFieldCode": "34",
+      "sunFieldName": "Marknadsföring och PR",
+      "educationTypes": [
+        {
+          "type": "Certifiering",
+          "name": "Digital certifiering",
+          "duration": "1-4 veckor",
+          "examples": ["Google Ads", "HubSpot Marketing", "Facebook Blueprint"]
+        },
+        {
+          "type": "YH",
+          "name": "Yrkeshögskoleutbildning",
+          "duration": "2 år",
+          "examples": ["Digital Marknadsförare", "Content Manager"]
+        }
+      ]
+    },
+    "healthcare": {
+      "sunFieldCode": "72",
+      "sunFieldName": "Hälso- och sjukvård",
+      "educationTypes": [
+        {
+          "type": "YH",
+          "name": "Yrkeshögskoleutbildning",
+          "duration": "1-2 år",
+          "examples": ["Undersköterska", "Vårdbiträde", "Medicinsk sekreterare"]
+        },
+        {
+          "type": "Högskola",
+          "name": "Högskoleutbildning",
+          "duration": "3-6 år",
+          "examples": ["Sjuksköterska", "Fysioterapeut", "Läkare"]
+        }
+      ]
+    },
+    "construction": {
+      "sunFieldCode": "58",
+      "sunFieldName": "Byggteknik och arkitektur",
+      "educationTypes": [
+        {
+          "type": "Gymnasium",
+          "name": "Gymnasieutbildning",
+          "duration": "3 år",
+          "examples": ["Bygg- och anläggningsprogrammet"]
+        },
+        {
+          "type": "YH",
+          "name": "Yrkeshögskoleutbildning",
+          "duration": "2 år",
+          "examples": ["Byggledare", "BIM-samordnare", "Platschef"]
+        }
+      ]
+    },
+    "leadership": {
+      "sunFieldCode": "34",
+      "sunFieldName": "Ledarskap och organisation",
+      "educationTypes": [
+        {
+          "type": "Kurs",
+          "name": "Ledarskapsutbildning",
+          "duration": "1-4 dagar",
+          "examples": ["UGL", "Situationsanpassat ledarskap", "Coachande ledarskap"]
+        },
+        {
+          "type": "YH",
+          "name": "Yrkeshögskoleutbildning",
+          "duration": "1 år",
+          "examples": ["Verksamhetsledare", "HR-specialist"]
+        }
+      ]
+    },
+    "finance": {
+      "sunFieldCode": "34",
+      "sunFieldName": "Finans, bank och försäkring",
+      "educationTypes": [
+        {
+          "type": "Certifiering",
+          "name": "Finanscertifiering",
+          "duration": "2-6 månader",
+          "examples": ["SwedSec-licens", "CFA", "CAIA"]
+        },
+        {
+          "type": "Högskola",
+          "name": "Högskoleutbildning",
+          "duration": "3-4 år",
+          "examples": ["Civilekonom", "Finansanalytiker"]
+        }
+      ]
+    }
+  },
+  "commonSkillMappings": {
+    "python": "programming",
+    "java": "programming",
+    "javascript": "programming",
+    "c#": "programming",
+    "react": "programming",
+    "sql": "dataAnalysis",
+    "excel": "dataAnalysis",
+    "power bi": "dataAnalysis",
+    "tableau": "dataAnalysis",
+    "projektledning": "projectManagement",
+    "scrum": "projectManagement",
+    "agil": "projectManagement",
+    "ledarskap": "leadership",
+    "marknadsföring": "marketing",
+    "seo": "marketing",
+    "google ads": "marketing",
+    "omvårdnad": "healthcare",
+    "vård": "healthcare",
+    "bygg": "construction",
+    "ekonomi": "finance",
+    "redovisning": "finance"
+  }
+}
