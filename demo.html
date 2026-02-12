@@ -1180,6 +1180,202 @@
             margin-bottom: 10px;
         }
 
+        /* Match Badge */
+        .match-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .match-badge.high {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: var(--success);
+        }
+
+        .match-badge.medium {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: var(--warning);
+        }
+
+        .match-badge.low {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: var(--primary-light);
+        }
+
+        .match-percent {
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        .match-label {
+            font-size: 0.65em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        .job-card.high-match {
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .job-card.high-match::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--success) 0%, #059669 100%);
+            border-radius: 16px 0 0 16px;
+        }
+
+        /* Skills match in job card */
+        .job-skills-match {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .skills-match-header {
+            font-size: 0.85em;
+            margin-bottom: 8px;
+        }
+
+        .skills-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skills-pills .skill-pill {
+            font-size: 0.75em;
+            padding: 4px 10px;
+        }
+
+        /* Bookmark button */
+        .bookmark-btn {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .bookmark-btn:hover {
+            color: var(--warning);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn.active {
+            color: var(--warning);
+        }
+
+        /* CV Profile Summary */
+        .cv-profile-summary {
+            margin-top: 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .profile-info h4 {
+            font-size: 1.1em;
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            font-size: 0.85em;
+            color: var(--gray-400);
+        }
+
+        .profile-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .profile-skill {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--primary-light);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .profile-action-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .profile-action-btn.primary {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        .profile-action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .job-card-title {
+            padding-right: 0;
+        }
+
         /* Footer */
         footer {
             background: rgba(15, 23, 42, 0.8);
@@ -1418,9 +1614,23 @@
 
                 <div class="file-info" id="file-info">
                     <span class="name" id="file-name"></span>
-                    <p style="margin-top: 12px; font-size: 0.85em; color: var(--gray-400);">
-                        💡 <strong>Tips:</strong> Sök nu efter ett yrke i rutan till höger för att se karriärövergångar baserade på AF:s data.
-                    </p>
+                </div>
+
+                <!-- CV Profile Summary -->
+                <div class="cv-profile-summary" id="cv-profile-summary" style="display: none;">
+                    <div class="profile-header">
+                        <div class="profile-avatar">👤</div>
+                        <div class="profile-info">
+                            <h4 id="profile-title">Din Profil</h4>
+                            <p id="profile-experience"></p>
+                        </div>
+                    </div>
+                    <div class="profile-skills" id="profile-skills"></div>
+                    <div class="profile-actions">
+                        <button class="profile-action-btn primary" onclick="document.getElementById('run-jobs-btn').click()">
+                            🔍 Hitta jobb som matchar
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -1680,10 +1890,13 @@
                 renderSkillTags();
 
                 // Don't pre-select an occupation - let user search
-                occupationInput.placeholder = 'Sök efter det yrke du vill utforska karriärvägar för...';
+                occupationInput.placeholder = 'Sök efter yrke för karriärövergångar...';
 
                 document.getElementById('experience-input').value = cvExtractedData.experience;
                 updateRunButton();
+
+                // Show profile summary
+                showProfileSummary(cvExtractedData);
 
             } catch (error) {
                 console.error('CV parsing error:', error);
@@ -2078,10 +2291,16 @@
         function displayJobs(jobs) {
             const jobsGrid = document.getElementById('jobs-grid');
 
-            jobsGrid.innerHTML = jobs.map(job => {
+            // Sort jobs by skill match if user has skills
+            const jobsWithMatch = jobs.map(job => {
+                const matchResult = calculateSkillMatch(job, userSkills);
+                return { ...job, ...matchResult };
+            }).sort((a, b) => b.matchScore - a.matchScore);
+
+            jobsGrid.innerHTML = jobsWithMatch.map(job => {
                 const deadline = job.lastApplicationDate
                     ? new Date(job.lastApplicationDate).toLocaleDateString('sv-SE')
-                    : 'Ingen deadline';
+                    : 'Löpande';
 
                 const publishedDate = job.publishedDate
                     ? new Date(job.publishedDate).toLocaleDateString('sv-SE')
@@ -2101,18 +2320,50 @@
                     applyContent += `<br><span style="color: var(--gray-400); font-size: 0.85em;">Ange referens: ${job.application.reference}</span>`;
                 }
 
+                // Match score badge
+                const matchBadge = job.matchScore > 0 ? `
+                    <div class="match-badge ${job.matchScore >= 70 ? 'high' : job.matchScore >= 40 ? 'medium' : 'low'}">
+                        <span class="match-percent">${job.matchScore}%</span>
+                        <span class="match-label">matchning</span>
+                    </div>
+                ` : '';
+
+                // Skills display
+                const skillsHtml = (job.matchingSkills && job.matchingSkills.length > 0) ? `
+                    <div class="job-skills-match">
+                        <div class="skills-match-header">
+                            <span style="color: var(--success);">✓ Du matchar ${job.matchingSkills.length} kompetenser</span>
+                        </div>
+                        <div class="skills-pills">
+                            ${job.matchingSkills.map(s => `<span class="skill-pill matching">${s}</span>`).join('')}
+                            ${job.missingSkills && job.missingSkills.length > 0 ?
+                                job.missingSkills.slice(0, 3).map(s => `<span class="skill-pill gap">${s}</span>`).join('') : ''}
+                        </div>
+                    </div>
+                ` : '';
+
+                // Check if bookmarked
+                const isBookmarked = isJobBookmarked(job.id);
+
                 return `
-                    <div class="job-card">
+                    <div class="job-card ${job.matchScore >= 70 ? 'high-match' : ''}">
                         <div class="verified-badge">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            Verifierad på Platsbanken
+                            Live på Platsbanken
                         </div>
+
+                        ${matchBadge}
 
                         <div class="job-card-header">
                             <div>
                                 <h3 class="job-card-title">${job.title}</h3>
                                 <div class="job-card-employer">${job.employer}</div>
                             </div>
+                            <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark('${job.id}', this)" title="${isBookmarked ? 'Ta bort bokmärke' : 'Spara jobb'}">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="${isBookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </button>
                         </div>
 
                         <div class="job-card-meta">
@@ -2129,10 +2380,12 @@
                             ${publishedDate ? `
                             <div class="job-meta-item">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                Publicerad ${publishedDate}
+                                ${publishedDate}
                             </div>
                             ` : ''}
                         </div>
+
+                        ${skillsHtml}
 
                         <div class="job-card-description">${job.descriptionShort}</div>
 
@@ -2147,11 +2400,11 @@
                         <div class="job-card-footer">
                             <div class="job-deadline">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                Sista ansökningsdag: ${deadline}
+                                Sista dag: ${deadline}
                             </div>
                             <div class="job-card-actions">
                                 <a href="${job.platsbankenUrl}" target="_blank" class="job-btn job-btn-primary">
-                                    Se på Platsbanken
+                                    Visa annons
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                                 </a>
                             </div>
@@ -2159,6 +2412,153 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        // Skill matching function
+        function calculateSkillMatch(job, userSkillsList) {
+            if (!userSkillsList || userSkillsList.length === 0) {
+                return { matchScore: 0, matchingSkills: [], missingSkills: [] };
+            }
+
+            // Normalize user skills for comparison
+            const normalizedUserSkills = userSkillsList.map(s => s.toLowerCase().trim());
+
+            // Get job requirements
+            const jobSkills = [
+                ...(job.mustHave || []).map(s => s.label).filter(Boolean),
+                ...(job.niceToHave || []).map(s => s.label).filter(Boolean)
+            ];
+
+            // Also extract skills from description
+            const descSkills = extractSkillsFromText(job.descriptionShort || '');
+            const allJobSkills = [...new Set([...jobSkills, ...descSkills])];
+
+            if (allJobSkills.length === 0) {
+                // No skills to match against - check description for keyword overlap
+                const descWords = (job.descriptionShort || '').toLowerCase().split(/\s+/);
+                const matchCount = normalizedUserSkills.filter(skill =>
+                    descWords.some(word => word.includes(skill) || skill.includes(word))
+                ).length;
+                const score = Math.min(Math.round((matchCount / normalizedUserSkills.length) * 100), 100);
+                return { matchScore: score, matchingSkills: [], missingSkills: [] };
+            }
+
+            // Find matching skills
+            const matchingSkills = [];
+            const missingSkills = [];
+
+            allJobSkills.forEach(jobSkill => {
+                const jobSkillLower = jobSkill.toLowerCase();
+                const isMatch = normalizedUserSkills.some(userSkill =>
+                    userSkill.includes(jobSkillLower) ||
+                    jobSkillLower.includes(userSkill) ||
+                    levenshteinSimilarity(userSkill, jobSkillLower) > 0.8
+                );
+                if (isMatch) {
+                    matchingSkills.push(jobSkill);
+                } else {
+                    missingSkills.push(jobSkill);
+                }
+            });
+
+            const matchScore = allJobSkills.length > 0
+                ? Math.round((matchingSkills.length / allJobSkills.length) * 100)
+                : 0;
+
+            return { matchScore, matchingSkills, missingSkills };
+        }
+
+        // Extract common skills from job description text
+        function extractSkillsFromText(text) {
+            const commonSkills = [
+                'JavaScript', 'Python', 'Java', 'C#', 'React', 'Node.js', 'SQL', 'AWS', 'Azure',
+                'Excel', 'Word', 'PowerPoint', 'Office', 'SAP', 'Photoshop', 'AutoCAD',
+                'projektledning', 'ledarskap', 'kommunikation', 'engelska', 'svenska',
+                'B-körkort', 'körkort', 'ekonomi', 'redovisning', 'bokföring',
+                'marknadsföring', 'försäljning', 'kundservice', 'support',
+                'agil', 'scrum', 'kanban', 'DevOps', 'CI/CD', 'Git',
+                'HTML', 'CSS', 'TypeScript', 'Vue', 'Angular', 'PHP', 'Ruby',
+                'machine learning', 'AI', 'data science', 'analys'
+            ];
+
+            const found = [];
+            const textLower = text.toLowerCase();
+            commonSkills.forEach(skill => {
+                if (textLower.includes(skill.toLowerCase())) {
+                    found.push(skill);
+                }
+            });
+            return found;
+        }
+
+        // Simple similarity check
+        function levenshteinSimilarity(s1, s2) {
+            if (s1 === s2) return 1;
+            if (s1.length === 0 || s2.length === 0) return 0;
+
+            // Simple check for now - contains or starts with
+            if (s1.includes(s2) || s2.includes(s1)) return 0.9;
+            if (s1.substring(0, 3) === s2.substring(0, 3)) return 0.7;
+            return 0;
+        }
+
+        // Bookmark functions
+        function getBookmarkedJobs() {
+            try {
+                return JSON.parse(localStorage.getItem('nordiqflow_bookmarks') || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function isJobBookmarked(jobId) {
+            return getBookmarkedJobs().includes(jobId);
+        }
+
+        function toggleBookmark(jobId, btn) {
+            let bookmarks = getBookmarkedJobs();
+            if (bookmarks.includes(jobId)) {
+                bookmarks = bookmarks.filter(id => id !== jobId);
+                btn.classList.remove('active');
+                btn.querySelector('svg').setAttribute('fill', 'none');
+            } else {
+                bookmarks.push(jobId);
+                btn.classList.add('active');
+                btn.querySelector('svg').setAttribute('fill', 'currentColor');
+            }
+            localStorage.setItem('nordiqflow_bookmarks', JSON.stringify(bookmarks));
+        }
+
+        window.toggleBookmark = toggleBookmark;
+
+        // Show profile summary after CV parsing
+        function showProfileSummary(data) {
+            const summary = document.getElementById('cv-profile-summary');
+            const profileTitle = document.getElementById('profile-title');
+            const profileExp = document.getElementById('profile-experience');
+            const profileSkills = document.getElementById('profile-skills');
+
+            // Set title based on competence areas
+            if (data.competenceAreas && data.competenceAreas.length > 0) {
+                profileTitle.textContent = data.competenceAreas.slice(0, 2).join(' & ');
+            } else {
+                profileTitle.textContent = 'Din Profil';
+            }
+
+            // Experience
+            if (data.experienceYears) {
+                profileExp.textContent = `${data.experienceYears} års erfarenhet`;
+            } else {
+                profileExp.textContent = data.experience ? data.experience.substring(0, 100) + '...' : '';
+            }
+
+            // Skills
+            const topSkills = data.skills.slice(0, 8);
+            profileSkills.innerHTML = topSkills.map(skill =>
+                `<span class="profile-skill">${skill}</span>`
+            ).join('') + (data.skills.length > 8 ? `<span class="profile-skill" style="opacity: 0.6;">+${data.skills.length - 8} till</span>` : '');
+
+            summary.style.display = 'block';
         }
 
         // Make loadJobsForOccupation available globally
