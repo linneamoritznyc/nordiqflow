@@ -1531,8 +1531,16 @@
             background: var(--gray-500);
         }
     </style>
+    <!-- PDF.js for parsing PDF files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
+    <script>
+        // Initialize PDF.js worker
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
     <div class="bg-grid"></div>
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
@@ -1821,14 +1829,76 @@
             }
         });
 
-        // Read file as text
-        async function readFileAsText(file) {
+        // Read file and extract text based on file type
+        async function extractTextFromFile(file) {
+            const fileName = file.name.toLowerCase();
+
+            // PDF files - use PDF.js
+            if (fileName.endsWith('.pdf')) {
+                return await extractTextFromPDF(file);
+            }
+
+            // Plain text files
+            if (fileName.endsWith('.txt')) {
+                return await readAsText(file);
+            }
+
+            // DOCX files - read as text (basic extraction)
+            if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
+                // For DOCX, we'll try to extract readable text
+                // Note: Full DOCX parsing would need a library
+                const text = await readAsText(file);
+                // Clean up XML/binary artifacts
+                return cleanDocxText(text);
+            }
+
+            // Default: try to read as text
+            return await readAsText(file);
+        }
+
+        async function readAsText(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (e) => resolve(e.target.result);
                 reader.onerror = reject;
                 reader.readAsText(file);
             });
+        }
+
+        async function extractTextFromPDF(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    try {
+                        const typedArray = new Uint8Array(e.target.result);
+                        const pdf = await pdfjsLib.getDocument(typedArray).promise;
+
+                        let fullText = '';
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const textContent = await page.getTextContent();
+                            const pageText = textContent.items.map(item => item.str).join(' ');
+                            fullText += pageText + '\n';
+                        }
+
+                        resolve(fullText.trim());
+                    } catch (err) {
+                        reject(new Error('Kunde inte läsa PDF: ' + err.message));
+                    }
+                };
+                reader.onerror = () => reject(new Error('Kunde inte läsa filen'));
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function cleanDocxText(text) {
+            // Very basic cleanup for DOCX content
+            // Remove XML tags and common artifacts
+            return text
+                .replace(/<[^>]*>/g, ' ')
+                .replace(/\s+/g, ' ')
+                .replace(/[^\x20-\x7E\xC0-\xFF\u0100-\u017F]/g, ' ')
+                .trim();
         }
 
         async function handleFile(file) {
@@ -1839,10 +1909,16 @@
             progressText.textContent = 'Laddar upp fil...';
 
             try {
-                // Read file content
+                // Read file content based on type
                 progressFill.style.width = '20%';
-                progressText.textContent = 'Läser dokument...';
-                const cvText = await readFileAsText(file);
+                const fileType = file.name.split('.').pop().toUpperCase();
+                progressText.textContent = `Läser ${fileType}-dokument...`;
+                const cvText = await extractTextFromFile(file);
+
+                // Validate we got some text
+                if (!cvText || cvText.trim().length < 50) {
+                    throw new Error('Kunde inte extrahera text från filen. Prova med en annan fil eller kopiera texten manuellt.');
+                }
 
                 // Send to API for parsing
                 progressFill.style.width = '40%';
