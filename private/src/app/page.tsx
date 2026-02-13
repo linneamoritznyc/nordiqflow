@@ -1,14 +1,8 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { DayRow } from "@/lib/sheets";
-import {
-  parseSheetDate,
-  daysUntil,
-  getWeekNumber,
-  getWeekColor,
-  isToday,
-} from "@/lib/dates";
+import { parseSheetDate, daysUntil } from "@/lib/dates";
 import DailyView from "@/components/DailyView";
 import WeekView from "@/components/WeekView";
 import DeadlineTracker from "@/components/DeadlineTracker";
@@ -16,7 +10,7 @@ import QuickLog from "@/components/QuickLog";
 import FundingLinks from "@/components/FundingLinks";
 import MeetingNotes from "@/components/MeetingNotes";
 
-type View = "daily" | "week" | "deadlines" | "funding" | "meetings" | "timeline";
+type View = "daily" | "week" | "deadlines" | "funding" | "meetings" | "spreadsheet";
 
 export default function Dashboard() {
   const [rows, setRows] = useState<DayRow[]>([]);
@@ -54,7 +48,7 @@ export default function Dashboard() {
     { key: "deadlines", label: "Deadlines" },
     { key: "funding", label: "Funding Sources" },
     { key: "meetings", label: "Meetings" },
-    { key: "timeline", label: "Full Timeline" },
+    { key: "spreadsheet", label: "Spreadsheet" },
   ];
 
   return (
@@ -134,13 +128,34 @@ export default function Dashboard() {
           <FundingLinks />
         ) : view === "meetings" ? (
           <MeetingNotes />
+        ) : view === "spreadsheet" ? (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50">
+              <p className="text-sm text-gray-500">
+                Live spreadsheet -- edits sync automatically
+              </p>
+              <a
+                href="https://docs.google.com/spreadsheets/d/1y-PAizoHyBlavtBO4y3Yi492TCbGeqUEC-q4J7zp7u4/edit?gid=59492130#gid=59492130"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+              >
+                Open in Google Sheets
+              </a>
+            </div>
+            <iframe
+              src="https://docs.google.com/spreadsheets/d/1y-PAizoHyBlavtBO4y3Yi492TCbGeqUEC-q4J7zp7u4/edit?gid=59492130&rm=minimal"
+              className="w-full border-0"
+              style={{ height: "calc(100vh - 220px)", minHeight: "600px" }}
+              title="NordiqFlow Planning Spreadsheet"
+            />
+          </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               {view === "daily" && <DailyView rows={rows} />}
               {view === "week" && <WeekView rows={rows} />}
               {view === "deadlines" && <DeadlineTracker rows={rows} />}
-              {view === "timeline" && <TimelineView rows={rows} />}
             </div>
             <div>
               <QuickLog rows={rows} onSave={fetchRows} />
@@ -152,77 +167,3 @@ export default function Dashboard() {
   );
 }
 
-function TimelineView({ rows }: { rows: DayRow[] }) {
-  const todayRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (todayRef.current) {
-      todayRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, []);
-
-  const enriched = rows.map((row) => ({
-    ...row,
-    parsedDate: parseSheetDate(row.date),
-  }));
-
-  interface WeekGroup {
-    weekNumber: number;
-    color: { bg: string; border: string };
-    rows: (DayRow & { parsedDate: Date | null })[];
-  }
-
-  const weeks: WeekGroup[] = [];
-  let currentWeek: WeekGroup | null = null;
-
-  for (const row of enriched) {
-    const wn = row.parsedDate ? getWeekNumber(row.parsedDate) : -1;
-    if (!currentWeek || currentWeek.weekNumber !== wn) {
-      currentWeek = { weekNumber: wn, color: getWeekColor(wn), rows: [] };
-      weeks.push(currentWeek);
-    }
-    currentWeek.rows.push(row);
-  }
-
-  return (
-    <div className="space-y-1">
-      {weeks.map((week) => (
-        <div
-          key={week.weekNumber}
-          className="rounded-lg overflow-hidden py-1"
-          style={{ background: week.color.bg }}
-        >
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-1">
-            Week {week.weekNumber}
-          </p>
-          {week.rows.map((row) => {
-            const today = row.parsedDate ? isToday(row.parsedDate) : false;
-            return (
-              <div
-                key={row.rowIndex}
-                ref={today ? todayRef : undefined}
-                className={`grid grid-cols-[110px_80px_1fr_1fr] gap-2 px-3 py-1.5 text-sm ${
-                  today
-                    ? "border-l-4 border-indigo-600 font-semibold bg-white/50"
-                    : "border-l-4 border-transparent"
-                }`}
-              >
-                <span className="font-medium">{row.date}</span>
-                <span className="text-gray-500 text-xs">{row.weekday}</span>
-                <span className="text-indigo-700 font-semibold">
-                  {row.event}
-                  {row.fundingDeadline && (
-                    <span className="ml-2 text-[10px] bg-red-600 text-white px-1.5 py-0.5 rounded">
-                      DEADLINE
-                    </span>
-                  )}
-                </span>
-                <span className="text-gray-700">{row.gamePlan}</span>
-              </div>
-            );
-          })}
-        </div>
-      ))}
-    </div>
-  );
-}
