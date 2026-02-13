@@ -14,8 +14,9 @@ import WeekView from "@/components/WeekView";
 import DeadlineTracker from "@/components/DeadlineTracker";
 import QuickLog from "@/components/QuickLog";
 import FundingLinks from "@/components/FundingLinks";
+import MeetingNotes from "@/components/MeetingNotes";
 
-type View = "daily" | "week" | "deadlines" | "funding" | "timeline";
+type View = "daily" | "week" | "deadlines" | "funding" | "meetings" | "timeline";
 
 export default function Dashboard() {
   const [rows, setRows] = useState<DayRow[]>([]);
@@ -52,6 +53,7 @@ export default function Dashboard() {
     { key: "week", label: "This Week" },
     { key: "deadlines", label: "Deadlines" },
     { key: "funding", label: "Funding Sources" },
+    { key: "meetings", label: "Meetings" },
     { key: "timeline", label: "Full Timeline" },
   ];
 
@@ -130,6 +132,8 @@ export default function Dashboard() {
           </div>
         ) : view === "funding" ? (
           <FundingLinks />
+        ) : view === "meetings" ? (
+          <MeetingNotes />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">

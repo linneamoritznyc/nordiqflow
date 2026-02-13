@@ -12,6 +12,12 @@ function getAuth() {
 
 const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID || "";
 const SHEET_NAME = "2026 planning";
+const NOTES_SHEET = "Meeting Notes";
+
+function getSheetsClient() {
+  const auth = getAuth();
+  return google.sheets({ version: "v4", auth });
+}
 
 export interface DayRow {
   rowIndex: number;
@@ -110,6 +116,138 @@ export async function updateRow(
     valueInputOption: "RAW",
     requestBody: {
       values: [updatedRow],
+    },
+  });
+}
+
+// --- Meeting Notes ---
+
+export interface MeetingNote {
+  rowIndex: number;
+  date: string;
+  contact: string;
+  organization: string;
+  type: string;
+  notes: string;
+  followUp: string;
+  status: string;
+}
+
+async function ensureNotesSheet(): Promise<void> {
+  const sheets = getSheetsClient();
+
+  try {
+    await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `'${NOTES_SHEET}'!A1`,
+    });
+  } catch {
+    // Sheet doesn't exist -- create it with headers
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      requestBody: {
+        requests: [
+          {
+            addSheet: {
+              properties: { title: NOTES_SHEET },
+            },
+          },
+        ],
+      },
+    });
+
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `'${NOTES_SHEET}'!A1:G1`,
+      valueInputOption: "RAW",
+      requestBody: {
+        values: [
+          [
+            "Date",
+            "Contact",
+            "Organization",
+            "Type",
+            "Notes",
+            "Follow-up",
+            "Status",
+          ],
+        ],
+      },
+    });
+  }
+}
+
+export async function readMeetingNotes(): Promise<MeetingNote[]> {
+  await ensureNotesSheet();
+  const sheets = getSheetsClient();
+
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `'${NOTES_SHEET}'!A1:G200`,
+  });
+
+  const rows = response.data.values || [];
+
+  return rows.slice(1).map((row, index) => ({
+    rowIndex: index + 2,
+    date: row[0] || "",
+    contact: row[1] || "",
+    organization: row[2] || "",
+    type: row[3] || "",
+    notes: row[4] || "",
+    followUp: row[5] || "",
+    status: row[6] || "",
+  }));
+}
+
+export async function addMeetingNote(
+  data: Omit<MeetingNote, "rowIndex">
+): Promise<void> {
+  await ensureNotesSheet();
+  const sheets = getSheetsClient();
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `'${NOTES_SHEET}'!A:G`,
+    valueInputOption: "RAW",
+    requestBody: {
+      values: [
+        [
+          data.date,
+          data.contact,
+          data.organization,
+          data.type,
+          data.notes,
+          data.followUp,
+          data.status,
+        ],
+      ],
+    },
+  });
+}
+
+export async function updateMeetingNote(
+  rowIndex: number,
+  data: Omit<MeetingNote, "rowIndex">
+): Promise<void> {
+  const sheets = getSheetsClient();
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `'${NOTES_SHEET}'!A${rowIndex}:G${rowIndex}`,
+    valueInputOption: "RAW",
+    requestBody: {
+      values: [
+        [
+          data.date,
+          data.contact,
+          data.organization,
+          data.type,
+          data.notes,
+          data.followUp,
+          data.status,
+        ],
+      ],
     },
   });
 }
