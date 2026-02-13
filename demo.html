@@ -2241,6 +2241,111 @@
             });
         }
 
+        // Education recommendation helper
+        function getEducationRecommendations(missingSkills) {
+            if (!missingSkills || missingSkills.length === 0) return '';
+
+            const eduMap = {
+                'programmering': { type: 'YH', name: 'Systemutvecklare', duration: '2 år' },
+                'utveckling': { type: 'YH', name: 'Webbutvecklare', duration: '2 år' },
+                'projektledning': { type: 'Certifiering', name: 'PMP/PRINCE2', duration: '2-4 veckor' },
+                'agil': { type: 'Certifiering', name: 'Scrum Master', duration: '2 dagar' },
+                'ledarskap': { type: 'Kurs', name: 'UGL Ledarskap', duration: '1 vecka' },
+                'budget': { type: 'Kurs', name: 'Ekonomi för chefer', duration: '3 dagar' },
+                'data': { type: 'YH', name: 'Data Analyst', duration: '2 år' },
+                'analys': { type: 'Kurs', name: 'Business Intelligence', duration: '4 veckor' },
+                'kommunikation': { type: 'Kurs', name: 'Presentationsteknik', duration: '2 dagar' },
+                'excel': { type: 'Online', name: 'Excel Avancerad', duration: '20 timmar' },
+                'sql': { type: 'Online', name: 'SQL Fundamentals', duration: '40 timmar' },
+                'python': { type: 'Bootcamp', name: 'Python för nybörjare', duration: '8 veckor' }
+            };
+
+            const recommendations = [];
+            for (const skill of missingSkills.slice(0, 3)) {
+                const skillLower = skill.toLowerCase();
+                for (const [key, edu] of Object.entries(eduMap)) {
+                    if (skillLower.includes(key) || key.includes(skillLower)) {
+                        recommendations.push(`<strong>${edu.type}:</strong> ${edu.name} (${edu.duration})`);
+                        break;
+                    }
+                }
+            }
+
+            if (recommendations.length === 0) {
+                return '<em>Sök efter relevanta YH-utbildningar på yrkeshogskolan.se</em>';
+            }
+
+            return recommendations.map(r => `<div style="margin-bottom: 6px;">${r}</div>`).join('');
+        }
+
+        // Show detailed gap analysis modal
+        async function showGapAnalysis(occupationName, missingSkills) {
+            try {
+                const response = await fetch(`${API_BASE}/api/gap-analysis`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_skills: userSkills,
+                        target_occupation: occupationName
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch gap analysis');
+
+                const data = await response.json();
+
+                // Create modal with detailed education recommendations
+                const modal = document.createElement('div');
+                modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;';
+                modal.innerHTML = `
+                    <div style="background: var(--dark-light); border-radius: 16px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 30px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 style="color: white; margin: 0;">Utbildningsplan: ${occupationName}</h2>
+                            <button onclick="this.closest('div').parentElement.remove()" style="background: none; border: none; color: var(--gray-400); font-size: 24px; cursor: pointer;">&times;</button>
+                        </div>
+
+                        <div style="background: rgba(155, 89, 182, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                                <span style="color: var(--gray-300);">Din matchning</span>
+                                <span style="color: #9b59b6; font-weight: 600;">${data.analysis?.matchPercentage || 0}%</span>
+                            </div>
+                            <div style="background: var(--dark); border-radius: 8px; height: 8px; overflow: hidden;">
+                                <div style="background: linear-gradient(90deg, #9b59b6, #8e44ad); height: 100%; width: ${data.analysis?.matchPercentage || 0}%;"></div>
+                            </div>
+                            <div style="margin-top: 10px; color: var(--gray-400); font-size: 0.9em;">
+                                ${data.readinessLevel?.label || 'Behöver utveckling'}
+                            </div>
+                        </div>
+
+                        <h3 style="color: white; margin-bottom: 15px;">Rekommenderade utbildningar</h3>
+                        ${(data.education || []).map(edu => `
+                            <div style="background: var(--dark); border-radius: 12px; padding: 15px; margin-bottom: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: start;">
+                                    <div>
+                                        <div style="color: #9b59b6; font-size: 0.85em; margin-bottom: 4px;">För: ${edu.skill}</div>
+                                        <div style="color: white; font-weight: 500;">${edu.educationOptions?.[0]?.name || edu.category}</div>
+                                        <div style="color: var(--gray-400); font-size: 0.9em; margin-top: 4px;">${edu.educationOptions?.[0]?.duration || ''}</div>
+                                    </div>
+                                    <span style="background: rgba(155, 89, 182, 0.2); color: #9b59b6; padding: 4px 10px; border-radius: 12px; font-size: 0.8em;">${edu.educationOptions?.[0]?.type || 'Kurs'}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--glass-border);">
+                            <div style="color: var(--gray-300); margin-bottom: 10px;">Uppskattad tid att bli redo:</div>
+                            <div style="color: white; font-size: 1.3em; font-weight: 600;">${data.timeToClose?.label || 'Medium (2-3 månader)'}</div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+
+            } catch (error) {
+                console.error('Gap analysis error:', error);
+                alert('Kunde inte hämta utbildningsrekommendationer');
+            }
+        }
+
         function displayResults(data) {
             const results = data.recommendations || [];
             document.getElementById('match-count').textContent = results.length;
@@ -2275,13 +2380,22 @@
                 const matchLabel = r.matchLabel || (score >= 65 ? 'Bra matchning' : 'Möjlig övergång');
                 const insight = r.recommendation || `Composite Score: ${score}% baserat på substituerbarhet (${breakdown.substitutability || 'N/A'}%), skill match (${breakdown.skillMatch || 'N/A'}%), och marknadsfaktorer.`;
 
-                // Show missing skills if available
+                // Show missing skills with education recommendations
                 const missingSkillsHtml = skillMatch.missing && skillMatch.missing.length > 0
                     ? `<div class="skills-box" style="background: rgba(231, 76, 60, 0.1); margin-top: 15px;">
                         <h4 style="color: #e74c3c;">Kompetenser att utveckla</h4>
                         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
                             ${skillMatch.missing.map(s => `<span style="background: rgba(231, 76, 60, 0.2); padding: 4px 10px; border-radius: 12px; font-size: 0.85em; color: #e74c3c;">${s}</span>`).join('')}
                         </div>
+                       </div>
+                       <div class="skills-box" style="background: rgba(155, 89, 182, 0.1); margin-top: 15px;">
+                        <h4 style="color: #9b59b6;">Rekommenderade utbildningar</h4>
+                        <div style="margin-top: 10px; font-size: 0.9em; color: var(--gray-300);">
+                            ${getEducationRecommendations(skillMatch.missing)}
+                        </div>
+                        <button class="job-btn" onclick="showGapAnalysis('${r.name}', ${JSON.stringify(skillMatch.missing).replace(/'/g, "\\'")})" style="margin-top: 12px; font-size: 0.85em; padding: 8px 16px;">
+                            Se detaljerad utbildningsplan
+                        </button>
                        </div>`
                     : '';
 
