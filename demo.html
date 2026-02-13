@@ -2187,10 +2187,19 @@
                 document.getElementById('step-2').classList.remove('active');
                 document.getElementById('step-2').classList.add('done');
 
-                // Step 3: Searching vector database - actual API call
+                // Step 3: Full Composite Career Score calculation via API
                 document.getElementById('step-3').classList.add('active');
 
-                const response = await fetch(`${API_BASE}/api/recommend?occupation_id=${selectedOccupation.id}&limit=10`);
+                // Use the full career-match API with user skills for composite scoring
+                const response = await fetch(`${API_BASE}/api/career-match`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        occupation_id: selectedOccupation.id,
+                        user_skills: userSkills,
+                        limit: 10
+                    })
+                });
 
                 document.getElementById('step-3').classList.remove('active');
                 document.getElementById('step-3').classList.add('done');
@@ -2249,13 +2258,41 @@
             }
 
             careerResults.innerHTML = results.map((r, i) => {
-                const scoreClass = r.matchScore >= 50 ? 'high' : r.matchScore >= 25 ? 'medium' : '';
-                const demand = ['Mycket hög', 'Hög', 'Medel'][Math.floor(Math.random() * 3)];
-                const salaryDelta = ['+15-25%', '+10-20%', '+5-15%', '±5%'][Math.floor(Math.random() * 4)];
-                const transitionTime = r.matchScore >= 50 ? '3-6 mån' : r.matchScore >= 25 ? '6-12 mån' : '1-2 år';
+                // Use composite score from full algorithm, fallback to matchScore for backwards compat
+                const score = r.compositeScore || r.matchScore || 50;
+                const scoreClass = score >= 65 ? 'high' : score >= 50 ? 'medium' : '';
 
-                // Generate insight based on real substitutability data
-                const insight = `Enligt Arbetsförmedlingens substitutabilitetsdata har detta yrke ${r.matchScore}% överlapp med ${data.sourceOccupation.name}. ${r.matchScore >= 50 ? 'Detta är en stark karriärväg med hög substituerbarhet.' : 'Övergången kan kräva viss kompetensutveckling.'}`;
+                // Use real breakdown data from the algorithm
+                const breakdown = r.breakdown || {};
+                const skillMatch = r.skillMatch || {};
+
+                // Calculate transition time based on skill gaps
+                const gapCount = skillMatch.gapCount || 0;
+                const transitionTime = gapCount === 0 ? 'Redo nu' : gapCount <= 2 ? '1-3 mån' : gapCount <= 4 ? '3-6 mån' : '6-12 mån';
+
+                // Generate insight based on composite algorithm data
+                const matchLabel = r.matchLabel || (score >= 65 ? 'Bra matchning' : 'Möjlig övergång');
+                const insight = r.recommendation || `Composite Score: ${score}% baserat på substituerbarhet (${breakdown.substitutability || 'N/A'}%), skill match (${breakdown.skillMatch || 'N/A'}%), och marknadsfaktorer.`;
+
+                // Show missing skills if available
+                const missingSkillsHtml = skillMatch.missing && skillMatch.missing.length > 0
+                    ? `<div class="skills-box" style="background: rgba(231, 76, 60, 0.1); margin-top: 15px;">
+                        <h4 style="color: #e74c3c;">Kompetenser att utveckla</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                            ${skillMatch.missing.map(s => `<span style="background: rgba(231, 76, 60, 0.2); padding: 4px 10px; border-radius: 12px; font-size: 0.85em; color: #e74c3c;">${s}</span>`).join('')}
+                        </div>
+                       </div>`
+                    : '';
+
+                // Show matched skills if available
+                const matchedSkillsHtml = skillMatch.matched && skillMatch.matched.length > 0
+                    ? `<div class="skills-box" style="background: rgba(39, 174, 96, 0.1); margin-top: 15px;">
+                        <h4 style="color: #27ae60;">Dina matchande kompetenser</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                            ${skillMatch.matched.map(s => `<span style="background: rgba(39, 174, 96, 0.2); padding: 4px 10px; border-radius: 12px; font-size: 0.85em; color: #27ae60;">${s}</span>`).join('')}
+                        </div>
+                       </div>`
+                    : '';
 
                 return `
                     <div class="career-card ${scoreClass}" style="animation-delay: ${i * 0.1}s">
@@ -2265,31 +2302,31 @@
                                 <div class="subtitle">${r.ssykLabel || 'Yrke'} · SSYK ${r.ssykCode || 'N/A'}</div>
                             </div>
                             <div class="match-score">
-                                <div class="score-value">${r.matchScore}%</div>
-                                <div class="score-label">Substituerbarhet</div>
+                                <div class="score-value">${score}%</div>
+                                <div class="score-label">${matchLabel}</div>
                             </div>
                         </div>
 
                         <div class="ai-insight">
                             <div class="ai-insight-header">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
-                                AF Data Insight
+                                NordiqFlow Composite Score
                             </div>
                             <p>${insight}</p>
                         </div>
 
                         <div class="metrics-grid">
                             <div class="metric-box">
-                                <div class="metric-value">${r.matchScore}%</div>
+                                <div class="metric-value">${breakdown.substitutability || score}%</div>
                                 <div class="metric-label">Substituerbarhet</div>
                             </div>
                             <div class="metric-box">
-                                <div class="metric-value">${demand}</div>
-                                <div class="metric-label">Efterfrågan</div>
+                                <div class="metric-value">${skillMatch.percentage || breakdown.skillMatch || 'N/A'}%</div>
+                                <div class="metric-label">Skill Match</div>
                             </div>
                             <div class="metric-box">
-                                <div class="metric-value">${salaryDelta}</div>
-                                <div class="metric-label">Lönepotential</div>
+                                <div class="metric-value">${breakdown.demand || 50}%</div>
+                                <div class="metric-label">Efterfrågan</div>
                             </div>
                             <div class="metric-box">
                                 <div class="metric-value">${transitionTime}</div>
@@ -2297,14 +2334,8 @@
                             </div>
                         </div>
 
-                        ${r.definition ? `
-                        <div class="skills-analysis" style="grid-template-columns: 1fr;">
-                            <div class="skills-box" style="background: rgba(99, 102, 241, 0.1);">
-                                <h4 style="color: var(--primary-light);">📋 Yrkesbeskrivning</h4>
-                                <p style="font-size: 0.9em; color: var(--gray-300); line-height: 1.6;">${r.definition}</p>
-                            </div>
-                        </div>
-                        ` : ''}
+                        ${matchedSkillsHtml}
+                        ${missingSkillsHtml}
 
                         <div style="margin-top: 20px; text-align: center;">
                             <button class="job-btn job-btn-primary" onclick="loadJobsForOccupation('${r.name}', '${r.ssykCode || ''}')">
