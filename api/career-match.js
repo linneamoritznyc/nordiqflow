@@ -34,6 +34,7 @@ let substitutability = null;
 let occupations = null;
 let skills = null;
 let occupationSkills = null;
+let yrkesbarometer = null;
 
 function loadData() {
     const dataDir = path.join(process.cwd(), 'data/processed');
@@ -46,6 +47,13 @@ function loadData() {
     }
     if (!skills) {
         skills = JSON.parse(fs.readFileSync(path.join(dataDir, 'skills.json'), 'utf8'));
+    }
+    if (!yrkesbarometer) {
+        try {
+            yrkesbarometer = JSON.parse(fs.readFileSync(path.join(dataDir, 'yrkesbarometer.json'), 'utf8'));
+        } catch (e) {
+            yrkesbarometer = { forecasts: {}, ssykToForecast: {} };
+        }
     }
 
     // Build occupation -> required skills mapping
@@ -154,18 +162,56 @@ function expandSkillsHierarchically(userSkills) {
     return Array.from(expanded);
 }
 
-function estimateDemand(occupationId) {
-    // Estimate demand based on occupation type
-    // In production, this would come from Yrkesbarometer API
-    const highDemandPatterns = ['it', 'utvecklare', 'sjuksköterska', 'lärare', 'ingenjör'];
+function getDemandForecast(occupationId) {
+    // Use real Yrkesbarometer data for demand forecasts
     const occ = occupations[occupationId];
+    if (!occ) return { score: 50, level: 3, label: 'Balans', trend: 'stable', source: 'default' };
 
-    if (!occ) return 50;
+    const ssykCode = occ.ssykCode || '';
 
+    // Try to match SSYK code to forecast category
+    for (const [ssyk, category] of Object.entries(yrkesbarometer.ssykToForecast || {})) {
+        if (ssykCode.startsWith(ssyk) || ssyk.startsWith(ssykCode.substring(0, 3))) {
+            const forecast = yrkesbarometer.forecasts[category];
+            if (forecast) {
+                // Convert 1-5 scale to 0-100 score
+                const demandScore = ((forecast.forecast5Year - 1) / 4) * 100;
+                return {
+                    score: demandScore,
+                    level: forecast.forecast5Year,
+                    label: yrkesbarometer.demandLevels[String(forecast.forecast5Year)]?.label || 'Okänd',
+                    trend: forecast.trend,
+                    comment: forecast.comment,
+                    source: 'yrkesbarometer'
+                };
+            }
+        }
+    }
+
+    // Fallback: Try to match by occupation name keywords
     const nameLower = occ.name.toLowerCase();
-    const isHighDemand = highDemandPatterns.some(p => nameLower.includes(p));
+    for (const [category, forecast] of Object.entries(yrkesbarometer.forecasts || {})) {
+        const keywords = forecast.keywords || [];
+        if (keywords.some(kw => nameLower.includes(kw))) {
+            const demandScore = ((forecast.forecast5Year - 1) / 4) * 100;
+            return {
+                score: demandScore,
+                level: forecast.forecast5Year,
+                label: yrkesbarometer.demandLevels[String(forecast.forecast5Year)]?.label || 'Okänd',
+                trend: forecast.trend,
+                comment: forecast.comment,
+                source: 'yrkesbarometer_keyword'
+            };
+        }
+    }
 
-    return isHighDemand ? 75 : 50;
+    // Default: balanced market
+    return { score: 50, level: 3, label: 'Balans', trend: 'stable', source: 'default' };
+}
+
+function estimateDemand(occupationId) {
+    // Wrapper for backwards compatibility
+    return getDemandForecast(occupationId).score;
 }
 
 function calculateCompositeScore(params) {
@@ -221,13 +267,15 @@ function getCareerRecommendations(currentOccupationId, userSkills, limit = 10) {
         .map(r => {
             // Calculate skill match for this target occupation
             const skillMatch = calculateSkillMatch(expandedSkills, r.targetId);
-            const demandScore = estimateDemand(r.targetId);
+
+            // Get real Yrkesbarometer forecast data
+            const demandForecast = getDemandForecast(r.targetId);
 
             // Calculate composite score
             const scoring = calculateCompositeScore({
                 substitutabilityScore: r.score || 50,
                 skillMatchScore: skillMatch.score,
-                demandScore: demandScore
+                demandScore: demandForecast.score
             });
 
             const occData = occupations[r.targetId] || {};
@@ -248,6 +296,15 @@ function getCareerRecommendations(currentOccupationId, userSkills, limit = 10) {
                     matched: skillMatch.matchedSkills,
                     missing: skillMatch.missingSkills,
                     gapCount: skillMatch.missingSkills.length
+                },
+
+                // Real Yrkesbarometer demand forecast
+                demandForecast: {
+                    level: demandForecast.level,
+                    label: demandForecast.label,
+                    trend: demandForecast.trend,
+                    comment: demandForecast.comment,
+                    source: demandForecast.source
                 },
 
                 // For display

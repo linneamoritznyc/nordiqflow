@@ -2265,6 +2265,7 @@
                 // Use real breakdown data from the algorithm
                 const breakdown = r.breakdown || {};
                 const skillMatch = r.skillMatch || {};
+                const demandForecast = r.demandForecast || {};
 
                 // Calculate transition time based on skill gaps
                 const gapCount = skillMatch.gapCount || 0;
@@ -2324,15 +2325,25 @@
                                 <div class="metric-value">${skillMatch.percentage || breakdown.skillMatch || 'N/A'}%</div>
                                 <div class="metric-label">Skill Match</div>
                             </div>
-                            <div class="metric-box">
-                                <div class="metric-value">${breakdown.demand || 50}%</div>
-                                <div class="metric-label">Efterfrågan</div>
+                            <div class="metric-box" style="${demandForecast?.level >= 4 ? 'background: rgba(39, 174, 96, 0.2);' : demandForecast?.level <= 2 ? 'background: rgba(231, 76, 60, 0.2);' : ''}">
+                                <div class="metric-value">${demandForecast?.label || 'Balans'}</div>
+                                <div class="metric-label">Yrkesbarometer</div>
                             </div>
                             <div class="metric-box">
                                 <div class="metric-value">${transitionTime}</div>
                                 <div class="metric-label">Uppskattad tid</div>
                             </div>
                         </div>
+
+                        ${demandForecast?.comment ? `
+                        <div class="skills-box" style="background: rgba(52, 152, 219, 0.1); margin-top: 15px;">
+                            <h4 style="color: #3498db;">Yrkesbarometer Prognos</h4>
+                            <p style="font-size: 0.9em; color: var(--gray-300); margin-top: 8px;">
+                                ${demandForecast.comment}
+                                ${demandForecast.trend === 'increasing' ? ' Trenden är ökande.' : demandForecast.trend === 'decreasing' ? ' Trenden är minskande.' : ''}
+                            </p>
+                        </div>
+                        ` : ''}
 
                         ${matchedSkillsHtml}
                         ${missingSkillsHtml}

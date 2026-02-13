@@ -1,0 +1,227 @@
+{
+  "metadata": {
+    "source": "Arbetsförmedlingen Yrkesbarometern",
+    "description": "5-year demand forecast by occupation category",
+    "lastUpdated": "2026-02-13",
+    "note": "Based on published Yrkesbarometer reports. Values: 1-5 scale (1=oversupply, 3=balanced, 5=high shortage)"
+  },
+  "demandLevels": {
+    "5": { "label": "Mycket stor brist", "description": "Stor efterfrågan, få sökande", "color": "#27ae60" },
+    "4": { "label": "Stor brist", "description": "Hög efterfrågan", "color": "#2ecc71" },
+    "3": { "label": "Balans", "description": "Efterfrågan matchar utbud", "color": "#f39c12" },
+    "2": { "label": "Litet överskott", "description": "Fler sökande än jobb", "color": "#e67e22" },
+    "1": { "label": "Stort överskott", "description": "Många sökande, få jobb", "color": "#e74c3c" }
+  },
+  "forecasts": {
+    "it_utvecklare": {
+      "ssykPattern": ["251", "2512", "2514", "2515"],
+      "keywords": ["systemutvecklare", "webbutvecklare", "mjukvaruutvecklare", "programmerare", "utvecklare"],
+      "currentDemand": 5,
+      "forecast5Year": 5,
+      "trend": "stable_high",
+      "comment": "Fortsatt mycket stor brist på IT-kompetens"
+    },
+    "sjukskoterska": {
+      "ssykPattern": ["2221", "2222"],
+      "keywords": ["sjuksköterska", "specialistsjuksköterska"],
+      "currentDemand": 5,
+      "forecast5Year": 5,
+      "trend": "stable_high",
+      "comment": "Kronisk brist inom vården"
+    },
+    "larare": {
+      "ssykPattern": ["233", "234", "2341", "2342"],
+      "keywords": ["lärare", "grundskollärare", "gymnasielärare", "förskollärare"],
+      "currentDemand": 5,
+      "forecast5Year": 5,
+      "trend": "stable_high",
+      "comment": "Stor brist på behöriga lärare"
+    },
+    "ingenior": {
+      "ssykPattern": ["214", "2141", "2142", "2149"],
+      "keywords": ["ingenjör", "civilingenjör", "maskiningenjör", "elingenjör"],
+      "currentDemand": 4,
+      "forecast5Year": 5,
+      "trend": "increasing",
+      "comment": "Ökande behov inom teknik och grön omställning"
+    },
+    "bygg_och_anlaggning": {
+      "ssykPattern": ["711", "712", "713"],
+      "keywords": ["byggare", "snickare", "elektriker", "rörmokare", "byggnadsarbetare"],
+      "currentDemand": 4,
+      "forecast5Year": 4,
+      "trend": "stable_high",
+      "comment": "Stor efterfrågan inom byggbranschen"
+    },
+    "data_analyst": {
+      "ssykPattern": ["2511", "2529"],
+      "keywords": ["dataanalytiker", "data analyst", "business analyst", "analytiker"],
+      "currentDemand": 4,
+      "forecast5Year": 5,
+      "trend": "increasing",
+      "comment": "Växande behov av datadriven kompetens"
+    },
+    "projektledare": {
+      "ssykPattern": ["1213", "2421"],
+      "keywords": ["projektledare", "projektchef", "produktägare"],
+      "currentDemand": 4,
+      "forecast5Year": 4,
+      "trend": "stable",
+      "comment": "Stabil efterfrågan på projektledning"
+    },
+    "ekonom": {
+      "ssykPattern": ["241", "2411", "2412"],
+      "keywords": ["ekonom", "revisor", "controller", "redovisningsekonom"],
+      "currentDemand": 3,
+      "forecast5Year": 3,
+      "trend": "stable",
+      "comment": "Balanserad arbetsmarknad"
+    },
+    "hr_personal": {
+      "ssykPattern": ["242", "2423"],
+      "keywords": ["hr", "personalvetare", "rekryterare", "hr-specialist"],
+      "currentDemand": 3,
+      "forecast5Year": 3,
+      "trend": "stable",
+      "comment": "Balanserad efterfrågan"
+    },
+    "marknadsforing": {
+      "ssykPattern": ["243", "2431"],
+      "keywords": ["marknadsförare", "marknadschef", "kommunikatör"],
+      "currentDemand": 2,
+      "forecast5Year": 3,
+      "trend": "increasing",
+      "comment": "Ökande behov av digital kompetens"
+    },
+    "administration": {
+      "ssykPattern": ["334", "411", "412"],
+      "keywords": ["administratör", "sekreterare", "kontorsassistent", "receptionist"],
+      "currentDemand": 2,
+      "forecast5Year": 2,
+      "trend": "decreasing",
+      "comment": "Minskande behov pga automatisering"
+    },
+    "forsaljning_butik": {
+      "ssykPattern": ["522", "5221", "5222"],
+      "keywords": ["butikssäljare", "butikschef", "försäljare"],
+      "currentDemand": 3,
+      "forecast5Year": 2,
+      "trend": "decreasing",
+      "comment": "E-handel påverkar fysisk butik"
+    },
+    "transport_logistik": {
+      "ssykPattern": ["832", "833", "432"],
+      "keywords": ["lastbilschaufför", "logistiker", "lagerarbetare", "truckförare"],
+      "currentDemand": 4,
+      "forecast5Year": 3,
+      "trend": "decreasing",
+      "comment": "Automation kommer påverka långsiktigt"
+    },
+    "vard_omsorg": {
+      "ssykPattern": ["532", "534"],
+      "keywords": ["undersköterska", "vårdbiträde", "personlig assistent"],
+      "currentDemand": 5,
+      "forecast5Year": 5,
+      "trend": "stable_high",
+      "comment": "Mycket stor brist, åldrande befolkning"
+    },
+    "kock_restaurang": {
+      "ssykPattern": ["512", "513"],
+      "keywords": ["kock", "köksmästare", "servitör", "restaurangbiträde"],
+      "currentDemand": 4,
+      "forecast5Year": 4,
+      "trend": "stable",
+      "comment": "Fortsatt brist på utbildade kockar"
+    },
+    "chef_ledning": {
+      "ssykPattern": ["121", "122", "131", "132"],
+      "keywords": ["chef", "vd", "verksamhetschef", "avdelningschef"],
+      "currentDemand": 3,
+      "forecast5Year": 3,
+      "trend": "stable",
+      "comment": "Stabil efterfrågan på ledningskompetens"
+    },
+    "juridik": {
+      "ssykPattern": ["261", "2611"],
+      "keywords": ["jurist", "advokat", "bolagsjurist"],
+      "currentDemand": 3,
+      "forecast5Year": 3,
+      "trend": "stable",
+      "comment": "Balanserad arbetsmarknad"
+    },
+    "design_kreativ": {
+      "ssykPattern": ["216", "265"],
+      "keywords": ["designer", "grafisk designer", "ux designer", "art director"],
+      "currentDemand": 3,
+      "forecast5Year": 3,
+      "trend": "stable",
+      "comment": "Digital design växer, print minskar"
+    },
+    "cybersecurity": {
+      "ssykPattern": ["2519"],
+      "keywords": ["säkerhetsspecialist", "cybersäkerhet", "informationssäkerhet", "security"],
+      "currentDemand": 5,
+      "forecast5Year": 5,
+      "trend": "increasing",
+      "comment": "Explosiv tillväxt inom cybersäkerhet"
+    },
+    "ai_ml": {
+      "ssykPattern": ["2511"],
+      "keywords": ["ai", "machine learning", "maskininlärning", "data scientist", "ai-utvecklare"],
+      "currentDemand": 5,
+      "forecast5Year": 5,
+      "trend": "increasing",
+      "comment": "Mycket hög efterfrågan på AI-kompetens"
+    }
+  },
+  "ssykToForecast": {
+    "251": "it_utvecklare",
+    "2512": "it_utvecklare",
+    "2514": "it_utvecklare",
+    "2515": "it_utvecklare",
+    "2511": "data_analyst",
+    "2519": "cybersecurity",
+    "2221": "sjukskoterska",
+    "2222": "sjukskoterska",
+    "233": "larare",
+    "234": "larare",
+    "2341": "larare",
+    "2342": "larare",
+    "214": "ingenior",
+    "2141": "ingenior",
+    "2142": "ingenior",
+    "711": "bygg_och_anlaggning",
+    "712": "bygg_och_anlaggning",
+    "713": "bygg_och_anlaggning",
+    "1213": "projektledare",
+    "2421": "projektledare",
+    "241": "ekonom",
+    "2411": "ekonom",
+    "2412": "ekonom",
+    "242": "hr_personal",
+    "2423": "hr_personal",
+    "243": "marknadsforing",
+    "2431": "marknadsforing",
+    "334": "administration",
+    "411": "administration",
+    "412": "administration",
+    "522": "forsaljning_butik",
+    "5221": "forsaljning_butik",
+    "5222": "forsaljning_butik",
+    "832": "transport_logistik",
+    "833": "transport_logistik",
+    "432": "transport_logistik",
+    "532": "vard_omsorg",
+    "534": "vard_omsorg",
+    "512": "kock_restaurang",
+    "513": "kock_restaurang",
+    "121": "chef_ledning",
+    "122": "chef_ledning",
+    "131": "chef_ledning",
+    "132": "chef_ledning",
+    "261": "juridik",
+    "2611": "juridik",
+    "216": "design_kreativ",
+    "265": "design_kreativ"
+  }
+}
