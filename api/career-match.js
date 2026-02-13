@@ -35,6 +35,7 @@ let occupations = null;
 let skills = null;
 let occupationSkills = null;
 let yrkesbarometer = null;
+let salaryData = null;
 
 function loadData() {
     const dataDir = path.join(process.cwd(), 'data/processed');
@@ -53,6 +54,13 @@ function loadData() {
             yrkesbarometer = JSON.parse(fs.readFileSync(path.join(dataDir, 'yrkesbarometer.json'), 'utf8'));
         } catch (e) {
             yrkesbarometer = { forecasts: {}, ssykToForecast: {} };
+        }
+    }
+    if (!salaryData) {
+        try {
+            salaryData = JSON.parse(fs.readFileSync(path.join(dataDir, 'salary-data.json'), 'utf8'));
+        } catch (e) {
+            salaryData = { salaryBySsyk: {}, occupationNameSalaries: {} };
         }
     }
 
@@ -214,6 +222,109 @@ function estimateDemand(occupationId) {
     return getDemandForecast(occupationId).score;
 }
 
+/**
+ * Get salary information for an occupation
+ * Uses SSYK code and occupation name matching
+ */
+function getSalaryInfo(occupationId) {
+    const occ = occupations[occupationId];
+    if (!occ) return null;
+
+    const ssykCode = occ.ssykCode || '';
+    const nameLower = occ.name.toLowerCase();
+
+    // Try exact SSYK code match first
+    if (ssykCode && salaryData.salaryBySsyk[ssykCode]) {
+        const data = salaryData.salaryBySsyk[ssykCode];
+        return {
+            median: data.median,
+            percentile10: data.percentile10,
+            percentile90: data.percentile90,
+            trend: data.trend,
+            source: 'ssyk',
+            formatted: formatSalary(data.median)
+        };
+    }
+
+    // Try SSYK prefix (e.g., 251 matches 2512)
+    for (const ssyk of Object.keys(salaryData.salaryBySsyk).sort((a, b) => b.length - a.length)) {
+        if (ssykCode.startsWith(ssyk)) {
+            const data = salaryData.salaryBySsyk[ssyk];
+            return {
+                median: data.median,
+                percentile10: data.percentile10,
+                percentile90: data.percentile90,
+                trend: data.trend,
+                source: 'ssyk_prefix',
+                formatted: formatSalary(data.median)
+            };
+        }
+    }
+
+    // Try occupation name match
+    for (const [name, data] of Object.entries(salaryData.occupationNameSalaries || {})) {
+        if (nameLower.includes(name) || name.includes(nameLower)) {
+            return {
+                median: data.median,
+                percentile10: data.percentile10,
+                percentile90: data.percentile90,
+                trend: 'unknown',
+                source: 'name_match',
+                formatted: formatSalary(data.median)
+            };
+        }
+    }
+
+    // Default: use general category based on SSYK first digit
+    if (ssykCode && ssykCode[0]) {
+        const category = salaryData.salaryBySsyk[ssykCode[0]];
+        if (category) {
+            return {
+                median: category.median,
+                percentile10: category.percentile10,
+                percentile90: category.percentile90,
+                trend: category.trend,
+                source: 'category_estimate',
+                formatted: formatSalary(category.median)
+            };
+        }
+    }
+
+    return null;
+}
+
+function formatSalary(amount) {
+    if (!amount) return null;
+    return `${Math.round(amount / 1000)} tkr/mån`;
+}
+
+/**
+ * Calculate salary delta between current and target occupation
+ */
+function calculateSalaryDelta(currentOccId, targetOccId) {
+    const currentSalary = getSalaryInfo(currentOccId);
+    const targetSalary = getSalaryInfo(targetOccId);
+
+    if (!currentSalary || !targetSalary) {
+        return { delta: 0, percentage: 0, score: 50 };
+    }
+
+    const delta = targetSalary.median - currentSalary.median;
+    const percentage = Math.round((delta / currentSalary.median) * 100);
+
+    // Convert to 0-100 score: +50% = 100, -50% = 0, 0% = 50
+    const score = Math.min(100, Math.max(0, 50 + percentage));
+
+    return {
+        delta,
+        percentage,
+        score,
+        currentSalary: currentSalary.formatted,
+        targetSalary: targetSalary.formatted,
+        direction: delta > 0 ? 'increase' : delta < 0 ? 'decrease' : 'same'
+    };
+}
+
 function calculateCompositeScore(params) {
     const {
         substitutabilityScore,  // 0-100 from AF data
@@ -261,6 +372,9 @@ function getCareerRecommendations(currentOccupationId, userSkills, limit = 10) {
     // Expand user skills hierarchically
     const expandedSkills = expandSkillsHierarchically(userSkills);
 
+    // Get current occupation salary for delta calculations
+    const currentSalary = getSalaryInfo(currentOccupationId);
+
     // Get all potential transitions
     const transitions = subData.relations
         .filter(r => r.direction === 'can_become')
@@ -271,11 +385,16 @@ function getCareerRecommendations(currentOccupationId, userSkills, limit = 10) {
             // Get real Yrkesbarometer forecast data
             const demandForecast = getDemandForecast(r.targetId);
 
-            // Calculate composite score
+            // Get salary info for target occupation
+            const targetSalary = getSalaryInfo(r.targetId);
+            const salaryDelta = calculateSalaryDelta(currentOccupationId, r.targetId);
+
+            // Calculate composite score with actual salary delta
             const scoring = calculateCompositeScore({
                 substitutabilityScore: r.score || 50,
                 skillMatchScore: skillMatch.score,
-                demandScore: demandForecast.score
+                demandScore: demandForecast.score,
+                salaryDeltaScore: salaryDelta.score
             });
 
             const occData = occupations[r.targetId] || {};
@@ -307,6 +426,22 @@ function getCareerRecommendations(currentOccupationId, userSkills, limit = 10) {
                     source: demandForecast.source
                 },
 
+                // Salary information
+                salary: targetSalary ? {
+                    median: targetSalary.median,
+                    formatted: targetSalary.formatted,
+                    range: `${targetSalary.percentile10 ? Math.round(targetSalary.percentile10/1000) : '?'}–${targetSalary.percentile90 ? Math.round(targetSalary.percentile90/1000) : '?'} tkr`,
+                    trend: targetSalary.trend
+                } : null,
+
+                // Salary delta from current occupation
+                salaryDelta: salaryDelta.delta !== 0 ? {
+                    amount: salaryDelta.delta,
+                    percentage: salaryDelta.percentage,
+                    direction: salaryDelta.direction,
+                    formatted: `${salaryDelta.percentage > 0 ? '+' : ''}${salaryDelta.percentage}%`
+                } : null,
+
                 // For display
                 matchLabel: getMatchLabel(scoring.compositeScore),
                 recommendation: generateRecommendation(skillMatch.missingSkills)
@@ -319,7 +454,11 @@ function getCareerRecommendations(currentOccupationId, userSkills, limit = 10) {
     return {
         sourceOccupation: {
             id: currentOccupationId,
-            name: subData.name
+            name: subData.name,
+            salary: currentSalary ? {
+                median: currentSalary.median,
+                formatted: currentSalary.formatted
+            } : null
         },
         userProfile: {
             skills: userSkills,

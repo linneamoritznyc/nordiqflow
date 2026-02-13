@@ -1,0 +1,370 @@
+{
+  "metadata": {
+    "source": "SCB/Medlingsinstitutet Lönestrukturstatistik",
+    "description": "Swedish salary data by occupation (monthly SEK, median)",
+    "lastUpdated": "2026-02-13",
+    "note": "Based on published salary statistics. Values are median monthly salaries in SEK."
+  },
+  "salaryBySsyk": {
+    "1": {
+      "name": "Chefer",
+      "median": 62500,
+      "percentile10": 42000,
+      "percentile90": 98000,
+      "trend": "stable"
+    },
+    "11": {
+      "name": "Politiker och högre ämbetsmän",
+      "median": 72000,
+      "percentile10": 48000,
+      "percentile90": 115000,
+      "trend": "stable"
+    },
+    "12": {
+      "name": "Verkställande direktörer m.fl.",
+      "median": 85000,
+      "percentile10": 55000,
+      "percentile90": 140000,
+      "trend": "increasing"
+    },
+    "121": {
+      "name": "Ekonomi- och finanschefer",
+      "median": 72000,
+      "percentile10": 52000,
+      "percentile90": 105000,
+      "trend": "stable"
+    },
+    "122": {
+      "name": "Personal- och HR-chefer",
+      "median": 58000,
+      "percentile10": 42000,
+      "percentile90": 82000,
+      "trend": "stable"
+    },
+    "13": {
+      "name": "Chefer inom tillverkning, bygg m.m.",
+      "median": 58000,
+      "percentile10": 42000,
+      "percentile90": 85000,
+      "trend": "stable"
+    },
+    "2": {
+      "name": "Specialister",
+      "median": 48500,
+      "percentile10": 35000,
+      "percentile90": 72000,
+      "trend": "increasing"
+    },
+    "21": {
+      "name": "Ingenjörer och arkitekter",
+      "median": 52000,
+      "percentile10": 38000,
+      "percentile90": 78000,
+      "trend": "increasing"
+    },
+    "214": {
+      "name": "Civilingenjörer",
+      "median": 55000,
+      "percentile10": 40000,
+      "percentile90": 82000,
+      "trend": "increasing"
+    },
+    "22": {
+      "name": "Hälso- och sjukvårdsspecialister",
+      "median": 58000,
+      "percentile10": 42000,
+      "percentile90": 95000,
+      "trend": "stable"
+    },
+    "221": {
+      "name": "Läkare",
+      "median": 72000,
+      "percentile10": 52000,
+      "percentile90": 105000,
+      "trend": "stable"
+    },
+    "222": {
+      "name": "Sjuksköterskor",
+      "median": 38500,
+      "percentile10": 32000,
+      "percentile90": 48000,
+      "trend": "increasing"
+    },
+    "23": {
+      "name": "Universitets- och högskollärare",
+      "median": 48000,
+      "percentile10": 38000,
+      "percentile90": 65000,
+      "trend": "stable"
+    },
+    "233": {
+      "name": "Gymnasielärare",
+      "median": 42000,
+      "percentile10": 35000,
+      "percentile90": 52000,
+      "trend": "stable"
+    },
+    "234": {
+      "name": "Grundskollärare",
+      "median": 39000,
+      "percentile10": 33000,
+      "percentile90": 48000,
+      "trend": "stable"
+    },
+    "24": {
+      "name": "Ekonomer, jurister m.fl.",
+      "median": 52000,
+      "percentile10": 38000,
+      "percentile90": 78000,
+      "trend": "stable"
+    },
+    "241": {
+      "name": "Ekonomer och revisorer",
+      "median": 52000,
+      "percentile10": 38000,
+      "percentile90": 75000,
+      "trend": "stable"
+    },
+    "242": {
+      "name": "HR-specialister",
+      "median": 45000,
+      "percentile10": 35000,
+      "percentile90": 62000,
+      "trend": "stable"
+    },
+    "25": {
+      "name": "IT-specialister",
+      "median": 52000,
+      "percentile10": 38000,
+      "percentile90": 75000,
+      "trend": "increasing"
+    },
+    "251": {
+      "name": "Systemutvecklare och programmerare",
+      "median": 52000,
+      "percentile10": 38000,
+      "percentile90": 72000,
+      "trend": "increasing"
+    },
+    "2511": {
+      "name": "Systemanalytiker och IT-arkitekter",
+      "median": 58000,
+      "percentile10": 42000,
+      "percentile90": 82000,
+      "trend": "increasing"
+    },
+    "2512": {
+      "name": "Mjukvaruutvecklare",
+      "median": 52000,
+      "percentile10": 38000,
+      "percentile90": 72000,
+      "trend": "increasing"
+    },
+    "2519": {
+      "name": "IT-säkerhetsspecialister",
+      "median": 58000,
+      "percentile10": 45000,
+      "percentile90": 85000,
+      "trend": "increasing"
+    },
+    "26": {
+      "name": "Jurister",
+      "median": 55000,
+      "percentile10": 38000,
+      "percentile90": 95000,
+      "trend": "stable"
+    },
+    "3": {
+      "name": "Yrken med kortare högskoleutbildning",
+      "median": 38000,
+      "percentile10": 30000,
+      "percentile90": 52000,
+      "trend": "stable"
+    },
+    "31": {
+      "name": "Ingenjörer och tekniker",
+      "median": 42000,
+      "percentile10": 33000,
+      "percentile90": 55000,
+      "trend": "stable"
+    },
+    "33": {
+      "name": "Ekonomer och administratörer",
+      "median": 38000,
+      "percentile10": 30000,
+      "percentile90": 52000,
+      "trend": "stable"
+    },
+    "334": {
+      "name": "Kontorsassistenter",
+      "median": 32000,
+      "percentile10": 27000,
+      "percentile90": 40000,
+      "trend": "decreasing"
+    },
+    "4": {
+      "name": "Kontors- och kundserviceyrken",
+      "median": 32000,
+      "percentile10": 27000,
+      "percentile90": 42000,
+      "trend": "stable"
+    },
+    "41": {
+      "name": "Kontorsassistenter m.fl.",
+      "median": 31000,
+      "percentile10": 26000,
+      "percentile90": 40000,
+      "trend": "stable"
+    },
+    "42": {
+      "name": "Kundserviceyrken",
+      "median": 30000,
+      "percentile10": 26000,
+      "percentile90": 38000,
+      "trend": "stable"
+    },
+    "5": {
+      "name": "Service-, omsorgs- och försäljningsyrken",
+      "median": 29500,
+      "percentile10": 25000,
+      "percentile90": 38000,
+      "trend": "stable"
+    },
+    "51": {
+      "name": "Serviceyrken",
+      "median": 30000,
+      "percentile10": 26000,
+      "percentile90": 38000,
+      "trend": "stable"
+    },
+    "512": {
+      "name": "Kockar och kallskänkor",
+      "median": 30000,
+      "percentile10": 26000,
+      "percentile90": 38000,
+      "trend": "stable"
+    },
+    "52": {
+      "name": "Försäljningsyrken",
+      "median": 29000,
+      "percentile10": 25000,
+      "percentile90": 38000,
+      "trend": "stable"
+    },
+    "522": {
+      "name": "Butikssäljare",
+      "median": 28000,
+      "percentile10": 25000,
+      "percentile90": 35000,
+      "trend": "stable"
+    },
+    "53": {
+      "name": "Vårdbiträden och personliga assistenter",
+      "median": 29000,
+      "percentile10": 26000,
+      "percentile90": 35000,
+      "trend": "stable"
+    },
+    "7": {
+      "name": "Hantverksyrken",
+      "median": 35000,
+      "percentile10": 29000,
+      "percentile90": 45000,
+      "trend": "stable"
+    },
+    "71": {
+      "name": "Byggnadshantverkare",
+      "median": 36000,
+      "percentile10": 30000,
+      "percentile90": 46000,
+      "trend": "stable"
+    },
+    "711": {
+      "name": "Murare, byggnadsarbetare",
+      "median": 35000,
+      "percentile10": 29000,
+      "percentile90": 44000,
+      "trend": "stable"
+    },
+    "712": {
+      "name": "Snickare",
+      "median": 35000,
+      "percentile10": 29000,
+      "percentile90": 44000,
+      "trend": "stable"
+    },
+    "713": {
+      "name": "Elektriker",
+      "median": 38000,
+      "percentile10": 31000,
+      "percentile90": 48000,
+      "trend": "stable"
+    },
+    "8": {
+      "name": "Maskinoperatörer och montörer",
+      "median": 32000,
+      "percentile10": 27000,
+      "percentile90": 42000,
+      "trend": "stable"
+    },
+    "83": {
+      "name": "Förare och operatörer",
+      "median": 32000,
+      "percentile10": 27000,
+      "percentile90": 42000,
+      "trend": "stable"
+    },
+    "832": {
+      "name": "Lastbilsförare",
+      "median": 32000,
+      "percentile10": 28000,
+      "percentile90": 40000,
+      "trend": "stable"
+    },
+    "9": {
+      "name": "Yrken utan krav på utbildning",
+      "median": 27000,
+      "percentile10": 24000,
+      "percentile90": 33000,
+      "trend": "stable"
+    }
+  },
+  "occupationNameSalaries": {
+    "systemutvecklare": { "median": 52000, "percentile10": 38000, "percentile90": 72000 },
+    "webbutvecklare": { "median": 48000, "percentile10": 35000, "percentile90": 68000 },
+    "data analyst": { "median": 48000, "percentile10": 36000, "percentile90": 68000 },
+    "projektledare": { "median": 52000, "percentile10": 40000, "percentile90": 72000 },
+    "produktägare": { "median": 55000, "percentile10": 42000, "percentile90": 78000 },
+    "scrum master": { "median": 52000, "percentile10": 40000, "percentile90": 72000 },
+    "it-chef": { "median": 68000, "percentile10": 52000, "percentile90": 95000 },
+    "butikschef": { "median": 38000, "percentile10": 30000, "percentile90": 52000 },
+    "butikssäljare": { "median": 28000, "percentile10": 25000, "percentile90": 35000 },
+    "verksamhetsledare": { "median": 52000, "percentile10": 38000, "percentile90": 72000 },
+    "ekonomichef": { "median": 72000, "percentile10": 52000, "percentile90": 105000 },
+    "controller": { "median": 52000, "percentile10": 40000, "percentile90": 72000 },
+    "redovisningsekonom": { "median": 42000, "percentile10": 33000, "percentile90": 55000 },
+    "sjuksköterska": { "median": 38500, "percentile10": 32000, "percentile90": 48000 },
+    "läkare": { "median": 72000, "percentile10": 52000, "percentile90": 105000 },
+    "undersköterska": { "median": 30000, "percentile10": 27000, "percentile90": 36000 },
+    "lärare": { "median": 40000, "percentile10": 34000, "percentile90": 50000 },
+    "grundskollärare": { "median": 39000, "percentile10": 33000, "percentile90": 48000 },
+    "gymnasielärare": { "median": 42000, "percentile10": 35000, "percentile90": 52000 },
+    "civilingenjör": { "median": 55000, "percentile10": 40000, "percentile90": 82000 },
+    "ingenjör": { "median": 48000, "percentile10": 36000, "percentile90": 68000 },
+    "marknadsförare": { "median": 42000, "percentile10": 32000, "percentile90": 58000 },
+    "marknadschef": { "median": 58000, "percentile10": 42000, "percentile90": 85000 },
+    "hr-specialist": { "median": 45000, "percentile10": 35000, "percentile90": 62000 },
+    "rekryterare": { "median": 42000, "percentile10": 33000, "percentile90": 58000 },
+    "administratör": { "median": 32000, "percentile10": 27000, "percentile90": 40000 },
+    "receptionist": { "median": 29000, "percentile10": 26000, "percentile90": 35000 },
+    "kock": { "median": 30000, "percentile10": 26000, "percentile90": 38000 },
+    "servitör": { "median": 27000, "percentile10": 24000, "percentile90": 33000 },
+    "elektriker": { "median": 38000, "percentile10": 31000, "percentile90": 48000 },
+    "snickare": { "median": 35000, "percentile10": 29000, "percentile90": 44000 },
+    "lastbilschaufför": { "median": 32000, "percentile10": 28000, "percentile90": 40000 },
+    "säljare": { "median": 35000, "percentile10": 28000, "percentile90": 55000 },
+    "designer": { "median": 42000, "percentile10": 32000, "percentile90": 58000 },
+    "ux designer": { "median": 48000, "percentile10": 38000, "percentile90": 65000 },
+    "grafisk designer": { "median": 38000, "percentile10": 30000, "percentile90": 52000 }
+  }
+}

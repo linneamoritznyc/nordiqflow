@@ -928,6 +928,568 @@
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
+        /* What-If Simulator */
+        .whatif-section {
+            display: none;
+            margin-top: 50px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .whatif-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .whatif-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .whatif-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .whatif-title {
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .whatif-subtitle {
+            color: var(--gray-400);
+            font-size: 0.9em;
+        }
+
+        .whatif-input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .whatif-skill-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 18px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .whatif-skill-input:focus {
+            outline: none;
+            border-style: solid;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .whatif-skill-input::placeholder {
+            color: var(--gray-500);
+        }
+
+        .whatif-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .whatif-suggestion {
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            color: var(--primary-light);
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .whatif-suggestion:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: scale(1.05);
+        }
+
+        .whatif-added-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .whatif-skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            animation: tagAppear 0.3s ease;
+        }
+
+        .whatif-skill-tag .remove {
+            cursor: pointer;
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+
+        .whatif-skill-tag .remove:hover {
+            opacity: 1;
+        }
+
+        .whatif-btn {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .whatif-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .whatif-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .whatif-results {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .whatif-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .whatif-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .whatif-column {
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .whatif-column.before {
+            border-left: 4px solid var(--gray-500);
+        }
+
+        .whatif-column.after {
+            border-left: 4px solid var(--success);
+        }
+
+        .whatif-column-title {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .whatif-stat {
+            font-size: 2.5em;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .whatif-stat-label {
+            color: var(--gray-400);
+            font-size: 0.9em;
+            margin-top: 4px;
+        }
+
+        .whatif-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: var(--primary-light);
+        }
+
+        .whatif-new-opportunities {
+            margin-top: 20px;
+        }
+
+        .whatif-opp-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .whatif-opp-name {
+            font-weight: 500;
+        }
+
+        .whatif-opp-badge {
+            background: var(--success);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .whatif-loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--gray-400);
+        }
+
+        .whatif-loading .loader {
+            margin: 0 auto 15px;
+        }
+
+        /* Multi-Step Career Path */
+        .multistep-path {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.1) 0%, rgba(52, 152, 219, 0.1) 100%);
+            border: 1px solid rgba(155, 89, 182, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .multistep-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #9b59b6;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .multistep-steps {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .multistep-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .multistep-node-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .multistep-node-circle.start {
+            background: var(--primary);
+            color: white;
+        }
+
+        .multistep-node-circle.step {
+            background: rgba(52, 152, 219, 0.3);
+            color: #3498db;
+            border: 2px solid #3498db;
+        }
+
+        .multistep-node-circle.end {
+            background: var(--success);
+            color: white;
+        }
+
+        .multistep-node-name {
+            font-size: 0.75em;
+            color: var(--gray-300);
+            max-width: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .multistep-arrow {
+            color: var(--gray-500);
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .multistep-score {
+            position: absolute;
+            top: -6px;
+            background: var(--dark);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.65em;
+            color: var(--gray-400);
+        }
+
+        .find-path-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(155, 89, 182, 0.2);
+            border: 1px solid rgba(155, 89, 182, 0.4);
+            border-radius: 8px;
+            color: #9b59b6;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .find-path-btn:hover {
+            background: rgba(155, 89, 182, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Compare Feature */
+        .compare-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background: rgba(52, 152, 219, 0.2);
+            border: 1px solid rgba(52, 152, 219, 0.4);
+            border-radius: 6px;
+            color: #3498db;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .compare-btn:hover {
+            background: rgba(52, 152, 219, 0.3);
+        }
+
+        .compare-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .compare-panel {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark-light);
+            border-top: 2px solid var(--primary);
+            padding: 20px 40px;
+            z-index: 999;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .compare-panel.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .compare-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .compare-title {
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .compare-count {
+            background: var(--primary);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+        }
+
+        .compare-close {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .compare-close:hover {
+            color: white;
+        }
+
+        .compare-items {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .compare-item {
+            flex: 0 0 150px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            position: relative;
+        }
+
+        .compare-item-name {
+            font-size: 0.85em;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .compare-item-score {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+
+        .compare-item-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .compare-item-remove:hover {
+            color: #e74c3c;
+        }
+
+        .compare-action {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+        }
+
+        .compare-action:hover {
+            transform: scale(1.02);
+        }
+
+        .compare-action:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Comparison Modal */
+        .comparison-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .comparison-content {
+            background: var(--dark-light);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 95%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            gap: 1px;
+            background: var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-row {
+            display: grid;
+            gap: 1px;
+        }
+
+        .comparison-cell {
+            background: var(--dark);
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        .comparison-cell.header {
+            background: rgba(99, 102, 241, 0.2);
+            font-weight: 600;
+            color: white;
+        }
+
+        .comparison-cell.label {
+            text-align: left;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--gray-300);
+            font-size: 0.9em;
+        }
+
+        .comparison-highlight {
+            background: rgba(39, 174, 96, 0.2) !important;
+        }
+
         /* Jobs Section */
         .jobs-section {
             display: none;
@@ -1751,6 +2313,43 @@
             </div>
 
             <div class="career-grid" id="career-results"></div>
+
+            <!-- What-If Skill Simulator -->
+            <div class="whatif-section" id="whatif-section">
+                <div class="whatif-header">
+                    <div class="whatif-icon">🔮</div>
+                    <div>
+                        <div class="whatif-title">Tänk Om... Skill Simulator</div>
+                        <div class="whatif-subtitle">Se hur nya kompetenser öppnar fler karriärvägar</div>
+                    </div>
+                </div>
+
+                <div class="whatif-input-row">
+                    <input type="text" class="whatif-skill-input" id="whatif-skill-input" placeholder="Vilken kompetens funderar du på att lära dig?">
+                    <button class="whatif-btn" id="whatif-add-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Lägg till
+                    </button>
+                </div>
+
+                <div style="margin-bottom: 12px; color: var(--gray-400); font-size: 0.85em;">Populära förslag baserat på din profil:</div>
+                <div class="whatif-suggestions" id="whatif-suggestions">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <div class="whatif-added-skills" id="whatif-added-skills">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <button class="whatif-btn" id="whatif-simulate-btn" disabled style="width: 100%; justify-content: center;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Simulera Framtiden
+                </button>
+
+                <div class="whatif-results" id="whatif-results" style="display: none;">
+                    <!-- Results populated by JS -->
+                </div>
+            </div>
         </div>
 
         <!-- Live Jobs Section -->
@@ -1767,6 +2366,26 @@
                 <p>Hämtar jobb från Platsbanken...</p>
             </div>
             <div class="jobs-grid" id="jobs-grid"></div>
+        </div>
+    </div>
+
+    <!-- Compare Panel (fixed at bottom) -->
+    <div class="compare-panel" id="compare-panel">
+        <div class="compare-header">
+            <div class="compare-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Jämför karriärvägar
+                <span class="compare-count" id="compare-count">0</span>
+            </div>
+            <button class="compare-close" onclick="clearComparison()">×</button>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <div class="compare-items" id="compare-items">
+                <!-- Populated by JS -->
+            </div>
+            <button class="compare-action" id="compare-action-btn" onclick="showComparison()" disabled>
+                Visa jämförelse
+            </button>
         </div>
     </div>
 
@@ -2431,15 +3050,21 @@
                 `;
 
                 return `
-                    <div class="career-card ${scoreClass}" style="animation-delay: ${i * 0.1}s">
+                    <div class="career-card ${scoreClass}" style="animation-delay: ${i * 0.1}s" data-career-id="${r.id}" data-career-name="${r.name}" data-career-score="${score}">
                         <div class="career-header">
                             <div class="career-info">
                                 <h3>${r.name}</h3>
                                 <div class="subtitle">${r.ssykLabel || 'Yrke'} · SSYK ${r.ssykCode || 'N/A'}</div>
                             </div>
-                            <div class="match-score">
-                                <div class="score-value">${score}%</div>
-                                <div class="score-label">${matchLabel}</div>
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <button class="compare-btn" onclick="toggleCompare('${r.id}', '${r.name.replace(/'/g, "\\'")}', ${score}, this)" title="Jämför">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    Jämför
+                                </button>
+                                <div class="match-score">
+                                    <div class="score-value">${score}%</div>
+                                    <div class="score-label">${matchLabel}</div>
+                                </div>
                             </div>
                         </div>
 
@@ -2472,6 +3097,34 @@
                             </div>
                         </div>
 
+                        ${r.salary ? `
+                        <div class="skills-box" style="background: rgba(46, 204, 113, 0.1); margin-top: 15px;">
+                            <h4 style="color: #2ecc71; display: flex; align-items: center; gap: 8px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                Lönestatistik
+                            </h4>
+                            <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 12px;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <div style="font-size: 0.8em; color: var(--gray-400);">Medianlön</div>
+                                    <div style="font-size: 1.3em; font-weight: 600; color: white;">${r.salary.formatted || 'N/A'}</div>
+                                </div>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <div style="font-size: 0.8em; color: var(--gray-400);">Lönespan (10-90%)</div>
+                                    <div style="font-size: 1em; color: var(--gray-300);">${r.salary.range || 'N/A'}</div>
+                                </div>
+                                ${r.salaryDelta ? `
+                                <div style="flex: 1; min-width: 120px;">
+                                    <div style="font-size: 0.8em; color: var(--gray-400);">Löneutveckling</div>
+                                    <div style="font-size: 1.1em; font-weight: 600; color: ${r.salaryDelta.direction === 'increase' ? '#2ecc71' : r.salaryDelta.direction === 'decrease' ? '#e74c3c' : 'var(--gray-300)'};">
+                                        ${r.salaryDelta.formatted}
+                                        ${r.salaryDelta.direction === 'increase' ? '↑' : r.salaryDelta.direction === 'decrease' ? '↓' : ''}
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
+
                         ${demandForecast?.comment ? `
                         <div class="skills-box" style="background: rgba(52, 152, 219, 0.1); margin-top: 15px;">
                             <h4 style="color: #3498db;">Yrkesbarometer Prognos</h4>
@@ -2485,6 +3138,16 @@
                         ${matchedSkillsHtml}
                         ${missingSkillsHtml}
 
+                        ${score < 50 ? `
+                        <div class="multistep-path" id="multistep-${r.id}" style="display: none;">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="find-path-btn" onclick="findSteppingStonePath('${data.sourceOccupation?.id || selectedOccupation?.id}', '${r.id}', '${r.name}')">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 12l-4-4-4 4"/><path d="M12 16V8"/></svg>
+                            Hitta stegvis karriärväg
+                        </button>
+                        ` : ''}
+
                         <div style="margin-top: 20px; text-align: center;">
                             <button class="job-btn job-btn-primary" onclick="loadJobsForOccupation('${r.name}', '${r.ssykCode || ''}')">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
@@ -2497,6 +3160,9 @@
 
             // Show jobs section but with initial message
             document.getElementById('jobs-section').classList.add('show');
+
+            // Show What-If simulator with the current analysis data
+            showWhatIfSection(data);
         }
 
         function sleep(ms) {
@@ -2877,6 +3543,554 @@
                 navLinks.classList.remove('show');
             });
         });
+
+        // ========================================
+        // MULTI-STEP CAREER PATH FINDER
+        // ========================================
+        async function findSteppingStonePath(sourceId, targetId, targetName) {
+            const container = document.getElementById(`multistep-${targetId}`);
+            if (!container) return;
+
+            // Show loading state
+            container.style.display = 'block';
+            container.innerHTML = `
+                <div class="multistep-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    Söker alternativa karriärvägar...
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div class="loader" style="width: 24px; height: 24px; margin: 0 auto;"></div>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/career-path`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        source_id: sourceId,
+                        target_id: targetId,
+                        max_hops: 3
+                    })
+                });
+
+                if (!response.ok) throw new Error('Could not find path');
+
+                const data = await response.json();
+
+                if (data.found && data.path && data.path.length > 2) {
+                    displayMultiStepPath(container, data, targetName);
+                } else {
+                    container.innerHTML = `
+                        <div class="multistep-header">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            Ingen stegvis väg hittad
+                        </div>
+                        <p style="font-size: 0.85em; color: var(--gray-400); margin-top: 8px;">
+                            Den här övergången kräver troligen formell utbildning eller certifiering snarare än stegvisa karriärbyten.
+                        </p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Career path error:', error);
+                container.innerHTML = `
+                    <div class="multistep-header" style="color: #e74c3c;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        Kunde inte hitta alternativ väg
+                    </div>
+                `;
+            }
+        }
+
+        function displayMultiStepPath(container, data, targetName) {
+            const path = data.path;
+
+            const stepsHtml = path.map((step, i) => {
+                const isFirst = i === 0;
+                const isLast = i === path.length - 1;
+                const circleClass = isFirst ? 'start' : isLast ? 'end' : 'step';
+                const initial = (step.name || '?')[0].toUpperCase();
+
+                let nodeHtml = `
+                    <div class="multistep-node">
+                        <div class="multistep-node-circle ${circleClass}">${initial}</div>
+                        <div class="multistep-node-name" title="${step.name}">${step.name}</div>
+                        ${step.transitionScore ? `<div style="font-size: 0.7em; color: var(--success); margin-top: 2px;">${step.transitionScore}%</div>` : ''}
+                    </div>
+                `;
+
+                if (!isLast) {
+                    nodeHtml += `<div class="multistep-arrow">→</div>`;
+                }
+
+                return nodeHtml;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="multistep-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Alternativ ${path.length - 1}-stegsväg till ${targetName}
+                </div>
+                <div class="multistep-steps">
+                    ${stepsHtml}
+                </div>
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(155, 89, 182, 0.2);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85em;">
+                        <span style="color: var(--gray-400);">Total övergångslätthet:</span>
+                        <span style="color: var(--success); font-weight: 600;">${data.totalEase}%</span>
+                    </div>
+                    <p style="font-size: 0.8em; color: var(--gray-400); margin-top: 8px;">
+                        ${data.summary || `Genom att ta mellansteg kan du nå ${targetName} med högre sannolikhet.`}
+                    </p>
+                </div>
+            `;
+        }
+
+        window.findSteppingStonePath = findSteppingStonePath;
+
+        // ========================================
+        // CAREER COMPARISON FEATURE
+        // ========================================
+        let compareList = [];
+        const MAX_COMPARE = 4;
+
+        function toggleCompare(id, name, score, btn) {
+            const existingIndex = compareList.findIndex(c => c.id === id);
+
+            if (existingIndex >= 0) {
+                // Remove from comparison
+                compareList.splice(existingIndex, 1);
+                btn.classList.remove('active');
+            } else {
+                // Add to comparison (max 4)
+                if (compareList.length >= MAX_COMPARE) {
+                    alert(`Maximalt ${MAX_COMPARE} karriärer kan jämföras samtidigt.`);
+                    return;
+                }
+                compareList.push({ id, name, score });
+                btn.classList.add('active');
+            }
+
+            updateComparePanel();
+        }
+
+        function updateComparePanel() {
+            const panel = document.getElementById('compare-panel');
+            const items = document.getElementById('compare-items');
+            const count = document.getElementById('compare-count');
+            const actionBtn = document.getElementById('compare-action-btn');
+
+            count.textContent = compareList.length;
+            actionBtn.disabled = compareList.length < 2;
+
+            if (compareList.length > 0) {
+                panel.classList.add('show');
+                items.innerHTML = compareList.map(c => `
+                    <div class="compare-item">
+                        <button class="compare-item-remove" onclick="removeFromCompare('${c.id}')">×</button>
+                        <div class="compare-item-name">${c.name}</div>
+                        <div class="compare-item-score">${c.score}%</div>
+                    </div>
+                `).join('');
+            } else {
+                panel.classList.remove('show');
+            }
+        }
+
+        function removeFromCompare(id) {
+            compareList = compareList.filter(c => c.id !== id);
+
+            // Update button state
+            const btn = document.querySelector(`.compare-btn[onclick*="${id}"]`);
+            if (btn) btn.classList.remove('active');
+
+            updateComparePanel();
+        }
+
+        function clearComparison() {
+            compareList = [];
+            document.querySelectorAll('.compare-btn.active').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            updateComparePanel();
+        }
+
+        function showComparison() {
+            if (compareList.length < 2) return;
+
+            // Get full data for each career from the last analysis
+            const careers = compareList.map(c => {
+                const fullData = (lastAnalysisData?.recommendations || []).find(r => r.id === c.id);
+                return { ...c, ...fullData };
+            });
+
+            // Create comparison modal
+            const modal = document.createElement('div');
+            modal.className = 'comparison-modal';
+            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+
+            const columns = careers.length + 1; // +1 for labels column
+
+            modal.innerHTML = `
+                <div class="comparison-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h2 style="color: white; margin: 0;">Karriärjämförelse</h2>
+                        <button onclick="this.closest('.comparison-modal').remove()" style="background: none; border: none; color: var(--gray-400); font-size: 24px; cursor: pointer;">&times;</button>
+                    </div>
+
+                    <div class="comparison-grid" style="grid-template-columns: 150px repeat(${careers.length}, 1fr);">
+                        ${generateComparisonRows(careers)}
+                    </div>
+
+                    <div style="margin-top: 25px; text-align: center;">
+                        <p style="color: var(--gray-400); font-size: 0.9em;">
+                            Grön markering visar bäst värde för varje kategori.
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function generateComparisonRows(careers) {
+            const metrics = [
+                { key: 'name', label: 'Yrke', type: 'text' },
+                { key: 'compositeScore', label: 'Total matchning', type: 'score', suffix: '%' },
+                { key: 'breakdown.substitutability', label: 'Substituerbarhet', type: 'score', suffix: '%' },
+                { key: 'skillMatch.percentage', label: 'Skill Match', type: 'score', suffix: '%' },
+                { key: 'demandForecast.label', label: 'Arbetsmarknad', type: 'demand' },
+                { key: 'salary.formatted', label: 'Medianlön', type: 'salary' },
+                { key: 'salaryDelta.formatted', label: 'Löneändring', type: 'salaryDelta' },
+                { key: 'skillMatch.gapCount', label: 'Kompetens-gap', type: 'inverse', suffix: ' st' }
+            ];
+
+            return metrics.map(metric => {
+                const values = careers.map(c => {
+                    const val = metric.key.split('.').reduce((obj, k) => obj?.[k], c);
+                    return val;
+                });
+
+                // Find best value for highlighting
+                let bestIndex = -1;
+                if (metric.type === 'score') {
+                    const numVals = values.map(v => typeof v === 'number' ? v : 0);
+                    bestIndex = numVals.indexOf(Math.max(...numVals));
+                } else if (metric.type === 'inverse') {
+                    const numVals = values.map(v => typeof v === 'number' ? v : 999);
+                    bestIndex = numVals.indexOf(Math.min(...numVals));
+                } else if (metric.type === 'salary') {
+                    // Parse salary values
+                    const numVals = values.map(v => {
+                        if (!v) return 0;
+                        const match = v.match(/(\d+)/);
+                        return match ? parseInt(match[1]) : 0;
+                    });
+                    bestIndex = numVals.indexOf(Math.max(...numVals));
+                } else if (metric.type === 'demand') {
+                    // "Mycket stor brist" is best
+                    const demandRank = { 'Mycket stor brist': 5, 'Stor brist': 4, 'Balans': 3, 'Litet överskott': 2, 'Stort överskott': 1 };
+                    const ranks = values.map(v => demandRank[v] || 0);
+                    bestIndex = ranks.indexOf(Math.max(...ranks));
+                }
+
+                const cells = values.map((val, i) => {
+                    const isHighlight = i === bestIndex && metric.type !== 'text';
+                    const displayVal = val !== undefined && val !== null ? `${val}${metric.suffix || ''}` : '-';
+
+                    // Special styling for salary delta
+                    let style = isHighlight ? 'class="comparison-cell comparison-highlight"' : 'class="comparison-cell"';
+                    if (metric.type === 'salaryDelta' && val) {
+                        const color = val.startsWith('+') ? '#2ecc71' : val.startsWith('-') ? '#e74c3c' : 'inherit';
+                        style = `class="comparison-cell${isHighlight ? ' comparison-highlight' : ''}" style="color: ${color}; font-weight: 600;"`;
+                    }
+
+                    return `<div ${style}>${displayVal}</div>`;
+                }).join('');
+
+                return `
+                    <div class="comparison-row" style="display: contents;">
+                        <div class="comparison-cell label">${metric.label}</div>
+                        ${cells}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.toggleCompare = toggleCompare;
+        window.removeFromCompare = removeFromCompare;
+        window.clearComparison = clearComparison;
+        window.showComparison = showComparison;
+
+        // ========================================
+        // WHAT-IF SKILL SIMULATOR
+        // ========================================
+        let whatIfSkills = [];
+        let lastAnalysisData = null;
+
+        // Skill suggestions based on common career advancement paths
+        const skillSuggestions = {
+            tech: ['Python', 'Machine Learning', 'Cloud (AWS/Azure)', 'Data Science', 'Kubernetes', 'AI', 'TypeScript', 'GraphQL'],
+            business: ['Projektledning', 'Agil/Scrum', 'Ledarskap', 'Ekonomistyrning', 'Förändringsledning', 'Strategisk planering'],
+            digital: ['Digital marknadsföring', 'SEO/SEM', 'UX Design', 'Google Analytics', 'E-handel'],
+            general: ['Engelska (avancerad)', 'Presentationsteknik', 'Förhandling', 'Ekonomi', 'Excel (avancerad)']
+        };
+
+        // DOM elements for What-If
+        const whatifSection = document.getElementById('whatif-section');
+        const whatifInput = document.getElementById('whatif-skill-input');
+        const whatifAddBtn = document.getElementById('whatif-add-btn');
+        const whatifSuggestions = document.getElementById('whatif-suggestions');
+        const whatifAddedSkills = document.getElementById('whatif-added-skills');
+        const whatifSimulateBtn = document.getElementById('whatif-simulate-btn');
+        const whatifResults = document.getElementById('whatif-results');
+
+        // Generate suggestions based on user's current profile
+        function generateWhatIfSuggestions() {
+            let suggestions = [];
+
+            // Determine user's likely domain
+            const techKeywords = ['utvecklare', 'developer', 'programmerare', 'it', 'data', 'system'];
+            const businessKeywords = ['chef', 'ledare', 'ekonom', 'säljare', 'marknadsförare'];
+
+            const currentOccLower = (selectedOccupation?.name || '').toLowerCase();
+            const userSkillsLower = userSkills.map(s => s.toLowerCase()).join(' ');
+
+            if (techKeywords.some(k => currentOccLower.includes(k) || userSkillsLower.includes(k))) {
+                suggestions = [...skillSuggestions.tech.slice(0, 4), ...skillSuggestions.business.slice(0, 2)];
+            } else if (businessKeywords.some(k => currentOccLower.includes(k) || userSkillsLower.includes(k))) {
+                suggestions = [...skillSuggestions.business.slice(0, 3), ...skillSuggestions.digital.slice(0, 2), ...skillSuggestions.general.slice(0, 1)];
+            } else {
+                suggestions = [...skillSuggestions.general, ...skillSuggestions.digital.slice(0, 2)];
+            }
+
+            // Filter out skills user already has
+            suggestions = suggestions.filter(s => !userSkills.some(us => us.toLowerCase().includes(s.toLowerCase())));
+
+            // Remove already added what-if skills
+            suggestions = suggestions.filter(s => !whatIfSkills.includes(s));
+
+            renderSuggestions(suggestions.slice(0, 6));
+        }
+
+        function renderSuggestions(suggestions) {
+            whatifSuggestions.innerHTML = suggestions.map(skill => `
+                <button class="whatif-suggestion" onclick="addWhatIfSkill('${skill}')">${skill}</button>
+            `).join('');
+        }
+
+        function addWhatIfSkill(skill) {
+            if (!whatIfSkills.includes(skill) && skill.trim()) {
+                whatIfSkills.push(skill.trim());
+                renderWhatIfSkills();
+                generateWhatIfSuggestions();
+                whatifSimulateBtn.disabled = false;
+            }
+            whatifInput.value = '';
+        }
+
+        function removeWhatIfSkill(skill) {
+            whatIfSkills = whatIfSkills.filter(s => s !== skill);
+            renderWhatIfSkills();
+            generateWhatIfSuggestions();
+            whatifSimulateBtn.disabled = whatIfSkills.length === 0;
+        }
+
+        function renderWhatIfSkills() {
+            whatifAddedSkills.innerHTML = whatIfSkills.map(skill => `
+                <span class="whatif-skill-tag">
+                    ${skill}
+                    <span class="remove" onclick="removeWhatIfSkill('${skill}')">×</span>
+                </span>
+            `).join('');
+        }
+
+        // Add event listeners
+        whatifAddBtn.addEventListener('click', () => {
+            const skill = whatifInput.value.trim();
+            if (skill) {
+                addWhatIfSkill(skill);
+            }
+        });
+
+        whatifInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && whatifInput.value.trim()) {
+                e.preventDefault();
+                addWhatIfSkill(whatifInput.value.trim());
+            }
+        });
+
+        whatifSimulateBtn.addEventListener('click', runWhatIfSimulation);
+
+        // Main simulation function
+        async function runWhatIfSimulation() {
+            if (!selectedOccupation || whatIfSkills.length === 0) return;
+
+            whatifResults.style.display = 'block';
+            whatifResults.innerHTML = `
+                <div class="whatif-loading">
+                    <div class="loader"></div>
+                    <p>Beräknar hur ${whatIfSkills.length} nya kompetenser påverkar dina möjligheter...</p>
+                </div>
+            `;
+
+            try {
+                // Combine current skills with what-if skills
+                const combinedSkills = [...userSkills, ...whatIfSkills];
+
+                // Run career match with enhanced skills
+                const response = await fetch(`${API_BASE}/api/career-match`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        occupation_id: selectedOccupation.id,
+                        user_skills: combinedSkills,
+                        limit: 15
+                    })
+                });
+
+                if (!response.ok) throw new Error('Simulation failed');
+
+                const newData = await response.json();
+                const beforeResults = lastAnalysisData?.recommendations || [];
+                const afterResults = newData.recommendations || [];
+
+                // Calculate improvements
+                const beforeTopScores = beforeResults.slice(0, 5).map(r => r.compositeScore || 0);
+                const afterTopScores = afterResults.slice(0, 5).map(r => r.compositeScore || 0);
+
+                const avgBefore = beforeTopScores.length > 0 ? Math.round(beforeTopScores.reduce((a, b) => a + b, 0) / beforeTopScores.length) : 0;
+                const avgAfter = afterTopScores.length > 0 ? Math.round(afterTopScores.reduce((a, b) => a + b, 0) / afterTopScores.length) : 0;
+
+                // Find newly accessible careers (score improved significantly)
+                const newOpportunities = afterResults.filter(after => {
+                    const before = beforeResults.find(b => b.id === after.id);
+                    if (!before) return after.compositeScore >= 60;
+                    return (after.compositeScore - before.compositeScore) >= 10;
+                }).slice(0, 4);
+
+                // Count high-match careers
+                const beforeHighMatch = beforeResults.filter(r => r.compositeScore >= 65).length;
+                const afterHighMatch = afterResults.filter(r => r.compositeScore >= 65).length;
+
+                displayWhatIfResults({
+                    avgBefore,
+                    avgAfter,
+                    beforeHighMatch,
+                    afterHighMatch,
+                    newOpportunities,
+                    addedSkills: whatIfSkills
+                });
+
+            } catch (error) {
+                console.error('What-If simulation error:', error);
+                whatifResults.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #e74c3c;">
+                        <p>Kunde inte köra simulering. Försök igen.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayWhatIfResults(data) {
+            const improvement = data.avgAfter - data.avgBefore;
+            const improvementColor = improvement > 0 ? 'var(--success)' : improvement < 0 ? '#e74c3c' : 'var(--gray-400)';
+            const newCareers = data.afterHighMatch - data.beforeHighMatch;
+
+            whatifResults.innerHTML = `
+                <h3 style="color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.3em;">✨</span>
+                    Simuleringsresultat
+                </h3>
+
+                <div style="background: rgba(16, 185, 129, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                    <div style="color: var(--gray-300); font-size: 0.9em; margin-bottom: 8px;">Med ${data.addedSkills.length} nya kompetenser:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${data.addedSkills.map(s => `<span style="background: rgba(6, 182, 212, 0.3); padding: 4px 12px; border-radius: 12px; color: #06b6d4; font-size: 0.85em;">${s}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="whatif-comparison">
+                    <div class="whatif-column before">
+                        <div class="whatif-column-title">Före</div>
+                        <div class="whatif-stat" style="color: var(--gray-400);">${data.avgBefore}%</div>
+                        <div class="whatif-stat-label">Genomsnittlig matchning</div>
+                        <div style="margin-top: 15px; font-size: 0.9em; color: var(--gray-400);">
+                            ${data.beforeHighMatch} starka matchningar
+                        </div>
+                    </div>
+
+                    <div class="whatif-arrow">→</div>
+
+                    <div class="whatif-column after">
+                        <div class="whatif-column-title">Efter</div>
+                        <div class="whatif-stat" style="color: var(--success);">${data.avgAfter}%</div>
+                        <div class="whatif-stat-label">Genomsnittlig matchning</div>
+                        <div style="margin-top: 15px; font-size: 0.9em; color: var(--success);">
+                            ${data.afterHighMatch} starka matchningar
+                            ${newCareers > 0 ? `<span style="font-weight: 600;">(+${newCareers} nya!)</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 25px 0; padding: 20px; background: rgba(99, 102, 241, 0.1); border-radius: 12px;">
+                    <div style="font-size: 2.5em; font-weight: 700; color: ${improvementColor};">
+                        ${improvement > 0 ? '+' : ''}${improvement}%
+                    </div>
+                    <div style="color: var(--gray-300);">förbättrad matchning</div>
+                </div>
+
+                ${data.newOpportunities.length > 0 ? `
+                <div class="whatif-new-opportunities">
+                    <h4 style="color: white; margin-bottom: 15px;">Nya karriärmöjligheter som öppnas:</h4>
+                    ${data.newOpportunities.map(opp => `
+                        <div class="whatif-opp-item">
+                            <div class="whatif-opp-name">${opp.name}</div>
+                            <div class="whatif-opp-badge">${opp.compositeScore}% match</div>
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+
+                <div style="margin-top: 25px; text-align: center;">
+                    <p style="color: var(--gray-400); font-size: 0.9em; margin-bottom: 15px;">
+                        Redo att ta steget? Utforska utbildningar för dessa kompetenser.
+                    </p>
+                    <button class="whatif-btn" onclick="applyWhatIfSkills()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        Lägg till kompetenserna i min profil
+                    </button>
+                </div>
+            `;
+        }
+
+        // Apply what-if skills to actual profile
+        function applyWhatIfSkills() {
+            whatIfSkills.forEach(skill => {
+                if (!userSkills.includes(skill)) {
+                    userSkills.push(skill);
+                }
+            });
+            renderSkillTags();
+            whatIfSkills = [];
+            renderWhatIfSkills();
+            whatifSimulateBtn.disabled = true;
+            generateWhatIfSuggestions();
+
+            // Re-run analysis with new skills
+            runAnalysis();
+        }
+
+        // Make functions available globally
+        window.addWhatIfSkill = addWhatIfSkill;
+        window.removeWhatIfSkill = removeWhatIfSkill;
+        window.applyWhatIfSkills = applyWhatIfSkills;
+
+        // Show What-If section and generate suggestions after analysis
+        function showWhatIfSection(analysisData) {
+            lastAnalysisData = analysisData;
+            whatifSection.classList.add('show');
+            generateWhatIfSuggestions();
+        }
     </script>
 </body>
 </html>
