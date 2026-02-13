@@ -2409,6 +2409,27 @@
                        </div>`
                     : '';
 
+                // Generate career path visualization
+                const careerPathHtml = `
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 15px; background: rgba(99, 102, 241, 0.05); border-radius: 12px; margin-bottom: 15px; overflow-x: auto;">
+                        <div style="text-align: center; min-width: 80px;">
+                            <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; font-size: 1.2em;">
+                                ${data.sourceOccupation?.name?.[0] || 'N'}
+                            </div>
+                            <div style="font-size: 0.75em; color: var(--gray-300); max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Nu</div>
+                        </div>
+                        <div style="flex: 1; height: 3px; background: linear-gradient(90deg, var(--primary), ${score >= 65 ? '#27ae60' : score >= 50 ? '#f39c12' : '#e74c3c'}); min-width: 40px; position: relative;">
+                            <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); color: var(--gray-400); font-size: 0.7em;">${transitionTime}</div>
+                        </div>
+                        <div style="text-align: center; min-width: 80px;">
+                            <div style="width: 40px; height: 40px; background: ${score >= 65 ? '#27ae60' : score >= 50 ? '#f39c12' : '#e74c3c'}; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; font-size: 1.2em;">
+                                ${r.name?.[0] || 'M'}
+                            </div>
+                            <div style="font-size: 0.75em; color: var(--gray-300); max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Mål</div>
+                        </div>
+                    </div>
+                `;
+
                 return `
                     <div class="career-card ${scoreClass}" style="animation-delay: ${i * 0.1}s">
                         <div class="career-header">
@@ -2421,6 +2442,8 @@
                                 <div class="score-label">${matchLabel}</div>
                             </div>
                         </div>
+
+                        ${careerPathHtml}
 
                         <div class="ai-insight">
                             <div class="ai-insight-header">
