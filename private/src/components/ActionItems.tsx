@@ -1,10 +1,11 @@
 "use client";
 
-import { DayRow } from "@/lib/sheets";
+import { DayRow, MeetingNote } from "@/lib/sheets";
 import { parseSheetDate, isToday, daysUntil } from "@/lib/dates";
 
 interface Props {
   rows: DayRow[];
+  meetingNotes?: MeetingNote[];
 }
 
 interface ActionItem {
@@ -44,8 +45,11 @@ const PRIORITY_STYLES = {
   },
 };
 
-export default function ActionItems({ rows }: Props) {
+export default function ActionItems({ rows, meetingNotes = [] }: Props) {
   const actions: ActionItem[] = [];
+  const now = new Date();
+  const currentHour = now.getHours();
+  const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon, ... 5=Fri, 6=Sat
 
   const todayRow = rows.find((r) => {
     const d = parseSheetDate(r.date);
@@ -123,6 +127,38 @@ export default function ActionItems({ rows }: Props) {
     });
   }
 
+  // --- Meeting follow-ups ---
+  const pendingFollowUps = meetingNotes.filter(
+    (n) => n.status === "Follow-up needed" && n.followUp
+  );
+  for (const note of pendingFollowUps) {
+    actions.push({
+      priority: "high",
+      message: `Follow up with ${note.contact}${note.organization ? ` (${note.organization})` : ""}`,
+      detail: note.followUp,
+    });
+  }
+
+  const waitingMeetings = meetingNotes.filter((n) => n.status === "Waiting");
+  if (waitingMeetings.length > 0) {
+    actions.push({
+      priority: "info",
+      message: `${waitingMeetings.length} meeting${waitingMeetings.length === 1 ? "" : "s"} waiting for response`,
+      detail: waitingMeetings.map((n) => n.contact).join(", "),
+    });
+  }
+
+  const scheduledMeetings = meetingNotes.filter(
+    (n) => n.status === "Scheduled"
+  );
+  if (scheduledMeetings.length > 0) {
+    actions.push({
+      priority: "medium",
+      message: `${scheduledMeetings.length} upcoming meeting${scheduledMeetings.length === 1 ? "" : "s"} scheduled`,
+      detail: scheduledMeetings.map((n) => `${n.contact} (${n.date})`).join(", "),
+    });
+  }
+
   // --- Check if tomorrow has a plan ---
   const tomorrowRow = rows.find((r) => {
     const d = parseSheetDate(r.date);
@@ -138,6 +174,48 @@ export default function ActionItems({ rows }: Props) {
     });
   }
 
+  // --- End of day planning nudge ---
+  if (currentHour >= 16 && dayOfWeek >= 1 && dayOfWeek <= 5) {
+    const nextDayRow = rows.find((r) => {
+      const d = parseSheetDate(r.date);
+      if (!d) return false;
+      return daysUntil(new Date(d)) === 1;
+    });
+    if (nextDayRow && !nextDayRow.gamePlan) {
+      actions.push({
+        priority: "medium",
+        message: "End of day: Plan tomorrow before you stop working.",
+        detail: "Write down your top priorities so you can start strong tomorrow.",
+      });
+    }
+  }
+
+  // --- Friday: plan next week ---
+  if (dayOfWeek === 5) {
+    const nextWeekEmpty = rows.filter((r) => {
+      const d = parseSheetDate(r.date);
+      if (!d) return false;
+      const days = daysUntil(new Date(d));
+      return days >= 3 && days <= 7 && !r.gamePlan && !r.event;
+    });
+    if (nextWeekEmpty.length >= 3) {
+      actions.push({
+        priority: "medium",
+        message: "It's Friday -- plan your next week.",
+        detail: `${nextWeekEmpty.length} days next week have no plan yet. Open the Spreadsheet tab to fill them in.`,
+      });
+    }
+  }
+
+  // --- Monday morning kickoff ---
+  if (dayOfWeek === 1 && currentHour < 12) {
+    actions.push({
+      priority: "info",
+      message: "Monday -- review your week ahead.",
+      detail: "Check your deadlines, events, and game plans for this week.",
+    });
+  }
+
   // --- Check days without plans in the next week ---
   const emptyDays = rows.filter((r) => {
     const d = parseSheetDate(r.date);
@@ -150,7 +228,7 @@ export default function ActionItems({ rows }: Props) {
     actions.push({
       priority: "info",
       message: `${emptyDays.length} days this week have no plan.`,
-      detail: "Use the Daily Log to fill in your week.",
+      detail: "Open the Spreadsheet tab to fill in your week.",
     });
   }
 
@@ -165,6 +243,46 @@ export default function ActionItems({ rows }: Props) {
         daysToLaunch <= 7
           ? "Make sure everything is ready for go-live."
           : undefined,
+    });
+  }
+
+  // --- Funding eligibility check ---
+  const unconfirmedFunding = rows.filter((r) => {
+    if (!r.fundingDeadline) return false;
+    const d = parseSheetDate(r.date);
+    if (!d) return false;
+    const days = daysUntil(new Date(d));
+    return days > 0 && days <= 14 && !r.fundingEligibility;
+  });
+  if (unconfirmedFunding.length > 0) {
+    actions.push({
+      priority: "medium",
+      message: `${unconfirmedFunding.length} upcoming funding deadline${unconfirmedFunding.length === 1 ? " has" : "s have"} unconfirmed eligibility`,
+      detail: "Check if you're eligible and update the spreadsheet.",
+    });
+  }
+
+  // --- Week progress ---
+  const thisWeekRows = rows.filter((r) => {
+    const d = parseSheetDate(r.date);
+    if (!d) return false;
+    const days = daysUntil(new Date(d));
+    return days >= -dayOfWeek && days <= (7 - dayOfWeek);
+  });
+  const completedDays = thisWeekRows.filter(
+    (r) => {
+      const d = parseSheetDate(r.date);
+      if (!d) return false;
+      return daysUntil(new Date(d)) < 0 && (r.gamePlan || r.event);
+    }
+  ).length;
+  const totalPlannedDays = thisWeekRows.filter(
+    (r) => r.gamePlan || r.event
+  ).length;
+  if (totalPlannedDays > 0 && completedDays > 0) {
+    actions.push({
+      priority: "info",
+      message: `Week progress: ${completedDays} of ${totalPlannedDays} planned days done`,
     });
   }
 

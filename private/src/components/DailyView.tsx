@@ -2,7 +2,6 @@
 
 import { DayRow } from "@/lib/sheets";
 import { parseSheetDate, isToday, daysUntil } from "@/lib/dates";
-import ActionItems from "@/components/ActionItems";
 
 interface Props {
   rows: DayRow[];
@@ -22,9 +21,6 @@ export default function DailyView({ rows }: Props) {
 
   return (
     <div className="space-y-6">
-      {/* Action items -- proactive nudges */}
-      <ActionItems rows={rows} />
-
       {/* Today */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-4">

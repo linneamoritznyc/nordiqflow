@@ -9,11 +9,14 @@ import DeadlineTracker from "@/components/DeadlineTracker";
 import QuickLog from "@/components/QuickLog";
 import FundingLinks from "@/components/FundingLinks";
 import MeetingNotes from "@/components/MeetingNotes";
+import ActionItems from "@/components/ActionItems";
+import { MeetingNote } from "@/lib/sheets";
 
 type View = "daily" | "week" | "deadlines" | "funding" | "meetings" | "spreadsheet";
 
 export default function Dashboard() {
   const [rows, setRows] = useState<DayRow[]>([]);
+  const [meetingNotes, setMeetingNotes] = useState<MeetingNote[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [view, setView] = useState<View>("daily");
@@ -35,8 +38,18 @@ export default function Dashboard() {
       .finally(() => setLoading(false));
   }
 
+  function fetchMeetingNotes() {
+    fetch("/api/notes")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) setMeetingNotes(data.notes || []);
+      })
+      .catch(() => {});
+  }
+
   useEffect(() => {
     fetchRows();
+    fetchMeetingNotes();
   }, []);
 
   const launchDate = new Date(2026, 1, 25);
@@ -110,6 +123,11 @@ export default function Dashboard() {
 
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Proactive action items -- always visible */}
+        {!loading && !error && rows.length > 0 && (
+          <ActionItems rows={rows} meetingNotes={meetingNotes} />
+        )}
+
         {loading ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto" />
