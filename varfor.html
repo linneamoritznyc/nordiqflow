@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varför NordiqFlow? - Vad vi gör som Arbetsförmedlingen inte gör</title>
+    <meta name="description" content="Varför behövs NordiqFlow när Arbetsförmedlingen redan har all data? Vi förklarar vad som gör oss unika.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+        }
+
+        .nav-links a.active {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2c3e50 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section.white {
+            background: white;
+        }
+
+        .section.gray {
+            background: #f8f9fa;
+        }
+
+        .section.dark {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .section.gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .section.dark .section-title,
+        .section.gradient .section-title {
+            color: white;
+        }
+
+        /* The Big Question */
+        .big-question {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .big-question h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        .big-question p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Content Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card h3 .emoji {
+            font-size: 1.3em;
+        }
+
+        .card p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .card ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 18px 20px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .comparison-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .af-col {
+            background: #fff5f5;
+            color: #c0392b;
+        }
+
+        .comparison-table .nf-col {
+            background: #f0fff4;
+            color: #27ae60;
+        }
+
+        /* Analogy Box */
+        .analogy-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2c3e50 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .analogy-box h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .analogy-box .comparison {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .analogy-box .item {
+            text-align: center;
+        }
+
+        .analogy-box .item .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .analogy-box .item .label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .analogy-box .vs {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .analogy-box .takeaway {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 1.1em;
+        }
+
+        /* Data Flow */
+        .data-flow {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .data-flow h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            color: #667eea;
+            font-size: 1.5em;
+        }
+
+        .flow-problem {
+            background: #fff5f5;
+            border: 2px solid #e74c3c;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            color: #c0392b;
+        }
+
+        .flow-solution {
+            background: #f0fff4;
+            border: 2px solid #27ae60;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: center;
+            color: #1e8449;
+        }
+
+        /* Value Props */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .value-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-top: 4px solid #667eea;
+        }
+
+        .value-card h4 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .value-card p {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 25px 30px;
+            margin: 30px 0;
+            font-style: italic;
+            font-size: 1.2em;
+            color: #444;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .big-question h2 {
+                font-size: 1.6em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .analogy-box .comparison {
+                flex-direction: column;
+            }
+
+            .analogy-box .vs {
+                transform: rotate(90deg);
+            }
+
+            .flow-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="varfor.html" class="active">Varför NordiqFlow?</a>
+            <a href="investors.html">For Investors</a>
+            <a href="tech.html">Tech & Modeller</a>
+            <a href="demo.html">Live Demo</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Varför NordiqFlow?</h1>
+            <p>Arbetsförmedlingen har all data. Vi gör den användbar.</p>
+        </div>
+    </section>
+
+    <!-- The Big Question -->
+    <section class="big-question">
+        <div class="container">
+            <h2>"Om AF redan har 51,000 karriärövergångar i sin databas... varför har de inte byggt detta själva?"</h2>
+            <p>Det är den viktigaste frågan. Och svaret förklarar exakt varför NordiqFlow behövs.</p>
+        </div>
+    </section>
+
+    <!-- The Problem -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Problemet: Fragmenterad data</h2>
+
+            <div class="data-flow">
+                <h3>AF publicerar 6+ olika API:er som inte pratar med varandra</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">Enrichments API<br><small>Extrahera skills</small></div>
+                    <div class="flow-arrow">+</div>
+                    <div class="flow-step">Taxonomy API<br><small>Concept IDs</small></div>
+                    <div class="flow-arrow">+</div>
+                    <div class="flow-step">Substitutability<br><small>Karriärövergångar</small></div>
+                    <div class="flow-arrow">+</div>
+                    <div class="flow-step">JobSearch API<br><small>Lediga jobb</small></div>
+                    <div class="flow-arrow">+</div>
+                    <div class="flow-step">Yrkesbarometer<br><small>Prognoser</small></div>
+                </div>
+
+                <div class="flow-problem">
+                    <strong>AF:s approach:</strong> "Här är 6 olika API:er. Lycka till att koppla ihop dem."
+                </div>
+
+                <div class="flow-solution">
+                    <strong>NordiqFlow:</strong> Vi är integrationslaget som kopplar ihop allt till EN upplevelse.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why AF Can't Do This -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Varför AF inte kan bygga detta</h2>
+
+            <div class="card">
+                <h3><span class="emoji">🏛️</span> Myndighetsrestriktioner</h3>
+                <ul>
+                    <li><strong>Långsamma upphandlingar</strong> - En ny funktion = 2 års projekt med offentlig upphandling</li>
+                    <li><strong>Kan inte iterera snabbt</strong> - Vi kan deploya uppdateringar varje dag, de tar månader</li>
+                    <li><strong>Inget produkt/UX-fokus</strong> - De publicerar råa API:er, inte användarvänliga verktyg</li>
+                    <li><strong>Politiska prioriteringar skiftar</strong> - Ny regering = nya direktiv</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><span class="emoji">⚖️</span> Uppdragsmissmatch</h3>
+                <p>
+                    AF ska tjäna <strong>alla medborgare lika</strong>. De kan inte optimera för specifika
+                    användarresor som "karriärbytare" eller "kompetensutveckling" - det skulle ses som
+                    orättvis prioritering.
+                </p>
+                <p>
+                    <strong>NordiqFlow kan fokusera.</strong> Vi bygger för specifika användare med specifika behov.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3><span class="emoji">📊</span> Inga kommersiella incitament</h3>
+                <p>
+                    AF:s framgång mäts i <strong>politiska mått</strong> - arbetslöshetstal, handläggningstider,
+                    antal beslut. Inte i användarengagemang eller konverteringar.
+                </p>
+                <p>
+                    De har ingen anledning att bygga en "sticky" produkt som folk älskar att använda.
+                    <strong>Vi har det.</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Analogy -->
+    <section class="section white">
+        <div class="container">
+            <div class="analogy-box">
+                <h3>Den bästa analogin</h3>
+                <div class="comparison">
+                    <div class="item">
+                        <div class="icon">🛰️</div>
+                        <div class="label">Rå GPS-data</div>
+                        <div style="opacity: 0.7; font-size: 0.9em; margin-top: 5px;">Koordinater, satelliter, signaler</div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="item">
+                        <div class="icon">🗺️</div>
+                        <div class="label">Google Maps</div>
+                        <div style="opacity: 0.7; font-size: 0.9em; margin-top: 5px;">"Sväng höger om 200m"</div>
+                    </div>
+                </div>
+                <div class="takeaway">
+                    <strong>Arbetsförmedlingen = rå GPS-data</strong><br>
+                    <strong>NordiqFlow = Google Maps</strong><br><br>
+                    Värdet ligger i att göra datan <em>användbar</em>, inte i att äga den.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What NordiqFlow Adds -->
+    <section class="section gray">
+        <div class="container">
+            <h2 class="section-title">Vad NordiqFlow tillför</h2>
+
+            <div class="value-grid">
+                <div class="value-card">
+                    <h4>🎨 Vacker UX</h4>
+                    <p>Vi surfar upp gömd data i ett gränssnitt som folk faktiskt vill använda. AF:s Platsbanken ser ut som... en myndighet.</p>
+                </div>
+
+                <div class="value-card">
+                    <h4>🎯 Personliga karriärvägar</h4>
+                    <p>Istället för "här är 51,000 övergångar" visar vi "här är DINA 5 bästa alternativ baserat på DIN profil".</p>
+                </div>
+
+                <div class="value-card">
+                    <h4>📊 Skill Match %</h4>
+                    <p>"Du matchar 85% av kraven för detta jobb. Du saknar: Excel avancerad, projektledning."</p>
+                </div>
+
+                <div class="value-card">
+                    <h4>🎓 Utbildningsrekommendationer</h4>
+                    <p>Vi kopplar skill-gaps till SUN-utbildningskoder. "För att nå ditt mål, överväg denna YH-utbildning."</p>
+                </div>
+
+                <div class="value-card">
+                    <h4>📱 Mobile-first</h4>
+                    <p>Byggd för hur folk faktiskt söker jobb idag - på telefonen, i tunnelbanan, mellan möten.</p>
+                </div>
+
+                <div class="value-card">
+                    <h4>⚡ Hastighet</h4>
+                    <p>De har datan men ingen snabb väg att visualisera den. Vi levererar insikter på sekunder.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">AF vs NordiqFlow</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th style="width: 30%;">Aspekt</th>
+                    <th class="af-col" style="width: 35%;">Arbetsförmedlingen</th>
+                    <th class="nf-col" style="width: 35%;">NordiqFlow</th>
+                </tr>
+                <tr>
+                    <td><strong>Data</strong></td>
+                    <td class="af-col">Råa API:er, fragmenterade</td>
+                    <td class="nf-col">Integrerad, sammankopplad</td>
+                </tr>
+                <tr>
+                    <td><strong>UX</strong></td>
+                    <td class="af-col">Myndighetsdesign</td>
+                    <td class="nf-col">Modern, intuitiv</td>
+                </tr>
+                <tr>
+                    <td><strong>Personalisering</strong></td>
+                    <td class="af-col">Samma för alla</td>
+                    <td class="nf-col">Baserat på din profil</td>
+                </tr>
+                <tr>
+                    <td><strong>Iteration</strong></td>
+                    <td class="af-col">Månader/år</td>
+                    <td class="nf-col">Dagar</td>
+                </tr>
+                <tr>
+                    <td><strong>Karriärövergångar</strong></td>
+                    <td class="af-col">51,000 i en JSON-fil</td>
+                    <td class="nf-col">Visualiserade, rankade, personliga</td>
+                </tr>
+                <tr>
+                    <td><strong>Skill matching</strong></td>
+                    <td class="af-col">Textsökning</td>
+                    <td class="nf-col">Semantisk med concept_ids</td>
+                </tr>
+                <tr>
+                    <td><strong>Gap-analys</strong></td>
+                    <td class="af-col">Finns inte</td>
+                    <td class="nf-col">"Du saknar 2 skills för detta jobb"</td>
+                </tr>
+                <tr>
+                    <td><strong>Utbildningslänkning</strong></td>
+                    <td class="af-col">Separata system</td>
+                    <td class="nf-col">Integrerad med SUN-koder</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="section gray">
+        <div class="container">
+            <div class="quote-box">
+                "Det smarta: Arbetsförmedlingen har redan räknat ut vilka jobb som liknar varandra.
+                De har över 51,000 sådana 'genvägar' i sin databas. Men de visar dem inte för dig!
+                NordiqFlow tar den gömda datan och gör den synlig och användbar."
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="section white">
+        <div class="container">
+            <h2 class="section-title">Sammanfattning</h2>
+
+            <div class="card" style="border-top: 4px solid #27ae60;">
+                <h3><span class="emoji">💡</span> Kortfattat</h3>
+                <p style="font-size: 1.2em; color: #2c3e50;">
+                    <strong>AF äger datan. Vi äger upplevelsen.</strong>
+                </p>
+                <p>
+                    Precis som Google Maps inte äger GPS-satelliterna men ändå är värd miljarder -
+                    NordiqFlow bygger värde genom att göra befintlig data användbar, tillgänglig och personlig.
+                </p>
+                <p>
+                    Vi konkurrerar inte med Arbetsförmedlingen. Vi <strong>kompletterar</strong> dem genom att
+                    bygga det UX-lager de aldrig kommer kunna bygga själva.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Redo att se skillnaden?</h2>
+            <p>Testa NordiqFlow-demot och upplev hur arbetsmarknadsdata ska kännas.</p>
+            <a href="demo.html" class="cta-btn">Prova Live Demo</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p>
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
+                <a href="investors.html">För Investerare</a> |
+                <a href="tech.html">Tech & Modeller</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
