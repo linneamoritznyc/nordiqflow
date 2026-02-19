@@ -135,6 +135,49 @@ function processSubstitutability() {
     return substitutability;
 }
 
+// Process regions (län) and municipalities (kommuner)
+function processGeography() {
+    console.log('\n🗺️  Processing geography (regions & municipalities)...');
+
+    const regions = {};
+    const municipalities = {};
+
+    // Process regions (21 Swedish län)
+    const regionData = loadJSON('regions.json');
+    if (regionData && regionData.data && regionData.data.concepts) {
+        regionData.data.concepts.forEach(region => {
+            regions[region.id] = {
+                id: region.id,
+                name: region.preferred_label,
+                nutsCode: region.national_nuts_level_3_code_2019 || region.nuts_level_3_code_2021 || null
+            };
+        });
+        console.log(`  Found ${Object.keys(regions).length} regions (län)`);
+    } else {
+        console.warn('  ⚠ regions.json not found — run the scraper to download it');
+    }
+
+    // Process municipalities (290 Swedish kommuner)
+    const municipalityData = loadJSON('municipalities.json');
+    if (municipalityData && municipalityData.data && municipalityData.data.concepts) {
+        municipalityData.data.concepts.forEach(muni => {
+            const regionRef = muni.broader || muni.region;
+            municipalities[muni.id] = {
+                id: muni.id,
+                name: muni.preferred_label,
+                municipalityCode: muni.municipality_code || muni.national_nuts_level_3_code_2019 || null,
+                regionId: regionRef ? (regionRef.id || null) : null,
+                regionName: regionRef ? (regionRef.preferred_label || null) : null
+            };
+        });
+        console.log(`  Found ${Object.keys(municipalities).length} municipalities (kommuner)`);
+    } else {
+        console.warn('  ⚠ municipalities.json not found — run the scraper to download it');
+    }
+
+    return { regions, municipalities };
+}
+
 // Create a search index for occupations
 function createSearchIndex(occupations) {
     console.log('\n🔍 Creating search index...');
@@ -164,6 +207,7 @@ async function main() {
     const { occupations, ssykGroups } = processOccupations();
     const skills = processSkills();
     const substitutability = processSubstitutability();
+    const { regions, municipalities } = processGeography();
     const searchIndex = createSearchIndex(occupations);
 
     // Save processed data
@@ -172,6 +216,13 @@ async function main() {
     saveJSON('skills.json', skills);
     saveJSON('substitutability.json', substitutability);
     saveJSON('search-index.json', searchIndex);
+
+    if (Object.keys(regions).length > 0) {
+        saveJSON('regions.json', regions);
+    }
+    if (Object.keys(municipalities).length > 0) {
+        saveJSON('municipalities.json', municipalities);
+    }
 
     // Create a combined lightweight file for the frontend
     const frontendData = {
@@ -184,7 +235,9 @@ async function main() {
         totalOccupations: searchIndex.length,
         totalSubstitutabilityRelations: Object.values(substitutability).reduce(
             (sum, o) => sum + o.relations.length, 0
-        )
+        ),
+        totalRegions: Object.keys(regions).length,
+        totalMunicipalities: Object.keys(municipalities).length
     };
     saveJSON('frontend-data.json', frontendData);
 
