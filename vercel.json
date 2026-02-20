@@ -13,6 +13,10 @@
     {
       "src": "data/processed/**/*.json",
       "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -51,6 +55,10 @@
     {
       "src": "/demo",
       "dest": "/demo.html"
+    },
+    {
+      "src": "/artiklar",
+      "dest": "/artiklar.html"
     },
     {
       "src": "/(.*)",
