@@ -1,0 +1,29 @@
+# NordiqFlow
+
+> Sweden's labour market OS — AI-powered career matching built on Arbetsförmedlingen's open data.
+
+NordiqFlow builds two products: TalentFlow (B2C career platform for individuals) and CityIQ (B2G municipal talent analytics). The platform uses 51,000+ pre-calculated career transitions from Sweden's public employment service data, combined with AI, to uncover hidden career paths that traditional keyword-based job matching misses.
+
+## Site Pages
+
+- [TalentFlow](https://nordiqflow.vercel.app/index.html): Main product landing page — skills-based career discovery, problem statement, solution overview, and data foundation
+- [For Investors](https://nordiqflow.vercel.app/investors.html): Investment pitch with market opportunity (SEK 79.8B spent, 100k+ unfilled jobs), business model, 6.6M SEK Year 2 ARR target, roadmap, and team
+- [Artiklar & Dokument](https://nordiqflow.vercel.app/artiklar.html): Downloadable PDFs — investor article (English) and Vinnova report (Swedish)
+- [AF Data](https://nordiqflow.vercel.app/af-data.html): Technical documentation of all Arbetsförmedlingen open APIs and 60+ datasets used
+- [AF:s Problem](https://nordiqflow.vercel.app/af-issues.html): Analysis of five core problems with Platsbanken's keyword-based matching system
+- [Tech & Modeller](https://nordiqflow.vercel.app/tech.html): Three-layer algorithm architecture, data pipeline, economic theory foundations, and interactive career graph
+- [Algoritmen](https://nordiqflow.vercel.app/algoritmen.html): Full mathematical specification of the matching algorithm with formulas and pseudocode
+- [Forskning](https://nordiqflow.vercel.app/research.html): Academic citations — Nobel Prize economics (DMP theory), human capital, signaling theory, ML papers
+- [Live Demo](https://nordiqflow.vercel.app/demo.html): Interactive career tool — upload CV or enter skills manually to get AI-powered career recommendations
+- [CityIQ](https://nordiqflow.vercel.app/cityiq.html): Municipal talent analytics product — real-time shortage analysis, education ROI calculator, 5-year forecasts
+- [Visualization](https://nordiqflow.vercel.app/viz.html): Interactive D3.js network graph of the Swedish labour market showing occupations, skills, and career transitions
+- [Next Steps](https://nordiqflow.vercel.app/next-steps.html): Development roadmap from prototype to MVP
+
+## Downloadable Documents
+
+- [Investor Article (English, PDF)](https://nordiqflow.vercel.app/public/nordiqflow_investor_article.docx.pdf): Full investigative analysis — political timeline, SEK 79.8B spending, Beveridge curve collapse, 6x fiscal ROI thesis
+- [Vinnova Report (Swedish, PDF)](https://nordiqflow.vercel.app/public/nordiqflow_vinnova_final.docx.pdf): Project summary for Vinnova application
+
+## Full Content
+
+For the complete text content of every page, see [llms-full.txt](https://nordiqflow.vercel.app/llms-full.txt).
