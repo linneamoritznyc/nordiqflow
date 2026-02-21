@@ -1,6 +1,8 @@
 # NordiqFlow
 
 > NordiqFlow builds Sweden's labour market OS. Two products: TalentFlow (B2C career platform) and CityIQ (B2G municipal talent analytics). Built on Arbetsformedlingen's open JobTech Dev API data.
+>
+> For the full text content of every page on this site, see: https://nordiqflow.vercel.app/llms-full.txt
 
 ## About
 
@@ -32,25 +34,25 @@ Municipal talent analytics dashboard. Shows competency gaps by occupation, ROI o
 
 ## Site Pages
 
-- [TalentFlow (Home)](https://nordiqflow-hr2n.vercel.app/index.html): Main product page for TalentFlow career matching platform
-- [For Investors](https://nordiqflow-hr2n.vercel.app/investors.html): Investment case, business model, revenue projections, roadmap, team, and moat analysis (Swedish)
-- [Artiklar & Dokument](https://nordiqflow-hr2n.vercel.app/artiklar.html): Document library with downloadable PDFs — investor article, Vinnova application, IFAU proposal, Vetlanda LOI
-- [AF Data](https://nordiqflow-hr2n.vercel.app/af-data.html): Guide to Arbetsformedlingen's open data: APIs, taxonomies, European standards, and how NordiqFlow uses them
-- [AF:s Problem](https://nordiqflow-hr2n.vercel.app/af-issues.html): Five structural problems with AF's databases and matching system, and how NordiqFlow solves them
-- [Tech & Modeller](https://nordiqflow-hr2n.vercel.app/tech.html): Technical explanation of the three-layer matching algorithm, economic theories, and ML architecture
-- [Algoritmen](https://nordiqflow-hr2n.vercel.app/algoritmen.html): Mathematical deep-dive: scoring formulas, graph traversal, substitutability calculations, predictive models
-- [Forskning](https://nordiqflow-hr2n.vercel.app/research.html): Academic research foundation — Nobel Prize-winning economic theory, labour market research, ML literature
-- [Live Demo](https://nordiqflow-hr2n.vercel.app/demo.html): Interactive AI-powered career matching demo — upload CV or describe profile for recommendations
-- [CityIQ](https://nordiqflow-hr2n.vercel.app/cityiq.html): CityIQ product page — municipal talent gap analysis and training ROI calculator
-- [Visualisering](https://nordiqflow-hr2n.vercel.app/viz.html): Labour market data visualizations
-- [Next Steps](https://nordiqflow-hr2n.vercel.app/next-steps.html): Development roadmap and next steps
+- [TalentFlow (Home)](https://nordiqflow.vercel.app/index.html): Main product page for TalentFlow career matching platform
+- [For Investors](https://nordiqflow.vercel.app/investors.html): Investment case, business model, revenue projections, roadmap, team, and moat analysis (Swedish)
+- [Artiklar & Dokument](https://nordiqflow.vercel.app/artiklar.html): Document library with downloadable PDFs — investor article, Vinnova application, IFAU proposal, Vetlanda LOI
+- [AF Data](https://nordiqflow.vercel.app/af-data.html): Guide to Arbetsformedlingen's open data: APIs, taxonomies, European standards, and how NordiqFlow uses them
+- [AF:s Problem](https://nordiqflow.vercel.app/af-issues.html): Five structural problems with AF's databases and matching system, and how NordiqFlow solves them
+- [Tech & Modeller](https://nordiqflow.vercel.app/tech.html): Technical explanation of the three-layer matching algorithm, economic theories, and ML architecture
+- [Algoritmen](https://nordiqflow.vercel.app/algoritmen.html): Mathematical deep-dive: scoring formulas, graph traversal, substitutability calculations, predictive models
+- [Forskning](https://nordiqflow.vercel.app/research.html): Academic research foundation — Nobel Prize-winning economic theory, labour market research, ML literature
+- [Live Demo](https://nordiqflow.vercel.app/demo.html): Interactive AI-powered career matching demo — upload CV or describe profile for recommendations
+- [CityIQ](https://nordiqflow.vercel.app/cityiq.html): CityIQ product page — municipal talent gap analysis and training ROI calculator
+- [Visualisering](https://nordiqflow.vercel.app/viz.html): Labour market data visualizations
+- [Next Steps](https://nordiqflow.vercel.app/next-steps.html): Development roadmap and next steps
 
 ## Downloadable Documents
 
-- [Investor Article (English, PDF)](https://nordiqflow-hr2n.vercel.app/public/nordiqflow_investor_article.docx.pdf): 15-page investigative analysis of Sweden's employment matching crisis — political timeline, SEK 79.8B spending, Beveridge curve collapse, IFAU RoM evaluation, 6x ROI investment thesis
-- [Vinnova Final (Swedish, PDF)](https://nordiqflow-hr2n.vercel.app/public/nordiqflow_vinnova_final.docx.pdf): Vinnova application summary — background, problem formulation, solution, project plan
-- [IFAU Research Proposal (English, PDF)](https://nordiqflow-hr2n.vercel.app/public/ifau_nordiqflow_proposal_full.pdf): 9-page formal proposal to IFAU for co-designed RCT of competency-based matching — three studies, Vinnova co-funding, SEK 12.5M budget
-- [Vetlanda LOI (Swedish, PDF)](https://nordiqflow-hr2n.vercel.app/public/loi_vetlanda_12sidor.pdf): 12-page Letter of Intent for 6-month pilot with Vetlanda Kommun — local labour market data, ROI calculation, pilot structure, 50,000 SEK cost
+- [Investor Article (English, PDF)](https://nordiqflow.vercel.app/public/nordiqflow_investor_article.docx.pdf): 15-page investigative analysis of Sweden's employment matching crisis — political timeline, SEK 79.8B spending, Beveridge curve collapse, IFAU RoM evaluation, 6x ROI investment thesis
+- [Vinnova Final (Swedish, PDF)](https://nordiqflow.vercel.app/public/nordiqflow_vinnova_final.docx.pdf): Vinnova application summary — background, problem formulation, solution, project plan
+- [IFAU Research Proposal (English, PDF)](https://nordiqflow.vercel.app/public/ifau_nordiqflow_proposal_full.pdf): 9-page formal proposal to IFAU for co-designed RCT of competency-based matching — three studies, Vinnova co-funding, SEK 12.5M budget
+- [Vetlanda LOI (Swedish, PDF)](https://nordiqflow.vercel.app/public/loi_vetlanda_12sidor.pdf): 12-page Letter of Intent for 6-month pilot with Vetlanda Kommun — local labour market data, ROI calculation, pilot structure, 50,000 SEK cost
 
 ## Key Sources
 

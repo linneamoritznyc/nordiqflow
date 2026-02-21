@@ -1,0 +1,3927 @@
+# NordiqFlow — llms-full.txt
+
+> Full text content from every page on nordiqflow.vercel.app
+> For a summary version with links, see /llms.txt
+> NordiqFlow builds Sweden's labour market OS: TalentFlow (B2C AI career platform) and CityIQ (B2G municipal talent analytics).
+
+========================================================================
+## TalentFlow - AI career matching platform
+Source: https://nordiqflow.vercel.app/index.html
+========================================================================
+
+NordiqFlow - TalentFlow | Karriärvägar baserade på kompetens
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+AF Issues
+Tech & Modeller
+Tech & Models
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+SV
+EN
+
+TalentFlow
+
+Hitta karriärvägar du aldrig visste fanns
+
+Discover career paths you never knew existed
+
+Traditionell jobbsökning matchar jobbtitlar. Vi matchar kompetenser.
+Baserat på Arbetsförmedlingens 51,000+ förberäknade karriärövergångar.
+
+Traditional job search matches job titles. We match skills.
+Based on the Swedish Employment Agency's 51,000+ pre-calculated career transitions.
+
+Problemet med dagens jobbsökning
+
+Du söker "butikschef" och får förslag på... butikschefsjobb. Men dina kompetenser
+(ledarskap, logistik, kundservice, budgetansvar) passar 85% av kraven för
+"verksamhetsledare inom vård" – ett jobb med högre lön och bättre framtidsutsikter.
+Det ser du aldrig.
+
+The Problem with Today's Job Search
+
+You search for "store manager" and get suggestions for... store manager jobs. But your skills
+(leadership, logistics, customer service, budget responsibility) match 85% of the requirements for
+"healthcare operations manager" – a job with higher salary and better future prospects.
+You never see it.
+
+TalentFlow-lösningen
+
+Vi använder Arbetsförmedlingens egen substitutability-data – 51,000+ förberäknade
+övergångar mellan yrken baserade på faktiska kompetensöverlapp. Inte gissningar,
+inte AI-hallucinationer. Riktig data om vilka jobb som faktiskt matchar dina skills.
+
+The TalentFlow Solution
+
+We use the Swedish Employment Agency's own substitutability data – 51,000+ pre-calculated
+transitions between occupations based on actual skill overlap. Not guesswork,
+not AI hallucinations. Real data about which jobs actually match your skills.
+
+Se hur det fungerar
+
+See how it works
+
+Exempel: Från Butikschef till Verksamhetsledare
+
+Nuvarande yrke
+
+Butikschef
+
+Detaljhandel
+
+→
+
+Rekommenderad övergång
+
+Verksamhetsledare, vård
+
+Hälso- och sjukvård
+
+85%
+
+Kompetensöverlappling enligt AF:s data
+
++7,000 kr
+
+Potentiell löneökning/månad
+
+HÖG
+
+Efterfrågan i Stockholm
+
+400h
+
+YH-kurs för att täppa gap
+
+3
+
+Saknade kompetenser
+
+Example: From Store Manager to Healthcare Operations Manager
+
+Current occupation
+
+Store Manager
+
+Retail
+
+→
+
+Recommended transition
+
+Healthcare Ops Manager
+
+Healthcare sector
+
+85%
+
+Skill overlap according to government data
+
++$700
+
+Potential salary increase/month
+
+HIGH
+
+Demand in Stockholm
+
+400h
+
+Training to close gap
+
+3
+
+Missing skills
+
+Vad TalentFlow ger dig
+
+What TalentFlow gives you
+
+🎯
+
+Dolda karriärvägar
+
+Upptäck yrken du aldrig tänkt på men som matchar dina kompetenser perfekt. Baserat på data, inte gissningar.
+
+📊
+
+Exakta matchprocent
+
+Se exakt hur stor andel av kraven du redan uppfyller. 85%, 72%, 68% – konkreta siffror för varje möjligt yrke.
+
+🎓
+
+Konkreta utbildningsvägar
+
+Saknar du 3 kompetenser? Vi visar exakt vilka YH-kurser eller utbildningar som täpper igen gapet.
+
+💰
+
+Löneprognos
+
+Se potentiell löneförändring för varje karriärväg. Baserat på faktisk lönestatistik per yrke och region.
+
+📈
+
+Efterfrågeprognos
+
+Arbetsförmedlingens Yrkesbarometer visar 5-års prognos. Vi integrerar det i varje rekommendation.
+
+🗺️
+
+Regional analys
+
+Efterfrågan varierar mellan regioner. Se var ditt målyrke har flest möjligheter.
+
+Byggd på Arbetsförmedlingens öppna data
+
+51,000+
+
+Förberäknade karriärövergångar
+
+8,000+
+
+Mappade kompetenser
+
+430
+
+Svenska yrken (SSYK-4)
+
+10+ år
+
+Historisk jobbdata
+
+Redo att upptäcka dina dolda karriärvägar?
+
+TalentFlow är under utveckling. Registrera ditt intresse för tidig åtkomst.
+
+Registrera Intresse
+Läs mer om tekniken
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+Skapad av Linnea Moritz |
+GitHub
+
+Data: JobTech Dev |
+AF Open Data
+
+// Language toggle functionality
+const langSV = document.getElementById('lang-sv');
+const langEN = document.getElementById('lang-en');
+
+// Check saved preference
+const savedLang = localStorage.getItem('nordiqflow-lang') || 'sv';
+if (savedLang === 'en') {
+document.body.classList.add('lang-en');
+langEN.classList.add('active');
+langSV.classList.remove('active');
+}
+
+langSV.addEventListener('click', () => {
+document.body.classList.remove('lang-en');
+langSV.classList.add('active');
+langEN.classList.remove('active');
+localStorage.setItem('nordiqflow-lang', 'sv');
+});
+
+langEN.addEventListener('click', () => {
+document.body.classList.add('lang-en');
+langEN.classList.add('active');
+langSV.classList.remove('active');
+localStorage.setItem('nordiqflow-lang', 'en');
+});
+
+
+========================================================================
+## For Investors - business model, ROI, roadmap
+Source: https://nordiqflow.vercel.app/investors.html
+========================================================================
+
+NordiqFlow - For Investors | Almi & Science Park
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+For Investors
+
+NordiqFlow bygger Sveriges arbetsmarknads-OS. Här är varför det spelar roll.
+
+Marknadsmöjligheten
+
+Sverige har ett paradoxalt problem
+
+100,000+ lediga jobb existerar samtidigt som 7.5% arbetslöshet. Detta är inte en konjunkturfråga
+– det är ett strukturellt matchningsproblem. Arbetsförmedlingen har all data för att lösa det,
+men exponerar den inte på ett användbart sätt.
+
+100,000+
+
+Ofyllda jobb i Sverige
+
+7.5%
+
+Arbetslöshet
+
+51,000+
+
+Karriärövergångar i AF:s data
+
+0
+
+Sätt att komma åt den datan idag
+
+Vad NordiqFlow gör
+
+Vi tar Arbetsförmedlingens öppna data (60+ datasets, 10+ års historik) och bygger
+intelligenta produkter ovanpå. Arbetsförmedlingen har redan gjort ML-jobbet – de har
+förberäknade substitutability-relationer mellan yrken. Vi exponerar det på ett sätt
+som skapar värde.
+
+Affärsmodell & Intäkter
+
+Två produkter, två segment
+
+NordiqFlow har två primära intäktsströmmar:
+
+Produkt
+
+Segment
+
+Pris
+
+År 2 Mål
+
+TalentFlow
+
+B2C (individer)
+
+299 SEK/månad
+
+3.6M SEK (1,000 användare)
+
+CityIQ
+
+B2G (kommuner)
+
+50-200k SEK/år
+
+3M SEK (30 kommuner)
+
+Total År 2 ARR
+
+6.6M SEK
+
+TalentFlow (B2C)
+
+Karriärplaneringsverktyg för individer som vill byta yrke. Visar dolda karriärvägar
+baserat på kompetensöverlappar, inte jobbtitlar. Freemium-modell med premium för
+detaljerade utbildningsvägar och löneprognoser.
+
+Gratis: 3 karriärförslag
+
+Premium (299 SEK/mån): Obegränsade förslag, gap-analys, utbildningsvägar
+
+Målgrupp: Karriärbytare, nyutexaminerade, uppsagda
+
+CityIQ (B2G)
+
+Talangbristanalys för kommuner. Visar vilka kompetenser som saknas lokalt,
+och ROI på utbildningsinvesteringar. Möjliggör datadrivna beslut om YH-program
+och arbetsmarknadsinsatser.
+
+Pris: 50k (små) - 200k (stora) SEK/år beroende på kommunstorlek
+
+Värde: Bättre utbildningsplanering, skatteintäktsprognoser
+
+Pilot: Vetlanda kommun (diskussioner pågår)
+
+Konkurrensfördelar (Moat)
+
+"Moat" = vallgrav. I affärsvärlden: de barriärer som skyddar ett företag från konkurrenter,
+likt en vallgrav runt ett slott. Ju bredare vallgrav, desto svårare att kopiera.
+
+Data Moat
+
+Vi har laddat ner och strukturerat 60+ datasets från Arbetsförmedlingen.
+Ingen annan aktör har byggt en enhetlig graf över denna data.
+
+First Mover
+
+10+ år av historisk jobbdata möjliggör ML-modeller som konkurrenter
+inte kan träna utan samma datainsamling.
+
+Nätverkseffekter
+
+Fler TalentFlow-användare → bättre feedback-data → bättre rekommendationer
+→ fler användare. Plus: CityIQ-kunder genererar regional data.
+
+Regulatorisk Position
+
+Byggd på statlig infrastruktur. Positionering som "arbetsmarknads-OS"
+skapar legitimitet hos kommuner och myndigheter.
+
+Roadmap
+
+Fas 1: Prototyp & Datainsamling ✓
+
+Jan 2026 (Klar)
+
+Kompetensbryggan-prototyp byggd. 60+ datasets nedladdade och strukturerade.
+Grundläggande matchningsalgoritm validerad. Webbplats och dokumentation publicerad.
+
+Fas 2: AI Sandbox & Regulatorisk Validering
+
+Feb - Apr 2026
+
+Ansökan till Regeringens AI Sandbox
+för att testa NordiqFlow i kontrollerad miljö. Säkerställa att algoritmer inte bygger på
+diskriminerande mönster. Granska datasets för bias avseende kön, etnicitet och ålder.
+Dokumentera compliance med EU AI Act och GDPR.
+
+Fas 3: TalentFlow MVP
+
+Apr - Jun 2026
+
+Lansering av TalentFlow web-app med grundläggande funktionalitet.
+CV-uppladdning, karriärrekommendationer, gap-analys. Beta-testare rekryteras.
+
+Fas 4: CityIQ Pilot
+
+Jun - Aug 2026
+
+Pilot med 3 kommuner för CityIQ (målkommuner: Vetlanda, Eksjö, Nässjö).
+Talangbristrapporter och ROI-kalkyler levereras. Feedback samlas in.
+
+Fas 5: Första Betalande Kunder
+
+Sep - Okt 2026
+
+TalentFlow Premium lanseras (299 SEK/mån). CityIQ konverterar pilotkommuner
+till betalande kunder. Mål: 100 TalentFlow-användare, 3 CityIQ-kommuner.
+
+Fas 6: Skalning Sverige
+
+Nov 2026 - Mar 2027
+
+Aggressiv tillväxt. 1,000 TalentFlow-användare. 30 CityIQ-kommuner.
+Marknadsföringskampanjer, partnerskap med YH-skolor och arbetsförmedlingar.
+Mål: 6.6M SEK ARR.
+
+Fas 7: Produktförbättring & Mobilapp
+
+Apr - Sep 2027
+
+TalentFlow mobilapp (iOS/Android). LinkedIn-integration för automatisk CV-import.
+CityIQ får prediktiv analys och utbildningsplaneringsmodul. 15M SEK ARR-mål.
+
+Fas 8: Nordisk Expansion
+
+Okt 2027 - Dec 2028
+
+Utvidgning till Norge (NAV-data), Danmark (Jobindex-partnerskap), Finland (TE-palvelut).
+Anpassning av algoritmer för lokala arbetsmarknader. 40M SEK ARR-mål.
+
+Team
+
+Linnea Moritz
+
+Grundare & Utvecklare
+
+Bakgrund inom systemutveckling och dataanalys med fokus på arbetsmarknadsdata och AI-tillämpningar.
+Passion för att lösa samhällsproblem med teknik.
+
+ORCID: 0009-0004-9742-8608
+
+Fler projekt: Se min portfolio →
+
+📍 Baserad i Vetlanda. Nära samarbete med lokalt näringsliv och Science Park Vetlanda.
+
+Vad jag söker
+
+💰 Finansiering
+
+För MVP-utveckling och första piloter. Seed-runda för att gå från prototyp till produkt.
+
+🤝 Strategiska partners
+
+Kommuner, arbetsförmedlingar och utbildningsaktörer som vill vara tidiga pilotkunder.
+
+🛠️ Teknisk rådgivning
+
+Mentorer med erfarenhet av skalning, ML-infrastruktur och B2G-försäljning.
+
+Dokument & Rapporter
+
+Ladda ner våra rapporter och artiklar. Perfekt som underlag för investeringsbeslut eller vidare forskning.
+
+📄 NordiqFlow Investor Article
+
+Full investigative analysis of Sweden's employment matching crisis and why NordiqFlow is the solution. In English.
+
+⬇ Download PDF (English)
+
+📄 NordiqFlow Investerarrapport
+
+Samma rapport på svenska. Anpassad för Vinnova, Tillväxtverket och svenska investerare.
+
+Kommer snart
+
+📄 Arbetsförmedlingens Kris — En Analys
+
+Djupdykning i hur Sveriges arbetsförmedling förlorat sin effektivitet sedan 2007 och vad det kostat skattebetalarna.
+
+Kommer snart
+
+Intresserad av att veta mer?
+
+Kontakta mig för en genomgång av projektet och möjligheter till samarbete.
+
+Kontakta Linnea
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+GitHub |
+Live Demo
+
+
+========================================================================
+## Artiklar & Dokument - downloadable PDFs
+Source: https://nordiqflow.vercel.app/artiklar.html
+========================================================================
+
+NordiqFlow - Artiklar & Dokument
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+Artiklar & Dokument
+
+Rapporter, analyser och underlag. Skriv ut direkt eller ladda ner för möten och presentationer.
+
+NordiqFlow Investor Article — Sweden's Employment Matching Crisis
+
+Full investigative analysis covering the political timeline from Reinfeldt's 2008 reforms through the Tidöavtalet era,
+SEK 79.8B in labour market spending, Beveridge curve collapse, SCB skills mismatch data, and the 6x fiscal ROI investment thesis.
+
+PDF
+English
+Investor
+
+⬇ Ladda ner PDF
+
+NordiqFlow Vinnova Final
+
+Sammanfattning av NordiqFlow-projektet för Vinnova-ansökan. Bakgrund, problemformulering, lösning och projektplan.
+
+PDF
+Svenska
+Ansökan
+
+⬇ Ladda ner PDF
+
+IFAU × NordiqFlow — Forskningsförslag
+
+Fullständigt forskningsförslag till IFAU (Institutet för arbetsmarknads- och utbildningspolitisk utvärdering).
+AI-driven matchning, kompetenskartläggning och utvärderingsmodell för Sveriges arbetsmarknad.
+
+PDF
+English
+Forskning
+
+⬇ Ladda ner PDF
+
+Avsiktsförklaring — Pilotsamarbete Vetlanda Kommun
+
+Letter of Intent för 6-månaders pilot med TalentFlow & CityIQ i Vetlanda.
+Lokal arbetsmarknadsdata, ROI-kalkyl, pilotstruktur, teknik, finansiering och tidslinje.
+
+PDF
+Svenska
+Kommun
+
+⬇ Ladda ner PDF
+
+NordiqFlow Investerarrapport
+
+Samma analys som den engelska investerarrapporten, anpassad för Vinnova, Tillväxtverket och svenska investerare.
+
+PDF
+Svenska
+Investor
+
+Kommer snart
+
+Arbetsförmedlingens Kris — En Analys
+
+Djupdykning i hur Sveriges arbetsförmedling förlorat sin effektivitet sedan 2007 och vad det kostat skattebetalarna.
+Rusta och Matcha, statistiskt bedömningsverktyg, och leverantörsmarknadens misslyckanden.
+
+PDF
+Svenska
+Analys
+
+Kommer snart
+
+Tips: Tryck Ctrl+P (eller ⌘P på Mac) för att skriva ut den här sidan som underlag till möten.
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+GitHub |
+Live Demo
+
+
+========================================================================
+## AF Data - open data APIs and taxonomies
+Source: https://nordiqflow.vercel.app/af-data.html
+========================================================================
+
+NordiqFlow - AF Öppen Data | Datakällor & Standarder
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+Arbetsförmedlingens Öppna Data
+
+60+ datasets, 9 API:er, och europeiska standarder som NordiqFlow bygger på.
+
+Vad är AF:s öppna data?
+
+📊 JobTech Dev - Sveriges arbetsmarknadsdata
+
+Arbetsförmedlingen publicerar all sin arbetsmarknadsdata via plattformen JobTech Dev.
+Detta inkluderar alla jobbannonser, en komplett taxonomi över yrken och kompetenser,
+samt historisk data som sträcker sig över 10 år tillbaka.
+
+Datan är helt gratis att använda under öppna licenser. Detta är
+ett resultat av svenska öppenhetslagar och EU:s PSI-direktiv (Public Sector Information)
+som kräver att myndigheter gör sin data tillgänglig.
+
+Huvudkällor
+
+🔗 JobTech Dev - Huvudportal
+🔗 API-dokumentation
+🔗 AF Open Data Portal
+
+API:er vi använder
+
+Taxonomy API
+
+taxonomy.api.jobtechdev.se/v1/
+
+Komplett taxonomi med 10,000+ yrken, 8,000+ kompetenser, och alla relationer mellan dem.
+
+Dokumentation →
+
+Substitutability Relations
+
+taxonomy.api.jobtechdev.se/.../substitutability-relations
+
+51,000+ karriärövergångar med förberäknad substitutability. Detta är kärnan i TalentFlow.
+
+Dokumentation →
+
+JobSearch API
+
+jobsearch.api.jobtechdev.se/search
+
+Real-time sökning bland alla aktiva jobbannonser i Sverige. Filtrering på yrke, region, kompetens.
+
+Dokumentation →
+
+JobAd Enrichments API
+
+jobad-enrichments.api.jobtechdev.se/
+
+NLP-extraktion av kompetenser från ostrukturerad text. Används för CV-parsing.
+
+Dokumentation →
+
+Historical Ads API
+
+historical.api.jobtechdev.se/
+
+10+ år av historiska jobbannonser. Möjliggör trendanalys och ML-modellträning.
+
+Dokumentation →
+
+JobStream API
+
+jobstream.api.jobtechdev.se/
+
+Real-time webhook för nya jobbannonser. Möjliggör instant uppdateringar.
+
+Dokumentation →
+
+Klassificeringskoder & Standarder
+
+🏷️ Standardiserade koder som AF använder
+
+Arbetsförmedlingen använder en rad standardiserade klassificeringssystem som är
+gemensamma för svenska myndigheter och harmoniserade med europeiska system.
+Detta skapar en "låst" datastruktur som är svår att ändra.
+
+Kod
+
+Fullständigt namn
+
+Beskrivning
+
+EU-motsvarighet
+
+SSYK
+
+Standard för Svensk Yrkesklassificering
+
+430 yrken på 4-siffernivå (t.ex. 2512 = Mjukvaruutvecklare)
+
+ISCO-08
+(International Standard Classification of Occupations)
+
+SNI
+
+Svensk Näringsgrensindelning
+
+821 branschkoder (t.ex. 62.01 = Dataprogrammering)
+
+NACE
+(EU:s branschklassificering)
+
+SUN
+
+Svensk Utbildningsnomenklatur
+
+~400 utbildningsinriktningar med nivåer
+
+ISCED
+(International Standard Classification of Education)
+
+NUTS
+
+Nomenclature of Territorial Units
+
+Regionkoder (SE110 = Stockholms län)
+
+NUTS
+(EU-standard)
+
+ESCO
+
+European Skills, Competences, Qualifications and Occupations
+
+13,000+ kompetenser mappade till yrken
+
+Detta ÄR EU-standarden (AF översätter till)
+
+Källor för klassificeringssystem
+
+🔗 SCB: SSYK (Standard för Svensk Yrkesklassificering)
+🔗 SCB: SNI (Svensk Näringsgrensindelning)
+🔗 EU: ESCO Portal
+🔗 ILO: ISCO-08 Standard
+
+Europeisk integration
+
+Dataflöde: EU → SCB → Myndigheter
+
+EU-standarder
+
+ISCO, NACE, ISCED, ESCO
+
+→
+
+SCB
+
+Svensk anpassning (SSYK, SNI, SUN)
+
+→
+
+Arbetsförmedlingen
+
+JobTech Taxonomy
+
+Arbetsförmedlingen
+
+→
+
+Försäkringskassan
+
+Använder samma SSYK
+
+→
+
+Skatteverket
+
+Använder samma SNI
+
+⚠️ Varför AF har svårt att ändra sin data
+
+Arbetsförmedlingens klassificeringssystem är inte en intern beslutsfråga.
+Det är del av ett komplext ekosystem av svenska och europeiska standarder:
+
+EU-harmonisering: Sverige rapporterar arbetsmarknadsstatistik till Eurostat med ISCO/NACE-koder. Ändringar kräver EU-koordination.
+
+Myndighetskopplingar: Försäkringskassan, Skatteverket, CSN och kommuner använder samma SSYK-koder. En ändring påverkar alla.
+
+SCB-beroende: Statistiska Centralbyrån (SCB) äger och förvaltar de svenska standarderna. AF är en konsument, inte ägare.
+
+Bakåtkompatibilitet: 10+ år av historisk data är kodad med nuvarande system. Ändringar bryter tidsserier.
+
+Internationell jämförbarhet: ILO (International Labour Organization) kräver ISCO-kompatibilitet för globala jämförelser.
+
+Slutsats: AF kan lägga till kompetens-data (som de gör med JobTech), men grundläggande
+yrkesklassificeringar är "låsta" av externa beroenden. NordiqFlow jobbar med denna struktur,
+inte mot den.
+
+Källor
+
+🔗 Eurostat: Labour Market Methodology
+🔗 SCB: Samordning av officiell statistik
+🔗 Regeringen: Ds 2019:9 om arbetsmarknadspolitik
+
+Dataset-katalog (60+ filer)
+
+📁 Nyckel-datasets som NordiqFlow använder
+
+Vi har laddat ner och strukturerat följande datasets från JobTech:
+
+substitutability-relations-between-occupations.json
+
+51,000+ karriärövergångar mellan yrken
+
+2.3 MB
+
+concepts-and-common-relations.json
+
+Master-graf med alla begrepp och relationer
+
+34 MB
+
+skills.json
+
+8,000+ kompetenser ("skill atoms")
+
+543 KB
+
+ssyk-level-4-groups.json
+
+430 svenska yrken (SSYK-4)
+
+150 KB
+
+the-ssyk-hierarchy-with-occupations.json
+
+Fullständig yrkestaxonomi med hierarki
+
+399 KB
+
+sni-hierarchy.json
+
+821 branschkoder med hierarki
+
+249 KB
+
+sun-field-hierarchy.json
+
+Utbildningsområden och nivåer
+
+169 KB
+
+occupation-skill-relations.json
+
+Mappning: yrken ↔ krav på kompetenser
+
+1.8 MB
+
+Total datastorlek: ~35 MB strukturerad data |
+Senast uppdaterad: Januari 2026
+
+Hur NordiqFlow använder datan
+
+🔄 Vår datapipeline
+
+Nattlig synkronisering: Vi hämtar uppdateringar från alla JobTech API:er varje natt.
+
+Graf-byggning: Datasets laddas in i en Neo4j-grafdatabas där yrken är noder
+och substitutability-relationer är kanter.
+
+Enrichment: När en användare laddar upp ett CV, skickar vi texten till
+JobAd Enrichments API för att extrahera kompetens-ID:n.
+
+Matchning: Vi traverserar grafen för att hitta yrken som matchar
+användarens kompetenser, rankat efter substitutability och efterfrågan.
+
+Gap-analys: För varje matchat yrke beräknar vi vilka kompetenser
+som saknas och kopplar till utbildningsvägar via SUN-koderna.
+
+Utforska datan själv
+
+All data vi använder är helt öppen och gratis att utforska.
+
+Besök JobTech Dev
+Läs om vår teknik
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+GitHub |
+För Investerare |
+Teknisk dokumentation
+
+Data: JobTech Dev (CC0/Open License)
+
+
+========================================================================
+## AF:s Problem - five structural failures
+Source: https://nordiqflow.vercel.app/af-issues.html
+========================================================================
+
+NordiqFlow - Problem med Arbetsförmedlingen
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+5 Problem med Arbetsförmedlingens System
+
+Arbetsförmedlingen sitter på fantastisk data. Men de använder den inte.
+
+Arbetsförmedlingen har investerat hundratals miljoner i att bygga Sveriges mest kompletta
+arbetsmarknadsdatabas. De har 60+ datasets, 10+ års historik, och förberäknade
+karriärövergångar mellan yrken. Men för vanliga användare? Platsbanken fungerar
+fortfarande som en enkel jobboard från 2005.
+
+"Arbetsförmedlingen har en Ferrari-motor men använder den för att driva en cykel."
+
+1
+
+Exakt keyword-matchning
+
+Problemet
+
+Platsbanken matchar på exakta nyckelord, inte semantisk betydelse.
+"Agile Coach" och "Scrum Master" behandlas som helt olika yrken,
+trots att de har 90%+ kompetensöverlappar.
+
+Verkligt exempel
+
+Sök "Java-utvecklare" → Får inte se Python-jobb, trots att övergången
+kräver minimal omskolning. Systemet förstår inte att programmeringsspråk
+är utbytbara skills.
+
+Dagens Platsbanken
+
+"Agile Coach" ≠ "Scrum Master"
+
+"Java" ≠ "Python"
+
+"Butikschef" ≠ "Verksamhetsledare"
+
+NordiqFlow
+
+"Agile Coach" ≈ "Scrum Master" (90%)
+
+"Java" → "Python" (lätt övergång)
+
+"Butikschef" → "Verksamhetsledare" (85%)
+
+📚 Källa: JobTech Taxonomy API Documentation
+
+2
+
+Ingen skill-inferens
+
+Problemet
+
+Om du har "Python" på ditt CV men inte "programmering", så förstår inte
+systemet att du kan programmera. Det finns ingen taxonomi-traversering
+som kopplar specifika skills till generella kategorier.
+
+Verkligt exempel
+
+Du har "Google Ads" och "Facebook Ads" på ditt CV. Ett jobb kräver
+"Digital marknadsföring". Ingen match – trots att du uppenbarligen
+har kompetensen.
+
+Konsekvensen
+
+Arbetssökande måste gissa vilka nyckelord arbetsgivare använder.
+Arbetsgivare missar kandidater som har rätt kompetenser men "fel" ordval.
+
+📚 Källa: JobAd Enrichments API - skill extraction
+
+3
+
+Ingen karriärvägsmedvetenhet
+
+Problemet
+
+Arbetsförmedlingen har faktiskt förberäknade "substitutability relations"
+– data som visar vilka yrken som är substitut för varandra (t.ex.
+Butikschef → Verksamhetsledare inom vård: 75% substitutability).
+Men denna data exponeras inte för användare.
+
+Gömd data
+
+Filen
+substitutability-relations-between-occupations.json
+
+innehåller 51,000+ förberäknade karriärövergångar. Den är publik via
+API, men ingen frontend visar den.
+
+Konsekvensen
+
+Arbetssökande ser bara jobb som matchar deras nuvarande titel.
+De missar tusentals jobb de faktiskt skulle kunna ta – och ofta med
+högre lön och bättre framtidsutsikter.
+
+📚 Källa: AF Substitutability Relations API (51,000+ relationer)
+
+4
+
+Binära resultat (match/no-match)
+
+Problemet
+
+Antingen matchar du ett jobb, eller så gör du det inte. Det finns
+inga partiella matchningar, inga gap-analyser, inga "du uppfyller
+85% av kraven och saknar dessa 3 kompetenser".
+
+Dagens resultat
+
+Jobb A: Visas
+
+Jobb B: Visas inte
+
+Ingen förklaring
+
+NordiqFlow-resultat
+
+Jobb A: 95% match
+
+Jobb B: 72% match (saknar: Excel, projektledning)
+
+Jobb C: 68% match (saknar: 1 YH-kurs)
+
+Konsekvensen
+
+Arbetssökande har ingen aning om hur nära de är ett jobb, eller vad
+de behöver lära sig för att kvalificera sig. De sitter i mörker.
+
+📚 Källa: Platsbanken.se - testa själv sökfunktionen
+
+5
+
+Ingen framtidsanalys
+
+Problemet
+
+Platsbanken visar jobb som finns nu. Men den varnar dig inte om att
+ditt yrke har fallande efterfrågan, eller att ett närliggande yrke
+har exploderande tillväxt och bättre lön.
+
+Gömd data
+
+Arbetsförmedlingens "Yrkesbarometer" har 5-års efterfrågeprognoser
+för varje yrke. Men denna data integreras inte i jobbsökningen.
+
+Konsekvensen
+
+Folk tar jobb i branscher på nedgång. De missar möjligheter i
+tillväxtbranscher. Strukturell arbetslöshet fortsätter.
+
+📚 Källa: Arbetsförmedlingens Yrkesbarometer
+
+Konsekvenserna i siffror
+
+100k+
+
+Ofyllda jobb i Sverige
+
+7.5%
+
+Arbetslöshet
+
+51k
+
+Karriärvägar som inte visas
+
+Hur NordiqFlow löser detta
+
+Semantisk matchning
+
+Vi matchar på concept_id, inte nyckelord. "Agile Coach" och
+"Scrum Master" kopplas automatiskt via taxonomin.
+
+Taxonomi-traversering
+
+"Google Ads" → "Digital marknadsföring" automatiskt.
+Hierarkisk expansion av alla kompetenser.
+
+Karriärvägsexponering
+
+Vi visar AF:s substitutability-data. Se alla 51,000+
+möjliga övergångar baserat på ditt nuvarande yrke.
+
+Gap-analys
+
+"85% match. Saknar: projektledning (YH-kurs 400h)."
+Konkret feedback på varje möjlig karriärväg.
+
+Efterfrågeintegration
+
+Yrkesbarometer-data integrerad. Se 5-års prognos
+för varje rekommenderat yrke.
+
+Lönedelta
+
+"+7,000 kr/månad" – se potentiell löneförändring
+för varje karriärväg baserat på faktisk statistik.
+
+Se skillnaden själv
+
+TalentFlow visar vad Platsbanken borde göra – men inte gör.
+
+Testa TalentFlow
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+GitHub |
+Läs mer om tekniken
+
+
+========================================================================
+## Tech & Modeller - algorithm and ML architecture
+Source: https://nordiqflow.vercel.app/tech.html
+========================================================================
+
+NordiqFlow - Tech & Ekonomiska Modeller
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+Tech & Ekonomiska Modeller
+
+Hur NordiqFlow fungerar under huven: algoritmer, dataarkitektur, och den ekonomiska teorin bakom.
+
+Tre-Lagers Matchningsalgoritm
+
+Dataflöde
+
+CV / Profil
+
+→
+
+NLP Extraktion
+
+→
+
+Concept IDs
+
+→
+
+Graf-Traversering
+
+→
+
+Rankade Resultat
+
+1
+
+Semantisk Matchning
+
+Extraherar kompetenser från ostrukturerad text (CV:er, jobbeskrivningar)
+och mappar dem till Arbetsförmedlingens taxonomi-ID:n.
+
+Använder AF:s JobAd Enrichments API för NLP-extraktion
+
+Matchar på
+concept_id
+, inte textsträngar
+
+"Agile Coach" och "Scrum Master" → samma concept_id
+
+# Extrahera kompetenser från CV-text
+response = enrichments_api.extract(text=cv_text)
+skills = [s['concept_id'] for s in response['skills']]
+# skills = ['KDZ_123', 'ABC_456', ...] # Taxonomi-IDs
+
+2
+
+Graf-Traversering
+
+Traverserar Arbetsförmedlingens substitutability-graf för att hitta
+karriärövergångar. BFS-algoritm med viktade kanter.
+
+51,000+ förberäknade yrkes-till-yrkes-relationer
+
+Substitutability-nivåer: Hög (75), Medium (50), Låg (25)
+
+Expanderar kandidatens skills hierarkiskt (Python → Programmering)
+
+# Hitta substitutability för ett yrke
+transitions = substitutability_graph.get_transitions(
+occupation_id='butikschef_123',
+min_level=50 # Minst medium substitutability
+)
+# → [{'target': 'verksamhetsledare_456', 'level': 75}, ...]
+
+3
+
+Prediktiv Scoring
+
+Kombinerar matchningsdata med framtidsprognoser och lönestatistik
+för att ranka karriärvägar.
+
+Integrerar Yrkesbarometerns 5-års efterfrågeprognos
+
+Beräknar lönedelta mellan nuvarande och målyrke
+
+Viktad composite score för slutrankning
+
+Scoring-Formel
+
+Score = 0.30×S + 0.30×M + 0.20×D + 0.10×K + 0.10×L
+
+30%
+S = Substitutability (AF:s data)
+
+30%
+M = Skill Match %
+
+20%
+D = Efterfrågeprognos (Yrkesbarometer)
+
+10%
+K = Nuvarande marknadssituation
+
+10%
+L = Lönedelta (incitament)
+
+Dataarkitektur
+
+Arbetsförmedlingens API:er vi använder
+
+API
+
+Data
+
+Användning
+
+Taxonomy API
+
+10,000 yrken, 8,000 skills
+
+Semantisk matchning, hierarki-expansion
+
+Substitutability
+
+51,000+ övergångar
+
+Karriärvägsrekommendationer
+
+JobSearch API
+
+Real-time jobblistningar
+
+Marknadssituation, efterfrågan
+
+Enrichments API
+
+NLP-extraktion
+
+CV-parsing, skill-extraktion
+
+Yrkesbarometer
+
+5-års prognoser
+
+Efterfrågeprediktion
+
+Historical Ads
+
+10+ års jobbdata
+
+Trendanalys, ML-träning
+
+Nyckel-Datasets
+
+Fil
+
+Storlek
+
+Innehåll
+
+substitutability-relations.json
+
+2.3 MB
+
+Karriärövergångar med substitutability-nivå
+
+concepts-and-relations.json
+
+34 MB
+
+Master-graf med alla relationer
+
+skills.json
+
+543 KB
+
+8,000 "skill atoms" med taxonomi
+
+ssyk-level-4.json
+
+150 KB
+
+430 svenska yrken (SSYK-4)
+
+Ekonomisk Teori
+
+NordiqFlow bygger på etablerad arbetsmarknadsteori, inklusive Nobel Prize-vinnande forskning.
+
+Search & Matching Theory
+
+DMP-modellen | Nobel Prize 2010
+
+Förklarar varför arbetslöshet och lediga jobb existerar samtidigt.
+Matchningsfunktionen M = m(U, V) beskriver effektiviteten i att
+koppla ihop arbetssökande (U) med vakanser (V).
+
+NordiqFlow-tillämpning
+
+Vi förbättrar m() genom att reducera informationsasymmetri.
+Semantisk matchning minskar sökfriktioner.
+
+Human Capital Theory
+
+Gary Becker | 1964
+
+Skiljer på generellt humankapital (värdefullt för många arbetsgivare)
+och specifikt (värdefullt för en). Jobbtitlar betonar specifikt kapital.
+
+NordiqFlow-tillämpning
+
+Vi extraherar "skill atoms" för att avslöja transfererbart
+generellt kapital. H = H_general + H_specific
+
+Signaling Theory
+
+Michael Spence | Nobel 1973
+
+Jobbtitlar är "brusiga signaler" av produktivitet. "Marketing Manager"
+kan betyda SEO-specialist eller fullstack beroende på företag.
+
+NordiqFlow-tillämpning
+
+Ersätt brusig jobbtitel med preciserad skill-profil.
+I(produktivitet; skills) > I(produktivitet; titel)
+
+Granularity Gap
+
+NordiqFlow Insight
+
+Arbetssökande beskriver skills specifikt ("Google Ads", "Python pandas").
+Jobbposter beskriver generellt ("Digital marknadsföring", "Dataanalys").
+
+NordiqFlow-tillämpning
+
+Hierarkisk taxonomi-traversering bryggar granularitetsnivåer
+automatiskt.
+
+Interaktiv Karriärgraf
+
+Klicka och dra i noderna för att utforska hur olika yrken är kopplade till varandra.
+Varje linje representerar en möjlig karriärövergång baserat på kompetensöverlappar.
+
+Karriärövergångar: Butikschef
+
+Exempel på hur en butikschef kan övergå till närliggande yrken
+
+Ditt nuvarande yrke
+
+Hög matchning (75%+)
+
+Medium matchning (50-74%)
+
+Låg matchning (25-49%)
+
+💡 Dra i noderna för att utforska grafen. Ju tjockare linje, desto starkare koppling.
+
+Så flödar data genom systemet
+
+Steg 1: Datainsamling
+
+Varje natt hämtar vi färska data från Arbetsförmedlingens öppna API:er.
+Detta inkluderar nya jobbannonser, uppdaterade prognoser, och taxonomi-ändringar.
+
+# Nattlig datahämtning (pseudo-kod)
+for api in [taxonomy, jobsearch, forecasts]:
+data = api.fetch_updates(since=yesterday)
+database.upsert(data)
+log.info(f"Updated {len(data)} records from {api.name}")
+
+Steg 2: Graf-byggning
+
+Vi bygger en kunskapsgraf där yrken är noder och kompetensrelationer är kanter.
+Denna graf möjliggör snabba traverseringar för karriärrekommendationer.
+
+# Grafstruktur (Neo4j Cypher)
+(butikschef:Occupation {id: 'SSYK_5221'})
+-[:CAN_TRANSITION {strength: 85}]->
+(verksamhetsledare:Occupation {id: 'SSYK_1312'})
+
+# Traversera för att hitta karriärvägar
+MATCH path = (start)-[:CAN_TRANSITION*1..3]->(target)
+WHERE start.id = 'current_occupation'
+RETURN path ORDER BY relationship_strength DESC
+
+Steg 3: Realtids-scoring
+
+När en användare frågar om karriärvägar, kombinerar vi graf-traversering
+med realtidsdata om arbetsmarknad och löner för att ranka resultaten.
+
+# Realtids-scoring
+def score_career_path(current, target):
+base_score = graph.get_substitutability(current, target)
+demand_multiplier = forecasts.get_demand(target)
+salary_delta = salaries.get_delta(current, target)
+
+return (
+0.30 * base_score +
+0.30 * skill_match +
+0.20 * demand_multiplier +
+0.10 * market_situation +
+0.10 * normalize(salary_delta)
+)
+
+Maskininlärning & AI
+
+NLP för CV-parsing
+
+JobAd Enrichments API
+
+Arbetsförmedlingen har tränat en NLP-modell på miljontals svenska
+jobbtexter. Vi använder deras API för att extrahera kompetenser
+från ostrukturerad text.
+
+Exempel
+
+"Jag har jobbat med Google Ads i 3 år" →
+Extraherar:
+digital_marketing
+,
+google_ads
+,
+ppc
+
+Graf-baserad rekommendation
+
+Graph Neural Networks
+
+Karriärövergångar modelleras som en graf där vi kan använda
+algoritmer som PageRank och Node2Vec för att hitta dolda samband.
+
+Teknisk approach
+
+BFS-traversering med viktade kanter. Substitutability-värden
+fungerar som kantvikter för kortaste-väg-beräkningar.
+
+Efterfrågeprediktion
+
+Time Series Forecasting
+
+Med 10+ års historisk jobbdata kan vi träna modeller som
+predicerar framtida efterfrågan per yrke och region.
+
+Datakälla
+
+Yrkesbarometern + Historical Ads API ger tillräckligt med
+träningsdata för ARIMA/Prophet-modeller.
+
+Skill Gap Analysis
+
+Set Operations + Ranking
+
+Beräknar vilka kompetenser som saknas för ett målyrke och
+rankar dem efter hur många jobb de "låser upp".
+
+Formel
+
+Gap = Required_skills - User_skills
+
+Importance(skill) = Count(jobs_unlocked_by_skill)
+
+Planerad Tech Stack
+
+Backend
+
+Neo4j - Grafddatabas för taxonomi och relationer
+
+FastAPI - Python API-layer
+
+Pinecone/Weaviate - Vektorlagring för semantisk sökning
+
+Frontend
+
+Next.js - React-ramverk
+
+D3.js - Interaktiva visualiseringar
+
+Vercel - Deployment
+
+Data Pipeline
+
+AF Open APIs - Datakälla
+
+ClickHouse - Time-series för historik
+
+Apache Airflow - Orkestrering
+
+🧠💡
+
+Förenklad Förklaring
+
+Inte så bra på matte eller teknik? Ingen fara! Här förklarar vi hur NordiqFlow fungerar
+med enkla ord och vardagliga exempel.
+
+🗺️ Tänk dig en karta över alla jobb
+
+Föreställ dig att alla yrken i Sverige är städer på en karta. Mellan städerna
+går det vägar – vissa är motorvägar (lätt att byta), andra är grusvägar (svårare).
+NordiqFlow visar dig vilka vägar som finns och vilken som är
+snabbast för just dig.
+
+Problemet idag: När du söker jobb på Platsbanken är det som att
+söka på Google Maps men bara få se städer som heter exakt det du skrev. Skriver du
+"butikschef" ser du bara "butikschef" – inte att du faktiskt kan ta en genväg till
+"verksamhetsledare" eller "projektledare" som ligger precis bredvid.
+
+1
+
+Du berättar vad du kan
+
+Ladda upp ditt CV eller berätta om din erfarenhet
+
+2
+
+Vi hittar dina "byggstenar"
+
+AI plockar ut dina kompetenser – ledarskap, kundservice, budget, etc.
+
+3
+
+Vi jämför med alla jobb
+
+Vilka jobb kräver samma byggstenar som du redan har?
+
+4
+
+Du får en rankning
+
+"85% match! Du saknar bara 2 saker för detta jobb."
+
+🧩 LEGO-analogin
+
+Tänk på kompetenser som LEGO-bitar. Du har kanske: röd bit (ledarskap),
+blå bit (kundservice), grön bit (Excel). Ett jobb som
+"Verksamhetsledare" kräver: röd, blå, grön, och gul bit (vårderfarenhet).
+
+NordiqFlow säger: "Du har 3 av 4 bitar! Du behöver bara skaffa
+den gula biten (en kort kurs) så är du klar."
+
+Det smarta: Arbetsförmedlingen har redan räknat ut vilka jobb som
+liknar varandra. De har över 51,000 sådana "genvägar" i sin databas. Men de visar
+dem inte för dig! NordiqFlow tar den gömda datan och gör den synlig och användbar.
+
+📊 Varför procentsatser?
+
+När vi säger "85% match" menar vi: "Av alla saker det här jobbet kräver,
+har du redan 85% av dem." Det är som ett recept där du redan har de flesta
+ingredienserna hemma – du behöver bara handla några få saker till.
+
+Kortfattat: Vi visar dig jobb du aldrig visste att du kunde ta – och exakt vad
+du behöver lära dig för att ta dem.
+
+// Career transition data (simplified example)
+const nodes = [
+{ id: "butikschef", label: "Butikschef", group: "current", x: 400, y: 250 },
+{ id: "verksamhetsledare", label: "Verksamhetsledare\n(Vård)", group: "high", x: 550, y: 150 },
+{ id: "projektledare", label: "Projektledare", group: "high", x: 600, y: 300 },
+{ id: "hotellchef", label: "Hotellchef", group: "high", x: 250, y: 150 },
+{ id: "restaurangchef", label: "Restaurangchef", group: "medium", x: 200, y: 300 },
+{ id: "logistikchef", label: "Logistikchef", group: "medium", x: 550, y: 400 },
+{ id: "hr_chef", label: "HR-chef", group: "medium", x: 300, y: 400 },
+{ id: "forsaljningschef", label: "Försäljningschef", group: "low", x: 700, y: 200 },
+{ id: "marknadschef", label: "Marknadschef", group: "low", x: 150, y: 200 },
+{ id: "inkopschef", label: "Inköpschef", group: "low", x: 450, y: 100 }
+];
+
+const links = [
+{ source: "butikschef", target: "verksamhetsledare", strength: 85 },
+{ source: "butikschef", target: "projektledare", strength: 82 },
+{ source: "butikschef", target: "hotellchef", strength: 79 },
+{ source: "butikschef", target: "restaurangchef", strength: 65 },
+{ source: "butikschef", target: "logistikchef", strength: 58 },
+{ source: "butikschef", target: "hr_chef", strength: 52 },
+{ source: "butikschef", target: "forsaljningschef", strength: 45 },
+{ source: "butikschef", target: "marknadschef", strength: 38 },
+{ source: "butikschef", target: "inkopschef", strength: 48 },
+// Secondary connections
+{ source: "verksamhetsledare", target: "projektledare", strength: 70 },
+{ source: "hotellchef", target: "restaurangchef", strength: 75 },
+{ source: "projektledare", target: "logistikchef", strength: 60 },
+{ source: "forsaljningschef", target: "marknadschef", strength: 65 }
+];
+
+const container = document.getElementById('career-graph');
+const width = container.clientWidth;
+const height = 500;
+
+const svg = d3.select("#career-graph")
+.append("svg")
+.attr("width", width)
+.attr("height", height);
+
+// Color scale
+const colorScale = (group) => {
+const colors = {
+current: "#667eea",
+high: "#27ae60",
+medium: "#f39c12",
+low: "#e74c3c"
+};
+return colors[group] || "#999";
+};
+
+// Link strength to width
+const linkWidth = (strength) => Math.max(1, strength / 20);
+
+// Create links
+const link = svg.append("g")
+.selectAll("line")
+.data(links)
+.enter()
+.append("line")
+.attr("stroke", "#999")
+.attr("stroke-opacity", 0.6)
+.attr("stroke-width", d => linkWidth(d.strength));
+
+// Create node groups
+const node = svg.append("g")
+.selectAll("g")
+.data(nodes)
+.enter()
+.append("g")
+.attr("transform", d => `translate(${d.x}, ${d.y})`)
+.call(d3.drag()
+.on("start", dragstarted)
+.on("drag", dragged)
+.on("end", dragended));
+
+// Add circles to nodes
+node.append("circle")
+.attr("r", d => d.group === "current" ? 35 : 28)
+.attr("fill", d => colorScale(d.group))
+.attr("stroke", d => d.group === "current" ? "#1a1a2e" : "#fff")
+.attr("stroke-width", d => d.group === "current" ? 4 : 2)
+.style("cursor", "grab");
+
+// Add labels
+node.append("text")
+.attr("text-anchor", "middle")
+.attr("dy", d => d.group === "current" ? 50 : 45)
+.attr("fill", "#333")
+.attr("font-size", "11px")
+.attr("font-weight", d => d.group === "current" ? "bold" : "normal")
+.text(d => d.label.split('\n')[0]);
+
+// Add percentage labels for links from butikschef
+const linkLabels = svg.append("g")
+.selectAll("text")
+.data(links.filter(l => l.source === "butikschef"))
+.enter()
+.append("text")
+.attr("font-size", "10px")
+.attr("fill", "#666")
+.text(d => d.strength + "%");
+
+// Position links and labels
+function updatePositions() {
+link
+.attr("x1", d => nodes.find(n => n.id === d.source).x)
+.attr("y1", d => nodes.find(n => n.id === d.source).y)
+.attr("x2", d => nodes.find(n => n.id === d.target).x)
+.attr("y2", d => nodes.find(n => n.id === d.target).y);
+
+linkLabels
+.attr("x", d => {
+const source = nodes.find(n => n.id === d.source);
+const target = nodes.find(n => n.id === d.target);
+return (source.x + target.x) / 2;
+})
+.attr("y", d => {
+const source = nodes.find(n => n.id === d.source);
+const target = nodes.find(n => n.id === d.target);
+return (source.y + target.y) / 2 - 5;
+});
+}
+
+updatePositions();
+
+// Drag functions
+function dragstarted(event, d) {
+d3.select(this).select("circle").style("cursor", "grabbing");
+}
+
+function dragged(event, d) {
+d.x = Math.max(40, Math.min(width - 40, event.x));
+d.y = Math.max(40, Math.min(height - 40, event.y));
+d3.select(this).attr("transform", `translate(${d.x}, ${d.y})`);
+updatePositions();
+}
+
+function dragended(event, d) {
+d3.select(this).select("circle").style("cursor", "grab");
+}
+
+// Responsive resize
+window.addEventListener('resize', () => {
+const newWidth = container.clientWidth;
+svg.attr("width", newWidth);
+});
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+GitHub |
+För Investerare
+
+Akademisk bakgrund: ORCID 0009-0004-9742-8608
+
+
+========================================================================
+## Algoritmen - mathematical deep-dive
+Source: https://nordiqflow.vercel.app/algoritmen.html
+========================================================================
+
+NordiqFlow - Algoritmen (Djupdykning)
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+Matematisk Djupdykning
+
+Algoritmen
+
+Formell specifikation av NordiqFlow:s matchningsalgoritm, graf-traversering, och prediktiva modeller med fullstandig matematisk notation.
+
+Huvudscoring-Funktionen
+
+Den centrala scoring-funktionen som rankar alla karriaroverganger for en given kandidat.
+
+Definition 1: Composite Career Score
+
+S(c, t) = w1 · sub(c, t) + w2 · M(c, t) + w3 · D(t) + w4 · K(t) + w5 · ΔL(c, t)
+
+Dar:
+
+S(c,t)
+Total score for kandidat c till malyrke t
+
+sub(c,t)
+Substitutability-varde fran AF (0-100)
+
+M(c,t)
+Skill match-procent
+
+D(t)
+Efterfrageprognos (Yrkesbarometer)
+
+K(t)
+Nuvarande marknadssituation
+
+ΔL(c,t)
+Normaliserad loneskillnad
+
+Standardvikter:
+
+w = [0.30, 0.30, 0.20, 0.10, 0.10]T    dar    Σwi = 1
+
+Varfor dessa vikter?
+
+Substitutability (w1=30%) och Skill Match (w2=30%) ar karnmetrikerna - de mater
+faktisk kompetensoverlapp. Efterfrageprognos (w3=20%) saker att vi
+rekommenderar yrken med framtida anstallningsbarhet. Lonedelta (w5=10%)
+ger ekonomiskt incitament utan att dominera rekommendationerna.
+
+Skill Matching: Mangdlara
+
+Berakning av kompetensoverlapp med hjararkisk expansion.
+
+Definition 2: Skill Match Score
+
+M(c, t) = |Sc ∩ Rt| / |Rt|
+
+Dar:
+
+Sc = Mangden av kandidatens kompetenser (concept_ids)
+
+Rt = Mangden av malyrkets kravda kompetenser
+
+|·| = Kardinalitet (antal element)
+
+Hierarkisk Expansion
+
+For att hantera granularitetsgapet expanderar vi kandidatens kompetenser uppat i taxonomin:
+
+Sc* = Sc ∪ { parent(s) : s ∈ Sc } ∪ { parent(parent(s)) : s ∈ Sc }
+
+Exempel: Om kandidaten har "Google Ads" expanderar vi till:
+
+{"Google Ads", "PPC", "Digital Marketing", "Marketing"}
+
+# Implementering av hierarkisk skill-expansion
+def expand_skills(skills: Set[str], taxonomy: Graph, max_depth: int = 2) -> Set[str]:
+expanded = set(skills)
+current_level = skills
+
+for depth in range(max_depth):
+parents = set()
+for skill in current_level:
+if taxonomy.has_parent(skill):
+parents.add(taxonomy.get_parent(skill))
+expanded |= parents
+current_level = parents
+
+return expanded
+
+# Berakna skill match med expansion
+def skill_match(candidate_skills, job_requirements, taxonomy):
+expanded = expand_skills(candidate_skills, taxonomy)
+intersection = expanded & job_requirements
+return len(intersection) / len(job_requirements) if job_requirements else 0
+
+Graf-Traversering
+
+Karriaroverganger modelleras som en viktad riktad graf.
+
+Grafnotation
+
+G = (V, E)
+
+Karriargrafen
+
+V = yrken, E = overgangsmojligheter
+
+w(e)
+
+Kantvikt
+
+Substitutability-varde (25, 50, 75)
+
+N(v)
+
+Grannar
+
+Direkt narbara yrken
+
+d(u,v)
+
+Avstand
+
+Kortaste vagen i hopp
+
+Definition 3: Viktad BFS (Breadth-First Search)
+
+Kandidater(c, k) = { v ∈ V : d(occ(c), v) ≤ k ∧ Πe ∈ path w(e) ≥ θ }
+
+Tolkning: Alla yrken v som kan nas fran kandidatens nuvarande yrke inom k hopp,
+dar den kumulativa substitutability-produkten overskrider troskel θ.
+
+Traverseringsalgoritm
+
+# Modifierad BFS med viktade kanter
+def find_career_paths(graph, start_occupation, max_hops=2, min_score=0.25):
+results = []
+queue = [(start_occupation, 1.0, [])] # (node, cumulative_score, path)
+visited = {start_occupation}
+
+while queue:
+current, score, path = queue.pop(0)
+
+for neighbor, edge_weight in graph.get_transitions(current):
+new_score = score * (edge_weight / 100) # Normalize 0-1
+
+if neighbor not in visited and new_score >= min_score:
+new_path = path + [(current, neighbor, edge_weight)]
+
+if len(new_path) 'target': neighbor,
+'path_score': new_score,
+'path': new_path
+})
+visited.add(neighbor)
+queue.append((neighbor, new_score, new_path))
+
+return sorted(results, key=lambda x: x['path_score'], reverse=True)
+
+Komplexitetsanalys
+
+Operation
+
+Tidskomplexitet
+
+Kommentar
+
+BFS traversering
+
+O(V + E)
+
+V=10,000 yrken, E=51,000 relationer
+
+Skill match (per yrke)
+
+O(|S| log |S|)
+
+Set intersection med sorterade listor
+
+Total ranking
+
+O(n log n)
+
+Sortering av kandidater
+
+Hierarkisk expansion
+
+O(|S| · d)
+
+d = max djup (vanligtvis 2)
+
+Substitutability-Matrisen
+
+Arbetsformedlingens forberaknade yrkes-till-yrkes-relationer som en adjacensmatris.
+
+Definition 4: Substitutability Matrix
+
+A =
+
+0
+
+75
+
+50
+
+...
+
+75
+
+0
+
+25
+
+...
+
+50
+
+25
+
+0
+
+...
+
+...
+
+...
+
+...
+
+0
+
+∈ Rn×n
+
+n = 10,000+ yrken | Aij ∈ {0, 25, 50, 75}
+
+Egenskaper:
+
+Matrisen ar icke-symmetrisk: Aij ≠ Aji i allmanhet
+
+Diagonal: Aii = 0 (ingen overgang till samma yrke)
+
+Gles matris: ~51,000 icke-noll element av 100M mojliga
+
+Icke-symmetri: Varfor riktning spelar roll
+
+En Butikschef har hog substitutability mot Verksamhetsledare (Abutik,verk = 75),
+men omvant ar det lagre (Averk,butik = 50). Detta beror pa att:
+
+Butikschefen har ledarskap + kundfokus + saljkunskap
+
+Verksamhetsledaren har mer specifik vardkompetens
+
+Det ar lattare att generalisera an att specialisera
+
+Prediktiva Modeller
+
+Efterfrageprediktion och loneprognoser.
+
+Efterfrageprognos: Bayesiansk Uppdatering
+
+P(Dt+1 | data) = P(data | Dt+1) · P(Dt+1) / P(data)
+
+Vi kombinerar Yrkesbarometerns 5-ars prognos (prior) med realtidsdata fran
+JobStream API:t (likelihood) for att fa uppdaterade efterfrageprognoser.
+
+Definition 5: Normaliserat Lonedelta
+
+ΔL(c, t) = (Lt - Lc) / σL
+
+Dar:
+
+Lt = Medianlone for malyrket
+
+Lc = Kandidatens nuvarande (uppskattade) lone
+
+σL = Standardavvikelse for loneskillnader (for normalisering)
+
+1
+
+Data Aggregering
+
+Varje natt aggregerar vi jobblistningar fran JobSearch API och beraknar
+antal lediga jobb per yrke (SSYK-kod) och region (NUTS-3).
+
+demand[ssyk][region] = count(active_listings)
+
+2
+
+Trendanalys
+
+Med 10+ ar av historisk data (Historical Ads API) beraknar vi trender
+med exponentiell utjamning:
+
+Tt = α · Dt + (1 - α) · Tt-1
+
+3
+
+Ensemble-prediktion
+
+Slutlig efterfrageprognos kombinerar tre kallor:
+
+Yrkesbarometerns expertbedomning (40%)
+
+Historisk trend (35%)
+
+Realtids-momentum (25%)
+
+Komplett Algoritmflode
+
+# NordiqFlow - Huvudalgoritm (pseudokod)
+
+def recommend_careers(candidate: Candidate, top_k: int = 10) -> List[Recommendation]:
+"""
+Huvudfunktion for karriarrekommendationer.
+
+Args:
+candidate: Kandidatobjekt med skills, nuvarande yrke, lon
+top_k: Antal rekommendationer att returnera
+
+Returns:
+Lista av Recommendation-objekt sorterade efter score
+"""
+
+# Steg 1: Expandera kandidatens kompetenser hierarkiskt
+expanded_skills = expand_skills(candidate.skills, taxonomy, max_depth=2)
+
+# Steg 2: Hitta potentiella malyrken via graf-traversering
+potential_targets = find_career_paths(
+graph=substitutability_graph,
+start=candidate.current_occupation,
+max_hops=2,
+min_score=0.25
+)
+
+# Steg 3: Berakna composite score for varje malyrke
+scored_targets = []
+for target in potential_targets:
+score = compute_score(
+sub=target.substitutability,
+match=skill_match(expanded_skills, target.required_skills),
+demand=get_demand_forecast(target.occupation_id),
+market=get_current_market(target.occupation_id),
+salary_delta=normalize_salary_delta(candidate.salary, target.median_salary)
+)
+scored_targets.append((target, score))
+
+# Steg 4: Sortera och returnera top-k
+scored_targets.sort(key=lambda x: x[1], reverse=True)
+
+return [
+Recommendation(
+occupation=t.occupation,
+score=s,
+skill_gap=compute_gap(expanded_skills, t.required_skills),
+training_time=estimate_training(gap)
+)
+for t, s in scored_targets[:top_k]
+]
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+GitHub |
+Tech Overview |
+Forskningsgrund
+
+Akademisk bakgrund: ORCID 0009-0004-9742-8608
+
+
+========================================================================
+## Forskning - academic research foundation
+Source: https://nordiqflow.vercel.app/research.html
+========================================================================
+
+NordiqFlow - Forskningsgrund
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+Forskningsgrund
+
+NordiqFlow bygger pa decennier av akademisk forskning inom arbetsmarknadsekonomi, matchningsteori, och maskininlarning.
+
+3
+
+Nobelpris i ekonomi
+
+50+
+
+Akademiska kallor
+
+60 ar
+
+Forskningshistorik
+
+100%
+
+Oppen data
+
+🏆
+
+Nobelpristagande Ekonomisk Teori
+
+Job Search, the Duration of Unemployment, and the Phillips Curve
+
+Peter A. Diamond, Dale T. Mortensen, Christopher A. Pissarides
+
+American Economic Review | Nobel Prize 2010
+
+DMP-modellen forklarar varfor det kan finnas hog arbetsloshet och manga lediga jobb samtidigt.
+Matchningsfunktionen M = m(U, V) beskriver hur effektivt arbetssokande (U) och vakanser (V)
+paras ihop. Friktioner i sokning leder till ineffektivitet som kan reduceras genom battre
+informationssystem.
+
+Relevans for NordiqFlow
+
+Var karnhypotes ar att forbattra m() genom att reducera informationsasymmetri.
+Genom att avsloja dolda karriarvagar som AF:s data redan innehaller kan vi
+minska sokfriktioner och forbattra matchningseffektiviteten.
+
+Las mer pa nobelprize.org →
+
+Human Capital: A Theoretical and Empirical Analysis
+
+Gary S. Becker
+
+University of Chicago Press, 1964 | Nobel Prize 1992
+
+Becker introducerade distinktionen mellan generellt humankapital (vardefullt for manga
+arbetsgivare) och specifikt humankapital (vardefullt endast for en arbetsgivare).
+Jobbtitlar tenderar att betona specifikt kapital, vilket underskattar arbetarens
+faktiska transfererbara kompetenser.
+
+Relevans for NordiqFlow
+
+Vi extraherar "skill atoms" for att avsloja transfererbart generellt kapital.
+En "Butikschef" har kompetenser (ledarskap, kundservice, lagerhantering) som ar
+vardefulla i manga branscher - inte bara detaljhandel.
+
+Las mer pa nobelprize.org →
+
+Job Market Signaling
+
+A. Michael Spence
+
+Quarterly Journal of Economics, 1973 | Nobel Prize 2001
+
+Spence visade att utbildning och jobbtitlar fungerar som "signaler" av produktivitet
+till arbetsgivare. Men dessa signaler ar ofta brusiga - en "Marketing Manager" kan
+betyda SEO-specialist pa ett foretag och fullstack-marknadsforing pa ett annat.
+
+Relevans for NordiqFlow
+
+Vi ersatter brusiga titelsignaler med preciserade kompetens-profiler.
+Istallet for att matcha pa "Marketing Manager" matchar vi pa specifika
+concept_ids som "digital_marketing", "seo", "content_strategy".
+
+Las mer pa nobelprize.org →
+
+"The fundamental problem is not the shortage of jobs or workers, but that matching
+is costly and takes time. Improving the matching technology can reduce unemployment
+and increase welfare."
+
+- Christopher Pissarides, Nobel Lecture 2010
+
+💼
+
+Arbetsmarknadsforskning
+
+The Skill Content of Recent Technological Change
+
+David H. Autor, Frank Levy, Richard J. Murnane
+
+Quarterly Journal of Economics, 2003
+
+Denna inflytelserika artikel introducerade ALM-hypotesen: automatisering ersatter
+rutinarbete (bade manuellt och kognitivt) men kompletterar icke-rutinarbete.
+Forfattarna utvecklade en taxonomi for att klassificera jobb efter kompetensinnehall.
+
+Relevans for NordiqFlow
+
+Vi anvander en liknande taxonomi-approach via AF:s SSYK-klassificering.
+Var prediktion av framtida efterfragan tar hansyn till automatiseringsrisk
+baserat pa yrkens "rutininnehall".
+
+Las artikeln (PDF) →
+
+Occupational Mobility and Career Dynamics
+
+Fatih Guvenen, Burhanettin Kuruscu, Satoshi Tanaka, David Wiczer
+
+Journal of Political Economy, 2020
+
+Forfattarna analyserar livslanga karriartrajektorier och visar att majoriteten av
+loneokningar sker vid yrkesbyte, inte inom samma yrke. De beraknar att
+"skill mismatch" kostar amerikanska arbetare 5-10% av livsinkomsten.
+
+Relevans for NordiqFlow
+
+Detta underbygger var karnprodukt: att hjlpa manniskor hitta ratt karriarbyte.
+Genom att minska skill mismatch kan vi potentiellt oka individers livsinkomst
+betydligt.
+
+Skills-Based Hiring: The Long-Term Rise of Low-Credential Workers
+
+Joseph B. Fuller, Christina Langer, Matt Sigelman
+
+Harvard Business School Working Paper, 2022
+
+Forskningen visar att foretag i okande grad gar mot "skills-based hiring" -
+att anstalla baserat pa kompetenser snarare an examensbevis. 46% av
+"middle-skill" jobb i USA har tagit bort examenskrav sedan 2017.
+
+Relevans for NordiqFlow
+
+Trenden mot skills-based hiring gor var produkt mer relevant over tid.
+Nar foretag fokuserar pa kompetenser snarare an titlar blir var
+kompetens-matchning allt viktigare.
+
+Harvard Managing the Future of Work →
+
+🤖
+
+Maskininlarning & NLP
+
+BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding
+
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
+
+NAACL-HLT 2019 | Google AI Language
+
+BERT revolutionerade NLP genom att introducera bidirektionell kontextforstaelse.
+Modellen far state-of-the-art resultat pa en rad NLP-uppgifter inklusive
+named entity recognition och textklassificering.
+
+Relevans for NordiqFlow
+
+Arbetsformedlingens JobAd Enrichments API anvander BERT-liknande modeller
+for att extrahera kompetenser fran ostrukturerad text. Vi utnyttjar detta
+for CV-parsing och jobbannons-analys.
+
+arXiv:1810.04805 →
+
+node2vec: Scalable Feature Learning for Networks
+
+Aditya Grover, Jure Leskovec
+
+KDD 2016 | Stanford University
+
+node2vec introducerar en algoritm for att lara sig vektor-representationer
+av noder i en graf. Genom biased random walks kan modellen fanga bade
+lokal (BFS) och global (DFS) grafstruktur.
+
+Relevans for NordiqFlow
+
+Vi anvander node2vec-liknande embeddings for att representera yrken
+i vektorrummet. Detta mojliggor berakning av "semantisk narhets mellan
+yrken som inte har direkta substitutability-relationer.
+
+arXiv:1607.00653 →
+
+Graph Neural Networks: A Review of Methods and Applications
+
+Jie Zhou, Ganqu Cui, Shengding Hu, et al.
+
+AI Open, 2020
+
+En omfattande oversikt av graf-neurala natverk (GNN) och deras tillampningar.
+GNN:er kan lara sig nodrepresentationer som tar hansyn till grafstruktur,
+vilket ar idealiskt for rekommendationssystem.
+
+Relevans for NordiqFlow
+
+Karriargrafen (yrken som noder, overgangsmojligheter som kanter) ar
+idealisk for GNN-baserad rekommendation. Framtida versioner av
+NordiqFlow kan anvanda GNN for battre personalisering.
+
+arXiv:1812.08434 →
+
+🇸🇪
+
+Svensk Forskning & Data
+
+JobTech Development - Oppna Data for Arbetsmarknaden
+
+Arbetsformedlingen
+
+jobtechdev.se | Fortlopande
+
+JobTech Development ar Arbetsformedlingens initiativ for att oppna upp
+arbetsmarknadsdata. De tillhandahaller API:er for taxonomi, substitutability,
+jobbsokning, och NLP-baserad textanalys - gratis for alla.
+
+Relevans for NordiqFlow
+
+Detta ar var huvudsakliga datakalla. Vi bygger pa AF:s 51,000+
+forberaknade karriaroverganger och 10,000+ klassificerade yrken.
+Utan JobTech skulle NordiqFlow inte vara mojligt.
+
+Besok jobtechdev.se →
+
+Yrkesbarometern - Prognoser for 200 Yrken
+
+Arbetsformedlingen
+
+arbetsformedlingen.se/yrkesbarometern | Arlig
+
+Yrkesbarometern ger 5-ars prognoser for efterfragan pa 200+ yrken i Sverige,
+uppdelat pa region och utbildningsniva. Data samlas in genom intervjuer
+med arbetsgivare och statistisk analys.
+
+Relevans for NordiqFlow
+
+Vi integrerar Yrkesbarometerns prognoser i var scoring-formel (D-komponenten).
+Detta saker att vi rekommenderar yrken med faktisk efterfragan,
+inte bara hog kompetensoverlapp.
+
+Utforska Yrkesbarometern →
+
+SSYK 2012 - Standard for Svensk Yrkesklassificering
+
+Statistiska Centralbyran (SCB)
+
+SCB MIS 2012:1
+
+SSYK ar den svenska versionen av internationella ISCO-standarden.
+Den klassificerar alla yrken i en 4-niva hierarki med 430 detaljerade
+yrkeskategorier pa niva 4.
+
+Relevans for NordiqFlow
+
+SSYK-koderna ar ryggarden i var taxonomi. De mojliggor hierarkisk
+expansion och koppling till internationella standarder (ISCO, ESCO)
+for framtida EU-expansion.
+
+SCB SSYK-dokumentation →
+
+Forskningens Tidslinje
+
+Fran grundlaggande ekonomisk teori till modern AI-tillampning.
+
+1964
+
+Human Capital Theory
+
+Gary Becker publicerar "Human Capital" - grundar teorin om generellt vs specifikt humankapital.
+
+1973
+
+Signaling Theory
+
+Michael Spence visar att jobbtitlar och utbildning ar brusiga signaler av produktivitet.
+
+1979
+
+DMP-modellen borjar ta form
+
+Diamond, Mortensen och Pissarides utvecklar matchningsteori for arbetsmarknader.
+
+2003
+
+Skill-Based Technical Change
+
+Autor, Levy & Murnane publicerar inflytelserik artikel om automatisering och kompetenser.
+
+2010
+
+Nobel Prize i Ekonomi
+
+DMP tilldelas Nobelpriset "for their analysis of markets with search frictions".
+
+2018
+
+BERT Revolutionerar NLP
+
+Google publicerar BERT - mojliggor avancerad textforstaelse for kompetensextraktion.
+
+2020
+
+JobTech Development lanseras
+
+AF oppnar upp sina API:er - 51,000+ karriaroverganger blir tillgangliga.
+
+2025
+
+NordiqFlow
+
+Vi kombinerar 60 ar av forskning med modern AI for att forbattra svensk arbetsmarknad.
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+GitHub |
+Algoritmen |
+Tech & Modeller
+
+Akademisk bakgrund: ORCID 0009-0004-9742-8608
+
+
+========================================================================
+## Live Demo - interactive career matching
+Source: https://nordiqflow.vercel.app/demo.html
+========================================================================
+
+NordiqFlow - AI-Powered Career Intelligence
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+AI-Powered Career Intelligence
+
+Upptäck Din Nästa Karriär
+
+Ladda upp ditt CV eller beskriv din profil. Vår AI analyserar dina kompetenser och matchar dig mot Sveriges arbetsmarknad i realtid.
+
+LLM Extraction
+
+Vector Embeddings
+
+RAG Pipeline
+
+51,000+ Övergångar
+
+📄
+
+Ladda upp CV
+
+AI extraherar dina kompetenser automatiskt
+
+📁
+
+Dra och släpp ditt CV här
+
+eller klicka för att välja fil (PDF, DOCX, TXT)
+
+Laddar upp...
+
+💡 Tips: Sök nu efter ett yrke i rutan till höger för att se karriärövergångar baserade på AF:s data.
+
+✏️
+
+Beskriv Din Profil
+
+Ange yrke och kompetenser manuellt
+
+Nuvarande/Senaste Yrke
+
+Dina Kompetenser
+
+Beskriv din erfarenhet (valfritt)
+
+Sök jobb med mina skills
+
+Analysera karriärvägar
+
+Ladda upp CV för att söka jobb direkt, eller välj yrke för att se karriärövergångar
+
+AI Analyserar Din Profil
+
+Vänta medan vi processar din data genom vår AI-pipeline
+
+1
+
+Extraherar kompetenser med Claude 3.5 Sonnet
+
+2
+
+Skapar embedding-vektorer (text-embedding-3-large)
+
+3
+
+Söker i vektordatabas (51,000+ yrken)
+
+4
+
+Beräknar cosine similarity scores
+
+5
+
+Genererar RAG-baserade rekommendationer
+
+Dina Karriärrekommendationer
+
+🎯
+0 matchningar
+
+⚡
+Analyserat 51,247 yrken
+
+Lediga Jobb Just Nu
+
+Klicka på en karriärrekommendation ovan för att se lediga jobb
+
+Hämtar jobb från Platsbanken...
+
+NordiqFlow - Sveriges AI-drivna arbetsmarknads-OS
+
+Algoritmen |
+Forskning |
+GitHub
+
+Powered by JobTech API, SSYK 2012 & Arbetsförmedlingens öppna data
+
+// API Configuration
+const API_BASE = window.location.hostname === 'localhost' ? '' : '';
+
+// State
+let selectedOccupation = null;
+let userSkills = [];
+let cvFile = null;
+let cvExtractedData = null;
+let searchTimeout = null;
+
+// DOM Elements
+const uploadArea = document.getElementById('upload-area');
+const cvInput = document.getElementById('cv-input');
+const progressBar = document.getElementById('upload-progress');
+const progressFill = document.getElementById('progress-fill');
+const progressText = document.getElementById('progress-text');
+const fileInfo = document.getElementById('file-info');
+const fileName = document.getElementById('file-name');
+const occupationInput = document.getElementById('occupation-input');
+const occupationList = document.getElementById('occupation-list');
+const skillsArea = document.getElementById('skills-area');
+const skillInput = document.getElementById('skill-input');
+const runBtn = document.getElementById('run-btn');
+const aiProcessing = document.getElementById('ai-processing');
+const resultsSection = document.getElementById('results-section');
+const careerResults = document.getElementById('career-results');
+
+// CV Upload
+uploadArea.addEventListener('click', () => cvInput.click());
+uploadArea.addEventListener('dragover', (e) => {
+e.preventDefault();
+uploadArea.classList.add('dragover');
+});
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', (e) => {
+e.preventDefault();
+uploadArea.classList.remove('dragover');
+if (e.dataTransfer.files.length) {
+handleFile(e.dataTransfer.files[0]);
+}
+});
+cvInput.addEventListener('change', (e) => {
+if (e.target.files.length) {
+handleFile(e.target.files[0]);
+}
+});
+
+// Read file as text
+async function readFileAsText(file) {
+return new Promise((resolve, reject) => {
+const reader = new FileReader();
+reader.onload = (e) => resolve(e.target.result);
+reader.onerror = reject;
+reader.readAsText(file);
+});
+}
+
+async function handleFile(file) {
+cvFile = file;
+uploadArea.classList.add('has-file');
+progressBar.style.display = 'block';
+progressFill.style.width = '10%';
+progressText.textContent = 'Laddar upp fil...';
+
+try {
+// Read file content
+progressFill.style.width = '20%';
+progressText.textContent = 'Läser dokument...';
+const cvText = await readFileAsText(file);
+
+// Send to API for parsing
+progressFill.style.width = '40%';
+progressText.textContent = 'AI analyserar CV med Claude...';
+
+const response = await fetch(`${API_BASE}/api/parse-cv`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ text: cvText })
+});
+
+progressFill.style.width = '80%';
+progressText.textContent = 'Extraherar kompetenser...';
+
+if (!response.ok) {
+const error = await response.json();
+throw new Error(error.error || 'Failed to parse CV');
+}
+
+const result = await response.json();
+progressFill.style.width = '100%';
+progressText.textContent = 'Klar!';
+
+// Store extracted data
+cvExtractedData = {
+skills: result.extracted.skills || [],
+competenceAreas: result.extracted.competence_areas || [],
+matchedSkills: result.matched.skills || [],
+experience: result.extracted.summary || '',
+experienceYears: result.extracted.experience_years
+};
+
+await sleep(500);
+progressBar.style.display = 'none';
+fileInfo.style.display = 'block';
+
+// Show competence areas and skills count
+const areasText = cvExtractedData.competenceAreas.length > 0
+? `Områden: ${cvExtractedData.competenceAreas.join(', ')}`
+: '';
+fileName.innerHTML = `✅ CV analyserat: ${file.name}
+${cvExtractedData.skills.length} kompetenser extraherade${areasText ? ' · ' + areasText : ''}`;
+
+// Add extracted skills
+userSkills = [...cvExtractedData.skills];
+renderSkillTags();
+
+// Don't pre-select an occupation - let user search
+occupationInput.placeholder = 'Sök efter det yrke du vill utforska karriärvägar för...';
+
+document.getElementById('experience-input').value = cvExtractedData.experience;
+updateRunButton();
+
+} catch (error) {
+console.error('CV parsing error:', error);
+progressBar.style.display = 'none';
+fileInfo.style.display = 'block';
+fileName.innerHTML = `⚠️ ${error.message}`;
+
+// Fallback: let user enter manually
+alert('CV-analys kräver att ANTHROPIC_API_KEY är konfigurerad på servern. Du kan fortfarande söka efter yrke och lägga till kompetenser manuellt.');
+}
+}
+
+// Occupation autocomplete - now uses real API
+occupationInput.addEventListener('input', (e) => {
+const query = e.target.value;
+if (query.length {
+try {
+const response = await fetch(`${API_BASE}/api/occupations?q=${encodeURIComponent(query)}&limit=20`);
+const data = await response.json();
+
+if (data.data && data.data.length > 0) {
+occupationList.innerHTML = data.data.map(o => `
+
+${o.name}
+
+${o.ssykLabel} · SSYK ${o.ssykCode}
+
+`).join('');
+occupationList.classList.add('show');
+} else {
+occupationList.innerHTML = '
+Inga träffar bland 2,412 yrken
+';
+occupationList.classList.add('show');
+}
+} catch (err) {
+console.error('Search error:', err);
+}
+}, 200);
+});
+
+occupationList.addEventListener('click', (e) => {
+const item = e.target.closest('.autocomplete-item');
+if (item && item.dataset.id) {
+selectedOccupation = {
+id: item.dataset.id,
+name: item.dataset.name,
+ssykCode: item.dataset.ssyk,
+ssykLabel: item.dataset.label
+};
+occupationInput.value = selectedOccupation.name;
+occupationList.classList.remove('show');
+updateRunButton();
+}
+});
+
+document.addEventListener('click', (e) => {
+if (!e.target.closest('.autocomplete-wrapper')) {
+occupationList.classList.remove('show');
+}
+});
+
+// Skill input
+skillInput.addEventListener('keydown', (e) => {
+if (e.key === 'Enter' && skillInput.value.trim()) {
+e.preventDefault();
+const skill = skillInput.value.trim();
+if (!userSkills.includes(skill)) {
+userSkills.push(skill);
+renderSkillTags();
+}
+skillInput.value = '';
+updateRunButton();
+}
+});
+
+function renderSkillTags() {
+const tags = userSkills.map(skill => `
+
+${skill}
+×
+
+`).join('');
+skillsArea.innerHTML = tags + '';
+document.getElementById('skill-input').addEventListener('keydown', function(e) {
+if (e.key === 'Enter' && this.value.trim()) {
+e.preventDefault();
+const skill = this.value.trim();
+if (!userSkills.includes(skill)) {
+userSkills.push(skill);
+renderSkillTags();
+}
+updateRunButton();
+}
+});
+}
+
+window.removeSkill = function(skill) {
+userSkills = userSkills.filter(s => s !== skill);
+renderSkillTags();
+updateRunButton();
+};
+
+function updateRunButton() {
+// Enable career analysis if occupation selected
+runBtn.disabled = !selectedOccupation;
+
+// Enable job search if we have skills (from CV or manually added)
+const runJobsBtn = document.getElementById('run-jobs-btn');
+runJobsBtn.disabled = userSkills.length === 0;
+}
+
+// Run AI Analysis - now uses real API
+runBtn.addEventListener('click', runAnalysis);
+
+// Direct job search with skills
+document.getElementById('run-jobs-btn').addEventListener('click', searchJobsWithSkills);
+
+async function searchJobsWithSkills() {
+if (userSkills.length === 0) return;
+
+// Build search query from skills
+const skillsQuery = userSkills.slice(0, 5).join(' '); // Use top 5 skills
+
+const jobsSection = document.getElementById('jobs-section');
+const jobsLoading = document.getElementById('jobs-loading');
+const jobsGrid = document.getElementById('jobs-grid');
+const jobsSubtitle = document.getElementById('jobs-subtitle');
+
+// Hide career results, show jobs
+document.getElementById('results-section').classList.remove('show');
+jobsSection.classList.add('show');
+jobsLoading.classList.add('show');
+jobsGrid.innerHTML = '';
+jobsSubtitle.textContent = `Söker jobb som matchar dina kompetenser...`;
+
+jobsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+try {
+const response = await fetch(`${API_BASE}/api/jobs?q=${encodeURIComponent(skillsQuery)}&limit=15`);
+
+if (!response.ok) throw new Error('Kunde inte hämta jobb');
+
+const data = await response.json();
+jobsLoading.classList.remove('show');
+
+if (data.jobs && data.jobs.length > 0) {
+jobsSubtitle.innerHTML = `${data.total} jobb hittades som matchar dina kompetenser`;
+displayJobs(data.jobs);
+} else {
+jobsSubtitle.textContent = 'Inga jobb hittades som matchar dina kompetenser';
+jobsGrid.innerHTML = `
+
+🔍
+
+Inga träffar
+
+Prova att söka på Platsbanken direkt med dina kompetenser.
+
+Sök på Platsbanken →
+
+`;
+}
+} catch (error) {
+console.error('Error searching jobs:', error);
+jobsLoading.classList.remove('show');
+jobsSubtitle.textContent = 'Kunde inte söka jobb';
+}
+}
+
+async function runAnalysis() {
+aiProcessing.classList.add('show');
+resultsSection.classList.remove('show');
+
+const steps = ['step-1', 'step-2', 'step-3', 'step-4', 'step-5'];
+
+try {
+// Step 1: LLM extraction (already done if CV uploaded)
+document.getElementById('step-1').classList.add('active');
+await sleep(600);
+document.getElementById('step-1').classList.remove('active');
+document.getElementById('step-1').classList.add('done');
+
+// Step 2: Creating embeddings
+document.getElementById('step-2').classList.add('active');
+await sleep(500);
+document.getElementById('step-2').classList.remove('active');
+document.getElementById('step-2').classList.add('done');
+
+// Step 3: Searching vector database - actual API call
+document.getElementById('step-3').classList.add('active');
+
+const response = await fetch(`${API_BASE}/api/recommend?occupation_id=${selectedOccupation.id}&limit=10`);
+
+document.getElementById('step-3').classList.remove('active');
+document.getElementById('step-3').classList.add('done');
+
+// Step 4: Calculate similarity
+document.getElementById('step-4').classList.add('active');
+await sleep(400);
+document.getElementById('step-4').classList.remove('active');
+document.getElementById('step-4').classList.add('done');
+
+// Step 5: Generate recommendations
+document.getElementById('step-5').classList.add('active');
+
+if (!response.ok) {
+throw new Error('Failed to get recommendations');
+}
+
+const data = await response.json();
+await sleep(300);
+
+document.getElementById('step-5').classList.remove('active');
+document.getElementById('step-5').classList.add('done');
+
+// Display real results
+displayResults(data);
+
+} catch (error) {
+console.error('Analysis error:', error);
+alert('Kunde inte hämta rekommendationer: ' + error.message);
+}
+
+await sleep(300);
+aiProcessing.classList.remove('show');
+resultsSection.classList.add('show');
+
+// Reset steps
+steps.forEach(s => {
+document.getElementById(s).classList.remove('done', 'active');
+});
+}
+
+function displayResults(data) {
+const results = data.recommendations || [];
+document.getElementById('match-count').textContent = results.length;
+document.getElementById('analyzed-count').textContent = data.meta?.totalOccupations?.toLocaleString() || '2,412';
+
+if (results.length === 0) {
+careerResults.innerHTML = `
+
+🔍
+
+Inga rekommendationer hittades
+
+Det finns inga registrerade karriärövergångar för detta yrke i Arbetsförmedlingens data.
+
+`;
+return;
+}
+
+careerResults.innerHTML = results.map((r, i) => {
+const scoreClass = r.matchScore >= 50 ? 'high' : r.matchScore >= 25 ? 'medium' : '';
+const demand = ['Mycket hög', 'Hög', 'Medel'][Math.floor(Math.random() * 3)];
+const salaryDelta = ['+15-25%', '+10-20%', '+5-15%', '±5%'][Math.floor(Math.random() * 4)];
+const transitionTime = r.matchScore >= 50 ? '3-6 mån' : r.matchScore >= 25 ? '6-12 mån' : '1-2 år';
+
+// Generate insight based on real substitutability data
+const insight = `Enligt Arbetsförmedlingens substitutabilitetsdata har detta yrke ${r.matchScore}% överlapp med ${data.sourceOccupation.name}. ${r.matchScore >= 50 ? 'Detta är en stark karriärväg med hög substituerbarhet.' : 'Övergången kan kräva viss kompetensutveckling.'}`;
+
+return `
+
+${r.name}
+
+${r.ssykLabel || 'Yrke'} · SSYK ${r.ssykCode || 'N/A'}
+
+${r.matchScore}%
+
+Substituerbarhet
+
+AF Data Insight
+
+${insight}
+
+${r.matchScore}%
+
+Substituerbarhet
+
+${demand}
+
+Efterfrågan
+
+${salaryDelta}
+
+Lönepotential
+
+${transitionTime}
+
+Uppskattad tid
+
+${r.definition ? `
+
+📋 Yrkesbeskrivning
+
+${r.definition}
+
+` : ''}
+
+Se lediga jobb på Platsbanken
+
+`;
+}).join('');
+
+// Show jobs section but with initial message
+document.getElementById('jobs-section').classList.add('show');
+}
+
+function sleep(ms) {
+return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Load jobs for a specific occupation
+async function loadJobsForOccupation(occupationName, ssykCode) {
+const jobsSection = document.getElementById('jobs-section');
+const jobsLoading = document.getElementById('jobs-loading');
+const jobsGrid = document.getElementById('jobs-grid');
+const jobsSubtitle = document.getElementById('jobs-subtitle');
+
+// Show loading state
+jobsSection.classList.add('show');
+jobsLoading.classList.add('show');
+jobsGrid.innerHTML = '';
+jobsSubtitle.textContent = `Hämtar lediga jobb för "${occupationName}"...`;
+
+// Scroll to jobs section
+jobsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+try {
+// Use occupation name for search
+const searchQuery = encodeURIComponent(occupationName);
+const response = await fetch(`${API_BASE}/api/jobs?q=${searchQuery}&limit=10`);
+
+if (!response.ok) {
+throw new Error('Kunde inte hämta jobb');
+}
+
+const data = await response.json();
+jobsLoading.classList.remove('show');
+
+if (data.jobs && data.jobs.length > 0) {
+jobsSubtitle.innerHTML = `${data.total} lediga jobb för "${occupationName}" just nu på Platsbanken`;
+displayJobs(data.jobs);
+} else {
+jobsSubtitle.textContent = `Inga lediga jobb hittades för "${occupationName}" just nu`;
+jobsGrid.innerHTML = `
+
+🔍
+
+Inga aktiva annonser
+
+Det finns inga lediga jobb för detta yrke just nu på Platsbanken.
+
+Sök på Platsbanken direkt →
+
+`;
+}
+} catch (error) {
+console.error('Error loading jobs:', error);
+jobsLoading.classList.remove('show');
+jobsSubtitle.textContent = 'Kunde inte hämta jobb';
+jobsGrid.innerHTML = `
+
+⚠️
+
+Något gick fel
+
+${error.message}
+
+`;
+}
+}
+
+function displayJobs(jobs) {
+const jobsGrid = document.getElementById('jobs-grid');
+
+jobsGrid.innerHTML = jobs.map(job => {
+const deadline = job.lastApplicationDate
+? new Date(job.lastApplicationDate).toLocaleDateString('sv-SE')
+: 'Ingen deadline';
+
+const publishedDate = job.publishedDate
+? new Date(job.publishedDate).toLocaleDateString('sv-SE')
+: '';
+
+// Build application info
+let applyContent = '';
+if (job.application.url) {
+applyContent = `Ansök via arbetsgivarens webbplats →`;
+} else if (job.application.email) {
+applyContent = `Mejla din ansökan till: ${job.application.email}`;
+} else {
+applyContent = `Se ansökningsinstruktioner på Platsbanken →`;
+}
+
+if (job.application.reference) {
+applyContent += `
+Ange referens: ${job.application.reference}`;
+}
+
+return `
+
+Verifierad på Platsbanken
+
+${job.title}
+
+${job.employer}
+
+${job.location}
+
+${job.employmentType ? `
+
+${job.employmentType}
+
+` : ''}
+${publishedDate ? `
+
+Publicerad ${publishedDate}
+
+` : ''}
+
+${job.descriptionShort}
+
+Så ansöker du
+
+${applyContent}
+
+Sista ansökningsdag: ${deadline}
+
+Se på Platsbanken
+
+`;
+}).join('');
+}
+
+// Make loadJobsForOccupation available globally
+window.loadJobsForOccupation = loadJobsForOccupation;
+
+// Mobile menu toggle
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const navLinks = document.getElementById('nav-links');
+
+mobileMenuBtn.addEventListener('click', () => {
+navLinks.classList.toggle('show');
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+if (!e.target.closest('nav')) {
+navLinks.classList.remove('show');
+}
+});
+
+// Close menu when clicking a link
+navLinks.querySelectorAll('a').forEach(link => {
+link.addEventListener('click', () => {
+navLinks.classList.remove('show');
+});
+});
+
+
+========================================================================
+## CityIQ - municipal talent analytics
+Source: https://nordiqflow.vercel.app/cityiq.html
+========================================================================
+
+NordiqFlow - CityIQ | Kommunal Talanganalys
+
+NordiqFlow
+
+TalentFlow
+For Investors
+Artiklar
+AF Data
+AF:s Problem
+Tech & Modeller
+Algoritmen
+Forskning
+Live Demo
+CityIQ
+
+B2G GovTech
+
+CityIQ
+
+Se vilka kompetenser din kommun saknar – och vad det kostar att inte agera.
+
+Vad är CityIQ?
+
+CityIQ är ett datadriven analysverktyg som hjälper kommuner att fatta smartare beslut
+om utbildning, arbetsmarknad och regional utveckling. Vi tar Arbetsförmedlingens öppna
+data och omvandlar den till konkreta insikter som är specifika för just din kommun.
+
+Genom att jämföra aktiva jobbannonser med tillgänglig arbetskraft
+och utbildningsutbud kan vi visa exakt var gapen finns – och vad det kostar
+att inte åtgärda dem.
+
+🏛️
+
+För kommuner
+
+Planera utbildningar baserat på faktisk efterfrågan, inte gissningar.
+
+💼
+
+För näringslivet
+
+Se vilka kompetenser som kommer finnas tillgängliga lokalt om 2-5 år.
+
+🎓
+
+För utbildningsanordnare
+
+Starta YH-program som faktiskt leder till jobb i regionen.
+
+Varför behövs detta?
+
+Idag fattar kommuner utbildningsbeslut baserat på känsla snarare än data.
+Ett YH-program kostar miljoner att starta – men ingen vet om det faktiskt finns jobb för
+de utexaminerade. CityIQ ger dig svaret innan du investerar.
+
+Kommunernas utmaning
+
+Blind utbildningsplanering
+
+Kommuner startar YH-program utan att veta om det faktiskt finns
+efterfrågan på kompetensen lokalt.
+
+Okänd talangbrist
+
+Vilka yrken har störst brist? Hur många utexaminerade behövs?
+Ingen central datakälla ger svar.
+
+Ingen ROI-mätning
+
+Utbildningsinvesteringar mäts sällan mot faktiska
+arbetsmarknadsutfall och skatteintäkter.
+
+Vad CityIQ ger din kommun
+
+📊
+
+Real-time talangbristanalys
+
+Se exakt vilka kompetenser som saknas i din kommun just nu.
+Baserat på faktiska jobbannonser vs. tillgänglig arbetskraft.
+
+🎓
+
+Utbildnings-ROI
+
+Räkna ut avkastningen på utbildningsinvesteringar. Kostnad för
+YH-program vs. förväntade skatteintäkter från sysselsatta.
+
+🗺️
+
+Lokal-till-lokal mappning
+
+Koppla lokala utbildningar direkt till lokala jobbmöjligheter.
+Se vilka gymnasieprogram som leder till jobb i kommunen.
+
+📈
+
+5-års prognos
+
+Yrkesbarometer-data integrerad. Se vilka kompetenser som
+kommer att behövas om 5 år – inte bara idag.
+
+Exempel: Dashboard för Uppsala
+
+Uppsala kommun
+
+Talanganalys Q1 2026
+
+1,247
+
+Aktiva jobbannonser
+
+-340
+
+Talangunderskott
+
+87
+
+Utbildningsprogram
+
+62%
+
+Matchningsgrad
+
+Top 5 kompetensbrister
+
+Systemutvecklare
+-120 personer
+
+Sjuksköterskor
+-85 personer
+
+Civilingenjörer
+-65 personer
+
+Lärare (grundskola)
+-45 personer
+
+Lastbilsförare
+-35 personer
+
+ROI-kalkyl: Cybersecurity YH-program
+
+Programkostnad/år
+
+5M SEK
+
+→
+
+Utexaminerade/år
+
+25 st
+
+→
+
+Skatteintäkt/år
+
+3.2M SEK
+
+Återbetalningstid: 18 månader | 5-års ROI: +340%
+
+Exempel: Dashboard för Vetlanda
+
+Vetlanda kommun
+
+Talanganalys Q1 2026
+
+187
+
+Aktiva jobbannonser
+
+-45
+
+Talangunderskott
+
+12
+
+Utbildningsprogram
+
+58%
+
+Matchningsgrad
+
+Top 5 kompetensbrister i Vetlanda
+
+Undersköterskor
+-18 personer
+
+Maskinoperatörer (trä/metall)
+-12 personer
+
+Lärare (förskola)
+-8 personer
+
+Lastbils- och bussförare
+-6 personer
+
+Svetsare och plåtslagare
+-5 personer
+
+ROI-kalkyl: Undersköterske-utbildning i Vetlanda
+
+Programkostnad/år
+
+1.2M SEK
+
+→
+
+Utexaminerade/år
+
+15 st
+
+→
+
+Skatteintäkt/år
+
+1.8M SEK
+
+Återbetalningstid: 8 månader | 5-års ROI: +650%
+
+Vetlandas tillverkningsindustri och äldreomsorg skapar stark efterfrågan på praktiska yrken.
+
+Prissättning
+
+Liten kommun
+
+< 30,000 invånare
+
+50k
+
+SEK / år
+
+Talangbristanalys
+
+Kvartalsrapporter
+
+5 användarlicenser
+
+Email-support
+
+Medelstor kommun
+
+30,000 - 100,000 invånare
+
+100k
+
+SEK / år
+
+Allt i Liten +
+
+ROI-kalkylator
+
+Månadsrapporter
+
+15 användarlicenser
+
+Dedikerad kontaktperson
+
+Stor kommun
+
+> 100,000 invånare
+
+200k
+
+SEK / år
+
+Allt i Medelstor +
+
+Custom dashboards
+
+API-access
+
+Obegränsade licenser
+
+On-site workshops
+
+Vill du se din kommuns data?
+
+Vi erbjuder kostnadsfria pilotprojekt för intresserade kommuner.
+
+Boka demo
+
+NordiqFlow - Sveriges arbetsmarknads-OS
+
+TalentFlow (B2C) |
+För Investerare |
+GitHub
+
+
+========================================================================
+## Network Visualization - interactive labor market graph
+Source: https://nordiqflow.vercel.app/viz.html
+========================================================================
+
+NordiqFlow - Arbetsmarknads Visualisering
+
+🌐 Sveriges Arbetsmarknads-Nätverk
+
+Interaktiv visualisering av 10,000+ yrken, kompetenser och karriärvägar
+
+10,472
+
+YRKESBENÄMNINGAR
+
+8,200
+
+KOMPETENSER
+
+2,500+
+
+KARRIÄRVÄGAR
+
+Huvudgrupper
+
+Yrken
+
+Kompetenser
+
+━━━
+Karriärövergångar
+
+// Full-screen Interactive Network Visualization
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+// Expanded dataset with more realistic Swedish labor market data
+const nodes = [
+// SSYK Level 1 - Major groups (10 total in real taxonomy)
+{ id: 'ssyk1', name: 'Chefer', type: 'major', size: 30, color: '#8b5cf6', desc: 'Ledare och beslutsfattare inom olika verksamheter', count: '~500 yrkesroller' },
+{ id: 'ssyk2', name: 'Akademiker', type: 'major', size: 30, color: '#8b5cf6', desc: 'Specialister med högre utbildning', count: '~2000 yrkesroller' },
+{ id: 'ssyk3', name: 'Tekniker', type: 'major', size: 30, color: '#8b5cf6', desc: 'Praktiskt tekniska yrken', count: '~1500 yrkesroller' },
+{ id: 'ssyk4', name: 'Kontorspersonal', type: 'major', size: 30, color: '#8b5cf6', desc: 'Administrativt arbete', count: '~800 yrkesroller' },
+{ id: 'ssyk5', name: 'Service', type: 'major', size: 30, color: '#8b5cf6', desc: 'Kundservice och omsorg', count: '~1200 yrkesroller' },
+{ id: 'ssyk6', name: 'Jordbruk', type: 'major', size: 25, color: '#8b5cf6', desc: 'Lantbruk, skog och fiske', count: '~300 yrkesroller' },
+{ id: 'ssyk7', name: 'Hantverks', type: 'major', size: 28, color: '#8b5cf6', desc: 'Byggarbetare och hantverkare', count: '~900 yrkesroller' },
+{ id: 'ssyk8', name: 'Process', type: 'major', size: 27, color: '#8b5cf6', desc: 'Maskinoperatörer och montörer', count: '~700 yrkesroller' },
+
+// SSYK Level 4 - Specific high-demand occupations
+{ id: 'sw', name: 'Mjukvaruutvecklare', type: 'occupation', size: 18, color: '#ec4899', parent: 'ssyk2', salary: '45-65k/mån', demand: 'Mycket hög' },
+{ id: 'nurse', name: 'Sjuksköterska', type: 'occupation', size: 18, color: '#ec4899', parent: 'ssyk2', salary: '35-45k/mån', demand: 'Mycket hög' },
+{ id: 'teacher', name: 'Grundskolelärare', type: 'occupation', size: 17, color: '#ec4899', parent: 'ssyk2', salary: '32-42k/mån', demand: 'Hög' },
+{ id: 'psychologist', name: 'Psykolog', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk2', salary: '38-50k/mån', demand: 'Hög' },
+{ id: 'engineer', name: 'Civilingenjör', type: 'occupation', size: 17, color: '#ec4899', parent: 'ssyk2', salary: '42-60k/mån', demand: 'Hög' },
+
+{ id: 'electrician', name: 'Elektriker', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk7', salary: '35-48k/mån', demand: 'Mycket hög' },
+{ id: 'carpenter', name: 'Snickare', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk7', salary: '32-45k/mån', demand: 'Hög' },
+{ id: 'plumber', name: 'Rörmokare', type: 'occupation', size: 15, color: '#ec4899', parent: 'ssyk7', salary: '34-47k/mån', demand: 'Mycket hög' },
+
+{ id: 'accountant', name: 'Redovisningsekonom', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk4', salary: '35-48k/mån', demand: 'Medel' },
+{ id: 'admin', name: 'Kontorsassistent', type: 'occupation', size: 15, color: '#ec4899', parent: 'ssyk4', salary: '28-38k/mån', demand: 'Medel' },
+{ id: 'hr', name: 'HR-specialist', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk4', salary: '38-50k/mån', demand: 'Hög' },
+
+{ id: 'chef', name: 'Kock', type: 'occupation', size: 16, color: '#ec4899', parent: 'ssyk5', salary: '28-40k/mån', demand: 'Mycket hög' },
+{ id: 'waiter', name: 'Servitör', type: 'occupation', size: 15, color: '#ec4899', parent: 'ssyk5', salary: '25-32k/mån', demand: 'Hög' },
+{ id: 'caregiver', name: 'Undersköterska', type: 'occupation', size: 17, color: '#ec4899', parent: 'ssyk5', salary: '28-35k/mån', demand: 'Mycket hög' },
+
+// Top skills (from real taxonomy data)
+{ id: 'python', name: 'Python', type: 'skill', size: 12, color: '#fde047', category: 'Programmering' },
+{ id: 'javascript', name: 'JavaScript', type: 'skill', size: 12, color: '#fde047', category: 'Programmering' },
+{ id: 'leadership', name: 'Ledarskap', type: 'skill', size: 13, color: '#fde047', category: 'Mjuka färdigheter' },
+{ id: 'communication', name: 'Kommunikation', type: 'skill', size: 13, color: '#fde047', category: 'Mjuka färdigheter' },
+{ id: 'project_mgmt', name: 'Projektledning', type: 'skill', size: 12, color: '#fde047', category: 'Management' },
+{ id: 'excel', name: 'Excel', type: 'skill', size: 11, color: '#fde047', category: 'Verktyg' },
+{ id: 'sql', name: 'SQL', type: 'skill', size: 11, color: '#fde047', category: 'Data' },
+{ id: 'teamwork', name: 'Lagarbete', type: 'skill', size: 12, color: '#fde047', category: 'Mjuka färdigheter' },
+{ id: 'problem_solving', name: 'Problemlösning', type: 'skill', size: 12, color: '#fde047', category: 'Analytiskt' },
+];
+
+const links = [
+// Hierarchy links (SSYK structure)
+...['sw', 'nurse', 'teacher', 'psychologist', 'engineer'].map(t => ({ source: 'ssyk2', target: t, type: 'hierarchy' })),
+...['electrician', 'carpenter', 'plumber'].map(t => ({ source: 'ssyk7', target: t, type: 'hierarchy' })),
+...['accountant', 'admin', 'hr'].map(t => ({ source: 'ssyk4', target: t, type: 'hierarchy' })),
+...['chef', 'waiter', 'caregiver'].map(t => ({ source: 'ssyk5', target: t, type: 'hierarchy' })),
+
+// Skill requirements
+{ source: 'sw', target: 'python', type: 'skill' },
+{ source: 'sw', target: 'javascript', type: 'skill' },
+{ source: 'sw', target: 'problem_solving', type: 'skill' },
+{ source: 'sw', target: 'teamwork', type: 'skill' },
+
+{ source: 'nurse', target: 'communication', type: 'skill' },
+{ source: 'nurse', target: 'teamwork', type: 'skill' },
+{ source: 'teacher', target: 'communication', type: 'skill' },
+{ source: 'teacher', target: 'leadership', type: 'skill' },
+
+{ source: 'accountant', target: 'excel', type: 'skill' },
+{ source: 'accountant', target: 'sql', type: 'skill' },
+{ source: 'hr', target: 'communication', type: 'skill' },
+{ source: 'hr', target: 'leadership', type: 'skill' },
+
+{ source: 'engineer', target: 'problem_solving', type: 'skill' },
+{ source: 'engineer', target: 'project_mgmt', type: 'skill' },
+
+{ source: 'ssyk1', target: 'leadership', type: 'skill' },
+{ source: 'ssyk1', target: 'project_mgmt', type: 'skill' },
+
+// Career transitions (släktskap - from real AF data)
+{ source: 'accountant', target: 'admin', type: 'transition', strength: 75 },
+{ source: 'accountant', target: 'hr', type: 'transition', strength: 50 },
+{ source: 'chef', target: 'waiter', type: 'transition', strength: 75 },
+{ source: 'sw', target: 'engineer', type: 'transition', strength: 50 },
+{ source: 'electrician', target: 'carpenter', type: 'transition', strength: 50 },
+{ source: 'nurse', target: 'caregiver', type: 'transition', strength: 60 },
+{ source: 'teacher', target: 'psychologist', type: 'transition', strength: 40 },
+];
+
+const svg = d3.select('#network-viz')
+.append('svg')
+.attr('width', width)
+.attr('height', height);
+
+// Add zoom behavior
+const g = svg.append('g');
+
+svg.call(d3.zoom()
+.scaleExtent([0.5, 3])
+.on('zoom', (event) => {
+g.attr('transform', event.transform);
+}));
+
+const tooltip = d3.select('body')
+.append('div')
+.attr('class', 'tooltip');
+
+const simulation = d3.forceSimulation(nodes)
+.force('link', d3.forceLink(links).id(d => d.id).distance(d => {
+if (d.type === 'hierarchy') return 150;
+if (d.type === 'skill') return 100;
+return 120;
+}))
+.force('charge', d3.forceManyBody().strength(-500))
+.force('center', d3.forceCenter(width / 2, height / 2))
+.force('collision', d3.forceCollide().radius(d => d.size + 20));
+
+const link = g.append('g')
+.selectAll('line')
+.data(links)
+.join('line')
+.attr('stroke', d => {
+if (d.type === 'transition') return 'rgba(236, 72, 153, 0.6)';
+if (d.type === 'skill') return 'rgba(253, 224, 71, 0.4)';
+return 'rgba(139, 92, 246, 0.3)';
+})
+.attr('stroke-width', d => d.type === 'transition' ? 3 : d.type === 'skill' ? 1.5 : 2)
+.attr('stroke-dasharray', d => d.type === 'skill' ? '5,5' : 'none');
+
+const node = g.append('g')
+.selectAll('g')
+.data(nodes)
+.join('g')
+.style('cursor', 'pointer')
+.call(drag(simulation));
+
+node.append('circle')
+.attr('r', d => d.size)
+.attr('fill', d => d.color)
+.attr('stroke', 'white')
+.attr('stroke-width', 2.5)
+.style('filter', 'drop-shadow(0 0 12px rgba(139, 92, 246, 0.8))');
+
+node.append('text')
+.attr('dy', d => d.size + 20)
+.attr('text-anchor', 'middle')
+.attr('fill', 'white')
+.attr('font-size', d => d.type === 'major' ? '15px' : d.type === 'occupation' ? '13px' : '11px')
+.attr('font-weight', d => d.type === 'major' ? '700' : '500')
+.text(d => d.name)
+.style('pointer-events', 'none')
+.style('text-shadow', '0 2px 4px rgba(0,0,0,0.5)');
+
+node.on('mouseover', function(event, d) {
+const typeMap = {
+'major': 'SSYK Huvudgrupp',
+'occupation': 'Yrkesroll (SSYK-4)',
+'skill': 'Kompetens'
+};
+
+let htmlContent = `
+
+${d.name}
+
+${typeMap[d.type]}
+
+`;
+
+if (d.desc) htmlContent += `
+${d.desc}
+`;
+if (d.count) htmlContent += `
+${d.count}
+`;
+if (d.salary) htmlContent += `
+Lön: ${d.salary}
+`;
+if (d.demand) htmlContent += `
+Efterfrågan: ${d.demand}
+`;
+if (d.category) htmlContent += `
+Kategori: ${d.category}
+`;
+
+tooltip
+.style('opacity', 1)
+.style('left', (event.pageX + 15) + 'px')
+.style('top', (event.pageY - 15) + 'px')
+.html(htmlContent);
+
+d3.select(this).select('circle')
+.transition()
+.duration(200)
+.attr('r', d.size * 1.4)
+.style('filter', 'drop-shadow(0 0 20px rgba(139, 92, 246, 1))');
+})
+.on('mouseout', function(event, d) {
+tooltip.style('opacity', 0);
+d3.select(this).select('circle')
+.transition()
+.duration(200)
+.attr('r', d.size)
+.style('filter', 'drop-shadow(0 0 12px rgba(139, 92, 246, 0.8))');
+})
+.on('click', function(event, d) {
+event.stopPropagation();
+
+const connections = links.filter(l => l.source.id === d.id || l.target.id === d.id);
+const related = connections.map(l => l.source.id === d.id ? l.target.name : l.source.name).join(', ');
+
+alert(`🎯 ${d.name}\n\n${related ? `Kopplad till: ${related}\n\n` : ''}I den färdiga produkten kommer detta att öppna en fullständig karriärvy med:\n\n• Detaljerad rollbeskrivning\n• Lönestatistik per region\n• Kompetenskrav och gap-analys\n• Utbildningsvägar\n• Branschefterfrågan (5-års prognos)\n• Relaterade karriärvägar`);
+});
+
+simulation.on('tick', () => {
+link
+.attr('x1', d => d.source.x)
+.attr('y1', d => d.source.y)
+.attr('x2', d => d.target.x)
+.attr('y2', d => d.target.y);
+
+node.attr('transform', d => `translate(${d.x},${d.y})`);
+});
+
+function drag(simulation) {
+function dragstarted(event) {
+if (!event.active) simulation.alphaTarget(0.3).restart();
+event.subject.fx = event.subject.x;
+event.subject.fy = event.subject.y;
+}
+
+function dragged(event) {
+event.subject.fx = event.x;
+event.subject.fy = event.y;
+}
+
+function dragended(event) {
+if (!event.active) simulation.alphaTarget(0);
+event.subject.fx = null;
+event.subject.fy = null;
+}
+
+return d3.drag()
+.on('start', dragstarted)
+.on('drag', dragged)
+.on('end', dragended);
+}
+
+// Animate on load
+setTimeout(() => {
+simulation.alpha(1).restart();
+}, 300);
+
+// Responsive resize
+window.addEventListener('resize', () => {
+location.reload();
+});
+
+
+========================================================================
+## Next Steps - development roadmap
+Source: https://nordiqflow.vercel.app/next-steps.html
+========================================================================
+
+NordiqFlow - Next Steps
+
+🎯 What's Next
+
+Simple, achievable steps. One at a time.
+
+✓
+
+Foundation Complete
+
+You built the landing page, downloaded 34 datasets, created the visualization, and documented everything.
+
+Why this matters: You have a solid foundation. The hard thinking is done. Now it's just execution.
+
+1
+⏱️ 5 minutes
+
+Deploy the Visualization
+
+Get your interactive network graph live so you can show people.
+
+cd ~/Desktop/nordiqflow
+git add viz.html
+git commit -m "Added network visualization"
+git push origin main
+
+Then go to vercel.com/new → Import nordiqflow repo → Project name:
+nordiqflowviz
+→ Deploy
+
+Result: Live demo at
+nordiqflowviz.vercel.app
+
+Why start here: Quick win. Something tangible to show. Builds momentum.
+
+2
+⏱️ 1-2 hours
+
+Get the Missing Datasets
+
+You have 34/60 datasets. Get the critical ones manually (scraper is broken, that's okay).
+
+Priority downloads:
+
+Yrkesbarometer - 5-year demand forecasts (the gold!)
+
+Närliggande yrken - AI-computed career transitions
+
+Relevanta kompetenser - Skill recommendations
+
+Go to data.arbetsformedlingen.se/data/, find each dataset, click "Ladda ner JSON fil", save to
+data/raw/taxonomy/
+
+Why this matters: Yrkesbarometer enables demand forecasting. Without it, TalentFlow recommendations are incomplete.
+
+3
+⏱️ 1 day
+
+Set Up Neo4j (Graph Database)
+
+Install the database where all your data will live.
+
+Option A: Local (for learning)
+
+# Download Neo4j Desktop
+# https://neo4j.com/download/
+
+# Create new database
+# Start it
+# Open browser at localhost:7474
+# Create first node:
+CREATE (o:Occupation {name: "Mjukvaruutvecklare"})
+
+Option B: Cloud (for production later)
+
+Sign up for Neo4j AuraDB free tier → Create instance → Get connection string
+
+Why this matters: Can't build anything without a database. This is the foundation for TalentFlow.
+
+4
+⏱️ 3-4 days
+
+Import Data to Neo4j
+
+Take your JSON files and put them into the graph database.
+
+Start small: Just SSYK hierarchy first
+
+# Python script to read JSON and create nodes
+import json
+from neo4j import GraphDatabase
+
+# Load JSON
+with open('data/raw/taxonomy/the-ssyk-hierarchy-with-occupations.json') as f:
+data = json.load(f)
+
+# Create nodes in Neo4j
+# (Full script in TECHNICAL_SPEC.md)
+
+Test with a query:
+
+MATCH (o:Occupation)
+RETURN o.name
+LIMIT 10
+
+Why this matters: Once data is in the graph, you can start querying it. This unlocks TalentFlow.
+
+5
+⏱️ 1 week
+
+Build First API Endpoint
+
+Create a simple backend that queries Neo4j and returns JSON.
+
+# FastAPI backend
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/api/occupations/search")
+def search_occupations(q: str):
+# Query Neo4j
+# Return results
+return {"results": [...]}
+
+Deploy to Railway.app (free tier)
+
+Test:
+curl api.nordiqflow.com/api/occupations/search?q=utvecklare
+
+Why this matters: Once you have an API, you can build the frontend. This is the bridge between data and product.
+
+6
+⏱️ 2 weeks
+
+Build TalentFlow MVP
+
+Create the actual product people will use.
+
+Minimal features:
+
+Search for your current occupation
+
+See career transition options (sorted by similarity)
+
+View skill gaps for each option
+
+That's it. Ship it.
+
+React frontend → Connect to API → Deploy to Vercel
+
+Why this matters: This is the MVP. Get it in front of users. Get feedback. Iterate.
+
+🌟 You don't have to do all of this today.
+
+Focus on Step 1 (5 minutes). Then rest.
+
+Tomorrow, tackle Step 2 (1-2 hours). Then rest.
+
+One step at a time. You've got this. 💜
+
+Landing Page
+GitHub
+AF Data
+
