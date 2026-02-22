@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM context">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalentFlow — Vilka jobb kan du ta?</title>
+    <meta name="description" content="Upptäck karriärvägar du aldrig visste om. Baserat på Arbetsförmedlingens data om 51 000+ karriärövergångar.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* ───── Landing View ───── */
+        .landing {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .landing-logo {
+            font-size: 1.2em;
+            font-weight: 700;
+            opacity: 0.6;
+            position: absolute;
+            top: 30px;
+            left: 40px;
+        }
+
+        .landing-logo span { color: #667eea; }
+
+        .landing h1 {
+            font-size: 3em;
+            font-weight: 800;
+            max-width: 700px;
+            line-height: 1.15;
+            margin-bottom: 15px;
+        }
+
+        .landing h1 .highlight {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .landing-sub {
+            font-size: 1.2em;
+            opacity: 0.7;
+            max-width: 500px;
+            margin-bottom: 40px;
+        }
+
+        /* Search Box */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 1.15em;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .search-input::placeholder { color: rgba(255,255,255,0.4); }
+
+        .search-input:focus {
+            border-color: #667eea;
+            background: rgba(255,255,255,0.12);
+        }
+
+        .search-hint {
+            margin-top: 12px;
+            font-size: 0.85em;
+            opacity: 0.4;
+        }
+
+        /* Autocomplete Dropdown */
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            max-height: 350px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .autocomplete-list.visible { display: block; }
+
+        .autocomplete-item {
+            padding: 14px 24px;
+            cursor: pointer;
+            transition: background 0.1s;
+            border-bottom: 1px solid #f3f4f6;
+            color: #333;
+        }
+
+        .autocomplete-item:hover,
+        .autocomplete-item.active {
+            background: #f0f4ff;
+        }
+
+        .autocomplete-item:last-child { border-bottom: none; }
+
+        .autocomplete-item .name {
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        .autocomplete-item .group {
+            font-size: 0.8em;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        .autocomplete-item .match-highlight {
+            background: #fef3c7;
+            border-radius: 2px;
+        }
+
+        /* ───── Results View ───── */
+        .results-view {
+            display: none;
+        }
+
+        .results-view.visible {
+            display: block;
+        }
+
+        /* Results Header */
+        .results-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d5e 100%);
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .results-header .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .results-header .back-btn {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .results-header .back-btn:hover { color: white; }
+
+        .results-header h2 {
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .results-header h2 .accent { color: #667eea; }
+
+        .results-header .occ-count {
+            font-size: 0.9em;
+            opacity: 0.6;
+        }
+
+        /* Results Body */
+        .results-body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        .results-summary {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: #6b7280;
+            font-size: 0.95em;
+        }
+
+        .results-summary strong {
+            color: #667eea;
+        }
+
+        /* Career Cards */
+        .career-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .career-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .career-card.expanded {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .career-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .career-card-info h3 {
+            font-size: 1.15em;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .career-card-info .direction-label {
+            font-size: 0.8em;
+            color: #9ca3af;
+        }
+
+        .score-ring {
+            min-width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2em;
+        }
+
+        .score-ring.high { background: #dcfce7; color: #166534; }
+        .score-ring.medium { background: #fef9c3; color: #854d0e; }
+        .score-ring.low { background: #fee2e2; color: #991b1b; }
+
+        .career-card-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            font-size: 0.85em;
+            color: #6b7280;
+        }
+
+        .meta-item strong {
+            color: #374151;
+        }
+
+        .jobs-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f0f4ff;
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .jobs-badge.loading {
+            color: #9ca3af;
+            background: #f3f4f6;
+        }
+
+        /* Expanded Card Detail */
+        .career-detail {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .career-card.expanded .career-detail {
+            display: block;
+        }
+
+        .detail-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-panel {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .detail-panel h4 {
+            font-size: 0.85em;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            margin: 3px 3px 3px 0;
+        }
+
+        .skill-tag.have { background: #dcfce7; color: #166534; }
+        .skill-tag.gap { background: #fee2e2; color: #991b1b; }
+
+        .job-listing {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .job-listing:last-child { border-bottom: none; }
+
+        .job-listing a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .job-listing a:hover { text-decoration: underline; }
+
+        .job-listing .employer {
+            font-size: 0.85em;
+            color: #9ca3af;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #9ca3af;
+        }
+
+        .no-results h3 {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .results-footer {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            text-align: center;
+        }
+
+        .powered-by {
+            font-size: 0.8em;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+
+        .powered-by a { color: #667eea; text-decoration: none; }
+
+        .landing-links {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.85em;
+            opacity: 0.4;
+        }
+
+        .landing-links a { color: white; text-decoration: none; margin: 0 10px; }
+        .landing-links a:hover { opacity: 0.8; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .landing h1 { font-size: 2em; }
+            .landing-sub { font-size: 1em; }
+            .search-input { font-size: 1em; padding: 15px 20px; }
+            .detail-columns { grid-template-columns: 1fr; }
+            .career-card-top { flex-direction: column-reverse; }
+            .score-ring { align-self: flex-end; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ───── Landing View ───── -->
+    <div class="landing" id="landing-view">
+        <div class="landing-logo">Nordiq<span>Flow</span></div>
+
+        <h1>Vilka jobb kan du ta — <span class="highlight">som du inte visste om?</span></h1>
+        <p class="landing-sub">Skriv in ditt nuvarande yrke. Vi visar karriärvägar baserat på 51 000+ karriärövergångar från Arbetsförmedlingen.</p>
+
+        <div class="search-container">
+            <input type="text"
+                   class="search-input"
+                   id="search-input"
+                   placeholder="T.ex. butikschef, undersköterska, lärare..."
+                   autocomplete="off"
+                   spellcheck="false">
+            <div class="autocomplete-list" id="autocomplete-list"></div>
+        </div>
+        <p class="search-hint">3 000+ yrken att välja bland</p>
+
+        <div class="landing-links">
+            <a href="index.html">Om NordiqFlow</a>
+            <a href="cityiq-vetlanda.html">CityIQ Demo</a>
+            <a href="investors.html">Investerare</a>
+        </div>
+    </div>
+
+    <!-- ───── Results View ───── -->
+    <div class="results-view" id="results-view">
+        <div class="results-header">
+            <div class="container">
+                <a class="back-btn" onclick="showLanding()">&#8592; Sök igen</a>
+                <div>
+                    <h2>Om du är <span class="accent" id="current-occupation-name">—</span></h2>
+                    <div class="occ-count" id="results-count"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-body">
+            <div class="results-summary" id="results-summary"></div>
+            <div id="career-cards"></div>
+        </div>
+
+        <div class="results-footer">
+            <p class="powered-by">
+                Data från <a href="https://jobtechdev.se" target="_blank">Arbetsförmedlingen JobTech Dev</a>
+                — 51 000+ karriärövergångar, 8 000+ kompetenser
+            </p>
+            <p class="powered-by">
+                <a href="index.html">NordiqFlow</a> | <a href="cityiq-vetlanda.html">CityIQ Vetlanda</a> | <a href="investors.html">Investerare</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        const AF_API = 'https://jobsearch.api.jobtechdev.se';
+
+        let substitutabilityData = null;
+        let occupationsList = [];
+        let selectedOccupation = null;
+        let activeAutocompleteIndex = -1;
+
+        // ───── Data Loading ─────
+
+        async function loadData() {
+            try {
+                const [subRes, occRes] = await Promise.all([
+                    fetch('/data/processed/substitutability.json'),
+                    fetch('/data/processed/occupations.json')
+                ]);
+                substitutabilityData = await subRes.json();
+                const occData = await occRes.json();
+
+                // Build searchable occupation list
+                if (Array.isArray(occData)) {
+                    occupationsList = occData.map(o => ({
+                        id: o.id || o.concept_id,
+                        name: o.preferred_label || o.label || o.name,
+                        group: o.ssyk_group || ''
+                    }));
+                } else if (typeof occData === 'object') {
+                    occupationsList = Object.entries(occData).map(([id, o]) => ({
+                        id: id,
+                        name: typeof o === 'string' ? o : (o.preferred_label || o.label || o.name || id),
+                        group: typeof o === 'object' ? (o.ssyk_group || '') : ''
+                    }));
+                }
+
+                // Also add all occupations from substitutability data
+                if (substitutabilityData) {
+                    for (const [id, occ] of Object.entries(substitutabilityData)) {
+                        if (!occupationsList.find(o => o.id === id)) {
+                            occupationsList.push({ id, name: occ.name, group: '' });
+                        }
+                    }
+                }
+
+                console.log(`Loaded ${occupationsList.length} occupations, ${Object.keys(substitutabilityData || {}).length} with substitutability data`);
+            } catch (e) {
+                console.error('Failed to load data:', e);
+            }
+        }
+
+        // ───── Search / Autocomplete ─────
+
+        function searchOccupations(query) {
+            if (!query || query.length < 2) return [];
+            const q = query.toLowerCase();
+
+            return occupationsList
+                .filter(o => o.name && o.name.toLowerCase().includes(q))
+                .sort((a, b) => {
+                    // Exact start match first
+                    const aStarts = a.name.toLowerCase().startsWith(q) ? 0 : 1;
+                    const bStarts = b.name.toLowerCase().startsWith(q) ? 0 : 1;
+                    if (aStarts !== bStarts) return aStarts - bStarts;
+
+                    // Then by whether they have substitutability data
+                    const aHasSub = substitutabilityData && substitutabilityData[a.id] ? 0 : 1;
+                    const bHasSub = substitutabilityData && substitutabilityData[b.id] ? 0 : 1;
+                    if (aHasSub !== bHasSub) return aHasSub - bHasSub;
+
+                    return a.name.localeCompare(b.name, 'sv');
+                })
+                .slice(0, 8);
+        }
+
+        function renderAutocomplete(results, query) {
+            const list = document.getElementById('autocomplete-list');
+
+            if (!results.length) {
+                list.classList.remove('visible');
+                return;
+            }
+
+            const q = query.toLowerCase();
+            list.innerHTML = results.map((r, i) => {
+                const hasSub = substitutabilityData && substitutabilityData[r.id];
+                const name = highlightMatch(r.name, q);
+                return `<div class="autocomplete-item" data-index="${i}" onclick="selectOccupation('${r.id}', '${escapeAttr(r.name)}')">
+                    <div class="name">${name}</div>
+                    ${hasSub ? '<div class="group">Karriärdata tillgänglig</div>' : '<div class="group" style="color:#d1d5db">Begränsad data</div>'}
+                </div>`;
+            }).join('');
+
+            list.classList.add('visible');
+            activeAutocompleteIndex = -1;
+        }
+
+        function highlightMatch(text, query) {
+            const idx = text.toLowerCase().indexOf(query);
+            if (idx === -1) return escapeHtml(text);
+            return escapeHtml(text.substring(0, idx)) +
+                   '<span class="match-highlight">' + escapeHtml(text.substring(idx, idx + query.length)) + '</span>' +
+                   escapeHtml(text.substring(idx + query.length));
+        }
+
+        // ───── Career Transitions ─────
+
+        function getCareerTransitions(occupationId) {
+            if (!substitutabilityData || !substitutabilityData[occupationId]) return [];
+
+            const occ = substitutabilityData[occupationId];
+            return occ.relations
+                .filter(r => r.direction === 'can_become')
+                .sort((a, b) => b.score - a.score)
+                .map(r => ({
+                    id: r.targetId,
+                    name: r.targetName,
+                    score: r.score,
+                    direction: r.direction
+                }));
+        }
+
+        async function fetchJobCount(occupationName) {
+            try {
+                const response = await fetch(`${AF_API}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ q: occupationName, limit: 0 })
+                });
+                if (!response.ok) return null;
+                const data = await response.json();
+                return data.total?.value || 0;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        async function fetchJobListings(occupationName) {
+            try {
+                const response = await fetch(`${AF_API}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ q: occupationName, limit: 5 })
+                });
+                if (!response.ok) return [];
+                const data = await response.json();
+                return (data.hits || []).map(j => ({
+                    title: j.headline,
+                    employer: j.employer?.name || 'Okänd',
+                    location: j.workplace_address?.municipality || j.workplace_address?.region || 'Sverige',
+                    id: j.id
+                }));
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // ───── Rendering ─────
+
+        window.selectOccupation = async function(id, name) {
+            selectedOccupation = { id, name };
+
+            // Hide landing, show results
+            document.getElementById('landing-view').style.display = 'none';
+            document.getElementById('results-view').classList.add('visible');
+            document.getElementById('current-occupation-name').textContent = name;
+
+            const transitions = getCareerTransitions(id);
+            document.getElementById('results-count').textContent =
+                transitions.length ? `${transitions.length} karriärövergångar hittades` : '';
+
+            if (!transitions.length) {
+                document.getElementById('results-summary').innerHTML =
+                    `Vi har tyvärr ingen karriärdata för <strong>${escapeHtml(name)}</strong> i Arbetsförmedlingens substitutability-databas. Prova ett annat yrke.`;
+                document.getElementById('career-cards').innerHTML = '';
+                return;
+            }
+
+            document.getElementById('results-summary').innerHTML =
+                `Enligt Arbetsförmedlingens data kan en <strong>${escapeHtml(name)}</strong> övergå till ${transitions.length} andra yrken. Klicka på ett yrke för att se detaljer.`;
+
+            // Render cards
+            const cardsHtml = transitions.map((t, i) => {
+                const scoreClass = t.score >= 75 ? 'high' : t.score >= 50 ? 'medium' : 'low';
+                const scoreLabel = t.score >= 75 ? 'Hög matchning' : t.score >= 50 ? 'Medel matchning' : 'Möjlig övergång';
+
+                return `<div class="career-card" id="career-card-${i}" onclick="toggleCareerCard(${i}, '${escapeAttr(t.name)}', '${escapeAttr(t.id)}')">
+                    <div class="career-card-top">
+                        <div class="career-card-info">
+                            <h3>${escapeHtml(t.name)}</h3>
+                            <div class="direction-label">${scoreLabel}</div>
+                        </div>
+                        <div class="score-ring ${scoreClass}">${t.score}</div>
+                    </div>
+                    <div class="career-card-meta">
+                        <span class="jobs-badge loading" id="jobs-badge-${i}">Laddar jobb...</span>
+                    </div>
+                    <div class="career-detail" id="career-detail-${i}">
+                        <div id="career-detail-content-${i}" style="text-align:center;color:#9ca3af;padding:20px;">Laddar...</div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            document.getElementById('career-cards').innerHTML = cardsHtml;
+
+            // Fetch job counts in parallel (fire and forget)
+            transitions.forEach((t, i) => {
+                fetchJobCount(t.name).then(count => {
+                    const badge = document.getElementById('jobs-badge-' + i);
+                    if (badge) {
+                        badge.classList.remove('loading');
+                        if (count !== null && count > 0) {
+                            badge.textContent = `${count} lediga jobb`;
+                        } else if (count === 0) {
+                            badge.textContent = 'Inga jobb just nu';
+                            badge.style.background = '#f3f4f6';
+                            badge.style.color = '#9ca3af';
+                        } else {
+                            badge.textContent = 'Kunde ej hämta';
+                            badge.style.background = '#f3f4f6';
+                            badge.style.color = '#d1d5db';
+                        }
+                    }
+                });
+            });
+        };
+
+        window.toggleCareerCard = async function(index, name, id) {
+            const card = document.getElementById('career-card-' + index);
+            const detail = document.getElementById('career-detail-' + index);
+            const content = document.getElementById('career-detail-content-' + index);
+
+            if (card.classList.contains('expanded')) {
+                card.classList.remove('expanded');
+                return;
+            }
+
+            // Close other cards
+            document.querySelectorAll('.career-card.expanded').forEach(c => c.classList.remove('expanded'));
+
+            card.classList.add('expanded');
+
+            // Check if already loaded
+            if (content.dataset.loaded) return;
+            content.dataset.loaded = 'true';
+
+            // Load jobs and show transitions from the target
+            const [jobs, targetTransitions] = await Promise.all([
+                fetchJobListings(name),
+                Promise.resolve(substitutabilityData && substitutabilityData[id]
+                    ? substitutabilityData[id].relations.filter(r => r.direction === 'can_become').slice(0, 5)
+                    : [])
+            ]);
+
+            let html = '<div class="detail-columns">';
+
+            // Left: Further transitions
+            html += '<div class="detail-panel">';
+            html += '<h4>Vidare karriärvägar</h4>';
+            if (targetTransitions.length) {
+                html += targetTransitions.map(t => `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:0.9em;">
+                        <span>${escapeHtml(t.targetName)}</span>
+                        <span class="skill-tag ${t.score >= 75 ? 'have' : t.score >= 50 ? 'have' : 'gap'}" style="margin:0">${t.score}%</span>
+                    </div>
+                `).join('');
+            } else {
+                html += '<p style="color:#9ca3af;font-size:0.9em;">Inga ytterligare övergångar registrerade.</p>';
+            }
+            html += '</div>';
+
+            // Right: Job listings
+            html += '<div class="detail-panel">';
+            html += '<h4>Lediga jobb just nu</h4>';
+            if (jobs.length) {
+                html += jobs.map(j => `
+                    <div class="job-listing">
+                        <a href="https://arbetsformedlingen.se/platsbanken/annonser/${j.id}" target="_blank">${escapeHtml(j.title)}</a>
+                        <div class="employer">${escapeHtml(j.employer)} — ${escapeHtml(j.location)}</div>
+                    </div>
+                `).join('');
+            } else {
+                html += '<p style="color:#9ca3af;font-size:0.9em;">Inga jobb hittades just nu. Nya jobb publiceras dagligen.</p>';
+            }
+            html += '</div>';
+
+            html += '</div>';
+            content.innerHTML = html;
+        };
+
+        window.showLanding = function() {
+            document.getElementById('results-view').classList.remove('visible');
+            document.getElementById('landing-view').style.display = 'flex';
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-input').focus();
+        };
+
+        // ───── Helpers ─────
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function escapeAttr(str) {
+            return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        // ───── Input Handlers ─────
+
+        const searchInput = document.getElementById('search-input');
+        const autocompleteList = document.getElementById('autocomplete-list');
+        let debounceTimer;
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const query = e.target.value.trim();
+                if (query.length < 2) {
+                    autocompleteList.classList.remove('visible');
+                    return;
+                }
+                const results = searchOccupations(query);
+                renderAutocomplete(results, query);
+            }, 150);
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+            const items = autocompleteList.querySelectorAll('.autocomplete-item');
+            if (!items.length) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                activeAutocompleteIndex = Math.min(activeAutocompleteIndex + 1, items.length - 1);
+                updateActiveItem(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                activeAutocompleteIndex = Math.max(activeAutocompleteIndex - 1, 0);
+                updateActiveItem(items);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (activeAutocompleteIndex >= 0 && items[activeAutocompleteIndex]) {
+                    items[activeAutocompleteIndex].click();
+                } else if (items.length) {
+                    items[0].click();
+                }
+            } else if (e.key === 'Escape') {
+                autocompleteList.classList.remove('visible');
+            }
+        });
+
+        function updateActiveItem(items) {
+            items.forEach((item, i) => {
+                item.classList.toggle('active', i === activeAutocompleteIndex);
+            });
+        }
+
+        // Close autocomplete on outside click
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                autocompleteList.classList.remove('visible');
+            }
+        });
+
+        // ───── Init ─────
+        loadData().then(() => {
+            searchInput.focus();
+        });
+    })();
+    </script>
+
+    <!-- LLM Site Navigation -->
+    <nav aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+        <h2>All pages on this site</h2>
+        <ul>
+            <li><a href="/index.html">TalentFlow - AI career matching platform</a></li>
+            <li><a href="/talentflow-demo.html">TalentFlow Demo - interactive career explorer</a></li>
+            <li><a href="/investors.html">For Investors - business model, ROI, roadmap</a></li>
+            <li><a href="/cityiq.html">CityIQ - municipal talent analytics</a></li>
+            <li><a href="/cityiq-vetlanda.html">CityIQ Vetlanda - live pilot dashboard</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

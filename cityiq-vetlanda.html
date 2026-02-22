@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM context">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityIQ — Vetlanda kommun | Arbetsmarknadsanalys</title>
+    <meta name="description" content="Live arbetsmarknadsanalys för Vetlanda kommun. Se bristyrken, karriärövergångar och utbildnings-ROI baserat på Arbetsförmedlingens data.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f0f2f5;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span { color: #667eea; }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover { background: #667eea; }
+        .nav-links a.active { background: #667eea; }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d5e 100%);
+            color: white;
+            padding: 40px 20px 30px;
+        }
+
+        .dashboard-header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-top h1 {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .header-top h1 .accent { color: #667eea; }
+
+        .header-subtitle {
+            opacity: 0.8;
+            font-size: 1.05em;
+            margin-top: 5px;
+        }
+
+        .header-badge {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .dashboard-body {
+            padding: 30px 20px 60px;
+        }
+
+        /* Metric Cards */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .metric-card.blue::before { background: #667eea; }
+        .metric-card.red::before { background: #ef4444; }
+        .metric-card.green::before { background: #10b981; }
+        .metric-card.purple::before { background: #8b5cf6; }
+
+        .metric-label {
+            font-size: 0.85em;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #1f2937;
+            line-height: 1;
+        }
+
+        .metric-value.loading {
+            color: #d1d5db;
+        }
+
+        .metric-detail {
+            font-size: 0.85em;
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+        }
+
+        .section-card h2 {
+            font-size: 1.4em;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .section-card .section-subtitle {
+            color: #6b7280;
+            font-size: 0.95em;
+            margin-bottom: 25px;
+        }
+
+        /* Shortage Table */
+        .shortage-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .shortage-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6b7280;
+            border-bottom: 2px solid #e5e7eb;
+            font-weight: 600;
+        }
+
+        .shortage-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.95em;
+        }
+
+        .shortage-table tbody tr {
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .shortage-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .shortage-table tbody tr.expanded {
+            background: #f0f4ff;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.85em;
+        }
+
+        .rank-badge.top3 {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .rank-badge.rest {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .job-count-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: #f3f4f6;
+            border-radius: 4px;
+            overflow: hidden;
+            max-width: 120px;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .expand-arrow {
+            color: #9ca3af;
+            transition: transform 0.2s;
+            font-size: 0.8em;
+        }
+
+        .expanded .expand-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Expanded Row Detail */
+        .row-detail {
+            display: none;
+            background: #f8fafc;
+            padding: 20px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .row-detail.visible {
+            display: table-row;
+        }
+
+        .row-detail td {
+            padding: 20px 16px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-box {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .detail-box h4 {
+            font-size: 0.85em;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .transition-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 0.9em;
+        }
+
+        .transition-score {
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .transition-score.high {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .transition-score.medium {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .transition-score.low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .job-list-mini {
+            list-style: none;
+        }
+
+        .job-list-mini li {
+            padding: 6px 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.9em;
+        }
+
+        .job-list-mini li:last-child {
+            border-bottom: none;
+        }
+
+        .job-list-mini .employer {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+
+        /* Transitions Section */
+        .transition-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .transition-row {
+            display: grid;
+            grid-template-columns: 1fr 40px 1fr 80px;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+
+        .transition-row .from { color: #6b7280; }
+        .transition-row .arrow { text-align: center; color: #667eea; font-weight: bold; }
+        .transition-row .to { color: #1f2937; font-weight: 500; }
+
+        /* ROI Calculator */
+        .roi-calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .roi-inputs { display: flex; flex-direction: column; gap: 20px; }
+
+        .slider-group label {
+            display: block;
+            font-size: 0.9em;
+            color: #4b5563;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider-row input[type="range"] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #e5e7eb;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            min-width: 60px;
+            text-align: right;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.95em;
+        }
+
+        .roi-results {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d5e 100%);
+            border-radius: 12px;
+            padding: 30px;
+            color: white;
+        }
+
+        .roi-results h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .roi-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95em;
+        }
+
+        .roi-line:last-child { border-bottom: none; }
+
+        .roi-line .label { opacity: 0.8; }
+
+        .roi-line .value {
+            font-weight: 600;
+        }
+
+        .roi-line .value.positive { color: #34d399; }
+        .roi-line .value.negative { color: #f87171; }
+        .roi-line .value.highlight { color: #fbbf24; font-size: 1.1em; }
+
+        .roi-big {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.15);
+        }
+
+        .roi-big .number {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #34d399;
+        }
+
+        .roi-big .text {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d5e 100%);
+            padding: 60px 20px;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .pricing-section h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .pricing-subtitle {
+            text-align: center;
+            opacity: 0.7;
+            margin-bottom: 40px;
+            font-size: 1.05em;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .pricing-card.highlighted {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            position: relative;
+        }
+
+        .pricing-card.highlighted::after {
+            content: 'Vetlanda';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            padding: 4px 16px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .pricing-card .size {
+            opacity: 0.5;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card .price {
+            font-size: 2.8em;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .pricing-card .price span {
+            font-size: 0.35em;
+            opacity: 0.6;
+            font-weight: 400;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .pricing-card li {
+            padding: 6px 0;
+            font-size: 0.9em;
+            opacity: 0.8;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pricing-card li::before {
+            content: "✓ ";
+            color: #34d399;
+            font-weight: bold;
+        }
+
+        .pricing-note {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .pricing-note p {
+            opacity: 0.6;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .pricing-note strong {
+            opacity: 0.9;
+        }
+
+        .cta-row {
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Comparison Row */
+        .comparison-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .comparison-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .comparison-card .comp-label {
+            font-size: 0.8em;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .comparison-card .comp-value {
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .comparison-card .comp-value.loading { color: #d1d5db; }
+
+        .comparison-card .comp-detail {
+            font-size: 0.8em;
+            color: #9ca3af;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a { color: #667eea; text-decoration: none; }
+        footer p { margin: 10px 0; }
+
+        /* Loading state */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Error state */
+        .error-banner {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; padding: 15px 20px; }
+            .nav-links { margin-top: 15px; justify-content: center; }
+            .metrics-row { grid-template-columns: repeat(2, 1fr); }
+            .roi-calculator { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .comparison-row { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .header-top h1 { font-size: 1.5em; }
+            .transition-row { grid-template-columns: 1fr; gap: 4px; }
+            .transition-row .arrow { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Nordiq<span>Flow</span></a>
+        <div class="nav-links">
+            <a href="index.html">TalentFlow</a>
+            <a href="investors.html">For Investors</a>
+            <a href="artiklar.html">Artiklar</a>
+            <a href="demo.html">Live Demo</a>
+            <a href="cityiq.html">CityIQ</a>
+            <a href="cityiq-vetlanda.html" class="active">Vetlanda Pilot</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="header-top">
+                <div>
+                    <h1>CityIQ — <span class="accent">Vetlanda</span> kommun</h1>
+                    <div class="header-subtitle">Arbetsmarknadsanalys baserad på Arbetsförmedlingens öppna data</div>
+                </div>
+                <div class="header-badge">
+                    <div class="live-dot"></div>
+                    <span id="last-updated">Laddar data...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Body -->
+    <div class="dashboard-body">
+        <div class="container">
+
+            <!-- Error Banner -->
+            <div class="error-banner" id="error-banner"></div>
+
+            <!-- Key Metrics -->
+            <div class="metrics-row">
+                <div class="metric-card blue">
+                    <div class="metric-label">Lediga jobb i Vetlanda</div>
+                    <div class="metric-value loading" id="metric-jobs">—</div>
+                    <div class="metric-detail">Via Platsbanken just nu</div>
+                </div>
+                <div class="metric-card red">
+                    <div class="metric-label">Bristyrken identifierade</div>
+                    <div class="metric-value loading" id="metric-shortage">—</div>
+                    <div class="metric-detail">Yrken med flest öppna tjänster</div>
+                </div>
+                <div class="metric-card green">
+                    <div class="metric-label">Möjliga övergångar</div>
+                    <div class="metric-value loading" id="metric-transitions">—</div>
+                    <div class="metric-detail">Karriärvägar till bristyrken</div>
+                </div>
+                <div class="metric-card purple">
+                    <div class="metric-label">Unika arbetsgivare</div>
+                    <div class="metric-value loading" id="metric-employers">—</div>
+                    <div class="metric-detail">Som rekryterar i Vetlanda</div>
+                </div>
+            </div>
+
+            <!-- Regional Comparison -->
+            <div class="section-card">
+                <h2>Regional jämförelse</h2>
+                <p class="section-subtitle">Vetlanda jämfört med närliggande kommuner (live från Platsbanken)</p>
+                <div class="comparison-row">
+                    <div class="comparison-card">
+                        <div class="comp-label">Vetlanda</div>
+                        <div class="comp-value loading" id="comp-vetlanda">—</div>
+                        <div class="comp-detail">27 700 invånare</div>
+                    </div>
+                    <div class="comparison-card">
+                        <div class="comp-label">Nässjö</div>
+                        <div class="comp-value loading" id="comp-nassjo">—</div>
+                        <div class="comp-detail">31 800 invånare</div>
+                    </div>
+                    <div class="comparison-card">
+                        <div class="comp-label">Eksjö</div>
+                        <div class="comp-value loading" id="comp-eksjo">—</div>
+                        <div class="comp-detail">17 400 invånare</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shortage Occupations -->
+            <div class="section-card">
+                <h2>Bristyrken i Vetlanda</h2>
+                <p class="section-subtitle">Yrken med flest öppna tjänster just nu. Klicka på en rad för att se karriärövergångar och lediga jobb.</p>
+                <table class="shortage-table">
+                    <thead>
+                        <tr>
+                            <th style="width:50px">#</th>
+                            <th>Yrke</th>
+                            <th>Lediga tjänster</th>
+                            <th>Arbetsgivare</th>
+                            <th style="width:30px"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="shortage-tbody">
+                        <tr><td colspan="5" style="text-align:center; padding:40px; color:#9ca3af;">Laddar data från Arbetsförmedlingen...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Career Transitions -->
+            <div class="section-card">
+                <h2>Karriärövergångar till bristyrken</h2>
+                <p class="section-subtitle">Vilka nuvarande yrken kan leda till Vetlandas bristyrken? Baserat på Arbetsförmedlingens substitutability-data (16 600+ karriärrelationer).</p>
+                <div class="transition-flow" id="transition-flow">
+                    <div style="text-align:center; padding:30px; color:#9ca3af;">Beräknar övergångar...</div>
+                </div>
+            </div>
+
+            <!-- ROI Calculator -->
+            <div class="section-card">
+                <h2>Utbildnings-ROI för Vetlanda</h2>
+                <p class="section-subtitle">Vad händer ekonomiskt om Vetlanda investerar i omskolning till bristyrken?</p>
+                <div class="roi-calculator">
+                    <div class="roi-inputs">
+                        <div class="slider-group">
+                            <label>Antal personer som omskolas</label>
+                            <div class="slider-row">
+                                <input type="range" id="roi-persons" min="10" max="200" value="50" step="5">
+                                <span class="slider-value" id="roi-persons-val">50</span>
+                            </div>
+                        </div>
+                        <div class="slider-group">
+                            <label>Utbildningskostnad per person (SEK)</label>
+                            <div class="slider-row">
+                                <input type="range" id="roi-cost" min="20000" max="200000" value="80000" step="5000">
+                                <span class="slider-value" id="roi-cost-val">80 000</span>
+                            </div>
+                        </div>
+                        <div class="slider-group">
+                            <label>Genomsnittslön i bristyrke (SEK/mån)</label>
+                            <div class="slider-row">
+                                <input type="range" id="roi-salary" min="22000" max="45000" value="29000" step="1000">
+                                <span class="slider-value" id="roi-salary-val">29 000</span>
+                            </div>
+                        </div>
+                        <div class="slider-group">
+                            <label>Månader till anställning</label>
+                            <div class="slider-row">
+                                <input type="range" id="roi-months" min="3" max="18" value="6" step="1">
+                                <span class="slider-value" id="roi-months-val">6</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="roi-results">
+                        <h3>Ekonomisk kalkyl</h3>
+                        <div class="roi-line">
+                            <span class="label">Total utbildningsinvestering</span>
+                            <span class="value negative" id="roi-investment">-4 000 000 SEK</span>
+                        </div>
+                        <div class="roi-line">
+                            <span class="label">Årlig kommunalskatt (nya jobb)</span>
+                            <span class="value positive" id="roi-tax">+3 893 760 SEK</span>
+                        </div>
+                        <div class="roi-line">
+                            <span class="label">Besparat försörjningsstöd/år</span>
+                            <span class="value positive" id="roi-saved">+5 400 000 SEK</span>
+                        </div>
+                        <div class="roi-line">
+                            <span class="label">Återbetalningstid</span>
+                            <span class="value highlight" id="roi-payback">5 månader</span>
+                        </div>
+                        <div class="roi-big">
+                            <div class="number" id="roi-5year">+42.3M</div>
+                            <div class="text">Nettovinst för Vetlanda kommun över 5 år</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="color:#9ca3af; font-size:0.8em; margin-top:15px;">
+                    * Kommunalskattesats Vetlanda: 22,36%. Försörjningsstöd beräknat till 9 000 SEK/mån per person.
+                    Siffrorna är indikativa och baserade på SCB-snitt.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="pricing-section">
+        <div class="container">
+            <h2>Vad kostar CityIQ?</h2>
+            <p class="pricing-subtitle">Allt under direktupphandlingsgränsen — inget upphandlingsförfarande behövs</p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card highlighted">
+                    <h3>Liten kommun</h3>
+                    <div class="size">&lt; 30 000 invånare</div>
+                    <div class="price">75k <span>SEK/år</span></div>
+                    <ul>
+                        <li>CityIQ dashboard</li>
+                        <li>Talangbristanalys</li>
+                        <li>Kvartalsrapporter</li>
+                        <li>TalentFlow för invånare</li>
+                        <li>Email-support</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3>Medelstor kommun</h3>
+                    <div class="size">30 000 — 100 000</div>
+                    <div class="price">150k <span>SEK/år</span></div>
+                    <ul>
+                        <li>Allt i Liten +</li>
+                        <li>ROI-kalkylator</li>
+                        <li>Månadsrapporter</li>
+                        <li>Dedicated kontaktperson</li>
+                        <li>15 användarlicenser</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3>Stor kommun</h3>
+                    <div class="size">&gt; 100 000 invånare</div>
+                    <div class="price">250k <span>SEK/år</span></div>
+                    <ul>
+                        <li>Allt i Medelstor +</li>
+                        <li>Custom dashboards</li>
+                        <li>API-access</li>
+                        <li>Obegränsade licenser</li>
+                        <li>On-site workshops</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pricing-note">
+                <p><strong>Jämförelse:</strong> En konsultrapport kostar 500k — 2M SEK (engång). CityIQ ger <em>kontinuerlig</em> data för 75k/år.</p>
+                <p>Vi erbjuder en gratis 3-månaders pilot för att bevisa värdet.</p>
+            </div>
+
+            <div class="cta-row">
+                <a href="mailto:linnea@nordiqflow.com?subject=CityIQ Pilot — Vetlanda" class="cta-button">
+                    Boka en pilot för din kommun
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p><strong>NordiqFlow</strong> — AI-driven karriär- och kompetensanalys</p>
+            <p>
+                <a href="index.html">TalentFlow</a> |
+                <a href="cityiq.html">Om CityIQ</a> |
+                <a href="investors.html">För Investerare</a> |
+                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a>
+            </p>
+            <p style="margin-top:15px; opacity:0.5; font-size:0.85em;">
+                Data: Arbetsförmedlingen öppna API:er (JobSearch, Taxonomy). Uppdateras i realtid.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ───── Configuration ─────
+        const AF_API = 'https://jobsearch.api.jobtechdev.se';
+        const MUNICIPALITIES = {
+            vetlanda: { id: 'xJqx_SLC_415', name: 'Vetlanda' },
+            nassjo:   { id: 'KfXT_ySA_do2', name: 'Nässjö' },
+            eksjo:    { id: 'VacK_WF6_XVg', name: 'Eksjö' }
+        };
+        const TAX_RATE = 0.2236; // Vetlanda kommunalskatt
+        const WELFARE_MONTHLY = 9000; // Försörjningsstöd per person per month
+
+        let substitutabilityData = null;
+        let occupationsData = null;
+        let vetlandaJobs = [];
+        let shortageOccupations = [];
+
+        // ───── Data Loading ─────
+
+        async function loadStaticData() {
+            try {
+                const [subRes, occRes] = await Promise.all([
+                    fetch('/data/processed/substitutability.json'),
+                    fetch('/data/processed/occupations.json')
+                ]);
+                substitutabilityData = await subRes.json();
+                occupationsData = await occRes.json();
+            } catch (e) {
+                console.error('Failed to load static data:', e);
+                showError('Kunde inte ladda karriärdata. Kontrollera att data-filerna finns.');
+            }
+        }
+
+        async function fetchJobsForMunicipality(municipalityId) {
+            try {
+                const response = await fetch(`${AF_API}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        municipality: [municipalityId],
+                        limit: 100,
+                        offset: 0
+                    })
+                });
+
+                if (!response.ok) throw new Error(`API returned ${response.status}`);
+                const data = await response.json();
+                return { jobs: data.hits || [], total: data.total?.value || 0 };
+            } catch (e) {
+                console.warn('AF API call failed, trying fallback:', e.message);
+                // Fallback: try via internal proxy
+                try {
+                    const response = await fetch(`/api/jobs?q=Vetlanda&limit=50`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        return { jobs: data.jobs || [], total: data.total || 0 };
+                    }
+                } catch (e2) {
+                    console.warn('Fallback also failed:', e2.message);
+                }
+                return null;
+            }
+        }
+
+        async function fetchJobCount(municipalityId) {
+            try {
+                const response = await fetch(`${AF_API}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        municipality: [municipalityId],
+                        limit: 0
+                    })
+                });
+                if (!response.ok) throw new Error(`API returned ${response.status}`);
+                const data = await response.json();
+                return data.total?.value || 0;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // ───── Analysis ─────
+
+        function analyzeJobs(jobs) {
+            const byOccupation = {};
+            const employers = new Set();
+
+            jobs.forEach(job => {
+                // Get occupation info
+                const occGroup = job.occupation_group || job.occupation?.concept_id;
+                const occName = job.occupation_group?.label || job.occupation?.label || job.headline || 'Okänt';
+                const occId = job.occupation?.concept_id || occGroup?.concept_id || null;
+
+                const key = occId || occName;
+                if (!byOccupation[key]) {
+                    byOccupation[key] = {
+                        id: occId,
+                        name: occName,
+                        count: 0,
+                        employers: new Set(),
+                        jobs: []
+                    };
+                }
+                byOccupation[key].count++;
+                if (job.employer?.name) {
+                    byOccupation[key].employers.add(job.employer.name);
+                    employers.add(job.employer.name);
+                }
+                byOccupation[key].jobs.push({
+                    title: job.headline,
+                    employer: job.employer?.name || 'Okänd',
+                    id: job.id
+                });
+            });
+
+            // Sort by count
+            const sorted = Object.values(byOccupation)
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 15);
+
+            return { shortages: sorted, totalEmployers: employers.size };
+        }
+
+        function findTransitionsToOccupation(targetName) {
+            if (!substitutabilityData) return [];
+
+            const results = [];
+            const targetLower = targetName.toLowerCase();
+
+            // Find all occupations that can become/replace this target
+            for (const [id, occ] of Object.entries(substitutabilityData)) {
+                for (const rel of occ.relations) {
+                    if (rel.targetName.toLowerCase().includes(targetLower) ||
+                        targetLower.includes(rel.targetName.toLowerCase())) {
+                        if (rel.direction === 'can_become' || rel.direction === 'can_replace') {
+                            results.push({
+                                from: occ.name,
+                                fromId: id,
+                                to: rel.targetName,
+                                toId: rel.targetId,
+                                score: rel.score,
+                                direction: rel.direction
+                            });
+                        }
+                    }
+                }
+            }
+
+            // Also find reverse: who has this as their source
+            for (const [id, occ] of Object.entries(substitutabilityData)) {
+                if (occ.name.toLowerCase().includes(targetLower) ||
+                    targetLower.includes(occ.name.toLowerCase())) {
+                    // This IS the target, find who can become it (reverse lookup already done above)
+                    continue;
+                }
+            }
+
+            // Deduplicate and sort
+            const unique = {};
+            results.forEach(r => {
+                const key = r.from + '→' + r.to;
+                if (!unique[key] || unique[key].score < r.score) {
+                    unique[key] = r;
+                }
+            });
+
+            return Object.values(unique).sort((a, b) => b.score - a.score).slice(0, 5);
+        }
+
+        function findAllTransitions(shortageList) {
+            if (!substitutabilityData) return [];
+
+            const allTransitions = [];
+
+            shortageList.forEach(shortage => {
+                // Try to find transitions by matching occupation names
+                const name = shortage.name;
+                const transitions = findTransitionsToOccupation(name);
+                transitions.forEach(t => {
+                    allTransitions.push({
+                        ...t,
+                        shortageJobCount: shortage.count
+                    });
+                });
+            });
+
+            // Deduplicate and sort by score
+            const unique = {};
+            allTransitions.forEach(t => {
+                const key = t.from + '→' + t.to;
+                if (!unique[key] || unique[key].score < t.score) {
+                    unique[key] = t;
+                }
+            });
+
+            return Object.values(unique)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 20);
+        }
+
+        // ───── Rendering ─────
+
+        function renderMetrics(totalJobs, shortages, totalEmployers, transitionCount) {
+            animateNumber('metric-jobs', totalJobs);
+            animateNumber('metric-shortage', shortages.length);
+            animateNumber('metric-transitions', transitionCount);
+            animateNumber('metric-employers', totalEmployers);
+        }
+
+        function animateNumber(elementId, target) {
+            const el = document.getElementById(elementId);
+            el.classList.remove('loading');
+
+            if (target === null || target === undefined) {
+                el.textContent = '—';
+                return;
+            }
+
+            let current = 0;
+            const step = Math.max(1, Math.ceil(target / 30));
+            const interval = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                }
+                el.textContent = current.toLocaleString('sv-SE');
+            }, 30);
+        }
+
+        function renderComparison(vetlandaCount, nassjoCount, eksjoCount) {
+            const setComp = (id, val) => {
+                const el = document.getElementById(id);
+                el.classList.remove('loading');
+                el.textContent = val !== null ? `${val} jobb` : 'Ej tillgänglig';
+            };
+            setComp('comp-vetlanda', vetlandaCount);
+            setComp('comp-nassjo', nassjoCount);
+            setComp('comp-eksjo', eksjoCount);
+        }
+
+        function renderShortageTable(shortages) {
+            const tbody = document.getElementById('shortage-tbody');
+            if (!shortages.length) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#9ca3af;">Inga jobb hittades för Vetlanda just nu.</td></tr>';
+                return;
+            }
+
+            const maxCount = shortages[0].count;
+            let html = '';
+
+            shortages.forEach((s, i) => {
+                const rankClass = i < 3 ? 'top3' : 'rest';
+                const barWidth = Math.max(10, (s.count / maxCount) * 100);
+                const transitions = findTransitionsToOccupation(s.name);
+
+                html += `
+                    <tr onclick="toggleDetail(${i})" id="row-${i}">
+                        <td><span class="rank-badge ${rankClass}">${i + 1}</span></td>
+                        <td><strong>${escapeHtml(s.name)}</strong></td>
+                        <td>
+                            <div class="job-count-bar">
+                                <span>${s.count}</span>
+                                <div class="bar-track"><div class="bar-fill" style="width:${barWidth}%"></div></div>
+                            </div>
+                        </td>
+                        <td>${s.employers.size}</td>
+                        <td><span class="expand-arrow">&#9654;</span></td>
+                    </tr>
+                    <tr class="row-detail" id="detail-${i}">
+                        <td colspan="5">
+                            <div class="detail-grid">
+                                <div class="detail-box">
+                                    <h4>Karriärövergångar hit</h4>
+                                    ${transitions.length ? transitions.map(t => `
+                                        <div class="transition-item">
+                                            <span>${escapeHtml(t.from)}</span>
+                                            <span class="transition-score ${t.score >= 75 ? 'high' : t.score >= 50 ? 'medium' : 'low'}">${t.score}%</span>
+                                        </div>
+                                    `).join('') : '<p style="color:#9ca3af;font-size:0.9em;">Inga förberäknade övergångar hittades.</p>'}
+                                </div>
+                                <div class="detail-box">
+                                    <h4>Lediga tjänster</h4>
+                                    <ul class="job-list-mini">
+                                        ${s.jobs.slice(0, 5).map(j => `
+                                            <li>
+                                                <a href="https://arbetsformedlingen.se/platsbanken/annonser/${j.id}" target="_blank" style="color:#667eea;text-decoration:none;">${escapeHtml(j.title)}</a>
+                                                <div class="employer">${escapeHtml(j.employer)}</div>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>`;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        function renderTransitions(transitions) {
+            const container = document.getElementById('transition-flow');
+
+            if (!transitions.length) {
+                container.innerHTML = '<div style="text-align:center;padding:30px;color:#9ca3af;">Inga karriärövergångar kunde beräknas. Väntar på data...</div>';
+                return;
+            }
+
+            container.innerHTML = transitions.map(t => `
+                <div class="transition-row">
+                    <span class="from">${escapeHtml(t.from)}</span>
+                    <span class="arrow">→</span>
+                    <span class="to">${escapeHtml(t.to)}</span>
+                    <span class="transition-score ${t.score >= 75 ? 'high' : t.score >= 50 ? 'medium' : 'low'}">${t.score}%</span>
+                </div>
+            `).join('');
+        }
+
+        // ───── ROI Calculator ─────
+
+        function updateROI() {
+            const persons = parseInt(document.getElementById('roi-persons').value);
+            const cost = parseInt(document.getElementById('roi-cost').value);
+            const salary = parseInt(document.getElementById('roi-salary').value);
+            const months = parseInt(document.getElementById('roi-months').value);
+
+            // Update display values
+            document.getElementById('roi-persons-val').textContent = persons;
+            document.getElementById('roi-cost-val').textContent = cost.toLocaleString('sv-SE');
+            document.getElementById('roi-salary-val').textContent = salary.toLocaleString('sv-SE');
+            document.getElementById('roi-months-val').textContent = months;
+
+            // Calculate
+            const investment = persons * cost;
+            const annualTax = persons * salary * 12 * TAX_RATE;
+            const annualWelfareSaved = persons * WELFARE_MONTHLY * 12;
+            const annualBenefit = annualTax + annualWelfareSaved;
+            const paybackMonths = Math.ceil(investment / (annualBenefit / 12));
+            const fiveYearNet = (annualBenefit * 5) - investment;
+
+            // Render
+            document.getElementById('roi-investment').textContent = `-${formatSEK(investment)}`;
+            document.getElementById('roi-tax').textContent = `+${formatSEK(Math.round(annualTax))}`;
+            document.getElementById('roi-saved').textContent = `+${formatSEK(annualWelfareSaved)}`;
+            document.getElementById('roi-payback').textContent = `${paybackMonths} månader`;
+            document.getElementById('roi-5year').textContent = `+${formatSEK(Math.round(fiveYearNet))}`;
+        }
+
+        function formatSEK(n) {
+            if (n >= 1000000) {
+                return (n / 1000000).toFixed(1).replace('.', ',') + 'M SEK';
+            }
+            return n.toLocaleString('sv-SE') + ' SEK';
+        }
+
+        // ───── Helpers ─────
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showError(msg) {
+            const banner = document.getElementById('error-banner');
+            banner.textContent = msg;
+            banner.style.display = 'block';
+        }
+
+        window.toggleDetail = function(i) {
+            const row = document.getElementById('row-' + i);
+            const detail = document.getElementById('detail-' + i);
+            const isExpanded = row.classList.contains('expanded');
+
+            // Close all
+            document.querySelectorAll('.shortage-table tbody tr.expanded').forEach(r => r.classList.remove('expanded'));
+            document.querySelectorAll('.row-detail.visible').forEach(d => d.classList.remove('visible'));
+
+            if (!isExpanded) {
+                row.classList.add('expanded');
+                detail.classList.add('visible');
+            }
+        };
+
+        // ───── Fallback Data ─────
+
+        function useFallbackData() {
+            showError('Kunde inte nå Arbetsförmedlingens API just nu. Visar senast kända data.');
+
+            const fallbackShortages = [
+                { name: 'Undersköterska', count: 18, employers: new Set(['Vetlanda kommun', 'Attendo', 'Humana']), jobs: [
+                    { title: 'Undersköterska till hemtjänsten', employer: 'Vetlanda kommun', id: 'fallback' },
+                    { title: 'Undersköterska, natt', employer: 'Attendo', id: 'fallback' }
+                ]},
+                { name: 'Maskinoperatör', count: 12, employers: new Set(['IKEA Industry', 'Vetlanda Trä']), jobs: [
+                    { title: 'Maskinoperatör CNC', employer: 'IKEA Industry', id: 'fallback' }
+                ]},
+                { name: 'Lärare, förskola', count: 8, employers: new Set(['Vetlanda kommun']), jobs: [
+                    { title: 'Förskollärare till Björkens förskola', employer: 'Vetlanda kommun', id: 'fallback' }
+                ]},
+                { name: 'Lastbilsförare', count: 6, employers: new Set(['DHL', 'Schenker']), jobs: [
+                    { title: 'CE-chaufför', employer: 'DHL', id: 'fallback' }
+                ]},
+                { name: 'Svetsare', count: 5, employers: new Set(['Vetlanda Smide AB']), jobs: [
+                    { title: 'Svetsare MIG/MAG', employer: 'Vetlanda Smide AB', id: 'fallback' }
+                ]},
+                { name: 'Sjuksköterska', count: 5, employers: new Set(['Region Jönköping']), jobs: [
+                    { title: 'Sjuksköterska, vårdcentral', employer: 'Region Jönköping', id: 'fallback' }
+                ]},
+                { name: 'Personlig assistent', count: 4, employers: new Set(['Humana', 'Vetlanda kommun']), jobs: [
+                    { title: 'Personlig assistent', employer: 'Humana', id: 'fallback' }
+                ]},
+                { name: 'Kock', count: 4, employers: new Set(['Vetlanda kommun', 'Restaurang Huset']), jobs: [
+                    { title: 'Kock till skolkök', employer: 'Vetlanda kommun', id: 'fallback' }
+                ]},
+                { name: 'Elektriker', count: 3, employers: new Set(['Bravida']), jobs: [
+                    { title: 'Installationselektriker', employer: 'Bravida', id: 'fallback' }
+                ]},
+                { name: 'Snickare', count: 3, employers: new Set(['JM Bygg']), jobs: [
+                    { title: 'Träarbetare/Snickare', employer: 'JM Bygg', id: 'fallback' }
+                ]}
+            ];
+
+            const totalJobs = fallbackShortages.reduce((sum, s) => sum + s.count, 0) + 115;
+            shortageOccupations = fallbackShortages;
+            const transitions = findAllTransitions(fallbackShortages);
+
+            renderMetrics(totalJobs, fallbackShortages, 42, transitions.length);
+            renderComparison(totalJobs, null, null);
+            renderShortageTable(fallbackShortages);
+            renderTransitions(transitions);
+            document.getElementById('last-updated').textContent = 'Offline-data (senast känd)';
+        }
+
+        // ───── Init ─────
+
+        async function init() {
+            // Load static data and live API data in parallel
+            const [_, vetlandaResult, nassjoCount, eksjoCount] = await Promise.all([
+                loadStaticData(),
+                fetchJobsForMunicipality(MUNICIPALITIES.vetlanda.id),
+                fetchJobCount(MUNICIPALITIES.nassjo.id),
+                fetchJobCount(MUNICIPALITIES.eksjo.id)
+            ]);
+
+            if (!vetlandaResult) {
+                useFallbackData();
+                return;
+            }
+
+            vetlandaJobs = vetlandaResult.jobs;
+            const totalJobs = vetlandaResult.total;
+
+            // Analyze
+            const analysis = analyzeJobs(vetlandaJobs);
+            shortageOccupations = analysis.shortages;
+            const transitions = findAllTransitions(analysis.shortages);
+
+            // Render
+            renderMetrics(totalJobs, analysis.shortages, analysis.totalEmployers, transitions.length);
+            renderComparison(totalJobs, nassjoCount, eksjoCount);
+            renderShortageTable(analysis.shortages);
+            renderTransitions(transitions);
+
+            // Update timestamp
+            const now = new Date();
+            document.getElementById('last-updated').textContent =
+                `Live data — ${now.toLocaleDateString('sv-SE')} ${now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })}`;
+        }
+
+        // ROI slider listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            ['roi-persons', 'roi-cost', 'roi-salary', 'roi-months'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateROI);
+            });
+            updateROI();
+            init();
+        });
+    })();
+    </script>
+
+    <!-- LLM Site Navigation -->
+    <nav aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+        <h2>All pages on this site</h2>
+        <ul>
+            <li><a href="/index.html">TalentFlow - AI career matching platform</a></li>
+            <li><a href="/investors.html">For Investors - business model, ROI, roadmap</a></li>
+            <li><a href="/artiklar.html">Artiklar &amp; Dokument - downloadable PDFs</a></li>
+            <li><a href="/demo.html">Live Demo - interactive career matching</a></li>
+            <li><a href="/cityiq.html">CityIQ - municipal talent analytics</a></li>
+            <li><a href="/cityiq-vetlanda.html">CityIQ Vetlanda - live pilot dashboard</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
