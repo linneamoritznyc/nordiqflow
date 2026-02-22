@@ -471,25 +471,49 @@
         'use strict';
 
         const AF_API = 'https://jobsearch.api.jobtechdev.se';
+        const API_BASE = '';  // Relative — same domain on Vercel
 
         let substitutabilityData = null;
         let occupationsList = [];
         let selectedOccupation = null;
         let activeAutocompleteIndex = -1;
 
+        // ───── API Helper ─────
+
+        async function fetchFromAPI(endpoint) {
+            try {
+                const response = await fetch(`${API_BASE}/api/${endpoint}`);
+                if (!response.ok) throw new Error(`API ${response.status}`);
+                return await response.json();
+            } catch (e) {
+                console.warn(`API endpoint ${endpoint} failed:`, e.message);
+                return null;
+            }
+        }
+
         // ───── Data Loading ─────
 
         async function loadData() {
             try {
-                const [subRes, occRes] = await Promise.all([
+                // Try API endpoint for occupations first
+                const [subRes, occRes, apiOccupations] = await Promise.all([
                     fetch('/data/processed/substitutability.json'),
-                    fetch('/data/processed/occupations.json')
+                    fetch('/data/processed/occupations.json'),
+                    fetchFromAPI('occupations?limit=5000')
                 ]);
                 substitutabilityData = await subRes.json();
                 const occData = await occRes.json();
 
                 // Build searchable occupation list
-                if (Array.isArray(occData)) {
+                if (apiOccupations?.data?.length) {
+                    // Use API data if available (from Supabase or local)
+                    occupationsList = apiOccupations.data.map(o => ({
+                        id: o.id,
+                        name: o.name,
+                        group: o.ssykLabel || o.ssykCode || ''
+                    }));
+                    console.log(`Loaded ${occupationsList.length} occupations from API (${apiOccupations.meta?.source || 'unknown'})`);
+                } else if (Array.isArray(occData)) {
                     occupationsList = occData.map(o => ({
                         id: o.id || o.concept_id,
                         name: o.preferred_label || o.label || o.name,
@@ -512,7 +536,7 @@
                     }
                 }
 
-                console.log(`Loaded ${occupationsList.length} occupations, ${Object.keys(substitutabilityData || {}).length} with substitutability data`);
+                console.log(`Total: ${occupationsList.length} occupations, ${Object.keys(substitutabilityData || {}).length} with substitutability data`);
             } catch (e) {
                 console.error('Failed to load data:', e);
             }
@@ -574,6 +598,22 @@
 
         // ───── Career Transitions ─────
 
+        async function getCareerTransitionsFromAPI(occupationId) {
+            // Try our API first (includes 2-hop paths)
+            const data = await fetchFromAPI(`recommend?occupation_id=${occupationId}&limit=15`);
+            if (data?.recommendations?.length) {
+                return data.recommendations.map(r => ({
+                    id: r.id,
+                    name: r.name,
+                    score: r.matchScore,
+                    hops: r.hops || 1,
+                    viaOccupation: r.viaOccupation || null,
+                    direction: 'can_become'
+                }));
+            }
+            return null; // Signal to use local fallback
+        }
+
         function getCareerTransitions(occupationId) {
             if (!substitutabilityData || !substitutabilityData[occupationId]) return [];
 
@@ -585,11 +625,22 @@
                     id: r.targetId,
                     name: r.targetName,
                     score: r.score,
+                    hops: 1,
+                    viaOccupation: null,
                     direction: r.direction
                 }));
         }
 
         async function fetchJobCount(occupationName) {
+            // Try our API proxy first
+            try {
+                const response = await fetch(`${API_BASE}/api/jobs?q=${encodeURIComponent(occupationName)}&limit=0`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.total || 0;
+                }
+            } catch (e) {}
+            // Fallback: AF API direct
             try {
                 const response = await fetch(`${AF_API}/search`, {
                     method: 'POST',
@@ -605,6 +656,20 @@
         }
 
         async function fetchJobListings(occupationName) {
+            // Try our API proxy first
+            try {
+                const response = await fetch(`${API_BASE}/api/jobs?q=${encodeURIComponent(occupationName)}&limit=5`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return (data.jobs || []).map(j => ({
+                        title: j.title,
+                        employer: j.employer || 'Okänd',
+                        location: j.location || j.municipality || 'Sverige',
+                        id: j.id
+                    }));
+                }
+            } catch (e) {}
+            // Fallback: AF API direct
             try {
                 const response = await fetch(`${AF_API}/search`, {
                     method: 'POST',
@@ -634,7 +699,12 @@
             document.getElementById('results-view').classList.add('visible');
             document.getElementById('current-occupation-name').textContent = name;
 
-            const transitions = getCareerTransitions(id);
+            // Try API first, then local data
+            let transitions = await getCareerTransitionsFromAPI(id);
+            if (!transitions || !transitions.length) {
+                transitions = getCareerTransitions(id);
+            }
+
             document.getElementById('results-count').textContent =
                 transitions.length ? `${transitions.length} karriärövergångar hittades` : '';
 

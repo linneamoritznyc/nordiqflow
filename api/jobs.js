@@ -1,17 +1,30 @@
 /**
  * API endpoint: Search real jobs from Platsbanken via JobTech API
  * GET /api/jobs?q=developer&occupation_id=xxx&limit=10
+ * GET /api/jobs?municipality=xJqx_SLC_415&limit=50  (by municipality concept ID)
+ * GET /api/jobs?municipality_code=0684&limit=50      (by kommun code)
  *
- * Returns live job listings from Arbetsförmedlingen's Platsbanken
+ * Returns live job listings from Arbetsformedlingen's Platsbanken
  */
+
+const { setCorsHeaders } = require('./_lib/supabase');
 
 const JOBTECH_API = 'https://jobsearch.api.jobtechdev.se';
 
+// Municipality code → AF concept ID mapping
+const MUNICIPALITY_CODE_MAP = {
+    '0684': 'xJqx_SLC_415', // Vetlanda
+    '0682': 'KfXT_ySA_do2', // Nässjö
+    '0680': 'VacK_WF6_XVg', // Eksjö
+    '0683': 'KURg_KJF_Lwc', // Jönköping
+    '0380': '2BEg_bTh_og8', // Uppsala
+    '0180': 'AvNB_uwa_6n6', // Stockholm
+    '1280': 'oYPt_yDA_Smw', // Malmö
+    '1480': '6Bkz_F1q_gBR', // Göteborg
+};
+
 module.exports = async (req, res) => {
-    // Enable CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    setCorsHeaders(res);
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
@@ -22,11 +35,11 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const { q, occupation_id, occupation_group, limit = 10, offset = 0 } = req.query;
+        const { q, occupation_id, occupation_group, municipality, municipality_code, region, limit = 10, offset = 0 } = req.query;
 
         // Build search request for JobTech API
         const searchBody = {
-            limit: Math.min(parseInt(limit), 50),
+            limit: Math.min(parseInt(limit), 100),
             offset: parseInt(offset) || 0
         };
 
@@ -43,6 +56,18 @@ module.exports = async (req, res) => {
         // Add occupation group (SSYK code) if provided
         if (occupation_group) {
             searchBody['occupation-group'] = [occupation_group];
+        }
+
+        // Add municipality filter (by concept ID or code)
+        if (municipality) {
+            searchBody.municipality = [municipality];
+        } else if (municipality_code && MUNICIPALITY_CODE_MAP[municipality_code]) {
+            searchBody.municipality = [MUNICIPALITY_CODE_MAP[municipality_code]];
+        }
+
+        // Add region filter
+        if (region) {
+            searchBody.region = [region];
         }
 
         console.log('Searching JobTech API:', JSON.stringify(searchBody));

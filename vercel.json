@@ -45,6 +45,14 @@
       "dest": "/cityiq.html"
     },
     {
+      "src": "/cityiq-vetlanda",
+      "dest": "/cityiq-vetlanda.html"
+    },
+    {
+      "src": "/talentflow-demo",
+      "dest": "/talentflow-demo.html"
+    },
+    {
       "src": "/algoritmen",
       "dest": "/algoritmen.html"
     },

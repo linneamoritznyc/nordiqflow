@@ -987,11 +987,13 @@
         'use strict';
 
         // ───── Configuration ─────
+        const API_BASE = '';  // Relative — same domain on Vercel
         const AF_API = 'https://jobsearch.api.jobtechdev.se';
+        const MUNICIPALITY_CODE = '0684'; // Vetlanda
         const MUNICIPALITIES = {
-            vetlanda: { id: 'xJqx_SLC_415', name: 'Vetlanda' },
-            nassjo:   { id: 'KfXT_ySA_do2', name: 'Nässjö' },
-            eksjo:    { id: 'VacK_WF6_XVg', name: 'Eksjö' }
+            vetlanda: { id: 'xJqx_SLC_415', code: '0684', name: 'Vetlanda' },
+            nassjo:   { id: 'KfXT_ySA_do2', code: '0682', name: 'Nässjö' },
+            eksjo:    { id: 'VacK_WF6_XVg', code: '0680', name: 'Eksjö' }
         };
         const TAX_RATE = 0.2236; // Vetlanda kommunalskatt
         const WELFARE_MONTHLY = 9000; // Försörjningsstöd per person per month
@@ -1000,8 +1002,20 @@
         let occupationsData = null;
         let vetlandaJobs = [];
         let shortageOccupations = [];
+        let dataSource = 'loading';
 
-        // ───── Data Loading ─────
+        // ───── API Layer (our endpoints first, AF fallback) ─────
+
+        async function fetchFromAPI(endpoint) {
+            try {
+                const response = await fetch(`${API_BASE}/api/${endpoint}`);
+                if (!response.ok) throw new Error(`API ${response.status}`);
+                return await response.json();
+            } catch (e) {
+                console.warn(`API endpoint ${endpoint} failed:`, e.message);
+                return null;
+            }
+        }
 
         async function loadStaticData() {
             try {
@@ -1017,46 +1031,52 @@
             }
         }
 
-        async function fetchJobsForMunicipality(municipalityId) {
+        async function fetchMunicipalityStats() {
+            // Try our backend API first
+            const apiData = await fetchFromAPI(`municipality-stats?id=${MUNICIPALITY_CODE}`);
+            if (apiData && apiData.jobs) {
+                dataSource = apiData.meta?.source || 'api';
+                return apiData;
+            }
+
+            // Fallback: call AF API directly
+            return await fetchFromAFDirect();
+        }
+
+        async function fetchFromAFDirect() {
             try {
                 const response = await fetch(`${AF_API}/search`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        municipality: [municipalityId],
+                        municipality: [MUNICIPALITIES.vetlanda.id],
                         limit: 100,
                         offset: 0
                     })
                 });
-
-                if (!response.ok) throw new Error(`API returned ${response.status}`);
+                if (!response.ok) throw new Error(`AF API ${response.status}`);
                 const data = await response.json();
-                return { jobs: data.hits || [], total: data.total?.value || 0 };
+                dataSource = 'af_api_direct';
+                return { jobs: data.hits || [], total: data.total?.value || 0, _raw: true };
             } catch (e) {
-                console.warn('AF API call failed, trying fallback:', e.message);
-                // Fallback: try via internal proxy
-                try {
-                    const response = await fetch(`/api/jobs?q=Vetlanda&limit=50`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        return { jobs: data.jobs || [], total: data.total || 0 };
-                    }
-                } catch (e2) {
-                    console.warn('Fallback also failed:', e2.message);
-                }
+                console.warn('AF API direct failed:', e.message);
                 return null;
             }
         }
 
         async function fetchJobCount(municipalityId) {
+            // Try our API
+            const code = Object.values(MUNICIPALITIES).find(m => m.id === municipalityId)?.code;
+            if (code) {
+                const apiData = await fetchFromAPI(`municipality-stats?id=${code}`);
+                if (apiData?.jobs?.totalActive !== undefined) return apiData.jobs.totalActive;
+            }
+            // Fallback: AF API direct
             try {
                 const response = await fetch(`${AF_API}/search`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        municipality: [municipalityId],
-                        limit: 0
-                    })
+                    body: JSON.stringify({ municipality: [municipalityId], limit: 0 })
                 });
                 if (!response.ok) throw new Error(`API returned ${response.status}`);
                 const data = await response.json();
@@ -1066,17 +1086,27 @@
             }
         }
 
-        // ───── Analysis ─────
+        async function fetchShortageAnalysis() {
+            const data = await fetchFromAPI(`shortage-analysis?municipality=${MUNICIPALITY_CODE}&limit=15`);
+            if (data?.shortages) return data;
+            return null;
+        }
+
+        async function fetchCareerTransitions() {
+            const data = await fetchFromAPI(`career-transitions?municipality=${MUNICIPALITY_CODE}&min_score=25&limit=20`);
+            if (data?.transitions) return data;
+            return null;
+        }
+
+        // ───── Analysis (for raw AF API data fallback) ─────
 
         function analyzeJobs(jobs) {
             const byOccupation = {};
             const employers = new Set();
 
             jobs.forEach(job => {
-                // Get occupation info
-                const occGroup = job.occupation_group || job.occupation?.concept_id;
                 const occName = job.occupation_group?.label || job.occupation?.label || job.headline || 'Okänt';
-                const occId = job.occupation?.concept_id || occGroup?.concept_id || null;
+                const occId = job.occupation?.concept_id || null;
 
                 const key = occId || occName;
                 if (!byOccupation[key]) {
@@ -1100,7 +1130,6 @@
                 });
             });
 
-            // Sort by count
             const sorted = Object.values(byOccupation)
                 .sort((a, b) => b.count - a.count)
                 .slice(0, 15);
@@ -1114,7 +1143,6 @@
             const results = [];
             const targetLower = targetName.toLowerCase();
 
-            // Find all occupations that can become/replace this target
             for (const [id, occ] of Object.entries(substitutabilityData)) {
                 for (const rel of occ.relations) {
                     if (rel.targetName.toLowerCase().includes(targetLower) ||
@@ -1133,16 +1161,6 @@
                 }
             }
 
-            // Also find reverse: who has this as their source
-            for (const [id, occ] of Object.entries(substitutabilityData)) {
-                if (occ.name.toLowerCase().includes(targetLower) ||
-                    targetLower.includes(occ.name.toLowerCase())) {
-                    // This IS the target, find who can become it (reverse lookup already done above)
-                    continue;
-                }
-            }
-
-            // Deduplicate and sort
             const unique = {};
             results.forEach(r => {
                 const key = r.from + '→' + r.to;
@@ -1160,18 +1178,17 @@
             const allTransitions = [];
 
             shortageList.forEach(shortage => {
-                // Try to find transitions by matching occupation names
-                const name = shortage.name;
+                const name = shortage.name || shortage.occupationName;
+                if (!name) return;
                 const transitions = findTransitionsToOccupation(name);
                 transitions.forEach(t => {
                     allTransitions.push({
                         ...t,
-                        shortageJobCount: shortage.count
+                        shortageJobCount: shortage.count || shortage.openPositions
                     });
                 });
             });
 
-            // Deduplicate and sort by score
             const unique = {};
             allTransitions.forEach(t => {
                 const key = t.from + '→' + t.to;
@@ -1422,37 +1439,82 @@
         // ───── Init ─────
 
         async function init() {
-            // Load static data and live API data in parallel
-            const [_, vetlandaResult, nassjoCount, eksjoCount] = await Promise.all([
+            // Load static data and try API endpoints in parallel
+            const [_, statsResult, shortageResult, transitionResult, nassjoCount, eksjoCount] = await Promise.all([
                 loadStaticData(),
-                fetchJobsForMunicipality(MUNICIPALITIES.vetlanda.id),
+                fetchMunicipalityStats(),
+                fetchShortageAnalysis(),
+                fetchCareerTransitions(),
                 fetchJobCount(MUNICIPALITIES.nassjo.id),
                 fetchJobCount(MUNICIPALITIES.eksjo.id)
             ]);
 
-            if (!vetlandaResult) {
-                useFallbackData();
+            // If our API returned structured data, use it
+            if (statsResult && !statsResult._raw && statsResult.jobs) {
+                const totalJobs = statsResult.jobs.totalActive || statsResult.jobs.total_active || 0;
+                const topOccs = statsResult.jobs.topOccupations || [];
+                const shortages = shortageResult?.shortages || statsResult.shortages || [];
+                const transitions = transitionResult?.transitions || [];
+
+                // Convert API format to rendering format
+                const renderShortages = shortages.map(s => ({
+                    id: s.occupationId || s.occupation_id,
+                    name: s.occupationName || s.occupation_name,
+                    count: s.openPositions || s.open_positions || s.activeJobs || 0,
+                    employers: new Set(s.employers || (s.topEmployers || []).map(e => e.name)),
+                    jobs: (s.topEmployers || []).map(e => ({
+                        title: s.occupationName || s.occupation_name,
+                        employer: e.name,
+                        id: 'api'
+                    }))
+                }));
+
+                const uniqueEmployers = new Set();
+                topOccs.forEach(o => (o.topEmployers || []).forEach(e => uniqueEmployers.add(e.name)));
+
+                // Use API transitions or compute from local data
+                let renderTransitions = [];
+                if (transitions.length) {
+                    renderTransitions = transitions.map(t => ({
+                        from: t.fromOccupation || t.from_occupation,
+                        to: t.toOccupation || t.to_occupation,
+                        score: t.score,
+                    }));
+                } else {
+                    renderTransitions = findAllTransitions(renderShortages);
+                }
+
+                renderMetrics(totalJobs, renderShortages, uniqueEmployers.size || topOccs.length, renderTransitions.length);
+                renderComparison(totalJobs, nassjoCount, eksjoCount);
+                renderShortageTable(renderShortages);
+                renderTransitions(renderTransitions);
+
+                const now = new Date();
+                const sourceLabel = dataSource === 'supabase' ? 'Supabase DB' : 'API';
+                document.getElementById('last-updated').textContent =
+                    `${sourceLabel} — ${now.toLocaleDateString('sv-SE')} ${now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })}`;
                 return;
             }
 
-            vetlandaJobs = vetlandaResult.jobs;
-            const totalJobs = vetlandaResult.total;
+            // Fallback: raw AF API data
+            if (statsResult && statsResult._raw) {
+                const analysis = analyzeJobs(statsResult.jobs || []);
+                shortageOccupations = analysis.shortages;
+                const transitions = findAllTransitions(analysis.shortages);
 
-            // Analyze
-            const analysis = analyzeJobs(vetlandaJobs);
-            shortageOccupations = analysis.shortages;
-            const transitions = findAllTransitions(analysis.shortages);
+                renderMetrics(statsResult.total, analysis.shortages, analysis.totalEmployers, transitions.length);
+                renderComparison(statsResult.total, nassjoCount, eksjoCount);
+                renderShortageTable(analysis.shortages);
+                renderTransitions(transitions);
 
-            // Render
-            renderMetrics(totalJobs, analysis.shortages, analysis.totalEmployers, transitions.length);
-            renderComparison(totalJobs, nassjoCount, eksjoCount);
-            renderShortageTable(analysis.shortages);
-            renderTransitions(transitions);
+                const now = new Date();
+                document.getElementById('last-updated').textContent =
+                    `Live AF API — ${now.toLocaleDateString('sv-SE')} ${now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })}`;
+                return;
+            }
 
-            // Update timestamp
-            const now = new Date();
-            document.getElementById('last-updated').textContent =
-                `Live data — ${now.toLocaleDateString('sv-SE')} ${now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })}`;
+            // Final fallback: hardcoded data
+            useFallbackData();
         }
 
         // ROI slider listeners

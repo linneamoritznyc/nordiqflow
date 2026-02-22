@@ -1,0 +1,150 @@
+{
+  "municipalityId": "0684",
+  "municipalityName": "Vetlanda",
+  "snapshotDate": "2026-02-22",
+  "totalActiveJobs": 187,
+  "uniqueOccupations": 42,
+  "occupationSnapshots": [
+    {
+      "occupationId": "bSEB_VKd_Ub3",
+      "occupationName": "Undersköterska, hemtjänst och äldreboende",
+      "ssykCode": "5321",
+      "activeJobs": 18,
+      "newJobs7d": 4,
+      "topEmployers": [
+        {"name": "Vetlanda kommun", "count": 12},
+        {"name": "Attendo", "count": 4},
+        {"name": "Humana", "count": 2}
+      ]
+    },
+    {
+      "occupationId": "TK78_Lw2_Sk3",
+      "occupationName": "Maskinoperatör, metallarbete",
+      "ssykCode": "8121",
+      "activeJobs": 14,
+      "newJobs7d": 3,
+      "topEmployers": [
+        {"name": "IKEA Industry", "count": 6},
+        {"name": "Vetlanda Smide AB", "count": 4},
+        {"name": "Sapa Profiler", "count": 4}
+      ]
+    },
+    {
+      "occupationId": "4dBZ_gZX_bkf",
+      "occupationName": "Förskollärare",
+      "ssykCode": "2342",
+      "activeJobs": 11,
+      "newJobs7d": 2,
+      "topEmployers": [
+        {"name": "Vetlanda kommun", "count": 11}
+      ]
+    },
+    {
+      "occupationId": "xxQs_SYu_8GD",
+      "occupationName": "Lastbilsförare",
+      "ssykCode": "8321",
+      "activeJobs": 9,
+      "newJobs7d": 3,
+      "topEmployers": [
+        {"name": "DHL", "count": 3},
+        {"name": "DB Schenker", "count": 3},
+        {"name": "Norrlands Åkeri", "count": 3}
+      ]
+    },
+    {
+      "occupationId": "rxrQ_Nyy_k6y",
+      "occupationName": "Svetsare",
+      "ssykCode": "7212",
+      "activeJobs": 8,
+      "newJobs7d": 2,
+      "topEmployers": [
+        {"name": "Vetlanda Smide AB", "count": 4},
+        {"name": "IKEA Industry", "count": 2},
+        {"name": "SSP Teknik", "count": 2}
+      ]
+    },
+    {
+      "occupationId": "VFDr_kCs_JnE",
+      "occupationName": "Sjuksköterska, grundutbildad",
+      "ssykCode": "2221",
+      "activeJobs": 7,
+      "newJobs7d": 1,
+      "topEmployers": [
+        {"name": "Region Jönköping", "count": 5},
+        {"name": "Vetlanda kommun", "count": 2}
+      ]
+    },
+    {
+      "occupationId": "GbmC_WZq_HDd",
+      "occupationName": "Personlig assistent",
+      "ssykCode": "5341",
+      "activeJobs": 7,
+      "newJobs7d": 2,
+      "topEmployers": [
+        {"name": "Humana", "count": 3},
+        {"name": "Vetlanda kommun", "count": 2},
+        {"name": "Olivia Personlig Assistans", "count": 2}
+      ]
+    },
+    {
+      "occupationId": "VGq9_DkH_QBt",
+      "occupationName": "Kock, storhushåll",
+      "ssykCode": "5121",
+      "activeJobs": 6,
+      "newJobs7d": 1,
+      "topEmployers": [
+        {"name": "Vetlanda kommun", "count": 4},
+        {"name": "Compass Group", "count": 2}
+      ]
+    },
+    {
+      "occupationId": "ePu3_Rxa_7TJ",
+      "occupationName": "Installationselektriker",
+      "ssykCode": "7411",
+      "activeJobs": 5,
+      "newJobs7d": 1,
+      "topEmployers": [
+        {"name": "Bravida", "count": 3},
+        {"name": "Elcenter i Vetlanda", "count": 2}
+      ]
+    },
+    {
+      "occupationId": "sN5a_LeA_CbN",
+      "occupationName": "Träarbetare och snickare",
+      "ssykCode": "7111",
+      "activeJobs": 5,
+      "newJobs7d": 1,
+      "topEmployers": [
+        {"name": "JM", "count": 2},
+        {"name": "Derome", "count": 2},
+        {"name": "Vetlanda Bygg", "count": 1}
+      ]
+    },
+    {
+      "occupationId": "cMq2_xJZ_Ry1",
+      "occupationName": "Mjukvaruutvecklare",
+      "ssykCode": "2512",
+      "activeJobs": 4,
+      "newJobs7d": 1,
+      "topEmployers": [
+        {"name": "IKEA IT", "count": 2},
+        {"name": "Proton Group", "count": 2}
+      ]
+    },
+    {
+      "occupationId": "Dkwd_LgR_hA6",
+      "occupationName": "Lagerarbetare",
+      "ssykCode": "9321",
+      "activeJobs": 4,
+      "newJobs7d": 2,
+      "topEmployers": [
+        {"name": "PostNord", "count": 2},
+        {"name": "ICA Maxi", "count": 2}
+      ]
+    }
+  ],
+  "meta": {
+    "source": "Arbetsförmedlingen JobSearch API (seed data, representative for Vetlanda Q1 2026)",
+    "generatedAt": "2026-02-22T14:00:00.000Z"
+  }
+}
