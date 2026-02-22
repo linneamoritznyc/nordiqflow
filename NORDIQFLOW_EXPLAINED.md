@@ -54,7 +54,7 @@ Output: "You can become a Healthcare Operations Manager with 85% skill match.
 6. Pulls salary data from JobSearch API
 7. Checks 5-year demand forecast from Yrkesbarometer
 
-**Price:** 299 SEK/month (freemium model)
+**Price:** Free for all users (funded via municipal CityIQ licenses)
 
 ---
 
@@ -145,17 +145,12 @@ NordiqFlow takes these pre-computed relationships and builds user-facing product
 ┌─────────────────────────────────────────────────────────────────┐
 │                    NORDIQFLOW INTELLIGENCE LAYER                 │
 │                                                                  │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │   Neo4j     │  │  Pinecone   │  │     ClickHouse          │  │
-│  │  (Graph)    │  │  (Vectors)  │  │   (Time Series)         │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-│         │               │                    │                   │
-│         └───────────────┴────────────────────┘                   │
-│                         │                                        │
-│                    ┌────▼────┐                                   │
-│                    │ FastAPI │                                   │
-│                    │  Core   │                                   │
-│                    └────┬────┘                                   │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │            Supabase (PostgreSQL 15)                      │  │
+│  │   pgvector (semantic search) + RLS (GDPR)               │  │
+│  │   Recursive CTEs (graph-like career path queries)       │  │
+│  │   Auto-generated REST API (no separate backend needed)  │  │
+│  └──────────────────────────┬───────────────────────────────┘  │
 │                         │                                        │
 └─────────────────────────┼────────────────────────────────────────┘
                           │
@@ -228,15 +223,15 @@ Sweden has:
 
 ---
 
-## Business Model
+## Business Model — Third-Party Payer
 
 | Product | Target | Year 2 ARR |
 |---------|--------|------------|
-| TalentFlow | 1,000 users @ 299 SEK/mo | 3.6M SEK |
-| CityIQ | 30 municipalities @ 100k/yr | 3M SEK |
-| **TOTAL** | | **6.6M SEK** |
+| TalentFlow | Free for all users | Included in CityIQ license |
+| CityIQ + TalentFlow | 30 municipalities @ 75-250k/yr | 4.5M SEK |
+| **TOTAL** | | **4.5M SEK** |
 
-**Exit potential:** 15-20x ARR for platform plays with network effects = **100-130M SEK valuation**
+The municipality buys a CityIQ license, residents get TalentFlow for free — like 1177 is free for patients but the region pays.
 
 ---
 
@@ -249,13 +244,13 @@ Sweden has:
 - Identified key datasets for each product
 
 ### In Progress 🔄
-- Building Neo4j graph database
-- Designing TalentFlow UI
-- Creating API layer
+- Building Supabase database with pgvector
+- Designing TalentFlow UI (Next.js 15)
+- Creating API layer via Supabase auto-generated REST
 
 ### Next Steps 📋
-- [ ] Parse and normalize all datasets
-- [ ] Build graph database with relationships
+- [ ] Import and normalize all datasets into Supabase
+- [ ] Build recursive CTE queries for career transitions
 - [ ] Create `/transitions` API endpoint
 - [ ] Design TalentFlow MVP interface
 - [ ] Pilot CityIQ with 3 municipalities
@@ -276,7 +271,7 @@ When working on NordiqFlow, remember:
 
 ## The Vision
 
-**NordiqFlow becomes Sweden's labor market operating system.**
+**NordiqFlow becomes the intelligence layer for Sweden's labor market.**
 
 Every career decision, every hiring choice, every education investment flows through our intelligence layer. We're not replacing Arbetsförmedlingen—we're making their data actually useful.
 

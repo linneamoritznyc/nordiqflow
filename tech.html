@@ -966,15 +966,20 @@ transitions = substitutability_graph.get_transitions(
                     Denna graf möjliggör snabba traverseringar för karriärrekommendationer.
                 </p>
                 <div class="code-block">
-<span class="comment"># Grafstruktur (Neo4j Cypher)</span>
-(butikschef:Occupation {id: <span class="string">'SSYK_5221'</span>})
-    -[:CAN_TRANSITION {strength: <span class="number">85</span>}]->
-(verksamhetsledare:Occupation {id: <span class="string">'SSYK_1312'</span>})
+<span class="comment">-- Karriärövergångar (PostgreSQL / Supabase)</span>
+<span class="keyword">SELECT</span> t.target_occupation, o.name, t.substitutability_level
+<span class="keyword">FROM</span> substitutability_relations t
+<span class="keyword">JOIN</span> occupations o <span class="keyword">ON</span> o.id = t.target_occupation
+<span class="keyword">WHERE</span> t.source_occupation = <span class="string">'SSYK_5221'</span>
+<span class="keyword">ORDER BY</span> t.substitutability_level <span class="keyword">DESC</span>;
 
-<span class="comment"># Traversera för att hitta karriärvägar</span>
-MATCH path = (start)-[:CAN_TRANSITION*<span class="number">1..3</span>]->(target)
-WHERE start.id = <span class="string">'current_occupation'</span>
-RETURN path ORDER BY relationship_strength DESC
+<span class="comment">-- Rekursiv CTE för multi-hop karriärvägar</span>
+<span class="keyword">WITH RECURSIVE</span> paths <span class="keyword">AS</span> (
+  <span class="keyword">SELECT</span> target_occupation, substitutability_level, <span class="number">1</span> <span class="keyword">AS</span> depth
+  <span class="keyword">FROM</span> substitutability_relations
+  <span class="keyword">WHERE</span> source_occupation = <span class="string">'current_occupation'</span>
+  <span class="keyword">UNION ALL</span> ...
+)
                 </div>
             </div>
 
@@ -1080,30 +1085,31 @@ RETURN path ORDER BY relationship_strength DESC
     <!-- Tech Stack -->
     <section class="section dark">
         <div class="container">
-            <h2 class="section-title">Planerad Tech Stack</h2>
+            <h2 class="section-title">Tech Stack</h2>
             <div class="theory-grid">
                 <div class="theory-card" style="background: #2c3e50; border-top-color: #3498db;">
                     <h3 style="color: white;">Backend</h3>
                     <p style="color: #ccc;">
-                        <strong>Neo4j</strong> - Grafddatabas för taxonomi och relationer<br>
-                        <strong>FastAPI</strong> - Python API-layer<br>
-                        <strong>Pinecone/Weaviate</strong> - Vektorlagring för semantisk sökning
+                        <strong>Supabase</strong> - PostgreSQL 15 med pgvector, RLS, auto-genererat REST API<br>
+                        <strong>Rekursiva CTEs</strong> - Graf-liknande queries utan separat grafdatabas<br>
+                        <strong>pgvector</strong> - Vektorsökning för semantisk matchning
                     </p>
                 </div>
                 <div class="theory-card" style="background: #2c3e50; border-top-color: #27ae60;">
                     <h3 style="color: white;">Frontend</h3>
                     <p style="color: #ccc;">
-                        <strong>Next.js</strong> - React-ramverk<br>
+                        <strong>Next.js 15</strong> - React med App Router och TypeScript<br>
+                        <strong>Tailwind CSS</strong> - Utility-first styling<br>
                         <strong>D3.js</strong> - Interaktiva visualiseringar<br>
-                        <strong>Vercel</strong> - Deployment
+                        <strong>Vercel</strong> - Edge deployment
                     </p>
                 </div>
                 <div class="theory-card" style="background: #2c3e50; border-top-color: #9b59b6;">
-                    <h3 style="color: white;">Data Pipeline</h3>
+                    <h3 style="color: white;">AI & Data</h3>
                     <p style="color: #ccc;">
-                        <strong>AF Open APIs</strong> - Datakälla<br>
-                        <strong>ClickHouse</strong> - Time-series för historik<br>
-                        <strong>Apache Airflow</strong> - Orkestrering
+                        <strong>Anthropic Claude</strong> - CV-parsing, resumé-generering<br>
+                        <strong>AF Open APIs</strong> - Datakälla (60+ datasets)<br>
+                        <strong>Plausible Analytics</strong> - GDPR-kompatibel analys
                     </p>
                 </div>
             </div>
@@ -1354,7 +1360,7 @@ RETURN path ORDER BY relationship_strength DESC
 
     <footer>
         <div class="container">
-            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p><strong>NordiqFlow</strong> — AI-driven karriär- och kompetensanalys</p>
             <p>
                 <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a> |
                 <a href="investors.html">För Investerare</a>

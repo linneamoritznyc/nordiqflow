@@ -26,8 +26,8 @@ Dagens rekryteringssajter är enkla sökmotorer. NordiqFlow är en **semantisk g
 └──────────────────┬──────────────────────────────────┘
                    │
             ┌──────▼─────┐
-            │  GRAPH DB  │  Neo4j + Vector Store
-            │   ENGINE   │  (Unified Intelligence Layer)
+            │  Supabase  │  PostgreSQL + pgvector
+            │  (Backend) │  (Unified Intelligence Layer)
             └──────┬─────┘
                    │
         ┌──────────┴──────────┐
@@ -36,7 +36,7 @@ Dagens rekryteringssajter är enkla sökmotorer. NordiqFlow är en **semantisk g
     │Talent │             │ City  │
     │ Flow  │             │  IQ   │
     │       │             │       │
-    │ B2C   │             │ B2G   │
+    │ Gratis│             │ B2G   │
     └───────┘             └───────┘
 ```
 
@@ -66,14 +66,14 @@ flowchart LR
 
 ## 📦 Produkter
 
-### 1️⃣ TalentFlow (B2C SaaS)
+### 1️⃣ TalentFlow (Gratis för användare)
 **Problem**: Personer vet inte hur deras skills överförs till andra yrken.
 
 **Lösning**: AI-driven karriärplanering
 - Input: "Jag är Butikschef inom Retail"
 - Output: "Du kan bli Verksamhetschef inom Vård med 85% skill-match. Saknade skills: Vårdadministration (400 YH-timmar). Löneökning: +7k SEK/månad"
 
-**Pris**: 299 SEK/månad (freemium model)
+**Pris**: Gratis för alla användare (finansieras via kommunala CityIQ-licenser)
 
 ---
 
@@ -97,22 +97,22 @@ flowchart LR
 
 ---
 
-## 📊 Business Model
+## 📊 Business Model — Third-Party Payer
 
 | Product | Target | ARR Potential (Year 2) |
 |---------|--------|------------------------|
-| TalentFlow | 1,000 users @ 299 SEK/mo | 3.6M SEK |
-| CityIQ | 30 municipalities @ 100k/yr | 3M SEK |
-| **TOTAL** | | **6.6M SEK** |
+| TalentFlow | Gratis för alla användare | Ingår i CityIQ-licens |
+| CityIQ + TalentFlow | 30 municipalities @ 75-250k/yr | 4.5M SEK |
+| **TOTAL** | | **4.5M SEK** |
 
-Exit multiples: 15-20x ARR för platform plays med network effects = **100-130M SEK valuation**.
+Modell: Kommunen köper CityIQ-licens, invånarna får TalentFlow gratis (som 1177).
 
 ---
 
 ## 🚀 Roadmap
 
 ### Phase 1: Foundation (Månader 1-4)
-- [ ] Ingest full Taxonomy graph till Neo4j
+- [ ] Importera Taxonomy-data till Supabase (PostgreSQL + pgvector)
 - [ ] Real-time JobSearch stream integration
 - [ ] Build core API: `/transitions`, `/skill-index`, `/talent-gaps`
 - [ ] Train ML models (salary prediction, demand forecasting)
@@ -138,17 +138,19 @@ Exit multiples: 15-20x ARR för platform plays med network effects = **100-130M 
 ## 🛠️ Tech Stack
 
 **Backend**:
-- Neo4j (graph database)
-- Pinecone/Weaviate (vector store för semantic search)
-- ClickHouse/TimescaleDB (time-series data)
-- Python/FastAPI
+- Supabase (PostgreSQL 15 + Auth + Storage + pgvector)
+- Rekursiva CTEs för graf-liknande karriärvägs-queries
+- Row-Level Security (RLS) för GDPR-compliance
 
 **Frontend**:
-- React/Next.js (TalentFlow, CityIQ dashboards)
+- Next.js 15 (App Router, TypeScript, Tailwind CSS)
+- D3.js (interaktiva visualiseringar)
 - Vercel (hosting)
 
-**Data Sources**:
+**AI & Data**:
+- Anthropic Claude Sonnet 4.5 (CV-parsing, resumé-generering)
 - Arbetsförmedlingens Open Data APIs (se `/docs/API_RESEARCH.md`)
+- Plausible Analytics (GDPR-kompatibel)
 
 ---
 

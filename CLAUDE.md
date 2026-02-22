@@ -1,7 +1,7 @@
 # NordiqFlow - Project Context
 
 ## Overview
-NordiqFlow builds Sweden's labour market OS. Two products: **TalentFlow** (B2C career platform) and **CityIQ** (B2G municipal talent analytics).
+NordiqFlow builds AI-driven career and competency analysis for Sweden's labour market. Two products: **TalentFlow** (free career platform for individuals) and **CityIQ** (B2G municipal talent analytics).
 
 ## Site Structure
 - Static HTML site deployed on Vercel from repo root

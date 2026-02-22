@@ -1,6 +1,6 @@
 # NordiqFlow
 
-> Sweden's labour market OS — AI-powered career matching built on Arbetsförmedlingen's open data.
+> AI-driven career and competency analysis for Sweden's labour market — built on Arbetsförmedlingen's open data.
 
 NordiqFlow builds two products: TalentFlow (B2C career platform for individuals) and CityIQ (B2G municipal talent analytics). The platform uses 51,000+ pre-calculated career transitions from Sweden's public employment service data, combined with AI, to uncover hidden career paths that traditional keyword-based job matching misses.
 

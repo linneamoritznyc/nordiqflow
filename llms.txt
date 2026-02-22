@@ -1,6 +1,6 @@
 # NordiqFlow
 
-> NordiqFlow builds Sweden's labour market OS. Two products: TalentFlow (B2C career platform) and CityIQ (B2G municipal talent analytics). Built on Arbetsformedlingen's open JobTech Dev API data.
+> NordiqFlow builds AI-driven career and competency analysis for Sweden's labour market. Two products: TalentFlow (free career platform for individuals) and CityIQ (B2G municipal talent analytics). Built on Arbetsformedlingen's open JobTech Dev API data.
 
 ## About
 
@@ -25,10 +25,10 @@ NordiqFlow is a Swedish AI company founded in 2026 by Linnea Moritz in Vetlanda.
 ## Products
 
 ### TalentFlow (B2C)
-Career intelligence for individuals. Upload CV, get AI-powered career recommendations based on competency overlap, skill gap analysis, regional demand forecasts, and salary data. Price: 299 SEK/month premium (free tier available).
+Career intelligence for individuals. Upload CV, get AI-powered career recommendations based on competency overlap, skill gap analysis, regional demand forecasts, and salary data. Free for all users — funded through municipal CityIQ licenses (third-party payer model).
 
 ### CityIQ (B2G)
-Municipal talent analytics dashboard. Shows competency gaps by occupation, ROI on training investments, exportable reports for budget planning. Price: 50,000 SEK/year per municipality.
+Municipal talent analytics dashboard. Shows competency gaps by occupation, ROI on training investments, exportable reports for budget planning. Includes TalentFlow access for all municipal residents. Price: 75,000-250,000 SEK/year per municipality depending on size.
 
 ## Site Pages
 
