@@ -53,6 +53,10 @@
       "dest": "/demo.html"
     },
     {
+      "src": "/graph",
+      "dest": "/graph-demo.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
