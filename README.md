@@ -1,4 +1,4 @@
-# NordiqFlow - Sveriges Arbetsmarknads-OS
+# Crosstrees - Sveriges Arbetsmarknads-OS
 
 > **En unified intelligence platform** som kombinerar Sveriges kompletta arbetsmarknadsdata (Arbetsförmedlingens Open Data) till två produkter: TalentFlow (B2C) och CityIQ (GovTech).
 
@@ -6,7 +6,7 @@
 
 ## 🎯 Vision
 
-Dagens rekryteringssajter är enkla sökmotorer. NordiqFlow är en **semantisk graf över hela den svenska arbetsmarknaden** som möjliggör:
+Dagens rekryteringssajter är enkla sökmotorer. Crosstrees är en **semantisk graf över hela den svenska arbetsmarknaden** som möjliggör:
 
 - **För individer**: AI-drivna karriärövergångar baserade på faktiska skill-överlappar
 - **För kommuner**: Exakt talangbristanalys kopplad till utbildningspipeline
@@ -155,7 +155,7 @@ Exit multiples: 15-20x ARR för platform plays med network effects = **100-130M 
 ## 📁 Repository Structure
 
 ```
-nordiqflow/
+crosstrees/
 ├── README.md                    # This file
 ├── docs/
 │   ├── API_RESEARCH.md         # AF API documentation deep dive

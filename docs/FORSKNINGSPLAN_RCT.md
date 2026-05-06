@@ -2,10 +2,10 @@
 
 **Projektnamn:** TalentFlow RCT — Effektutvärdering av AI-driven karriärvägledning byggd på Arbetsförmedlingens öppna data
 
-**Sökande organisation:** NordiqFlow AB, Vetlanda
+**Sökande organisation:** Crosstrees AB, Vetlanda
 
 **Kontaktperson:** Linnea Moritz, grundare och utvecklare
-**E-post:** linnea@nordiqflow.com
+**E-post:** linnea@crosstrees.com
 **ORCID:** 0009-0004-9742-8608
 
 **Sökt finansiär:** Forte (Forskningsrådet för hälsa, arbetsliv och välfärd) / IFAU (Institutet för arbetsmarknads- och utbildningspolitisk utvärdering)
@@ -22,7 +22,7 @@ Sverige spenderar årligen cirka 80 miljarder kronor på arbetsmarknadspolitik (
 
 En central orsak till matchningsproblematiken är att Arbetsförmedlingens (AF) användarriktade digitala verktyg — främst Platsbanken — bygger på nyckelords- och yrkestitelsmatchning, trots att AF:s egna öppna data (via JobTech Dev) innehåller 51 000+ förberäknade substituerbarhetsvärden mellan yrkeskategorier, 8 000+ kartlagda kompetenser och NLP-baserade anrikningsverktyg.
 
-NordiqFlow har utvecklat TalentFlow, en AI-baserad plattform som bygger på AF:s öppna data och exponerar dolda karriärvägar genom kompetensöverlappsanalys. Denna forskningsplan beskriver en randomiserad kontrollerad studie (RCT) för att mäta om tillgång till TalentFlow leder till kortare arbetslöshetstid, bättre matchningskvalitet och högre lön vid anställning, jämfört med standardstöd.
+Crosstrees har utvecklat TalentFlow, en AI-baserad plattform som bygger på AF:s öppna data och exponerar dolda karriärvägar genom kompetensöverlappsanalys. Denna forskningsplan beskriver en randomiserad kontrollerad studie (RCT) för att mäta om tillgång till TalentFlow leder till kortare arbetslöshetstid, bättre matchningskvalitet och högre lön vid anställning, jämfört med standardstöd.
 
 Studien syftar till att producera den typ av rigorös kausal evidens som hittills saknats för AI-baserade matchningsverktyg i en svensk arbetsmarknadskontext, och bidra till den internationella kunskapsbasen om digitala interventioner inom aktiv arbetsmarknadspolitik.
 
@@ -58,7 +58,7 @@ Det saknas kausal evidens för huruvida AI-baserade verktyg som bygger på offen
 
 ### 3.1 Övergripande syfte
 
-Att genom en randomiserad kontrollerad studie mäta den kausala effekten av tillgång till NordiqFlow TalentFlow — en AI-baserad kompetensmatching-plattform byggd på AF:s öppna data — på arbetssökandes arbetsmarknadsutfall.
+Att genom en randomiserad kontrollerad studie mäta den kausala effekten av tillgång till Crosstrees TalentFlow — en AI-baserad kompetensmatching-plattform byggd på AF:s öppna data — på arbetssökandes arbetsmarknadsutfall.
 
 ### 3.2 Primära frågeställningar
 
@@ -188,7 +188,7 @@ Studien kräver godkännande av Etikprövningsmyndigheten (EPM) enligt Lag (2003
 
 ### 7.1 Föreslagna samarbetspartners
 
-Studien kräver kompetens som sträcker sig bortom NordiqFlow:s kärnteam. Följande samarbeten eftersöks:
+Studien kräver kompetens som sträcker sig bortom Crosstrees:s kärnteam. Följande samarbeten eftersöks:
 
 **Akademisk partner (önskas):**
 - IFAU, Uppsala — expertis inom randomiserade utvärderingar av arbetsmarknadspolitik, direkt relevans genom deras RoM-utvärdering (2024:17)
@@ -197,7 +197,7 @@ Studien kräver kompetens som sträcker sig bortom NordiqFlow:s kärnteam. Följ
 **Akademisk forskare:**
 - Doktorand eller postdoktor inom nationalekonomi/arbetsmarknadsekonomi med erfarenhet av RCT-design och registerdata. Denna person leder den statistiska analysen och ansvarar för vetenskaplig publikation.
 
-**NordiqFlow:s ansvar:**
+**Crosstrees:s ansvar:**
 - Utveckling och drift av TalentFlow-plattformen
 - Implementering av randomiseringsmodul
 - Rekrytering av deltagare
@@ -208,9 +208,9 @@ Studien kräver kompetens som sträcker sig bortom NordiqFlow:s kärnteam. Följ
 
 | Roll | Ansvarig | Uppgift |
 |---|---|---|
-| Projektledare | Linnea Moritz, NordiqFlow | Övergripande projektledning, kommunrekrytering, plattformsutveckling |
+| Projektledare | Linnea Moritz, Crosstrees | Övergripande projektledning, kommunrekrytering, plattformsutveckling |
 | Huvudforskare (PI) | Akademisk partner (sökes) | Studiedesign, analysplan, etikansökan, vetenskaplig publicering |
-| Dataansvarig | NordiqFlow + akademisk partner | Registerdata-avtal, pseudonymisering, GDPR-compliance |
+| Dataansvarig | Crosstrees + akademisk partner | Registerdata-avtal, pseudonymisering, GDPR-compliance |
 | Statistiker | Akademisk partner | Powerberäkningar, statistisk analys, robusthetskontroller |
 | Algoritm-granskare | Oberoende expert (sökes) | Bias-granskning av TalentFlow:s rekommendationer |
 
@@ -232,7 +232,7 @@ Studien kräver kompetens som sträcker sig bortom NordiqFlow:s kärnteam. Följ
 | Plattformsdrift (TalentFlow, servrar, API-kostnader) | 350 000 | 350 000 | 700 000 |
 | **Totalt** | **1 540 000** | **1 660 000** | **3 200 000** |
 
-**Not:** NordiqFlow:s egeninsats (plattformsutveckling, teamlöner, marknadsföring) finansieras separat och ingår inte i detta sökt belopp. Denna budget avser enbart forskningskostnaderna.
+**Not:** Crosstrees:s egeninsats (plattformsutveckling, teamlöner, marknadsföring) finansieras separat och ingår inte i detta sökt belopp. Denna budget avser enbart forskningskostnaderna.
 
 ---
 

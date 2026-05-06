@@ -1,4 +1,4 @@
-# NordiqFlow - AI Context Document
+# Crosstrees - AI Context Document
 
 *This document is designed to give AI assistants complete context about this project*
 
@@ -6,10 +6,10 @@
 
 ## Quick Summary
 
-**NordiqFlow** is a Swedish labor market intelligence platform that transforms Arbetsförmedlingen's (Swedish Public Employment Service) open data into actionable products for individuals, businesses, and municipalities.
+**Crosstrees** is a Swedish labor market intelligence platform that transforms Arbetsförmedlingen's (Swedish Public Employment Service) open data into actionable products for individuals, businesses, and municipalities.
 
-**Repository**: `github.com/linneamoritznyc/nordiqflow`  
-**Deployment**: `https://nordiqflow-hr2n.vercel.app/`  
+**Repository**: `github.com/linneamoritznyc/crosstrees`  
+**Deployment**: `https://crosstrees-hr2n.vercel.app/`  
 **Author**: Linnea Moritz  
 **ORCID**: 0009-0004-9742-8608
 
@@ -27,9 +27,9 @@ The project started as **Kompetensbryggan** ("Skills Bridge AI") — a proof-of-
 
 **Location**: `/Kompetensbryggan/` folder contains the original Python/Streamlit prototype.
 
-### Phase 2: NordiqFlow (Production Platform)
+### Phase 2: Crosstrees (Production Platform)
 
-Kompetensbryggan proved the thesis. NordiqFlow scales it into three commercial products:
+Kompetensbryggan proved the thesis. Crosstrees scales it into three commercial products:
 
 | Product | Target | What It Does |
 |---------|--------|--------------|
@@ -57,7 +57,7 @@ Arbetsförmedlingen has **already computed** the hard stuff:
 ## Repository Structure
 
 ```
-nordiqflow/
+crosstrees/
 ├── Kompetensbryggan/          # Original research prototype
 │   ├── bryggan.py             # Main Streamlit app
 │   ├── loaders.py             # Data loading with hierarchy
@@ -79,7 +79,7 @@ nordiqflow/
 │   └── *.docx                 # Original research docs (Swedish)
 │
 ├── index.html                 # Landing page (deployed to Vercel)
-├── NORDIQFLOW_EXPLAINED.md    # Business overview
+├── CROSSTREES_EXPLAINED.md    # Business overview
 ├── CONTEXT.md                 # This file (AI context)
 └── README.md                  # Project README
 ```
@@ -193,13 +193,13 @@ This work builds on Nobel Prize-winning economic theory:
 
 ## Links
 
-- **Live Site**: https://nordiqflow-hr2n.vercel.app/
-- **GitHub**: https://github.com/linneamoritznyc/nordiqflow
+- **Live Site**: https://crosstrees-hr2n.vercel.app/
+- **GitHub**: https://github.com/linneamoritznyc/crosstrees
 - **AF Open Data**: https://jobtechdev.se/
 - **Taxonomy API**: https://taxonomy.api.jobtechdev.se/
 
 ---
 
-*This document should give any AI assistant enough context to contribute meaningfully to NordiqFlow.*
+*This document should give any AI assistant enough context to contribute meaningfully to Crosstrees.*
 
 *Last updated: January 5, 2026*

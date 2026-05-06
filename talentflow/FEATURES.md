@@ -9,7 +9,7 @@ Detailed user flows, component specs, and implementation notes for each feature.
 ### User Flow
 
 ```
-User visits app.nordiqflow.com
+User visits app.crosstrees.com
        |
        v
 Not logged in --> show landing page with "Logga in med Google" button

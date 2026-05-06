@@ -1,8 +1,8 @@
-# NordiqFlow — Detaljerad Budgetplan för Vinnova/ESF+ ansökan
+# Crosstrees — Detaljerad Budgetplan för Vinnova/ESF+ ansökan
 
-**Projektnamn:** NordiqFlow TalentFlow — AI-driven kompetensmatching för Sveriges arbetsmarknad
+**Projektnamn:** Crosstrees TalentFlow — AI-driven kompetensmatching för Sveriges arbetsmarknad
 
-**Sökande:** NordiqFlow AB, Vetlanda
+**Sökande:** Crosstrees AB, Vetlanda
 
 **Kontaktperson:** Linnea Moritz, grundare
 
@@ -18,7 +18,7 @@
 
 ## 1. Sammanfattning och finansieringsstrategi
 
-NordiqFlow söker finansiering för att ta TalentFlow från prototyp till validerad produkt med bevisad samhällseffekt. Budgeten täcker produktutveckling, teamuppbyggnad, validering genom randomiserad studie, och initial marknadsintroduktion.
+Crosstrees söker finansiering för att ta TalentFlow från prototyp till validerad produkt med bevisad samhällseffekt. Budgeten täcker produktutveckling, teamuppbyggnad, validering genom randomiserad studie, och initial marknadsintroduktion.
 
 ### Finansieringskällor (planerad stackning)
 
@@ -27,7 +27,7 @@ NordiqFlow söker finansiering för att ta TalentFlow från prototyp till valide
 | **Vinnova** — Innovativa Startups / Innovationsprojekt | 5 000 000 SEK | Bidrag | Planerad ansökan Q2 2026 |
 | **ESF+** — Programområde A (Kompetensförsörjning) | 4 600 000 SEK | Bidrag | Planerad ansökan Q2 2026 |
 | **Forte** — Forskningsprojekt (RCT-delen) | 3 200 000 SEK | Bidrag | Planerad ansökan Q3 2026 |
-| **NordiqFlow egeninsats** | 2 600 000 SEK | Eget arbete + Almi-lån | Löpande |
+| **Crosstrees egeninsats** | 2 600 000 SEK | Eget arbete + Almi-lån | Löpande |
 | **Totalt** | **15 400 000 SEK** | | |
 
 **Not:** Vinnova kräver vanligtvis 50 % medfinansiering. ESF+ kräver typiskt 40 % medfinansiering. Forte-medel kan täcka 100 % av forskningskostnader. Den totala bidragsandelen (83 %) förutsätter att ESF+ och Forte-medel räknas som medfinansiering i Vinnova-ansökan, alternativt att Almi-lån täcker mellanskillnaden.
@@ -71,7 +71,7 @@ Alla lönekostnader inkluderar:
 | **Supabase Pro** (Auth + PostgreSQL + RLS) | 3 500 | 24 | 84 000 | Databas, autentisering, API |
 | **Anthropic Claude API** (CV-parsing, matchning) | 15 000 | 24 | 360 000 | Uppskattning baserad på 5 000 aktiva användare |
 | **Vercel Pro** (hosting) | 1 500 | 24 | 36 000 | Frontend-deployment |
-| **Domäner och SSL** | 500 | 24 | 12 000 | nordiqflow.com + subdomäner |
+| **Domäner och SSL** | 500 | 24 | 12 000 | crosstrees.com + subdomäner |
 | **Övrig SaaS** (GitHub Teams, Slack, Figma, PostHog, Sentry) | 5 000 | 24 | 120 000 | Utvecklings- och analysverktyg |
 | **Serverkostnader / GPU** (ML-träning) | 8 000 | 18 | 144 000 | Nödvändigt för finjustering av matchningsmodeller |
 | | | | **Summa teknik** | **756 000** |
@@ -151,7 +151,7 @@ Denna post täcks primärt av Forte-ansökan (se separat Forskningsplan) men ing
 | Forte (Forskningsprojekt) | 3 200 000 | Bidrag, 100 % av forskningskostnader |
 | Almi Företagspartner (lån) | 2 000 000 | Lån, marknadsmässig ränta |
 | Almi Invest (equity) | 2 500 000 | Investering mot ägarandel |
-| NordiqFlow egeninsats (arbete) | 1 904 360 | Grundarens tid + befintlig IP |
+| Crosstrees egeninsats (arbete) | 1 904 360 | Grundarens tid + befintlig IP |
 | **Totalt** | **19 204 360** | |
 
 **Not om medfinansiering:** Vinnovas krav på 50 % medfinansiering (2 500 000 SEK) kan täckas av en kombination av: Almi-lån, Almi Invest, egeninsats, och eventuellt ESF+-medel (beroende på utlysningens villkor). ESF+ och Forte räknas normalt som separata finansiärer och kan ibland godkännas som medfinansiering. Exakt struktur bör verifieras med Vinnovas handläggare innan ansökan.
@@ -207,7 +207,7 @@ Vinnova och ESF+ kopplar ofta utbetalningar till milstolpar. Föreslagna:
 
 ---
 
-## 12. Egeninsats — Vad NordiqFlow redan har byggt
+## 12. Egeninsats — Vad Crosstrees redan har byggt
 
 Följande räknas som egeninsats och visar att projektet inte startar från noll:
 

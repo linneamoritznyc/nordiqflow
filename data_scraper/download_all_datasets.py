@@ -51,7 +51,7 @@ for directory in [DATA_DIR, RAW_DIR]:
     directory.mkdir(exist_ok=True)
 
 print(f"\n{BLUE}{'='*60}{RESET}")
-print(f"{BLUE}NordiqFlow - Intelligent Data Scraper v2{RESET}")
+print(f"{BLUE}Crosstrees - Intelligent Data Scraper v2{RESET}")
 print(f"{BLUE}{'='*60}{RESET}\n")
 
 # =============================================================================

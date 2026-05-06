@@ -1,6 +1,6 @@
 # Job & Candidate Matching Algorithm
 
-*Technical documentation on how NordiqFlow improves Arbetsförmedlingen's matching capabilities*
+*Technical documentation on how Crosstrees improves Arbetsförmedlingen's matching capabilities*
 
 ---
 
@@ -26,7 +26,7 @@ CV/Profile: Contains "projektledare" OR "Scrum"
 
 ---
 
-## NordiqFlow's Matching Architecture
+## Crosstrees's Matching Architecture
 
 ### Three-Layer Matching System
 
@@ -84,7 +84,7 @@ def keyword_match(job_ad, cv):
 ### Our Solution: Concept-Based Matching
 
 ```python
-# NordiqFlow semantic matching
+# Crosstrees semantic matching
 def semantic_match(job_ad, cv):
     # Step 1: Extract concepts using AF's NLP API
     job_concepts = enrich_text(job_ad)  # Returns concept_ids
@@ -415,7 +415,7 @@ def find_candidates_for_job(job_ad_text, expand_search=True):
 
 ### Comparison Table
 
-| Feature | Arbetsförmedlingen | NordiqFlow |
+| Feature | Arbetsförmedlingen | Crosstrees |
 |---------|-------------------|------------|
 | Matching method | Keyword search | Semantic concepts |
 | Career transitions | Not shown | Pre-computed + scored |
@@ -434,7 +434,7 @@ def find_candidates_for_job(job_ad_text, expand_search=True):
 3. Retail Sales Associate
 4. *(No cross-industry suggestions)*
 
-**NordiqFlow Results:**
+**Crosstrees Results:**
 1. **Healthcare Operations Manager** — 85% match, +7k SEK/mo, HIGH demand
    - Missing: Healthcare administration (400 YH hours)
 2. **Project Manager** — 82% match, +5k SEK/mo, STABLE demand
@@ -481,4 +481,4 @@ def find_candidates_for_job(job_ad_text, expand_search=True):
 ---
 
 *Last updated: January 5, 2026*
-*Document location: `/Users/bashar/Desktop/nordiqflow/docs/MATCHING_ALGORITHM.md`*
+*Document location: `/Users/bashar/Desktop/crosstrees/docs/MATCHING_ALGORITHM.md`*

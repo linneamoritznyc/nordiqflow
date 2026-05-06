@@ -72,7 +72,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                NordiqFlow Private
+                Crosstrees Private
               </h1>
               <p className="text-sm text-gray-500">
                 Launch: Feb 6 -- Feb 25, 2026
@@ -165,7 +165,7 @@ export default function Dashboard() {
               src="https://docs.google.com/spreadsheets/d/1y-PAizoHyBlavtBO4y3Yi492TCbGeqUEC-q4J7zp7u4/edit?gid=59492130&rm=minimal"
               className="w-full border-0"
               style={{ height: "calc(100vh - 220px)", minHeight: "600px" }}
-              title="NordiqFlow Planning Spreadsheet"
+              title="Crosstrees Planning Spreadsheet"
             />
           </div>
         ) : (

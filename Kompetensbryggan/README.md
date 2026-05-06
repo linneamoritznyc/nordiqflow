@@ -1,6 +1,6 @@
 # Kompetensbryggan (Skills Bridge AI)
 
-*The foundational research prototype that led to NordiqFlow*
+*The foundational research prototype that led to Crosstrees*
 
 ---
 
@@ -8,7 +8,7 @@
 
 Kompetensbryggan ("The Skills Bridge") is a proof-of-concept skill-matching engine that demonstrates how AI can identify **latent competencies** in job seekers by analyzing their CVs against Sweden's official labor market taxonomy.
 
-**This prototype proved the core thesis that became NordiqFlow:**
+**This prototype proved the core thesis that became Crosstrees:**
 > Traditional job matching fails because it matches job *titles*, not *skills*. By extracting "skill atoms" from unstructured text and matching them against a semantic graph, we can reveal career paths that keyword matching would never find.
 
 ---
@@ -115,11 +115,11 @@ Upload a PDF CV and see:
 
 ---
 
-## From Kompetensbryggan to NordiqFlow
+## From Kompetensbryggan to Crosstrees
 
-Kompetensbryggan proved the concept. NordiqFlow scales it into three products:
+Kompetensbryggan proved the concept. Crosstrees scales it into three products:
 
-| Kompetensbryggan | NordiqFlow |
+| Kompetensbryggan | Crosstrees |
 |------------------|------------|
 | Single-user CV analysis | TalentFlow: Career guidance platform |
 | Manual skill gap display | Automated education pathway recommendations |
@@ -169,7 +169,7 @@ If you're an AI assistant working on this codebase:
 2. **ID types**: All JobTech IDs are strings like `'15e8_KDZ_31Z'`
 3. **Regex safety**: Use `re.escape()` for labels like "C++" or ".NET"
 4. **Relation merging**: Occupations need both `related` AND `broader` fields for full skill profiles
-5. **The parent project is NordiqFlow**: This folder contains the research prototype; the production system is being built in the parent directory
+5. **The parent project is Crosstrees**: This folder contains the research prototype; the production system is being built in the parent directory
 
 ---
 

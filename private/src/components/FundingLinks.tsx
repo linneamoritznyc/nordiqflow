@@ -19,7 +19,7 @@ const FUNDING_SOURCES: FundingSource[] = [
     name: "Innovativa Startups",
     org: "Vinnova",
     description:
-      "For knowledge-intensive, newly started companies with innovative business ideas. Perfect fit for NordiqFlow's AI matching tech.",
+      "For knowledge-intensive, newly started companies with innovative business ideas. Perfect fit for Crosstrees's AI matching tech.",
     amount: "Up to 500,000 SEK",
     deadline: "Rolling (projects must end by Aug 25, 2026)",
     url: "https://www.vinnova.se/en/calls-for-proposals/innovative-startups/innovative-startups-2025/",
@@ -30,7 +30,7 @@ const FUNDING_SOURCES: FundingSource[] = [
     name: "Advanced and Innovative AI",
     org: "Vinnova",
     description:
-      "Development of advanced and innovative AI solutions. NordiqFlow's ML matching algorithm qualifies.",
+      "Development of advanced and innovative AI solutions. Crosstrees's ML matching algorithm qualifies.",
     amount: "Varies by project",
     deadline: "Check current calls",
     url: "https://www.vinnova.se/en/calls-for-proposals/ai-from-research-to-innovation/advanced-and-innovative-ai/",

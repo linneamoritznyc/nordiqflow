@@ -1,4 +1,4 @@
-# NordiqFlow Private Dashboard - Complete Setup Guide
+# Crosstrees Private Dashboard - Complete Setup Guide
 
 Private project management portal that syncs with your Google Sheets planning spreadsheet.
 
@@ -6,7 +6,7 @@ Private project management portal that syncs with your Google Sheets planning sp
 
 1. Go to https://console.cloud.google.com/
 2. Click the project dropdown at the top > **New Project**
-3. Name it (e.g. `privatenordiqflow`)
+3. Name it (e.g. `privatecrosstrees`)
 4. Under Organization, select your account (e.g. `minerva.edu`)
 5. Click **Create**
 6. Make sure the new project is selected in the top dropdown
@@ -26,7 +26,7 @@ A service account is like a robot email -- it has no access to your personal dat
 2. For "Which API are you using?" -- select **Google Sheets API**
 3. For "What data will you be accessing?" -- select **Application data**
 4. Click **Next**
-5. Give it a name (e.g. `privatenordiqflow`) and click **Create and Continue**
+5. Give it a name (e.g. `privatecrosstrees`) and click **Create and Continue**
 6. **Skip** the "Permissions" step (optional) -- just click **Continue**
 7. **Skip** the "Principals with access" step (optional) -- just click **Done**
 
@@ -34,7 +34,7 @@ A service account is like a robot email -- it has no access to your personal dat
 
 1. Go to **APIs & Services > Credentials** (left sidebar)
 2. Under **Service Accounts**, click on the email address you just created
-   (e.g. `privatenordiqflow@privatenordiqflow.iam.gserviceaccount.com`)
+   (e.g. `privatecrosstrees@privatecrosstrees.iam.gserviceaccount.com`)
 3. Click the **Keys** tab at the top
 4. Click **Add Key** > **Create new key**
 5. Select **JSON** and click **Create**

@@ -1,6 +1,6 @@
-# NordiqFlow - Revolutionizing Sweden's Labor Market
+# Crosstrees - Revolutionizing Sweden's Labor Market
 
-*A comprehensive explanation of what NordiqFlow is, why it matters, and how it improves upon Arbetsförmedlingen*
+*A comprehensive explanation of what Crosstrees is, why it matters, and how it improves upon Arbetsförmedlingen*
 
 ---
 
@@ -24,13 +24,13 @@ Arbetsförmedlingen (AF) is Sweden's Public Employment Service. They have:
 
 AF has **incredible data** but uses it for **basic job search**. It's like having a Ferrari engine and using it to power a bicycle.
 
-**NordiqFlow takes that Ferrari engine and builds the actual car.**
+**Crosstrees takes that Ferrari engine and builds the actual car.**
 
 ---
 
-## What NordiqFlow Actually Is
+## What Crosstrees Actually Is
 
-NordiqFlow is a **unified intelligence platform** built on top of Arbetsförmedlingen's open data. It transforms raw government data into actionable intelligence for two distinct audiences:
+Crosstrees is a **unified intelligence platform** built on top of Arbetsförmedlingen's open data. It transforms raw government data into actionable intelligence for two distinct audiences:
 
 ### 1. TalentFlow (B2C) — For Individuals
 
@@ -105,9 +105,9 @@ Output: "You can become a Healthcare Operations Manager with 85% skill match.
 | JobEd Connect | Education → Job mappings | **NOT USED** |
 | Historical Ads | 10+ years of job data | **NOT USED** |
 
-### What NordiqFlow Builds (Intelligence Layer)
+### What Crosstrees Builds (Intelligence Layer)
 
-| NordiqFlow Feature | AF Data Used | Value Created |
+| Crosstrees Feature | AF Data Used | Value Created |
 |--------------------|--------------|---------------|
 | Career Pathfinder | Substitutability + Skills | Personalized transition recommendations |
 | Skill Gap Analysis | Skills + JobEd Connect | "You need X to become Y" |
@@ -125,7 +125,7 @@ Output: "You can become a Healthcare Operations Manager with 85% skill match.
 
 **They just don't surface it to users.**
 
-NordiqFlow takes these pre-computed relationships and builds user-facing products on top.
+Crosstrees takes these pre-computed relationships and builds user-facing products on top.
 
 ---
 
@@ -143,7 +143,7 @@ NordiqFlow takes these pre-computed relationships and builds user-facing product
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    NORDIQFLOW INTELLIGENCE LAYER                 │
+│                    CROSSTREES INTELLIGENCE LAYER                 │
 │                                                                  │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
 │  │   Neo4j     │  │  Pinecone   │  │     ClickHouse          │  │
@@ -201,7 +201,7 @@ Sweden has:
 - **Education mismatch** — Schools teaching skills the market doesn't need
 - **Regional imbalances** — Stockholm has jobs, rural areas have workers
 
-### How NordiqFlow Helps
+### How Crosstrees Helps
 
 1. **Individuals** get personalized career guidance based on actual data, not guesswork
 2. **Companies** can hedge against talent shortages and plan workforce needs
@@ -264,7 +264,7 @@ Sweden has:
 
 ## For Future Development Sessions
 
-When working on NordiqFlow, remember:
+When working on Crosstrees, remember:
 
 1. **The data is already downloaded** — Check `/data/raw/taxonomy/`
 2. **Substitutability is the key dataset** — This powers career transitions
@@ -276,7 +276,7 @@ When working on NordiqFlow, remember:
 
 ## The Vision
 
-**NordiqFlow becomes Sweden's labor market operating system.**
+**Crosstrees becomes Sweden's labor market operating system.**
 
 Every career decision, every hiring choice, every education investment flows through our intelligence layer. We're not replacing Arbetsförmedlingen—we're making their data actually useful.
 
@@ -285,4 +285,4 @@ The government collects the data. We turn it into decisions.
 ---
 
 *Last updated: January 5, 2026*
-*Document location: `/Users/bashar/Desktop/nordiqflow/NORDIQFLOW_EXPLAINED.md`*
+*Document location: `/Users/bashar/Desktop/crosstrees/CROSSTREES_EXPLAINED.md`*

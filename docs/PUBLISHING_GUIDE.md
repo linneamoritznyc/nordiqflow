@@ -1,12 +1,12 @@
 # How to Get Published: Academic Publishing Guide
 
-*A guide for publishing NordiqFlow research as an independent researcher*
+*A guide for publishing Crosstrees research as an independent researcher*
 
 ---
 
 ## Overview
 
-This document outlines the path to publishing academic research about NordiqFlow's labor market matching methodology. The goal is to establish credibility as an independent researcher and contribute to the academic discourse on AI-driven labor market optimization.
+This document outlines the path to publishing academic research about Crosstrees's labor market matching methodology. The goal is to establish credibility as an independent researcher and contribute to the academic discourse on AI-driven labor market optimization.
 
 ---
 

@@ -201,7 +201,7 @@ function createSearchIndex(occupations) {
 
 // Main
 async function main() {
-    console.log('🚀 NordiqFlow Data Preparation\n');
+    console.log('🚀 Crosstrees Data Preparation\n');
     console.log('='.repeat(50));
 
     const { occupations, ssykGroups } = processOccupations();

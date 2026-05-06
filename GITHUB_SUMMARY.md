@@ -2,12 +2,12 @@
 
 ## What Was Just Pushed
 
-Successfully pushed comprehensive documentation and organized structure to `github.com/linneamoritznyc/nordiqflow`.
+Successfully pushed comprehensive documentation and organized structure to `github.com/linneamoritznyc/crosstrees`.
 
 ### New Documentation Added
 
 1. **CONTEXT.md** - Complete AI-readable project overview
-2. **NORDIQFLOW_EXPLAINED.md** - Business explanation and product vision
+2. **CROSSTREES_EXPLAINED.md** - Business explanation and product vision
 3. **Kompetensbryggan/README.md** - Research prototype documentation
 4. **docs/MATCHING_ALGORITHM.md** - Technical matching specification
 5. **docs/THEORETICAL_FRAMEWORK.md** - Economic foundations (DMP, Becker, Spence)
@@ -18,7 +18,7 @@ Successfully pushed comprehensive documentation and organized structure to `gith
 ### Repository Organization
 
 ```
-nordiqflow/
+crosstrees/
 ├── Kompetensbryggan/          # Original research prototype (moved from legacy/)
 ├── docs/                      # Clean documentation
 │   ├── data_structure/        # Data schema guides
@@ -53,8 +53,8 @@ nordiqflow/
 
 ### Deployment
 
-- **Live site**: https://nordiqflow-hr2n.vercel.app/
-- **GitHub**: https://github.com/linneamoritznyc/nordiqflow
+- **Live site**: https://crosstrees-hr2n.vercel.app/
+- **GitHub**: https://github.com/linneamoritznyc/crosstrees
 - **Data source**: https://jobtechdev.se/ (Arbetsförmedlingen open data)
 
 ---

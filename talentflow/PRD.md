@@ -1,6 +1,6 @@
 # TalentFlow — Product Requirements Document
 
-**Product**: TalentFlow by NordiqFlow AB
+**Product**: TalentFlow by Crosstrees AB
 **Version**: 1.0 (MVP)
 **Author**: Linnea Moritz (ORCID 0009-0004-9742-8608)
 **Date**: February 19, 2026
@@ -76,7 +76,7 @@ Browser --> Vercel Edge Network --> Next.js App
 ```
 
 - Vercel project root: `talentflow/`
-- Production domain: `app.nordiqflow.com`
+- Production domain: `app.crosstrees.com`
 - Staging: automatic preview URLs from Vercel (per PR)
 - Environment variables: Vercel dashboard (never in code)
 
@@ -625,7 +625,7 @@ If Claude API is down or rate-limited:
 
 ### Phase 5: Launch (Week 9)
 - Production deployment
-- Domain setup (app.nordiqflow.com)
+- Domain setup (app.crosstrees.com)
 - Privacy policy / terms of service
 - Launch communications
 - Monitoring and alerting

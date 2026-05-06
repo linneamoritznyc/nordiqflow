@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NordiqFlow Private",
+  title: "Crosstrees Private",
   description: "Private project management dashboard",
   robots: "noindex, nofollow",
 };

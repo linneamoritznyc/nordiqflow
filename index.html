@@ -4,7 +4,7 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM context">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NordiqFlow - TalentFlow | Karriärvägar baserade på kompetens</title>
+    <title>Crosstrees - TalentFlow | Karriärvägar baserade på kompetens</title>
     <meta name="description" content="Hitta din nästa karriär baserat på dina faktiska kompetenser, inte bara jobbtitlar. AI-driven matchning med Arbetsförmedlingens data.">
     <style>
         * {
@@ -727,17 +727,17 @@
         <div class="container">
             <h2>Redo att upptäcka dina dolda karriärvägar?</h2>
             <p>TalentFlow är under utveckling. Registrera ditt intresse för tidig åtkomst.</p>
-            <a href="mailto:linnea@nordiqflow.com?subject=TalentFlow Early Access" class="cta-button">Registrera Intresse</a>
+            <a href="mailto:linnea@crosstrees.com?subject=TalentFlow Early Access" class="cta-button">Registrera Intresse</a>
             <a href="tech.html" class="cta-button outline">Läs mer om tekniken</a>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p><strong>NordiqFlow</strong> - Sveriges arbetsmarknads-OS</p>
+            <p><strong>Crosstrees</strong> - Sveriges arbetsmarknads-OS</p>
             <p>
                 Skapad av <a href="https://orcid.org/0009-0004-9742-8608" target="_blank">Linnea Moritz</a> |
-                <a href="https://github.com/linneamoritznyc/nordiqflow" target="_blank">GitHub</a>
+                <a href="https://github.com/linneamoritznyc/crosstrees" target="_blank">GitHub</a>
             </p>
             <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.7;">
                 Data: <a href="https://jobtechdev.se" target="_blank">JobTech Dev</a> |
@@ -753,7 +753,7 @@
         const langEN = document.getElementById('lang-en');
 
         // Check saved preference
-        const savedLang = localStorage.getItem('nordiqflow-lang') || 'sv';
+        const savedLang = localStorage.getItem('crosstrees-lang') || 'sv';
         if (savedLang === 'en') {
             document.body.classList.add('lang-en');
             langEN.classList.add('active');
@@ -764,14 +764,14 @@
             document.body.classList.remove('lang-en');
             langSV.classList.add('active');
             langEN.classList.remove('active');
-            localStorage.setItem('nordiqflow-lang', 'sv');
+            localStorage.setItem('crosstrees-lang', 'sv');
         });
 
         langEN.addEventListener('click', () => {
             document.body.classList.add('lang-en');
             langEN.classList.add('active');
             langSV.classList.remove('active');
-            localStorage.setItem('nordiqflow-lang', 'en');
+            localStorage.setItem('crosstrees-lang', 'en');
         });
     </script>
     <!-- LLM Site Navigation - hidden from visual display -->
