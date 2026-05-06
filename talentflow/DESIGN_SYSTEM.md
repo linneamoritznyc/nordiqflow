@@ -263,7 +263,7 @@ Centered card: "Något gick fel. Försök igen eller kontakta support."
 ```
 ┌─────────────────────────────────────────┐
 │                                         │
-│           [NordiqFlow logo]             │
+│           [Crosstrees logo]             │
 │                                         │
 │         TalentFlow                      │  <- Display, bold
 │   Din AI-drivna jobbassistent           │  <- H2, slate

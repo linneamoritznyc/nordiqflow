@@ -1,5 +1,5 @@
 -- ============================================================
--- NordiqFlow — Complete Supabase Schema
+-- Crosstrees — Complete Supabase Schema
 -- ============================================================
 -- Run this in Supabase SQL Editor (Dashboard → SQL Editor → New query)
 -- Order matters: run top to bottom.
@@ -103,7 +103,7 @@ CREATE INDEX idx_salary_occupation ON salary_stats(occupation_id);
 -- ============================================================
 -- 2. USERS & AUTHENTICATION
 --    Supabase Auth handles the auth.users table automatically.
---    This extends it with NordiqFlow-specific profile data.
+--    This extends it with Crosstrees-specific profile data.
 -- ============================================================
 CREATE TABLE user_profiles (
   id                  UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -260,7 +260,7 @@ CREATE TABLE municipal_roi_calculations (
 );
 -- ============================================================
 -- 5. RESEARCH / RCT INFRASTRUCTURE
---    For IFAU collaboration (see ifau_nordiqflow_proposal.pdf)
+--    For IFAU collaboration (see ifau_crosstrees_proposal.pdf)
 --    GDPR: only populated for users with research_consent = TRUE
 -- ============================================================
 CREATE TABLE rct_participants (
@@ -275,7 +275,7 @@ CREATE TABLE rct_participants (
   education_level   TEXT CHECK (education_level IN ('primary','secondary','post_secondary','tertiary')),
   unemployment_duration_days INT,
   enrolled_at       TIMESTAMPTZ DEFAULT NOW(),
-  -- Outcome tracking (populated via IFAU register linkage, not by NordiqFlow)
+  -- Outcome tracking (populated via IFAU register linkage, not by Crosstrees)
   employment_date   DATE,                        -- first qualifying employment spell
   employment_occupation_id TEXT REFERENCES occupations(id),
   -- Study 1 primary outcome

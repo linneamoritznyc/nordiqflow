@@ -2,7 +2,7 @@
 
 **Datum**: 2024-12-24  
 **Författare**: Linnea Moritz  
-**Syfte**: Dokumentera och verifiera att alla data-connections vi behöver för NordiqFlow faktiskt existerar
+**Syfte**: Dokumentera och verifiera att alla data-connections vi behöver för Crosstrees faktiskt existerar
 
 ---
 
@@ -127,7 +127,7 @@ Detta ger oss:
 - Antal jobb per skill
 - Geografisk fördelning
 
-**Detta är GULD för NordiqFlow's analyser!**
+**Detta är GULD för Crosstrees's analyser!**
 
 ---
 
@@ -364,7 +364,7 @@ for skill in skill_demand:
 
 ---
 
-## ✅ Slutsats: Kan vi bygga NordiqFlow?
+## ✅ Slutsats: Kan vi bygga Crosstrees?
 
 **JA. 100%.**
 

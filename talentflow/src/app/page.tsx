@@ -17,7 +17,7 @@ export default function LandingPage() {
             Kom igang
           </Link>
           <a
-            href="https://nordiqflow-hr2n.vercel.app/"
+            href="https://crosstrees-hr2n.vercel.app/"
             className="border border-gray-300 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition"
           >
             Las mer

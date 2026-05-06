@@ -1,4 +1,4 @@
-# Theoretical Framework: Economic Foundations of NordiqFlow
+# Theoretical Framework: Economic Foundations of Crosstrees
 
 *Academic grounding for AI-driven labor market matching*
 
@@ -6,7 +6,7 @@
 
 ## Abstract
 
-This document establishes the theoretical foundation for NordiqFlow's approach to labor market matching. By grounding our methodology in Nobel Prize-winning economic theory, we demonstrate that semantic skill matching is not merely a technical improvement, but a fundamental solution to well-documented market failures.
+This document establishes the theoretical foundation for Crosstrees's approach to labor market matching. By grounding our methodology in Nobel Prize-winning economic theory, we demonstrate that semantic skill matching is not merely a technical improvement, but a fundamental solution to well-documented market failures.
 
 ---
 
@@ -39,7 +39,7 @@ Where:
 - V = vacant jobs
 - m() = matching function (determines efficiency)
 
-**NordiqFlow's contribution**: We improve the matching function m() by reducing information asymmetry through semantic skill matching.
+**Crosstrees's contribution**: We improve the matching function m() by reducing information asymmetry through semantic skill matching.
 
 ---
 
@@ -68,7 +68,7 @@ But the underlying skills are highly general:
 - Customer service
 - Inventory systems
 
-**NordiqFlow's contribution**: By extracting "skill atoms" from job titles, we reveal general human capital that enables cross-industry transitions.
+**Crosstrees's contribution**: By extracting "skill atoms" from job titles, we reveal general human capital that enables cross-industry transitions.
 
 ### 2.3 Mathematical Formulation
 
@@ -82,9 +82,9 @@ Traditional matching observes only:
 Signal_traditional = f(job_title) ≈ H_specific
 ```
 
-NordiqFlow observes:
+Crosstrees observes:
 ```
-Signal_NordiqFlow = g(skill_atoms) ≈ H_general + H_specific
+Signal_Crosstrees = g(skill_atoms) ≈ H_general + H_specific
 ```
 
 This fuller observation enables better matching.
@@ -115,7 +115,7 @@ The same title signals very different skill sets.
 
 ### 3.3 Skill Atoms as Cleaner Signals
 
-NordiqFlow replaces noisy title signals with precise skill atoms:
+Crosstrees replaces noisy title signals with precise skill atoms:
 
 ```
 Noisy signal:    "Marketing Manager" → Productivity = ???
@@ -156,7 +156,7 @@ Reality: Google Ads ⊂ Digital Marketing ⊂ Marketing
 
 ### 4.3 Hierarchical Inference
 
-NordiqFlow solves this by traversing the taxonomy graph:
+Crosstrees solves this by traversing the taxonomy graph:
 
 ```python
 def expand_skill(skill_id, taxonomy):
@@ -207,7 +207,7 @@ This aligns with labor economics research on **occupational mobility**:
 
 **Citation**: Gathmann, C., & Schönberg, U. (2010). How General Is Human Capital? A Task-Based Approach. Journal of Labor Economics, 28(1), 1-49.
 
-### 5.3 NordiqFlow's Application
+### 5.3 Crosstrees's Application
 
 We use substitutability scores to:
 1. Recommend career transitions users wouldn't consider
@@ -220,7 +220,7 @@ We use substitutability scores to:
 
 ### 6.1 The Counterfactual Problem
 
-To measure NordiqFlow's impact, we need to answer:
+To measure Crosstrees's impact, we need to answer:
 > "What would have happened to this job seeker WITHOUT semantic matching?"
 
 This is the fundamental problem of causal inference.
@@ -229,7 +229,7 @@ This is the fundamental problem of causal inference.
 
 Following **Abadie, Diamond, and Hainmueller (2010)**, we construct synthetic counterfactuals:
 
-1. Identify treated group (NordiqFlow users)
+1. Identify treated group (Crosstrees users)
 2. Construct synthetic control from weighted combination of non-users
 3. Compare outcomes (time to employment, salary, job satisfaction)
 
@@ -284,7 +284,7 @@ Based on the theoretical framework, we predict:
 
 ## 8. Conclusion
 
-NordiqFlow is not merely a technical system — it is an implementation of decades of labor economics research. By:
+Crosstrees is not merely a technical system — it is an implementation of decades of labor economics research. By:
 
 1. Reducing search frictions (DMP)
 2. Revealing general human capital (Becker)

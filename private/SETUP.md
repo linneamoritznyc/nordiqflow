@@ -1,4 +1,4 @@
-# NordiqFlow Private Dashboard - Complete Setup Guide
+# Crosstrees Private Dashboard - Complete Setup Guide
 
 Private project management portal that syncs with your Google Sheets planning spreadsheet.
 

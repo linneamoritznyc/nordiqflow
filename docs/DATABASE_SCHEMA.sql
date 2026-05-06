@@ -1,5 +1,5 @@
 -- =============================================================================
--- NordiqFlow / TalentFlow Database Schema
+-- Crosstrees / TalentFlow Database Schema
 -- Target: PostgreSQL (Supabase)
 -- =============================================================================
 -- This schema covers:

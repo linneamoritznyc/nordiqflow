@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NordiqFlow API Connectivity Test
+Crosstrees API Connectivity Test
 Tests all Arbetsförmedlingen APIs to verify they work as expected.
 """
 
@@ -28,7 +28,7 @@ def print_warning(msg):
     print(f"{YELLOW}⚠{RESET} {msg}")
 
 print(f"\n{BLUE}{'='*60}{RESET}")
-print(f"{BLUE}NordiqFlow - API Connectivity Test{RESET}")
+print(f"{BLUE}Crosstrees - API Connectivity Test{RESET}")
 print(f"{BLUE}{'='*60}{RESET}\n")
 
 # =============================================================================
@@ -229,7 +229,7 @@ print(f"  • {GREEN}Enrichments{RESET}: NLP extraction from unstructured text")
 print(f"  • {GREEN}Historical{RESET}: 10+ years of trend data")
 
 print(f"\n{GREEN}✓ All systems GO!{RESET}")
-print(f"{GREEN}✓ NordiqFlow can be built with these APIs{RESET}\n")
+print(f"{GREEN}✓ Crosstrees can be built with these APIs{RESET}\n")
 
 print_info(f"Next steps:")
 print("  1. Build the graph database (Neo4j)")

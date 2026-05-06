@@ -1,4 +1,4 @@
-# Supabase vs Neo4j — Varför NordiqFlow väljer Supabase
+# Supabase vs Neo4j — Varför Crosstrees väljer Supabase
 
 **Datum:** 20 februari 2026
 **Författare:** Linnea Moritz
@@ -8,7 +8,7 @@
 
 ## Sammanfattning
 
-NordiqFlow:s tekniska arkitektur har hittills planerats kring Neo4j som grafdatabas för karriärövergångsdata (51 000+ substitutability-relationer, 8 000+ kompetenser, 430 SSYK-koder). Efter utvärdering av projektets faktiska fas, datavolym, teamresurser och tidsplan är beslutet att **bygga hela MVP:n på Supabase (PostgreSQL)** och skjuta upp en eventuell Neo4j-migration till en framtida skalningsfas.
+Crosstrees:s tekniska arkitektur har hittills planerats kring Neo4j som grafdatabas för karriärövergångsdata (51 000+ substitutability-relationer, 8 000+ kompetenser, 430 SSYK-koder). Efter utvärdering av projektets faktiska fas, datavolym, teamresurser och tidsplan är beslutet att **bygga hela MVP:n på Supabase (PostgreSQL)** och skjuta upp en eventuell Neo4j-migration till en framtida skalningsfas.
 
 Detta dokument dokumenterar resonemanget, den tekniska analysen, och migreringsplanen.
 
@@ -44,7 +44,7 @@ Algoritmen specificerar BFS-traversering med komplexitet O(V + E) där V = ~10 0
 
 Karriärövergångar *är* en grafproblem. Det kan inte förnekas. Datans struktur — yrken som noder, substituerbarhet som kanter med vikter, kompetenser som delade egenskaper — mappas naturligt till en property graph-modell.
 
-**Neo4j:s styrkor för NordiqFlow:**
+**Neo4j:s styrkor för Crosstrees:**
 
 - **Native graftraversering**: BFS/DFS utan rekursiva CTEs
 - **Cypher-queryspråk**: Intuitivt för att uttrycka mönster som "hitta alla yrken inom 2 hopp med substituerbarhet > 50"
@@ -59,7 +59,7 @@ Karriärövergångar *är* en grafproblem. Det kan inte förnekas. Datans strukt
 
 ### 3.1 Datavolymen är liten
 
-Det här är den viktigaste insikten. NordiqFlow:s grafdata är:
+Det här är den viktigaste insikten. Crosstrees:s grafdata är:
 
 | Dataset | Storlek |
 |---|---|
@@ -73,7 +73,7 @@ Det här är den viktigaste insikten. NordiqFlow:s grafdata är:
 
 ### 3.2 Rekursiva CTE:er löser multi-hop-problemet
 
-Den vanligaste invändningen mot SQL för grafproblem: "men du kan inte göra multi-hop traversering effektivt." Det stämmer — i allmänhet. Men för NordiqFlow:s specifika fall:
+Den vanligaste invändningen mot SQL för grafproblem: "men du kan inte göra multi-hop traversering effektivt." Det stämmer — i allmänhet. Men för Crosstrees:s specifika fall:
 
 **Karriärvägar kräver max 2–3 hopp.** En butikschef → verksamhetsledare (1 hopp) eller butikschef → logistikchef → supply chain manager (2 hopp) täcker 95%+ av relevanta karriärvägar. Ingen användare behöver en karriärväg med 5 hopp.
 
@@ -163,7 +163,7 @@ Förklaring:
 
 ### 3.4 Teamet kan SQL, inte Cypher
 
-NordiqFlow:s team (och framtida rekryteringar) kan SQL. Cypher kräver:
+Crosstrees:s team (och framtida rekryteringar) kan SQL. Cypher kräver:
 
 - Lära sig ett nytt query-språk
 - Förstå Neo4j:s transaktionsmodell (annorlunda än ACID i PostgreSQL)
@@ -177,7 +177,7 @@ RCT-forskarna (IFAU, universitetspartners) förstår SQL och kan köra analyser 
 | | Neo4j AuraDB | Supabase |
 |---|---|---|
 | Free tier | 200 000 noder, 400 000 kanter | 500 MB databas, 50 000 monthly active users |
-| Produktion (NordiqFlow skala) | ~$65/mån (AuraDB Professional) | ~$25/mån (Supabase Pro) |
+| Produktion (Crosstrees skala) | ~$65/mån (AuraDB Professional) | ~$25/mån (Supabase Pro) |
 | Skalningskostnad vid 10 000 användare | ~$200/mån + separat Supabase-kostnad | ~$75/mån (allt inkluderat) |
 | Backup, monitoring | Extra konfiguration | Inbyggt |
 | Auth | Saknas — kräver separat lösning | Inbyggt (Supabase Auth) |
@@ -192,7 +192,7 @@ Skillnad: **~$175–325/mån** eller **~$2 100–3 900/år** — inte enormt, me
 
 ### 3.6 Schemat finns redan
 
-`docs/DATABASE_SCHEMA.sql` definierar redan hela NordiqFlow:s datamodell i PostgreSQL. Tabellen `af_substitutability` med kolumnerna `from_occupation_id`, `to_occupation_id`, `score`, och `direction` modellerar exakt samma grafrelationer som Neo4j:s `CAN_TRANSITION`-edge — bara som en junction table istället för en explicit kant.
+`docs/DATABASE_SCHEMA.sql` definierar redan hela Crosstrees:s datamodell i PostgreSQL. Tabellen `af_substitutability` med kolumnerna `from_occupation_id`, `to_occupation_id`, `score`, och `direction` modellerar exakt samma grafrelationer som Neo4j:s `CAN_TRANSITION`-edge — bara som en junction table istället för en explicit kant.
 
 Allt yrke-, kompetens-, och användardata är redan strukturerat för Supabase. Neo4j skulle kräva en parallell datamodell och synkronisering mellan två databaser.
 
@@ -362,7 +362,7 @@ Ingen separat backend-server krävs.
 
 ## 6. Migreringsplan — Om vi behöver Neo4j i framtiden
 
-**Trigger:** Om NordiqFlow når en punkt där:
+**Trigger:** Om Crosstrees når en punkt där:
 - Datavolymen överstiger 1 miljon noder/kanter (t.ex. vid nordisk expansion med norsk, dansk, finsk data)
 - Karriärvägsanalyser kräver 4+ hopp regelbundet
 - Community detection eller PageRank-baserad ranking behövs
@@ -384,7 +384,7 @@ Ingen separat backend-server krävs.
 
 ### Beslut
 
-**NordiqFlow bygger hela MVP:n och v1.0 på Supabase (PostgreSQL).** Neo4j läggs som en framtida skalningspost, inte en lanserings-dependency.
+**Crosstrees bygger hela MVP:n och v1.0 på Supabase (PostgreSQL).** Neo4j läggs som en framtida skalningspost, inte en lanserings-dependency.
 
 ### Konsekvenser för existerande dokumentation
 
@@ -415,17 +415,17 @@ Följande dokument behöver uppdateras för att reflektera beslutet:
 
 ## 8. Slutsats
 
-Neo4j är en utmärkt grafdatabas. För ett projekt med miljontals noder och djupa traverseringar (sociala nätverk, kunskapsgrafer, fraud detection) är det rätt val. Men NordiqFlow har:
+Neo4j är en utmärkt grafdatabas. För ett projekt med miljontals noder och djupa traverseringar (sociala nätverk, kunskapsgrafer, fraud detection) är det rätt val. Men Crosstrees har:
 
 - **120 000 rader** — inte 120 miljoner
 - **Max 2–3 hopp** — inte 10+
 - **En utvecklare i early stage** — inte ett dedikerat infrastrukturteam
 - **En befintlig Supabase-stack** — att lägga till en annan databas skapar komplexitet utan proportionellt värde
 
-PostgreSQL med rekursiva CTE:er, materialized views, pgvector och Supabase:s inbyggda Auth/API täcker 100 % av NordiqFlow:s behov för MVP, v1.0, och troligtvis långt bortom det.
+PostgreSQL med rekursiva CTE:er, materialized views, pgvector och Supabase:s inbyggda Auth/API täcker 100 % av Crosstrees:s behov för MVP, v1.0, och troligtvis långt bortom det.
 
 Bygg produkten. Bevisa matchningseffekten. Optimera infrastrukturen när du har det lyxproblemet att data inte får plats i Postgres.
 
 ---
 
-*Dokumentet upprättat 20 februari 2026 av Linnea Moritz, NordiqFlow.*
+*Dokumentet upprättat 20 februari 2026 av Linnea Moritz, Crosstrees.*

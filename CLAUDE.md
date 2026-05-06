@@ -1,7 +1,7 @@
-# NordiqFlow - Project Context
+# Crosstrees - Project Context
 
 ## Overview
-NordiqFlow builds Sweden's labour market OS. Two products: **TalentFlow** (B2C career platform) and **CityIQ** (B2G municipal talent analytics).
+Crosstrees builds Sweden's labour market OS. Two products: **TalentFlow** (B2C career platform) and **CityIQ** (B2G municipal talent analytics).
 
 ## Site Structure
 - Static HTML site deployed on Vercel from repo root
@@ -17,7 +17,7 @@ NordiqFlow builds Sweden's labour market OS. Two products: **TalentFlow** (B2C c
 - `talentflow/FEATURES.md` — Feature specifications
 - `docs/DATABASE_SCHEMA.sql` — Database schema
 
-## Investor Article: `nordiqflow_investor_article.docx.pdf`
+## Investor Article: `crosstrees_investor_article.docx.pdf`
 Full investigative article about Sweden's employment matching crisis. Located in `public/`.
 
 ### What's in it:

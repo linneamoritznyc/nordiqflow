@@ -1,5 +1,5 @@
 """
-NordiqFlow — JobTech Dev → Supabase Import Script
+Crosstrees — JobTech Dev → Supabase Import Script
 ==================================================
 Imports ALL taxonomy data from AF's open APIs into Supabase.
 Usage:
@@ -263,7 +263,7 @@ def seed_municipalities(supabase: Client):
     print(f"  ✓ {count} municipalities seeded")
 # ── MAIN ──────────────────────────────────────────────────────────────────────
 def main():
-    parser = argparse.ArgumentParser(description="NordiqFlow — JobTech Dev → Supabase importer")
+    parser = argparse.ArgumentParser(description="Crosstrees — JobTech Dev → Supabase importer")
     parser.add_argument(
         "--step",
         default="all",
@@ -272,7 +272,7 @@ def main():
     )
     args = parser.parse_args()
     print("=" * 60)
-    print("NordiqFlow — JobTech Dev → Supabase Import")
+    print("Crosstrees — JobTech Dev → Supabase Import")
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     supabase = get_supabase()
