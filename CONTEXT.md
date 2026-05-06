@@ -8,7 +8,7 @@
 
 **Crosstrees** is a Swedish labor market intelligence platform that transforms Arbetsförmedlingen's (Swedish Public Employment Service) open data into actionable products for individuals, businesses, and municipalities.
 
-**Repository**: `github.com/linneamoritznyc/nordiqflow`  
+**Repository**: `github.com/linneamoritznyc/crosstrees`  
 **Deployment**: `https://crosstrees-hr2n.vercel.app/`  
 **Author**: Linnea Moritz  
 **ORCID**: 0009-0004-9742-8608
@@ -194,7 +194,7 @@ This work builds on Nobel Prize-winning economic theory:
 ## Links
 
 - **Live Site**: https://crosstrees-hr2n.vercel.app/
-- **GitHub**: https://github.com/linneamoritznyc/nordiqflow
+- **GitHub**: https://github.com/linneamoritznyc/crosstrees
 - **AF Open Data**: https://jobtechdev.se/
 - **Taxonomy API**: https://taxonomy.api.jobtechdev.se/
 

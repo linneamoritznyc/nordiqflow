@@ -2,7 +2,7 @@
 
 ## What Was Just Pushed
 
-Successfully pushed comprehensive documentation and organized structure to `github.com/linneamoritznyc/nordiqflow`.
+Successfully pushed comprehensive documentation and organized structure to `github.com/linneamoritznyc/crosstrees`.
 
 ### New Documentation Added
 
@@ -54,7 +54,7 @@ crosstrees/
 ### Deployment
 
 - **Live site**: https://crosstrees-hr2n.vercel.app/
-- **GitHub**: https://github.com/linneamoritznyc/nordiqflow
+- **GitHub**: https://github.com/linneamoritznyc/crosstrees
 - **Data source**: https://jobtechdev.se/ (Arbetsförmedlingen open data)
 
 ---
